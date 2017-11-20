@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/main_white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/small">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/fresco_bank_logo"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:actualImageScaleType="fitCenter"
+        app:placeholderImage="@drawable/ic_placeholder"
+        app:placeholderImageScaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/tv_bank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/small"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/text_small"
+        tools:text="中国工商银行" />
+</LinearLayout>

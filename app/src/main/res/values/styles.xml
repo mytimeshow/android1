@@ -1,0 +1,107 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--页面背景色-->
+        <item name="android:windowBackground">@color/main_bg</item>
+        <!--Switch开时的颜色-->
+        <item name="colorAccent">@color/main_red</item>
+    </style>
+    <!--主按钮中号-->
+    <style name="MainButtonMedium">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+        <item name="android:paddingTop">@dimen/top_padding_main_button_medium</item>
+        <item name="android:paddingBottom">@dimen/bottom_padding_main_button_medium</item>
+    </style>
+    <!--主按钮小号-->
+    <style name="MainButtonSmall">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:paddingTop">@dimen/top_padding_main_button_small</item>
+        <item name="android:paddingBottom">@dimen/bottom_padding_main_button_small</item>
+    </style>
+    <!--对话框按钮中号-->
+    <style name="DialogButtonMedium">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+        <item name="android:paddingTop">@dimen/top_padding_dialog_button_medium</item>
+        <item name="android:paddingBottom">@dimen/bottom_padding_dialog_button_medium</item>
+    </style>
+    <!--对话框按钮小号-->
+    <style name="DialogButtonSmall">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:paddingTop">@dimen/top_padding_dialog_button_small</item>
+        <item name="android:paddingBottom">@dimen/bottom_padding_dialog_button_small</item>
+    </style>
+    <!--中号红色按钮正常-->
+    <style name="MainButtonMedium.RedNormal">
+        <item name="android:background">@drawable/bg_main_button_red_normal</item>
+        <item name="android:textColor">@color/text_main_button_red_normal</item>
+    </style>
+    <!--中号红色按钮暂时不可用-->
+    <style name="MainButtonMedium.RedTempDisable">
+        <item name="android:background">@drawable/bg_main_button_red_normal</item>
+        <item name="android:textColor">@color/text_main_button_red_temp_disable</item>
+    </style>
+    <!--中号红色按钮不可用-->
+    <style name="MainButtonMedium.RedDisable">
+        <item name="android:background">@drawable/bg_main_button_red_disable</item>
+        <item name="android:textColor">@color/text_main_button_red_disable</item>
+    </style>
+    <!--中号红色边框按钮正常-->
+    <style name="MainButtonMedium.RedBorderNormal">
+        <item name="android:background">@drawable/bg_main_button_red_border_normal</item>
+        <item name="android:textColor">@color/text_main_button_red_border_normal</item>
+    </style>
+    <!--中号红色边框按钮暂时不可用-->
+    <style name="MainButtonMedium.RedBorderTempDisable">
+        <item name="android:background">@drawable/bg_main_button_red_border_normal</item>
+        <item name="android:textColor">@color/text_main_button_red_border_temp_disable</item>
+    </style>
+    <!--中号红色边框按钮不可用-->
+    <style name="MainButtonMedium.RedBorderDisable">
+        <item name="android:background">@drawable/bg_main_button_red_border_disable</item>
+        <item name="android:textColor">@color/text_main_button_red_border_disable</item>
+    </style>
+    <!--小号红色边框按钮正常-->
+    <style name="MainButtonSmall.RedBorderNormal">
+        <item name="android:background">@drawable/bg_main_button_red_border_normal</item>
+        <item name="android:textColor">@color/text_main_button_red_border_normal</item>
+    </style>
+    <!--小号红色边框按钮不可用-->
+    <style name="MainButtonSmall.RedBorderDisable">
+        <item name="android:background">@drawable/bg_main_button_red_border_disable</item>
+        <item name="android:textColor">@color/text_main_button_red_border_disable</item>
+    </style>
+    <!--小号黑色边框按钮正常-->
+    <style name="MainButtonSmall.BlackBorderNormal">
+        <item name="android:background">@drawable/bg_main_button_black_border_normal</item>
+        <item name="android:textColor">@color/text_main_button_black_border_normal</item>
+    </style>
+    <!--小号黑色边框按钮不可用-->
+    <style name="MainButtonSmall.BlackBorderDisable">
+        <item name="android:background">@drawable/bg_main_button_black_border_disable</item>
+        <item name="android:textColor">@color/text_main_button_black_border_disable</item>
+    </style>
+    <!--中号积极对话框按钮-->
+    <style name="DialogButtonMedium.Positive">
+        <item name="android:background">@drawable/bg_dialog_button_positive</item>
+        <item name="android:textColor">@color/text_dialog_button_positive</item>
+    </style>
+    <!--小号积极对话框按钮-->
+    <style name="DialogButtonSmall.Positive">
+        <item name="android:background">@drawable/bg_dialog_button_positive</item>
+        <item name="android:textColor">@color/text_dialog_button_positive</item>
+    </style>
+    <!--中号消极对话框按钮-->
+    <style name="DialogButtonMedium.Negative">
+        <item name="android:background">@drawable/bg_dialog_button_negative</item>
+        <item name="android:textColor">@color/text_dialog_button_negative</item>
+    </style>
+    <!--小号消极对话框按钮-->
+    <style name="DialogButtonSmall.Negative">
+        <item name="android:background">@drawable/bg_dialog_button_negative</item>
+        <item name="android:textColor">@color/text_dialog_button_negative</item>
+    </style>
+</resources>

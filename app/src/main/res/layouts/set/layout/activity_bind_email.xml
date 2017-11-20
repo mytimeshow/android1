@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".modules.set.activity.BindEmailActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/main_white">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/medium"
+            android:paddingRight="@dimen/small"
+            android:src="@drawable/ic_back_arrow" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="绑定邮箱"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_large" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:layout_alignParentBottom="true"
+            android:background="@color/div_dark" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/medium"
+        android:layout_marginTop="@dimen/medium"
+        android:drawableLeft="@drawable/ic_hint_info"
+        android:drawablePadding="@dimen/very_small"
+        android:text="请登录填写的邮箱地址，查看接收到的邮箱验证码。"
+        android:textColor="@color/text_dark_gray"
+        android:textSize="@dimen/text_very_small" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/small"
+            android:text="邮箱"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_small" />
+
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="请输入邮箱账号"
+            android:inputType="textEmailAddress"
+            android:lines="1"
+            android:paddingBottom="@dimen/medium"
+            android:paddingLeft="@dimen/medium"
+            android:paddingRight="@dimen/small"
+            android:paddingTop="@dimen/medium"
+            android:textColor="@color/text_black"
+            android:textColorHint="@color/text_light_gray"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/text_small" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@color/div_light" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/small"
+            android:text="验证码"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_small" />
+
+        <EditText
+            android:id="@+id/et_verification_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="请输入邮箱验证码"
+            android:inputType="number"
+            android:lines="1"
+            android:maxLength="@integer/verification_code_length"
+            android:paddingBottom="@dimen/medium"
+            android:paddingLeft="@dimen/medium"
+            android:paddingRight="@dimen/small"
+            android:paddingTop="@dimen/medium"
+            android:textColor="@color/text_black"
+            android:textColorHint="@color/text_light_gray"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/text_small" />
+
+        <TextView
+            android:id="@+id/tv_send_verification_code"
+            style="@style/MainButtonSmall.RedBorderNormal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/small"
+            android:paddingLeft="@dimen/very_small"
+            android:paddingRight="@dimen/very_small"
+            android:text="发送验证码" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_bind"
+        style="@style/MainButtonMedium.RedNormal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/small"
+        android:layout_marginRight="@dimen/small"
+        android:layout_marginTop="@dimen/medium"
+        android:text="绑定" />
+</LinearLayout>

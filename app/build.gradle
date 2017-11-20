@@ -1,0 +1,80 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            res.srcDirs = [
+                    'src/main/res',
+                    'src/main/res/layouts',
+                    'src/main/res/layouts/entry',
+                    'src/main/res/layouts/login',
+                    'src/main/res/layouts/set',
+                    'src/main/res/layouts/address',
+                    'src/main/res/layouts/balance'
+            ]
+        }
+    }
+    defaultConfig {
+        applicationId "cn.czyugang.tcg.client"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    signingConfigs {
+        debug {
+            storeFile file('cn.czyugang.jks')//签名文件路径
+            storePassword "czyugang"
+            keyAlias "cn.czyugang"
+            keyPassword "czyugang"  //签名密码
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile(deps.espresso, {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile deps.appcompatv7
+    compile deps.recyclerviewv7
+    compile deps.constraint
+    compile deps.fresco
+    compile deps.animated_gif
+    compile deps.imagepipeline_okhttp
+    compile deps.retrofit
+    compile deps.adapter_rxjava
+    compile deps.converter_gson
+    compile deps.rxjava
+    compile deps.rxandroid
+    compile deps.gson
+    compile deps.butterknife
+    annotationProcessor deps.butterknife_compiler
+    compile deps.arouter_api
+    annotationProcessor deps.arouter_compiler
+    compile deps.wechat
+    compile deps.map_location
+    compile deps.map_3d
+    compile deps.map_search
+    testCompile deps.junit
+}

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context=".modules.address.activity.SelectLocationActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/main_white">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/medium"
+            android:paddingRight="@dimen/small"
+            android:src="@drawable/ic_back_arrow" />
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toLeftOf="@+id/tv_cancel"
+            android:layout_toRightOf="@+id/iv_back"
+            android:background="@drawable/bg_search_edit"
+            android:drawableLeft="@drawable/ic_search"
+            android:drawablePadding="@dimen/medium"
+            android:hint="小区/写字楼/学校"
+            android:inputType="text"
+            android:lines="1"
+            android:paddingBottom="@dimen/very_small"
+            android:paddingLeft="@dimen/small"
+            android:paddingRight="@dimen/small"
+            android:paddingTop="@dimen/very_small"
+            android:textColor="@color/text_black"
+            android:textColorHint="@color/text_light_gray"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/text_small" />
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/small"
+            android:paddingRight="@dimen/medium"
+            android:text="取消"
+            android:textColor="@color/text_dark_gray"
+            android:textSize="@dimen/text_small" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:layout_alignParentBottom="true"
+            android:background="@color/div_dark" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <FrameLayout
+            android:id="@+id/fl_map"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <cn.czyugang.tcg.client.widget.MapView
+                android:id="@+id/mapView"
+                android:layout_width="match_parent"
+                android:layout_height="250dp" />
+
+            <ImageView
+                android:id="@+id/iv_relocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|bottom"
+                android:layout_marginBottom="@dimen/small"
+                android:layout_marginLeft="@dimen/small"
+                android:src="@drawable/ic_relocation" />
+
+            <ImageView
+                android:id="@+id/iv_current_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:src="@drawable/ic_current_location" />
+        </FrameLayout>
+
+        <RadioGroup
+            android:id="@+id/group_tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fl_map"
+            android:background="@color/main_white"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbtn_all"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:button="@null"
+                android:gravity="center_horizontal"
+                android:paddingBottom="@dimen/medium"
+                android:paddingTop="@dimen/medium"
+                android:text="全部"
+                android:textColor="@color/selector_select_location_tab_text"
+                android:textSize="@dimen/text_small" />
+
+            <RadioButton
+                android:id="@+id/rbtn_office"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:button="@null"
+                android:gravity="center_horizontal"
+                android:paddingBottom="@dimen/medium"
+                android:paddingTop="@dimen/medium"
+                android:text="写字楼"
+                android:textColor="@color/selector_select_location_tab_text"
+                android:textSize="@dimen/text_small" />
+
+            <RadioButton
+                android:id="@+id/rbtn_house"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:button="@null"
+                android:gravity="center_horizontal"
+                android:paddingBottom="@dimen/medium"
+                android:paddingTop="@dimen/medium"
+                android:text="小区"
+                android:textColor="@color/selector_select_location_tab_text"
+                android:textSize="@dimen/text_small" />
+
+            <RadioButton
+                android:id="@+id/rbtn_school"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:button="@null"
+                android:gravity="center_horizontal"
+                android:paddingBottom="@dimen/medium"
+                android:paddingTop="@dimen/medium"
+                android:text="学校"
+                android:textColor="@color/selector_select_location_tab_text"
+                android:textSize="@dimen/text_small" />
+        </RadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:layout_alignBottom="@+id/group_tab"
+            android:background="@color/div_light" />
+
+        <View
+            android:id="@+id/line_tab"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/mini"
+            android:layout_alignBottom="@+id/group_tab"
+            android:layout_marginBottom="@dimen/small"
+            android:background="@color/main_red" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/group_tab"
+            android:background="@color/main_white"
+            android:overScrollMode="never" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/main_white"
+            android:overScrollMode="never"
+            android:visibility="gone" />
+    </RelativeLayout>
+</LinearLayout>

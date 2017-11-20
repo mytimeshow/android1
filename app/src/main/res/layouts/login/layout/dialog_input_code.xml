@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_message_dialog"
+    android:padding="@dimen/large"
+    tools:context=".modules.login.dialog.InputCodeDialog">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="请输入验证码"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/text_medium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/ll_verification_code"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/large"
+        android:background="@drawable/bg_verification_code_edit"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title">
+
+        <EditText
+            android:id="@+id/et_verification_code"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="请输入图片验证码"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLength="@integer/picture_verification_code_length"
+            android:paddingLeft="@dimen/small"
+            android:paddingRight="@dimen/small"
+            android:textColor="@color/text_black"
+            android:textColorHint="#bbb"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/text_medium" />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/fresco_verification_code"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            app:actualImageScaleType="fitCenter"
+            app:roundBottomLeft="false"
+            app:roundTopLeft="false"
+            app:roundedCornerRadius="3dp"
+            app:viewAspectRatio="2.5" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        style="@style/DialogButtonSmall.Negative"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/very_small"
+        android:layout_marginTop="@dimen/large"
+        android:text="@string/btn_cancel"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/ll_verification_code" />
+
+    <TextView
+        android:id="@+id/tv_confirm"
+        style="@style/DialogButtonSmall.Positive"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/very_small"
+        android:layout_marginTop="@dimen/large"
+        android:text="@string/btn_confirm"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_verification_code" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+</android.support.constraint.ConstraintLayout>

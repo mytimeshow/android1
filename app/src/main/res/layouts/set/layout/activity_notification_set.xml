@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".modules.set.activity.NotificationSetActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/main_white">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/medium"
+            android:paddingRight="@dimen/small"
+            android:src="@drawable/ic_back_arrow" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="消息提醒"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_large" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:layout_alignParentBottom="true"
+            android:background="@color/div_dark" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/switch_notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_white"
+        android:paddingBottom="@dimen/medium"
+        android:paddingLeft="@dimen/small"
+        android:paddingRight="@dimen/small"
+        android:paddingTop="@dimen/medium"
+        android:text="接收信息消息提醒"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/text_small" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small"
+        android:text="开启后，你将收到商城促销活动，折扣等"
+        android:textColor="@color/text_gray"
+        android:textSize="@dimen/text_very_small" />
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/switch_sound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_white"
+        android:paddingBottom="@dimen/medium"
+        android:paddingLeft="@dimen/small"
+        android:paddingRight="@dimen/small"
+        android:paddingTop="@dimen/medium"
+        android:text="声音"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/text_small" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@color/div_light" />
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/switch_vibrate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_white"
+        android:paddingBottom="@dimen/medium"
+        android:paddingLeft="@dimen/small"
+        android:paddingRight="@dimen/small"
+        android:paddingTop="@dimen/medium"
+        android:text="震动"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/text_small" />
+</LinearLayout>

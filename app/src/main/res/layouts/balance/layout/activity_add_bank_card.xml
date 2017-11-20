@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".modules.balance.activity.AddBankCardActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/main_white">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/medium"
+            android:paddingRight="@dimen/small"
+            android:src="@drawable/ic_back_arrow" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="添加银行卡"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_large" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:layout_alignParentBottom="true"
+            android:background="@color/div_dark" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/small"
+        android:layout_marginLeft="@dimen/medium"
+        android:layout_marginTop="@dimen/large"
+        android:text="请绑定账户本人的银行卡"
+        android:textColor="@color/text_gray"
+        android:textSize="@dimen/text_small" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/small"
+        android:background="@color/main_white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/small"
+            android:text="银行卡号"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_small" />
+
+        <EditText
+            android:id="@+id/et_bank_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="请输入银行卡号"
+            android:inputType="number"
+            android:lines="1"
+            android:maxLength="@integer/bank_number_length"
+            android:paddingBottom="@dimen/medium"
+            android:paddingLeft="@dimen/medium"
+            android:paddingRight="@dimen/small"
+            android:paddingTop="@dimen/medium"
+            android:textColor="@color/text_black"
+            android:textColorHint="@color/text_light_gray"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/text_small" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_bank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/medium"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/fresco_bank_logo"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            app:placeholderImage="@drawable/ic_placeholder"
+            app:placeholderImageScaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/tv_bank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/small"
+            tools:text="中国工商银行储蓄卡" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_next"
+        style="@style/MainButtonMedium.RedNormal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small"
+        android:layout_marginLeft="@dimen/small"
+        android:layout_marginTop="@dimen/large"
+        android:text="下一步" />
+</LinearLayout>

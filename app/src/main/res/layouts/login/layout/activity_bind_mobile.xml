@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_white"
+    android:orientation="vertical"
+    tools:context=".modules.login.activity.BindMobileActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/medium"
+            android:paddingRight="@dimen/small"
+            android:src="@drawable/ic_back_arrow" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_large"
+            tools:text="绑定手机" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:layout_alignParentBottom="true"
+            android:background="@color/div_dark" />
+    </RelativeLayout>
+
+    <RadioGroup
+        android:id="@+id/group_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checkedButton="@+id/rbtn_input_mobile"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/small"
+        android:paddingTop="@dimen/small">
+
+        <RadioButton
+            android:id="@+id/rbtn_input_mobile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:enabled="false"
+            android:gravity="center"
+            android:text="1.输入手机号码"
+            android:textColor="@color/selector_forget_password_tab_text"
+            android:textSize="@dimen/text_very_small" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_next_arrow" />
+
+        <RadioButton
+            android:id="@+id/rbtn_input_verification_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:enabled="false"
+            android:gravity="center"
+            android:text="2.输入验证码"
+            android:textColor="@color/selector_forget_password_tab_text"
+            android:textSize="@dimen/text_very_small" />
+    </RadioGroup>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@color/div_light" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager_bind_mobile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

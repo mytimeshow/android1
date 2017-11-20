@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".modules.set.activity.BindThirdpartyActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/main_white">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/medium"
+            android:paddingRight="@dimen/small"
+            android:src="@drawable/ic_back_arrow" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="社交账号绑定"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_large" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:layout_alignParentBottom="true"
+            android:background="@color/div_dark" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_wx_bind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_white"
+        android:padding="@dimen/small">
+
+        <TextView
+            android:id="@+id/tv_wx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_wx_unbind"
+            android:drawablePadding="@dimen/small"
+            android:gravity="center_vertical"
+            android:text="微信"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_small" />
+
+        <TextView
+            android:id="@+id/tv_wx_bind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:drawablePadding="@dimen/small"
+            android:drawableRight="@drawable/ic_goto_arrow"
+            android:textColor="@color/main_light_red"
+            android:textSize="@dimen/text_small"
+            tools:text="未绑定" />
+    </FrameLayout>
+
+    <VideoView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@color/div_light" />
+
+    <FrameLayout
+        android:id="@+id/fl_tencent_bind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_white"
+        android:padding="@dimen/small">
+
+        <TextView
+            android:id="@+id/tv_tencent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_tencent_unbind"
+            android:drawablePadding="@dimen/small"
+            android:gravity="center_vertical"
+            android:text="QQ"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_small" />
+
+        <TextView
+            android:id="@+id/tv_tencent_bind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:drawablePadding="@dimen/small"
+            android:drawableRight="@drawable/ic_goto_arrow"
+            android:textColor="@color/main_light_red"
+            android:textSize="@dimen/text_small"
+            tools:text="未绑定" />
+    </FrameLayout>
+
+    <VideoView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@color/div_light" />
+
+    <FrameLayout
+        android:id="@+id/fl_weibo_bind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_white"
+        android:padding="@dimen/small">
+
+        <TextView
+            android:id="@+id/tv_weibo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_weibo_unbind"
+            android:drawablePadding="@dimen/small"
+            android:gravity="center_vertical"
+            android:text="新浪微博"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_small" />
+
+        <TextView
+            android:id="@+id/tv_weibo_bind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:drawablePadding="@dimen/small"
+            android:drawableRight="@drawable/ic_goto_arrow"
+            android:textColor="@color/main_light_red"
+            android:textSize="@dimen/text_small"
+            tools:text="未绑定" />
+    </FrameLayout>
+</LinearLayout>

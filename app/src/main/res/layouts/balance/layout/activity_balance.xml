@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".modules.balance.activity.BalanceActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/main_white">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/medium"
+            android:paddingRight="@dimen/small"
+            android:src="@drawable/ic_back_arrow" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="我的资产"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_large" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:layout_alignParentBottom="true"
+            android:background="@color/div_dark" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_red"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/large"
+                android:paddingLeft="@dimen/small"
+                android:paddingRight="@dimen/small"
+                android:paddingTop="@dimen/large">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="余额（元）"
+                    android:textColor="@color/text_white"
+                    android:textSize="@dimen/text_small" />
+
+                <TextView
+                    android:id="@+id/tv_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/large"
+                    android:textColor="@color/text_white"
+                    android:textSize="36dp"
+                    tools:text="530.68" />
+
+                <TextView
+                    android:id="@+id/tv_withdraw_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:textColor="@color/text_white"
+                    android:textSize="@dimen/text_small"
+                    tools:text="可提现余额：270.50" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_recharge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_white"
+                android:drawableRight="@drawable/ic_goto_arrow"
+                android:paddingBottom="@dimen/medium"
+                android:paddingLeft="@dimen/small"
+                android:paddingRight="@dimen/small"
+                android:paddingTop="@dimen/medium"
+                android:text="充值"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_small" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/div_light" />
+
+            <TextView
+                android:id="@+id/tv_withdraw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_white"
+                android:drawableRight="@drawable/ic_goto_arrow"
+                android:paddingBottom="@dimen/medium"
+                android:paddingLeft="@dimen/small"
+                android:paddingRight="@dimen/small"
+                android:paddingTop="@dimen/medium"
+                android:text="提现"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_small" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/div_light" />
+
+            <TextView
+                android:id="@+id/tv_bill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_white"
+                android:drawableRight="@drawable/ic_goto_arrow"
+                android:paddingBottom="@dimen/medium"
+                android:paddingLeft="@dimen/small"
+                android:paddingRight="@dimen/small"
+                android:paddingTop="@dimen/medium"
+                android:text="收支明细"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_small" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/div_light" />
+
+            <FrameLayout
+                android:id="@+id/fl_bank_card_manage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_white"
+                android:paddingBottom="@dimen/medium"
+                android:paddingLeft="@dimen/small"
+                android:paddingRight="@dimen/small"
+                android:paddingTop="@dimen/medium">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="银行卡管理"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_small" />
+
+                <TextView
+                    android:id="@+id/tv_bank_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:drawablePadding="@dimen/small"
+                    android:drawableRight="@drawable/ic_goto_arrow"
+                    android:textColor="@color/text_dark_gray"
+                    android:textSize="@dimen/text_small"
+                    tools:text="已经添加0张卡" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_discount_coupon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small"
+                android:background="@color/main_white"
+                android:paddingBottom="@dimen/medium"
+                android:paddingLeft="@dimen/small"
+                android:paddingRight="@dimen/small"
+                android:paddingTop="@dimen/medium">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="优惠券"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_small" />
+
+                <TextView
+                    android:id="@+id/tv_discount_coupon_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:drawablePadding="@dimen/small"
+                    android:drawableRight="@drawable/ic_goto_arrow"
+                    android:textColor="@color/text_dark_gray"
+                    android:textSize="@dimen/text_small"
+                    tools:text="3张可用" />
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/div_light" />
+
+            <TextView
+                android:id="@+id/tv_coupon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_white"
+                android:drawableRight="@drawable/ic_goto_arrow"
+                android:paddingBottom="@dimen/medium"
+                android:paddingLeft="@dimen/small"
+                android:paddingRight="@dimen/small"
+                android:paddingTop="@dimen/medium"
+                android:text="卡券"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_small" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/div_light" />
+
+            <FrameLayout
+                android:id="@+id/fl_points"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_white"
+                android:paddingBottom="@dimen/medium"
+                android:paddingLeft="@dimen/small"
+                android:paddingRight="@dimen/small"
+                android:paddingTop="@dimen/medium">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="积分"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_small" />
+
+                <TextView
+                    android:id="@+id/tv_points"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:drawablePadding="@dimen/small"
+                    android:drawableRight="@drawable/ic_goto_arrow"
+                    android:textColor="@color/text_dark_gray"
+                    android:textSize="@dimen/text_small"
+                    tools:text="450分" />
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/div_light" />
+
+            <TextView
+                android:id="@+id/tv_red_packet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_white"
+                android:drawableRight="@drawable/ic_goto_arrow"
+                android:paddingBottom="@dimen/medium"
+                android:paddingLeft="@dimen/small"
+                android:paddingRight="@dimen/small"
+                android:paddingTop="@dimen/medium"
+                android:text="红包"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_small" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

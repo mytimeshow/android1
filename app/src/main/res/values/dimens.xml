@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="large">20dp</dimen>
+    <dimen name="medium">15dp</dimen>
+    <dimen name="small">10dp</dimen>
+    <dimen name="very_small">5dp</dimen>
+    <dimen name="mini">2dp</dimen>
+    <!--字体尺寸-->
+    <!--bottom=0.5,top=3-->
+    <dimen name="text_large">18dp</dimen>
+    <!--bottom=0.4,top=2.6-->
+    <dimen name="text_medium">16dp</dimen>
+    <!--bottom=0.4,top=2.3-->
+    <dimen name="text_small">14dp</dimen>
+    <!--bottom=0.3,top=2-->
+    <dimen name="text_very_small">12dp</dimen>
+    <!--bottom=0.3,top=1.8-->
+    <dimen name="text_mini">11dp</dimen>
+    <!--分割线宽度-->
+    <dimen name="divider">0.5dp</dimen>
+    <!--标题栏高度-->
+    <dimen name="title_bar_height">45dp</dimen>
+    <!--按钮尺寸-->
+    <!--主按钮-->
+    <dimen name="corners_radius_main_button">2dp</dimen>
+    <dimen name="stroke_width_main_button">1dp</dimen>
+    <dimen name="top_padding_main_button_medium">10dp</dimen>
+    <dimen name="bottom_padding_main_button_medium">10dp</dimen>
+    <dimen name="top_padding_main_button_small">5dp</dimen>
+    <dimen name="bottom_padding_main_button_small">5dp</dimen>
+    <!--对话框按钮-->
+    <dimen name="corners_radius_dialog_button">3dp</dimen>
+    <dimen name="stroke_width_dialog_button">1dp</dimen>
+    <dimen name="top_padding_dialog_button_medium">11dp</dimen>
+    <dimen name="bottom_padding_dialog_button_medium">11dp</dimen>
+    <dimen name="top_padding_dialog_button_small">6dp</dimen>
+    <dimen name="bottom_padding_dialog_button_small">6dp</dimen>
+    <!--对话框背景-->
+    <dimen name="corners_radius_message_dialog">5dp</dimen>
+</resources>

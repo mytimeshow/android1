@@ -1,0 +1,68 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'me.tatarka:gradle-retrolambda:3.7.0'
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    compileSdkVersion = 25
+    buildToolsVersion = "26.0.1"
+    minSdkVersion = 15
+    targetSdkVersion = 25
+
+    espressoVersion = '2.2.2'
+    supportVersion = '25.3.1'
+    constraintVersion = '1.0.2'
+    frescoVersion = '0.12.0'
+    retrofitVersion = '2.3.0'
+    rxjavaVersion = '2.1.3'
+    rxandroidVersion = '2.0.1'
+    gsonVersion = "2.8.0"
+    butterknifeVersion = "8.8.1"
+    arouterApiVersion = "1.2.2"
+    arouterCompilerVersion = "1.1.3"
+    wechatVersion = "1.4.0"
+    mapVersion = "latest.integration"
+    junitVersion = '4.12'
+
+    deps = [
+            espresso            : "com.android.support.test.espresso:espresso-core:$espressoVersion",
+            appcompatv7         : "com.android.support:appcompat-v7:$supportVersion",
+            recyclerviewv7      : "com.android.support:recyclerview-v7:$supportVersion",
+            constraint          : "com.android.support.constraint:constraint-layout:$constraintVersion",
+            fresco              : "com.facebook.fresco:fresco:$frescoVersion",
+            animated_gif        : "com.facebook.fresco:animated-gif:$frescoVersion",
+            imagepipeline_okhttp: "com.facebook.fresco:imagepipeline-okhttp3:$frescoVersion",
+            retrofit            : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            adapter_rxjava      : "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
+            converter_gson      : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
+            rxjava              : "io.reactivex.rxjava2:rxjava:$rxjavaVersion",
+            rxandroid           : "io.reactivex.rxjava2:rxandroid:$rxandroidVersion",
+            gson                : "com.google.code.gson:gson:$gsonVersion",
+            butterknife         : "com.jakewharton:butterknife:$butterknifeVersion",
+            butterknife_compiler: "com.jakewharton:butterknife-compiler:$butterknifeVersion",
+            arouter_api         : "com.alibaba:arouter-api:$arouterApiVersion",
+            arouter_compiler    : "com.alibaba:arouter-compiler:$arouterCompilerVersion",
+            wechat              : "com.tencent.mm.opensdk:wechat-sdk-android-without-mta:$wechatVersion",
+            map_location        : "com.amap.api:location:$mapVersion",
+            map_3d              : "com.amap.api:3dmap:$mapVersion",
+            map_search          : "com.amap.api:search:$mapVersion",
+            junit               : "junit:junit:$junitVersion"
+    ]
+}

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="@dimen/corners_radius_main_button" />
+    <solid android:color="@android:color/transparent" />
+    <stroke
+        android:width="@dimen/stroke_width_main_button"
+        android:color="@color/border_main_button_black_border_disable" />
+</shape>

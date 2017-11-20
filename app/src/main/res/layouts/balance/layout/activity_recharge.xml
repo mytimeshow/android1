@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".modules.balance.activity.RechargeActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/main_white">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/medium"
+            android:paddingRight="@dimen/small"
+            android:src="@drawable/ic_back_arrow" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="账户充值"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_large" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:layout_alignParentBottom="true"
+            android:background="@color/div_dark" />
+    </RelativeLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/rl_bank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small"
+        android:background="@color/main_white"
+        android:padding="@dimen/small">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/fresco_bank_logo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:actualImageScaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:placeholderImage="@drawable/ic_placeholder"
+            app:placeholderImageScaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/tv_bank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/very_small"
+            android:layout_marginLeft="@dimen/small"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintBottom_toBottomOf="@+id/guideline"
+            app:layout_constraintLeft_toRightOf="@+id/fresco_bank_logo"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="中国工商银行" />
+
+        <TextView
+            android:id="@+id/tv_bank_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/small"
+            android:layout_marginTop="@dimen/very_small"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_very_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/fresco_bank_logo"
+            app:layout_constraintTop_toTopOf="@+id/guideline"
+            tools:text="尾号2728" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_goto_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+    </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_recharge_max_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/medium"
+        android:layout_marginLeft="@dimen/small"
+        android:layout_marginTop="@dimen/medium"
+        android:drawableLeft="@drawable/ic_hint_info"
+        android:drawablePadding="@dimen/very_small"
+        android:text="该卡本次最多可以充值10,000.00元"
+        android:textColor="@color/text_dark_gray"
+        android:textSize="@dimen/text_very_small" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/small"
+            android:text="金额"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_small" />
+
+        <EditText
+            android:id="@+id/et_recharge_money"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="请输入充值金额"
+            android:inputType="numberDecimal"
+            android:lines="1"
+            android:paddingBottom="@dimen/medium"
+            android:paddingLeft="@dimen/medium"
+            android:paddingRight="@dimen/small"
+            android:paddingTop="@dimen/medium"
+            android:textColor="@color/text_black"
+            android:textColorHint="@color/text_light_gray"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/text_small" />
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/cb_user_agreement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/small"
+        android:layout_marginTop="@dimen/large"
+        android:background="@null"
+        android:button="@null"
+        android:checked="true"
+        android:drawableLeft="@drawable/selector_main_checkbox"
+        android:drawablePadding="@dimen/very_small"
+        android:text="我已阅读并同意《同城鸽用户协议》"
+        android:textColor="@color/text_dark_gray"
+        android:textSize="@dimen/text_very_small" />
+
+    <TextView
+        android:id="@+id/tv_next"
+        style="@style/MainButtonMedium.RedNormal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/small"
+        android:layout_marginRight="@dimen/small"
+        android:layout_marginTop="25dp"
+        android:text="下一步" />
+</LinearLayout>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_white"
+    tools:context=".modules.login.activity.LoginActivity">
+
+    <RelativeLayout
+        android:id="@+id/rl_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/medium"
+            android:paddingRight="@dimen/small"
+            android:src="@drawable/ic_back_arrow" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="登录"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_large" />
+
+        <TextView
+            android:id="@+id/tv_forgot_password"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/small"
+            android:paddingRight="@dimen/medium"
+            android:text="找回密码"
+            android:textColor="@color/text_dark_gray"
+            android:textSize="@dimen/text_small" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:layout_alignParentBottom="true"
+            android:background="@color/div_dark" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_account_login_tab"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingBottom="@dimen/small"
+        android:paddingTop="@dimen/small"
+        android:text="账号密码登录"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/text_medium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/rl_title_bar" />
+
+    <TextView
+        android:id="@+id/tv_shortcut_login_tab"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingBottom="@dimen/small"
+        android:paddingTop="@dimen/small"
+        android:text="手机号快捷登录"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/text_medium"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rl_title_bar" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="#e5e5e5"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_account_login_tab"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <View
+        android:id="@+id/line_tab"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/mini"
+        android:background="@color/main_red"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_account_login_tab" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager_login"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@+id/tv_other_login"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_account_login_tab" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="@dimen/divider"
+        android:layout_marginLeft="@dimen/medium"
+        android:layout_marginRight="@dimen/small"
+        android:background="#999"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_other_login"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tv_other_login"
+        app:layout_constraintTop_toTopOf="@+id/tv_other_login" />
+
+    <TextView
+        android:id="@+id/tv_other_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:text="其他登录方式"
+        android:textColor="@color/text_dark_gray"
+        android:textSize="@dimen/text_very_small"
+        app:layout_constraintBottom_toTopOf="@+id/iv_wechat_login"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="@dimen/divider"
+        android:layout_marginLeft="@dimen/small"
+        android:layout_marginRight="@dimen/medium"
+        android:background="#999"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_other_login"
+        app:layout_constraintLeft_toRightOf="@+id/tv_other_login"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_other_login" />
+
+    <ImageView
+        android:id="@+id/iv_tencent_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/large"
+        android:src="@drawable/ic_tencent_login"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_wechat_login"
+        app:layout_constraintRight_toLeftOf="@+id/iv_wechat_login" />
+
+    <ImageView
+        android:id="@+id/iv_wechat_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:src="@drawable/ic_wx_login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_sina_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/large"
+        android:src="@drawable/ic_weibo_login"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_wechat_login"
+        app:layout_constraintLeft_toRightOf="@+id/iv_wechat_login" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+</android.support.constraint.ConstraintLayout>

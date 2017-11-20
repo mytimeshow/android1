@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".modules.balance.activity.UnbindBankCardActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/main_white">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/medium"
+            android:paddingRight="@dimen/small"
+            android:src="@drawable/ic_back_arrow" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="验证银行卡信息"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_large" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:layout_alignParentBottom="true"
+            android:background="@color/div_dark" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/small"
+        android:layout_marginLeft="@dimen/medium"
+        android:layout_marginTop="@dimen/large"
+        android:text="请绑定账户本人的银行卡"
+        android:textColor="@color/text_gray"
+        android:textSize="@dimen/text_small" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/medium"
+        android:layout_marginRight="@dimen/medium"
+        android:background="@drawable/bg_bank_card"
+        android:padding="@dimen/medium">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/fresco_bank_logo"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginRight="@dimen/small"
+            app:placeholderImage="@drawable/ic_placeholder"
+            app:placeholderImageScaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/tv_bank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/fresco_bank_logo"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/text_large"
+            tools:text="中国工商银行" />
+
+        <TextView
+            android:id="@+id/tv_bank_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_bank"
+            android:layout_toRightOf="@id/fresco_bank_logo"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/text_mini"
+            tools:text="储蓄卡" />
+
+        <TextView
+            android:id="@+id/tv_bank_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fresco_bank_logo"
+            android:layout_marginTop="25dp"
+            android:layout_toRightOf="@id/fresco_bank_logo"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/text_mini"
+            tools:text="**** **** **** 2924" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_unbind"
+        style="@style/MainButtonMedium.RedBorderNormal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/small"
+        android:layout_marginRight="@dimen/small"
+        android:layout_marginTop="@dimen/large"
+        android:text="解除绑定" />
+</LinearLayout>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_white"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/small"
+        android:paddingLeft="@dimen/medium"
+        android:paddingRight="@dimen/medium"
+        android:paddingTop="@dimen/small">
+
+        <TextView
+            android:id="@+id/tv_select_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_bill_filter"
+            android:paddingBottom="@dimen/very_small"
+            android:paddingLeft="@dimen/small"
+            android:paddingRight="@dimen/small"
+            android:paddingTop="@dimen/very_small"
+            android:text="按分类选择"
+            android:textColor="@color/text_dark_gray"
+            android:textSize="@dimen/text_small" />
+
+        <TextView
+            android:id="@+id/tv_select_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/small"
+            android:background="@drawable/bg_bill_filter"
+            android:paddingBottom="@dimen/very_small"
+            android:paddingLeft="@dimen/small"
+            android:paddingRight="@dimen/small"
+            android:paddingTop="@dimen/very_small"
+            android:text="按时间选择"
+            android:textColor="@color/text_dark_gray"
+            android:textSize="@dimen/text_small" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small"
+        android:background="@color/main_white"
+        android:paddingBottom="@dimen/medium"
+        android:paddingLeft="@dimen/small"
+        android:paddingRight="@dimen/small"
+        android:paddingTop="@dimen/medium">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="总收入"
+            android:textColor="@color/text_dark_gray"
+            android:textSize="@dimen/text_small" />
+
+        <TextView
+            android:id="@+id/tv_income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_small"
+            tools:text="+890.00" />
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@color/div_light" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_white"
+        android:paddingBottom="@dimen/medium"
+        android:paddingLeft="@dimen/small"
+        android:paddingRight="@dimen/small"
+        android:paddingTop="@dimen/medium">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="总支出"
+            android:textColor="@color/text_dark_gray"
+            android:textSize="@dimen/text_small" />
+
+        <TextView
+            android:id="@+id/tv_expense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_small"
+            tools:text="490.68" />
+    </FrameLayout>
+</LinearLayout>

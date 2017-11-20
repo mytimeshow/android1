@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--主要颜色-->
+    <color name="main_bg">#f0f0f0</color>
+    <color name="main_red">#f22f22</color>
+    <color name="main_black">#000</color>
+    <color name="main_white">#fff</color>
+    <color name="main_light_red">#ff8585</color>
+    <color name="main_light_blue">#77c6f7</color>
+    <color name="main_orange">#ffae00</color>
+    <!--字体颜色-->
+    <color name="text_black">#333</color>
+    <color name="text_dark_gray">#666</color>
+    <color name="text_gray">#999</color>
+    <color name="text_light_gray">#ccc</color>
+    <color name="text_white">#fff</color>
+    <!--分割线颜色-->
+    <color name="div_light">#ddd</color>
+    <color name="div_dark">#ccc</color>
+    <!--标题栏背景色-->
+    <color name="bg_title_bar">@color/main_white</color>
+    <!--按钮颜色-->
+    <!--红色按钮-->
+    <color name="bg_main_button_red_normal">@color/main_red</color>
+    <color name="bg_main_button_red_disable">#faaca7</color>
+    <color name="text_main_button_red_normal">@color/text_white</color>
+    <color name="text_main_button_red_temp_disable">#66ffffff</color>
+    <color name="text_main_button_red_disable">#66ffffff</color>
+    <!--红色边框按钮-->
+    <color name="border_main_button_red_border_normal">@color/main_red</color>
+    <color name="border_main_button_red_border_disable">#ccc</color>
+    <color name="text_main_button_red_border_normal">@color/main_red</color>
+    <color name="text_main_button_red_border_temp_disable">#faaca7</color>
+    <color name="text_main_button_red_border_disable">@color/text_light_gray</color>
+    <!--黑色边框按钮-->
+    <color name="border_main_button_black_border_normal">#333</color>
+    <color name="border_main_button_black_border_disable">#ccc</color>
+    <color name="text_main_button_black_border_normal">@color/text_black</color>
+    <color name="text_main_button_black_border_disable">@color/text_light_gray</color>
+    <!--对话框按钮-->
+    <color name="bg_dialog_button_positive">@color/main_black</color>
+    <color name="text_dialog_button_positive">@color/main_white</color>
+    <color name="border_dialog_button_negative">#333</color>
+    <color name="text_dialog_button_negative">@color/text_black</color>
+</resources>

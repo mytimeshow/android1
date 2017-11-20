@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/small"
+    tools:context=".modules.login.fragment.InputVerificationCodeFragment">
+
+    <TextView
+        android:id="@+id/tv_mobile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_dark_gray"
+        android:textSize="@dimen/text_medium"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_send_verification_code"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_send_verification_code"
+        tools:text="137*****288" />
+
+    <TextView
+        android:id="@+id/tv_send_verification_code"
+        style="@style/MainButtonSmall.RedBorderNormal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/very_small"
+        android:paddingRight="@dimen/very_small"
+        android:text="获取验证码"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_verification_code"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small"
+        android:background="#eee"
+        android:hint="请输入手机验证码"
+        android:inputType="number"
+        android:lines="1"
+        android:maxLength="@integer/verification_code_length"
+        android:padding="@dimen/small"
+        android:textColor="@color/text_black"
+        android:textColorHint="#bbb"
+        android:textCursorDrawable="@null"
+        android:textSize="@dimen/text_medium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_send_verification_code" />
+
+    <TextView
+        android:id="@+id/tv_commit"
+        style="@style/MainButtonMedium.RedNormal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large"
+        android:text="提交验证"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_verification_code" />
+</android.support.constraint.ConstraintLayout>

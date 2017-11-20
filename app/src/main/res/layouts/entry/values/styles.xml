@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--启动页样式-->
+    <style name="AppTheme.Splash">
+        <item name="android:windowBackground">@drawable/def_splash</item>
+    </style>
+</resources>
