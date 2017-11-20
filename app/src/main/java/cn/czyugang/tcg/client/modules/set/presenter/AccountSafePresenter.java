@@ -2,9 +2,9 @@ package cn.czyugang.tcg.client.modules.set.presenter;
 
 import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.entity.UserInfo;
-import cn.czyugang.tcg.client.event.UpdateUserInfoEvent;
+import cn.czyugang.tcg.client.utils.rxbus.UpdateUserInfoEvent;
 import cn.czyugang.tcg.client.modules.set.contract.AccountSafeContract;
-import cn.czyugang.tcg.client.utils.RxBus;
+import cn.czyugang.tcg.client.utils.rxbus.RxBus;
 import io.reactivex.disposables.CompositeDisposable;
 
 /**

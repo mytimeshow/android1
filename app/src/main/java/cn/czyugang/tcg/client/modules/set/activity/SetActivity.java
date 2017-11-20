@@ -20,7 +20,7 @@ import cn.czyugang.tcg.client.entity.UserInfo;
 import cn.czyugang.tcg.client.modules.address.activity.AddressManageActivity;
 import cn.czyugang.tcg.client.modules.set.contract.SetContract;
 import cn.czyugang.tcg.client.modules.set.presenter.SetPresenter;
-import cn.czyugang.tcg.client.utils.ImageLoader;
+import cn.czyugang.tcg.client.utils.img.ImageLoader;
 
 /**
  * Created by wuzihong on 2017/9/29.

@@ -6,6 +6,13 @@
         <!--Switch开时的颜色-->
         <item name="colorAccent">@color/main_red</item>
     </style>
+
+    <!--启动页样式-->
+    <style name="AppTheme.Splash">
+        <item name="android:windowBackground">@drawable/def_splash</item>
+    </style>
+
+
     <!--主按钮中号-->
     <style name="MainButtonMedium">
         <item name="android:gravity">center_horizontal</item>

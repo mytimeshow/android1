@@ -22,7 +22,7 @@ import cn.czyugang.tcg.client.entity.BankCardStyle;
 import cn.czyugang.tcg.client.modules.balance.contract.RechargeContract;
 import cn.czyugang.tcg.client.modules.balance.dialog.SelectPayTypeDialog;
 import cn.czyugang.tcg.client.modules.balance.presenter.RechargePresenter;
-import cn.czyugang.tcg.client.utils.ImageLoader;
+import cn.czyugang.tcg.client.utils.img.ImageLoader;
 
 /**
  * Created by wuzihong on 2017/10/16.

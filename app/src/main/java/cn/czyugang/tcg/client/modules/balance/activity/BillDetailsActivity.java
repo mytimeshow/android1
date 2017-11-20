@@ -15,7 +15,7 @@ import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.entity.Bill;
 import cn.czyugang.tcg.client.modules.balance.contract.BillDetailsContract;
 import cn.czyugang.tcg.client.modules.balance.presenter.BillDetailsPresenter;
-import cn.czyugang.tcg.client.utils.DateFormat;
+import cn.czyugang.tcg.client.utils.string.DateFormat;
 
 /**
  * Created by wuzihong on 2017/10/18.

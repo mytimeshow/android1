@@ -16,7 +16,7 @@ import cn.czyugang.tcg.client.base.BaseRecyclerAdapter;
 import cn.czyugang.tcg.client.entity.BankCard;
 import cn.czyugang.tcg.client.entity.BankCardInfo;
 import cn.czyugang.tcg.client.entity.BankCardStyle;
-import cn.czyugang.tcg.client.utils.ImageLoader;
+import cn.czyugang.tcg.client.utils.img.ImageLoader;
 
 /**
  * Created by wuzihong on 2017/11/3.

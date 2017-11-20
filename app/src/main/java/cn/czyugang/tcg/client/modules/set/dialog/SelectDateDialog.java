@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseDialogFragment;
-import cn.czyugang.tcg.client.utils.DateFormat;
+import cn.czyugang.tcg.client.utils.string.DateFormat;
 
 /**
  * Created by wuzihong on 2017/9/30.

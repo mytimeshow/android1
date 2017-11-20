@@ -24,7 +24,7 @@ import cn.czyugang.tcg.client.entity.BankCardInfo;
 import cn.czyugang.tcg.client.entity.BankCardStyle;
 import cn.czyugang.tcg.client.modules.balance.contract.WithdrawContract;
 import cn.czyugang.tcg.client.modules.balance.presenter.WithdrawPresenter;
-import cn.czyugang.tcg.client.utils.ImageLoader;
+import cn.czyugang.tcg.client.utils.img.ImageLoader;
 
 /**
  * Created by wuzihong on 2017/10/16.

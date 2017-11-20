@@ -17,7 +17,7 @@ import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.api.BalanceApi;
 import cn.czyugang.tcg.client.base.BaseRecyclerAdapter;
 import cn.czyugang.tcg.client.entity.Bill;
-import cn.czyugang.tcg.client.utils.DateFormat;
+import cn.czyugang.tcg.client.utils.string.DateFormat;
 
 /**
  * Created by wuzihong on 2017/10/18.

@@ -23,7 +23,7 @@ import cn.czyugang.tcg.client.entity.BankCardStyle;
 import cn.czyugang.tcg.client.entity.RealNameAuth;
 import cn.czyugang.tcg.client.modules.balance.contract.AddBankCardContract;
 import cn.czyugang.tcg.client.modules.balance.presenter.AddBankCardPresenter;
-import cn.czyugang.tcg.client.utils.ImageLoader;
+import cn.czyugang.tcg.client.utils.img.ImageLoader;
 
 /**
  * Created by wuzihong on 2017/10/17.

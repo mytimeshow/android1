@@ -26,7 +26,7 @@ import cn.czyugang.tcg.client.modules.balance.contract.BillFilterContract;
 import cn.czyugang.tcg.client.modules.balance.dialog.SelectBillTypeDialog;
 import cn.czyugang.tcg.client.modules.balance.presenter.BillFilterPresenter;
 import cn.czyugang.tcg.client.modules.balance.window.BillFilterWindow;
-import cn.czyugang.tcg.client.utils.DateFormat;
+import cn.czyugang.tcg.client.utils.string.DateFormat;
 
 /**
  * Created by wuzihong on 2017/10/18.

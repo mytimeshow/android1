@@ -12,7 +12,7 @@ import cn.czyugang.tcg.client.entity.Balance;
 import cn.czyugang.tcg.client.entity.BankCard;
 import cn.czyugang.tcg.client.entity.Bill;
 import cn.czyugang.tcg.client.entity.Response;
-import cn.czyugang.tcg.client.utils.EncryptUtils;
+import cn.czyugang.tcg.client.utils.string.EncryptUtils;
 import cn.czyugang.tcg.client.utils.JsonParse;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;

@@ -1,75 +1,69 @@
 package cn.czyugang.tcg.client.modules.entry.activity;
 
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.widget.RadioGroup;
+import android.support.v4.app.Fragment;
+
+import com.ruiaa.bottomnavigation.BottomBarView;
+import com.ruiaa.bottomnavigation.ItemView;
+import com.ruiaa.bottomnavigation.ScrollFrameView;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
-import cn.czyugang.tcg.client.base.BaseFragment;
+import cn.czyugang.tcg.client.modules.entry.fragment.CategoryFragment;
+import cn.czyugang.tcg.client.modules.entry.fragment.HomepageFragment;
+import cn.czyugang.tcg.client.modules.entry.fragment.InformFragment;
 import cn.czyugang.tcg.client.modules.entry.fragment.MyFragment;
+import cn.czyugang.tcg.client.modules.entry.fragment.TrolleyFragment;
 
 /**
  * Created by wuzihong on 2017/9/13.
  * 主页
  */
 
-public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
-    @BindView(R.id.group_tab)
-    RadioGroup group_tab;
+public class MainActivity extends BaseActivity {
 
-    private MyFragment mMyFragment;
-    private BaseFragment mCurrentFragment;
+    @BindView(R.id.main_frame)
+    ScrollFrameView mainFrame;
+    @BindView(R.id.main_bottom)
+    BottomBarView bottomBar;
+
+    private ArrayList<Fragment> fragments = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        initView();
+
+        bottomBar
+                .setImgSizeRes(R.dimen.dp_20)
+                .setTextImgDistanceRes(R.dimen.dp_4)
+                .setTextSize(12)
+                .addItem(new ItemView(bottomBar).setContent("首页", R.drawable.ic_address_location, R.drawable.ic_address_location))
+                .addItem(new ItemView(bottomBar).setContent("资讯", R.drawable.ic_address_location, R.drawable.ic_address_location))
+                .addItem(new ItemView(bottomBar).setContent("分类", R.drawable.ic_address_location, R.drawable.ic_address_location))
+                .addItem(new ItemView(bottomBar).setContent("购物车", R.drawable.ic_address_location, R.drawable.ic_address_location))
+                .addItem(new ItemView(bottomBar).setContent("我的", R.drawable.ic_address_location, R.drawable.ic_address_location))
+                .setOnSelectListener(this::onChangeFragment)
+                .init();
+
+        fragments.add(HomepageFragment.newInstance());
+        fragments.add(InformFragment.newInstance());
+        fragments.add(CategoryFragment.newInstance());
+        fragments.add(TrolleyFragment.newInstance());
+        fragments.add(MyFragment.newInstance());
+
+        mainFrame.setFragmentList(getSupportFragmentManager(),fragments);
+        mainFrame.setBottomBarView(bottomBar);
+
     }
 
-    private void initView() {
-        group_tab.setOnCheckedChangeListener(this);
-    }
+    private void onChangeFragment(int index){
 
-    /**
-     * 显示界面
-     *
-     * @param fragment
-     */
-    private void showFragment(BaseFragment fragment) {
-        if (fragment == mCurrentFragment) {
-            return;
-        }
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        if (mCurrentFragment != null) {
-            ft.detach(mCurrentFragment);
-        }
-        if (fragment.isDetached()) {
-            ft.attach(fragment);
-        } else {
-            ft.add(R.id.fl_content, fragment);
-        }
-        ft.commit();
-        mCurrentFragment = fragment;
-    }
-
-    @Override
-    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-        switch (checkedId) {
-            case R.id.rbtn_my:
-                if (mMyFragment == null) {
-                    mMyFragment = MyFragment.newInstance();
-                }
-                showFragment(mMyFragment);
-                break;
-        }
     }
 }

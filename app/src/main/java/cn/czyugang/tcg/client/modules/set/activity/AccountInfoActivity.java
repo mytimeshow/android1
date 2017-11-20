@@ -26,9 +26,9 @@ import cn.czyugang.tcg.client.modules.set.contract.AccountInfoContract;
 import cn.czyugang.tcg.client.modules.set.dialog.SelectDateDialog;
 import cn.czyugang.tcg.client.modules.set.dialog.SelectSexDialog;
 import cn.czyugang.tcg.client.modules.set.presenter.AccountInfoPresenter;
-import cn.czyugang.tcg.client.utils.DateFormat;
+import cn.czyugang.tcg.client.utils.string.DateFormat;
 import cn.czyugang.tcg.client.utils.DictUtil;
-import cn.czyugang.tcg.client.utils.ImageLoader;
+import cn.czyugang.tcg.client.utils.img.ImageLoader;
 
 /**
  * Created by wuzihong on 2017/9/30.

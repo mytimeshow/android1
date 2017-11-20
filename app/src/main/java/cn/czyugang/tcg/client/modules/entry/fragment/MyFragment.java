@@ -31,7 +31,7 @@ import cn.czyugang.tcg.client.modules.entry.contract.MyContract;
 import cn.czyugang.tcg.client.modules.entry.presenter.MyPresenter;
 import cn.czyugang.tcg.client.modules.login.activity.LoginActivity;
 import cn.czyugang.tcg.client.modules.set.activity.SetActivity;
-import cn.czyugang.tcg.client.utils.ImageLoader;
+import cn.czyugang.tcg.client.utils.img.ImageLoader;
 
 /**
  * Created by wuzihong on 2017/9/13.

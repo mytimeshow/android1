@@ -1,0 +1,127 @@
+/*
+*
+*                             px        dpi
+*
+*   低密度（ldpi）	        240x320	    120 -- 1dp=0.75px   --> 320dp
+*   中密度（mdpi）	        320x480	    160 -- 1dp=1px      --> 320dp
+*   高密度（hdpi）	        480x800	    240 -- 1dp=1.5px    --> 320dp
+*   超高密度（xhdpi）	    720x1280	320 -- 1dp=2px      --> 360dp
+*   超超高密度（xxhdpi）	1080x1920	480 -- 1dp=3px      --> 360dp
+*
+*
+*   sp：独立比例像素，可根据字体大小首选项进行缩放  ：12sp、14sp、18sp、22sp
+*
+*
+*  base : px 720  dpi 320(1:2)  --->  360dp
+*
+*/
+ext {
+    baseWidthDp = 360;
+    screenWidthDp = "270;300;320;340;360;411;440;480";
+    baseDimenPath = "${rootDir}/app/src/main/res/values-sw{0}dp/dimens.xml";
+    resDir = "${rootDir}/app/src/main/res";
+    dpTemplate = "<dimen name=\"dp_{0}\">{1}dp</dimen>\n";
+    spTemplate = "<dimen name=\"sp_{0}\">{1}sp</dimen>\n";
+    valueTemplate = "values-sw{0}dp";
+}
+
+task generateBaseDimens {
+    StringBuilder stringBuilder = new StringBuilder();
+
+    stringBuilder.append("<resources>\n");
+    stringBuilder.append(dpTemplate.replace("{0}", String.valueOf(0.5)).replace("{1}", String.valueOf(0.5)));
+    for (int i = 1; i <= 100; i++) {
+        stringBuilder.append(dpTemplate.replace("{0}", String.valueOf(i)).replace("{1}", String.valueOf(i)));
+    }
+    for (int i = 102; i <= 200; i += 2) {
+        stringBuilder.append(dpTemplate.replace("{0}", String.valueOf(i)).replace("{1}", String.valueOf(i)));
+    }
+    for (int i = 210; i <= 500; i += 10) {
+        stringBuilder.append(dpTemplate.replace("{0}", String.valueOf(i)).replace("{1}", String.valueOf(i)));
+    }
+
+    for (int i = 8; i <= 28; i += 2) {
+        stringBuilder.append(spTemplate.replace("{0}", String.valueOf(i)).replace("{1}", String.valueOf(i)));
+    }
+    stringBuilder.append("</resources>")
+
+    try {
+        File baseFile = new File(resDir + File.separator + valueTemplate.replace("{0}", String.valueOf(baseWidthDp)) + File.separator + "dimens.xml");
+        if (!baseFile.exists()) {
+            File valueDir = new File(resDir + File.separator + valueTemplate.replace("{0}", String.valueOf(baseWidthDp)));
+            valueDir.mkdir();
+        } else {
+            baseFile = new File(resDir + File.separator + "base_dimens.xml");
+        }
+        PrintWriter pw = new PrintWriter(new FileOutputStream(baseFile));
+        pw.print(stringBuilder.toString());
+        pw.close();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+def generateEvery(int target, int base) {
+
+    float scale = ((float) target) / ((float) base);
+
+    File baseSizeFile = new File(baseDimenPath.replace("{0}", String.valueOf(base)));
+    BufferedReader reader = null;
+    PrintWriter out = null;
+    StringBuilder stringBuilder = new StringBuilder();
+
+    try {
+        reader = new BufferedReader(new FileReader(baseSizeFile));
+        String tempString;
+
+        while ((tempString = reader.readLine()) != null) {
+            if (tempString.contains("</dimen>")) {
+                //tempString = tempString.replaceAll(" ", "");
+                String start = tempString.substring(0, tempString.indexOf(">") + 1);
+                String end = tempString.substring(tempString.lastIndexOf("<") - 2);
+                float num = Float.valueOf(tempString.substring(tempString.indexOf(">") + 1, tempString.indexOf("</dimen>") - 2));
+                int resultNum = (int) (num * scale);
+                if (resultNum != 0 || num == 0f) {
+                    stringBuilder.append(start).append(resultNum).append(end).append("\n");
+                } else {
+                    stringBuilder.append(start).append(0.5).append(end).append("\n");
+                }
+            } else {
+                stringBuilder.append(tempString).append("\n");
+            }
+        }
+        reader.close();
+
+        File valueDir = new File(resDir + File.separator + valueTemplate.replace("{0}", String.valueOf(target)));
+        valueDir.mkdir();
+        String valueDirName = valueDir.getAbsolutePath() + File.separator + "dimens.xml";
+
+        out = new PrintWriter(new BufferedWriter(new FileWriter(valueDirName)));
+        out.println(stringBuilder.toString());
+        out.close();
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    } finally {
+        if (reader != null) {
+            try {
+                reader.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+        if (out != null) {
+            out.close();
+        }
+    }
+}
+
+task generateDimensFromBase {
+    String[] targets = screenWidthDp.split(";");
+    for (String target : targets) {
+        int targetW = Integer.valueOf(target);
+        if (targetW != baseWidthDp) {
+            generateEvery(targetW, baseWidthDp)
+        }
+    }
+}

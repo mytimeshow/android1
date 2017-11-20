@@ -21,10 +21,16 @@ import cn.czyugang.tcg.client.api.WeiboApi;
 public class MyApplication extends Application {
     public static int sVersionCode;//当前版本号
     public static String sVersionName;//当前版本名
+    private static Application application;
+
+    public static Application getContext(){
+        return application;
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        application=this;
         Context context = getApplicationContext();
         getVersionInfo(context);
         //初始化全局配置
