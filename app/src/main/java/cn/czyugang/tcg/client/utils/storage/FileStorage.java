@@ -20,7 +20,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import cn.czyugang.tcg.client.R;
-import cn.czyugang.tcg.client.utils.LogUtil;
+import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.string.StringUtil;
 
@@ -89,7 +89,7 @@ public class FileStorage {
             Intent scannerIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
             context.sendBroadcast(scannerIntent);
         }catch (Exception e){
-            LogUtil.e("saveImgExternalStorage####",e);
+            LogRui.e("saveImgExternalStorage####",e);
         }
     }
 
@@ -155,7 +155,7 @@ public class FileStorage {
             return true;
 
         } catch (IOException e) {
-            LogUtil.e("saveFile--",e);
+            LogRui.e("saveFile--",e);
             return false;
 
 
@@ -169,7 +169,7 @@ public class FileStorage {
                     outputStream.close();
                 }
             }catch (IOException e){
-                LogUtil.e("saveFile--",e);
+                LogRui.e("saveFile--",e);
             }
         }
     }
@@ -188,7 +188,7 @@ public class FileStorage {
         try {
             return writeFileFromIS(destFile, new FileInputStream(srcFile), false) && !(isMove && !deleteFile(srcFile));
         } catch (FileNotFoundException e) {
-           LogUtil.e("copyOrMoveFile--",e);
+           LogRui.e("copyOrMoveFile--",e);
             return false;
         }
     }
@@ -269,7 +269,7 @@ public class FileStorage {
             }
             return true;
         } catch (IOException e) {
-            LogUtil.e("writeFileFromIS--",e);
+            LogRui.e("writeFileFromIS--",e);
             return false;
         } finally {
             CloseUtils.closeIO(is, os);

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
-import cn.czyugang.tcg.client.utils.LogUtil;
+import cn.czyugang.tcg.client.utils.LogRui;
 
 
 /**
@@ -23,7 +23,7 @@ public class ShareUtil {
 
 
     public static void shareText(Context context, String subjectText, String extraText) {
-        LogUtil.i("shareText####  "+subjectText+"\n"+extraText);
+        LogRui.i("shareText####  "+subjectText+"\n"+extraText);
         Intent intent = new Intent();
         intent.setType("text/plain");
         intent.setAction(Intent.ACTION_SEND);
@@ -53,7 +53,7 @@ public class ShareUtil {
                 SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
         MyApplication.wxApi.sendReq(req);
 
-        LogUtil.i("shareImgWeixin####");
+        LogRui.i("shareImgWeixin####");
     }
 
     public static byte[] bmpToByteArray(final Bitmap bmp, final boolean needRecycle) {
@@ -126,7 +126,7 @@ public class ShareUtil {
 
     public static void shareUrlWeixin(Context context, String url, String title, String description, Bitmap bmp, boolean requestRecycle, boolean isToSession) {
         if (bmp == null||bmp.isRecycled()) {
-            LogUtil.e("shareUrlWeixin####bmp,null");
+            LogRui.e("shareUrlWeixin####bmp,null");
             return;
         }
 
@@ -148,7 +148,7 @@ public class ShareUtil {
                 SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
         MyApplication.wxApi.sendReq(req);
 
-        LogUtil.i("shareUrlWeixin####",url);
+        LogRui.i("shareUrlWeixin####",url);
     }
 
     public static void shareUrlWeixin(Context context, String url, String title, String description, @DrawableRes int img, boolean isToSession) {
@@ -165,8 +165,8 @@ public class ShareUtil {
         params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, imgUrl);
         params.putString(QQShare.SHARE_TO_QQ_APP_NAME, ResUtil.getString(R.string.app_name));
         tencent.shareToQQ(activity, params, iUiListener);
-        LogUtil.i("shareUrlQQ####",url);
-        LogUtil.i("shareUrlQQ####",imgUrl);
+        LogRui.i("shareUrlQQ####",url);
+        LogRui.i("shareUrlQQ####",imgUrl);
     }
 
     public static void shareImgQQ(Tencent tencent, Activity activity, IUiListener iUiListener, String localUrl) {
@@ -194,7 +194,7 @@ public class ShareUtil {
                 .add("from",from)
                 .add("type",to)
                 .post(AppConfig.URL_SHARE_RECORD,response -> {
-                    LogUtil.i("postShareRecord####",response);
+                    LogRui.i("postShareRecord####",response);
                 });
     }*/
 }

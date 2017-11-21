@@ -1,6 +1,7 @@
 package cn.czyugang.tcg.client.common;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
@@ -12,11 +13,12 @@ import cn.czyugang.tcg.client.entity.Progress;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.entity.UserInfo;
 import cn.czyugang.tcg.client.entity.UserToken;
+import cn.czyugang.tcg.client.modules.login.activity.LoginActivity;
+import cn.czyugang.tcg.client.utils.JsonParse;
 import cn.czyugang.tcg.client.utils.rxbus.LoginEvent;
 import cn.czyugang.tcg.client.utils.rxbus.LogoutEvent;
-import cn.czyugang.tcg.client.utils.rxbus.UpdateUserInfoEvent;
-import cn.czyugang.tcg.client.utils.JsonParse;
 import cn.czyugang.tcg.client.utils.rxbus.RxBus;
+import cn.czyugang.tcg.client.utils.rxbus.UpdateUserInfoEvent;
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
@@ -63,6 +65,23 @@ public class UserOAuth {
      */
     public static UserOAuth getInstance() {
         return mInstance;
+    }
+
+    /*
+    *   判断是否已经登录，未登录将跳转至登录界面
+    *
+    * */
+    public static boolean judgeOrLogin(){
+        if (mInstance.isLogin()){
+            return true;
+        }else {
+            MyApplication.getContext().startActivity(new Intent(MyApplication.getContext(), LoginActivity.class));
+            return false;
+        }
+    }
+
+    public static boolean judgeHadLogin(){
+        return mInstance.isLogin;
     }
 
     /**

@@ -70,4 +70,8 @@ public class BaseFragment extends Fragment implements BaseView {
         }
         e.printStackTrace();
     }
+
+    public String getLabel(){
+        return getClass().getName();
+    }
 }

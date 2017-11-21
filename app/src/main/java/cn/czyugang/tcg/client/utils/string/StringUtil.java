@@ -4,7 +4,7 @@ package cn.czyugang.tcg.client.utils.string;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cn.czyugang.tcg.client.utils.LogUtil;
+import cn.czyugang.tcg.client.utils.LogRui;
 
 /**
  * Created by ruiaa on 2017/9/11.
@@ -43,7 +43,7 @@ public class StringUtil {
                 try {
                     b = String.valueOf(c).getBytes("utf-8");
                 } catch (Exception e) {
-                    LogUtil.e("toUtf8String####",e);
+                    LogRui.e("toUtf8String####",e);
                     b = new byte[0];
                 }
                 for (int j = 0; j < b.length; j++) {

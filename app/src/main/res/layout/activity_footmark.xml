@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        style="@style/title_title">
+
+        <ImageView
+            android:id="@+id/title_back"
+            style="@style/title_back"
+            />
+
+        <TextView
+            style="@style/title_text"
+            android:text="我的足迹"/>
+
+        <TextView
+            android:id="@+id/title_right"
+            style="@style/title_right"
+            android:text="编辑"/>
+    </FrameLayout>
+
+    <include layout="@layout/view_split_bar"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/footmark_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_white"/>
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/footmark_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/white"/>
+
+</LinearLayout>

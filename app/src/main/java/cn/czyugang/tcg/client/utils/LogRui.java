@@ -21,7 +21,7 @@ import cn.czyugang.tcg.client.utils.string.TimeUtils;
  * Created by ruiaa on 2016/9/29.
  */
 
-public class LogUtil {
+public class LogRui {
 
     public static final String USER_NAME = "ruiaa---";
     public static final boolean LOG_OPEN = BuildConfig.LOG_OPEN;
@@ -108,7 +108,7 @@ public class LogUtil {
         String result;
         StackTraceElement thisMethodStack = Thread.currentThread().getStackTrace()[4];
         result = thisMethodStack.getClassName();
-        if (result.contains("LogUtil")) {
+        if (result.contains("LogRui")) {
             thisMethodStack = Thread.currentThread().getStackTrace()[5];
             result = thisMethodStack.getClassName();
         }
@@ -231,13 +231,13 @@ public class LogUtil {
             outputStream.flush();
 
         } catch (Exception e) {
-            LogUtil.e("saveAllLogToFile####", e);
+            LogRui.e("saveAllLogToFile####", e);
         } finally {
             try {
                 if (outputStream != null) outputStream.close();
                 if (inputStream != null) inputStream.close();
             } catch (IOException e) {
-                LogUtil.e("saveAllLogToFile####", e);
+                LogRui.e("saveAllLogToFile####", e);
             }
         }
     }
@@ -262,7 +262,7 @@ public class LogUtil {
             writer.write(log);
             writer.flush();
         } catch (Exception e) {
-            LogUtil.e("saveMyLog####", e);
+            LogRui.e("saveMyLog####", e);
         } finally {
             FileStorage.CloseUtils.closeIO(writer);
         }

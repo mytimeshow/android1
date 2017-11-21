@@ -1,5 +1,6 @@
 package cn.czyugang.tcg.client.utils.string;
 
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
@@ -15,6 +16,7 @@ import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
 import android.text.style.TextAppearanceSpan;
 import android.text.style.UnderlineSpan;
+import android.widget.TextView;
 
 import java.util.regex.Pattern;
 
@@ -120,6 +122,15 @@ public class RichText {
         return this;
     }
 
+    public RichText setColorRes(CharSequence text, int colorRes) {
+        if (text == null) return this;
+        containOrAppend(text);
+        String source = builder.toString();
+        int startIndex = source.indexOf(text.toString());
+        int endIndex = startIndex + text.length();
+        builder.setSpan(new ForegroundColorSpan(ResUtil.getColor(colorRes)), startIndex, endIndex, 0);
+        return this;
+    }
 
     public RichText setSizeInPx(CharSequence text, int sizePx) {
         if (text == null) return this;
@@ -143,7 +154,7 @@ public class RichText {
     public final static int STYLE_UNDERLINE = 12;
     public final static int STYLE_STRIKETHROUGH = 13;
 
-    public RichText setStyle( int style) {
+    public RichText setStyle(int style) {
         String source = builder.toString();
         int startIndex = 0;
         int endIndex = source.length();
@@ -190,24 +201,24 @@ public class RichText {
     public RichText addimg(int start, int end, @DrawableRes int img) {
         if (start < 0 || start >= end) return this;
         if (builder.toString().length() < end) return this;
-        ImageSpan imageSpan=new ImageSpan(MyApplication.getContext(),img,ALIGN_BASELINE);
-        builder.setSpan(imageSpan,start,end,0);
+        ImageSpan imageSpan = new ImageSpan(MyApplication.getContext(), img, ALIGN_BASELINE);
+        builder.setSpan(imageSpan, start, end, 0);
         return this;
     }
 
     public RichText addimg(int start, int end, @DrawableRes int img, int width, int height) {
         if (start < 0 || start >= end) return this;
         if (builder.toString().length() < end) return this;
-        Drawable drawable=ResUtil.getDrawable(img);
+        Drawable drawable = ResUtil.getDrawable(img);
         drawable.setBounds(0, 0, width > 0 ? width : 0, height > 0 ? height : 0);
-        ImageSpan imageSpan=new ImageSpan(drawable,ALIGN_BASELINE);
-        builder.setSpan(imageSpan,start,end,0);
+        ImageSpan imageSpan = new ImageSpan(drawable, ALIGN_BASELINE);
+        builder.setSpan(imageSpan, start, end, 0);
         return this;
     }
 
     public RichText addimgRes(int start, int end, @DrawableRes int img, @DimenRes int size) {
-        size=(int)(ResUtil.getDimenInPx(size));
-        return addimg(start, end, img,size,size);
+        size = (int) (ResUtil.getDimenInPx(size));
+        return addimg(start, end, img, size, size);
     }
 
     public CharSequence build() {
@@ -246,5 +257,9 @@ public class RichText {
         return spannableString;
     }
 
+    public static void setUnderline(TextView textView) {
+        textView.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+        textView.getPaint().setAntiAlias(true);//抗锯齿
+    }
 
 }

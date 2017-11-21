@@ -1,21 +1,26 @@
 package cn.czyugang.tcg.client.modules.entry.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,8 +35,11 @@ import cn.czyugang.tcg.client.modules.balance.activity.BalanceActivity;
 import cn.czyugang.tcg.client.modules.entry.contract.MyContract;
 import cn.czyugang.tcg.client.modules.entry.presenter.MyPresenter;
 import cn.czyugang.tcg.client.modules.login.activity.LoginActivity;
+import cn.czyugang.tcg.client.modules.person.CollectionActivity;
+import cn.czyugang.tcg.client.modules.person.FootmarkActivity;
 import cn.czyugang.tcg.client.modules.set.activity.SetActivity;
 import cn.czyugang.tcg.client.utils.img.ImageLoader;
+import cn.czyugang.tcg.client.widget.RecycleViewDivider;
 
 /**
  * Created by wuzihong on 2017/9/13.
@@ -74,6 +82,13 @@ public class MyFragment extends BaseFragment implements MyContract.View {
             mPresenter = new MyPresenter(this);
             mPresenter.subscribe();
         }
+
+        GridAdapter adapter = new GridAdapter(Item.getAll(), getActivity());
+        grid_tools.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        grid_tools.setAdapter(adapter);
+        grid_tools.addItemDecoration(new RecycleViewDivider(getActivity()));
+        grid_tools.setNestedScrollingEnabled(false);
+
         return rootView;
     }
 
@@ -180,6 +195,101 @@ public class MyFragment extends BaseFragment implements MyContract.View {
             case R.id.fl_order:
                 //TODO 启动订单列表
                 break;
+        }
+    }
+
+    static class GridAdapter extends RecyclerView.Adapter<GridAdapter.Holder> {
+        private List<Item> list;
+        private Activity activity;
+
+        public GridAdapter(List<Item> list, Activity activity) {
+            this.list = list;
+            this.activity = activity;
+        }
+
+        @Override
+        public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new Holder(LayoutInflater.from(activity).inflate(
+                    R.layout.item_myfragment_grid, parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(Holder holder, int position) {
+            Item data = list.get(position);
+            holder.textView.setText(data.name);
+            holder.itemView.setOnClickListener(v -> {
+                if (UserOAuth.judgeOrLogin() && data.onOpenListener != null)
+                    data.onOpenListener.onOpen();
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return list.size();
+        }
+
+        class Holder extends RecyclerView.ViewHolder {
+            @BindView(R.id.item_img)
+            ImageView imageView;
+            @BindView(R.id.item_text)
+            TextView textView;
+
+            public Holder(View itemView) {
+                super(itemView);
+                ButterKnife.bind(this, itemView);
+            }
+        }
+    }
+
+    static class Item {
+        String name = "";
+        int img = R.drawable.logo;
+        OnOpenListener onOpenListener = null;
+
+
+        Item(String name) {
+            this.name = name;
+        }
+
+        Item(String name, OnOpenListener onOpenListener) {
+            this.name = name;
+            this.onOpenListener = onOpenListener;
+        }
+
+        Item(String name, int img, OnOpenListener onOpenListener) {
+            this.name = name;
+            this.img = img;
+            this.onOpenListener = onOpenListener;
+        }
+
+        static List<Item> getAll() {
+            List<Item> list = new ArrayList<>();
+            list.add(new Item("店铺收藏", () -> {
+                CollectionActivity.startCollectionActivity(CollectionActivity.COLLECTION_TYPE_SHOP);
+            }));
+            list.add(new Item("商品收藏", () -> {
+                CollectionActivity.startCollectionActivity(CollectionActivity.COLLECTION_TYPE_GOODS);
+            }));
+            list.add(new Item("我的资讯"));
+            list.add(new Item("我的足迹",()->{
+                FootmarkActivity.startFootmarkActivity();
+            }));
+
+            list.add(new Item("我的评价"));
+            list.add(new Item("地址管理"));
+            list.add(new Item("客服"));
+            list.add(new Item("跑腿"));
+
+            list.add(new Item("商家入驻"));
+            list.add(new Item("推广有礼"));
+            list.add(new Item("邀请领红包"));
+            list.add(new Item("分享领红包"));
+
+            return list;
+        }
+
+        private interface OnOpenListener {
+            void onOpen();
         }
     }
 }

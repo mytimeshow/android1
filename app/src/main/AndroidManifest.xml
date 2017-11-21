@@ -362,5 +362,10 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="a29ac43262d81410e779e24a8d2a5a75" />
+
+
+        <activity android:name=".modules.person.CollectionActivity"/>
+        <activity android:name=".modules.person.FootmarkActivity"/>
+
     </application>
 </manifest>

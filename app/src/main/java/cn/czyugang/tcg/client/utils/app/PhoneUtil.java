@@ -11,7 +11,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 
-import cn.czyugang.tcg.client.utils.LogUtil;
+import cn.czyugang.tcg.client.utils.LogRui;
 
 /**
  * Created by ruiaa on 2017/8/28.
@@ -39,7 +39,7 @@ public class PhoneUtil {
             if (tm.getDeviceId().equals("")) return "no permission";
             return  tm.getDeviceId();
         }catch (Exception e){
-            LogUtil.e("getIMEI####",e);
+            LogRui.e("getIMEI####",e);
         }
         return "no permission";
     }
@@ -58,7 +58,7 @@ public class PhoneUtil {
             TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             return tm != null ? tm.getSubscriberId() : null;
         }catch (Exception e){
-            LogUtil.e("getIMSI####",e);
+            LogRui.e("getIMSI####",e);
         }
         return "no permission";
     }
