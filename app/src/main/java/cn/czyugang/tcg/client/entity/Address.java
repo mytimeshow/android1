@@ -3,6 +3,9 @@ package cn.czyugang.tcg.client.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by wuzihong on 2017/10/30.
  */
@@ -21,6 +24,7 @@ public class Address implements Parcelable {
     private String sex;
     private String street;
     private String tag;
+    private String type;//收货地址RECEIVED、跑腿取货地址/买货地址-OBTAIN
 
     protected Address(Parcel in) {
         address = in.readString();
@@ -49,6 +53,14 @@ public class Address implements Parcelable {
             return new Address[size];
         }
     };
+
+    public boolean isDefaultAddress(){
+        return defaultAddress.equals("YES");
+    }
+
+    public boolean isReceivedAddress(){
+        return "RECEIVED".equals(type);
+    }
 
     public String getAddress() {
         return address;
@@ -174,5 +186,21 @@ public class Address implements Parcelable {
         dest.writeString(sex);
         dest.writeString(street);
         dest.writeString(tag);
+    }
+
+    public static void clearNotReceivedAddress(List<Address> list){
+        List<Address> newList=new ArrayList<>();
+        for(Address address:list){
+            if (address.isReceivedAddress()) newList.add(address);
+        }
+        list.clear();
+        list.addAll(newList);
+    }
+
+    public static Address findDefaultAddress(List<Address> list){
+        for (Address address:list){
+            if (address.isDefaultAddress()) return address;
+        }
+        return null;
     }
 }

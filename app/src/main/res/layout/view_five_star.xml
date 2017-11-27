@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/view_five_star_1"
+        android:layout_width="@dimen/dp_15"
+        android:layout_height="@dimen/dp_15"
+        android:src="@drawable/icon_graystar"/>
+    <ImageView
+        android:id="@+id/view_five_star_2"
+        android:layout_width="@dimen/dp_15"
+        android:layout_height="@dimen/dp_15"
+        android:layout_marginLeft="@dimen/dp_2"
+        android:src="@drawable/icon_graystar"/>
+    <ImageView
+        android:id="@+id/view_five_star_3"
+        android:layout_width="@dimen/dp_15"
+        android:layout_height="@dimen/dp_15"
+        android:layout_marginLeft="@dimen/dp_2"
+        android:src="@drawable/icon_graystar"/>
+    <ImageView
+        android:id="@+id/view_five_star_4"
+        android:layout_width="@dimen/dp_15"
+        android:layout_height="@dimen/dp_15"
+        android:layout_marginLeft="@dimen/dp_2"
+        android:src="@drawable/icon_graystar"/>
+    <ImageView
+        android:id="@+id/view_five_star_5"
+        android:layout_width="@dimen/dp_15"
+        android:layout_height="@dimen/dp_15"
+        android:layout_marginLeft="@dimen/dp_2"
+        android:src="@drawable/icon_graystar"/>
+    <TextView
+        android:id="@+id/view_five_star_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_8"
+        android:text="5分"
+        android:textSize="@dimen/sp_12"
+        android:textColor="@color/text_black"/>
+    
+</LinearLayout>

@@ -16,8 +16,8 @@
 *
 */
 ext {
-    baseWidthDp = 360;
-    screenWidthDp = "270;300;320;340;360;411;440;480";
+    baseWidthDp = 375;
+    screenWidthDp = "270;300;320;340;360;375;411;440;480";
     baseDimenPath = "${rootDir}/app/src/main/res/values-sw{0}dp/dimens.xml";
     resDir = "${rootDir}/app/src/main/res";
     dpTemplate = "<dimen name=\"dp_{0}\">{1}dp</dimen>\n";

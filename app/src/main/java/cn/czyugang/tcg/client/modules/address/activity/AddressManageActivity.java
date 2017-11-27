@@ -17,6 +17,7 @@ import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseRecyclerAdapter;
 import cn.czyugang.tcg.client.base.DefaultItemDecoration;
+import cn.czyugang.tcg.client.common.MyApplication;
 import cn.czyugang.tcg.client.entity.Address;
 import cn.czyugang.tcg.client.modules.address.adapter.AddressAdapter;
 import cn.czyugang.tcg.client.modules.address.contract.AddressManageContract;
@@ -35,6 +36,11 @@ public class AddressManageActivity extends BaseActivity implements AddressManage
     private AddressAdapter mAdapter;
 
     private AddressManageContract.Presenter mPresenter;
+
+    public static void startAddressManageActivity() {
+        Intent intent = new Intent(MyApplication.getContext(), AddressManageActivity.class);
+        MyApplication.getContext().startActivity(intent);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,9 +87,7 @@ public class AddressManageActivity extends BaseActivity implements AddressManage
                 finish();
                 break;
             case R.id.fl_add:
-                Intent intent = new Intent(context, AddAddressActivity.class);
-                intent.putExtra(AddAddressActivity.KEY_TYPE, AddAddressActivity.TYPE_ADD_ADDRESS);
-                startActivity(intent);
+                AddAddressActivity.startAddAddressActivityForAdd();
                 break;
         }
     }
@@ -97,10 +101,7 @@ public class AddressManageActivity extends BaseActivity implements AddressManage
                 }
                 break;
             case R.id.tv_edit:
-                Intent intent = new Intent(context, AddAddressActivity.class);
-                intent.putExtra(AddAddressActivity.KEY_TYPE, AddAddressActivity.TYPE_EDIT_ADDRESS);
-                intent.putExtra(AddAddressActivity.KEY_ADDRESS, (Address) data);
-                startActivity(intent);
+                AddAddressActivity.startAddAddressActivityForEdit((Address) data);
                 break;
             case R.id.tv_delete:
                 MessageDialog messageDialog = MessageDialog.newInstance()

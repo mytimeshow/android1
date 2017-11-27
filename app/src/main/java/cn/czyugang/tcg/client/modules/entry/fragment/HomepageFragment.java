@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseFragment;
+import cn.czyugang.tcg.client.modules.order.ConfirmOrderActivity;
+import cn.czyugang.tcg.client.modules.store.StoreActivity;
 
 /**
  * @author ruiaa
@@ -32,6 +34,10 @@ public class HomepageFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_homepage, container, false);
         ButterKnife.bind(this, rootView);
+        rootView.findViewById(R.id.homepage_store).setOnClickListener(v -> StoreActivity.startStoreActivity(getActivity(),"919122791461220353"));
+        rootView.findViewById(R.id.homepage_order).setOnClickListener(v -> ConfirmOrderActivity.startConfirmOrderActivity());
+
+
         return rootView;
     }
 }

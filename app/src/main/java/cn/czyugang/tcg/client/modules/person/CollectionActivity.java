@@ -20,16 +20,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.czyugang.tcg.client.R;
-import cn.czyugang.tcg.client.api.Store;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.base.BaseFragmentAdapter;
 import cn.czyugang.tcg.client.common.MyApplication;
-import cn.czyugang.tcg.client.entity.Response;
-import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.widget.SelectButton;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 
 /**
  * @author ruiaa
@@ -81,28 +76,6 @@ public class CollectionActivity extends BaseActivity {
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         viewPager.setCurrentItem(getIntent().getIntExtra("showType", 0));
 
-        Store.categoryList()
-                .subscribe(new Observer<Response<String>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Response<String> stringResponse) {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        LogRui.i("onError####",e);
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        LogRui.i("onComplete####");
-                    }
-                });
     }
 
     @OnClick(R.id.title_right)

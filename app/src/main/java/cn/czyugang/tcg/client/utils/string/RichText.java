@@ -10,6 +10,7 @@ import android.support.annotation.StyleRes;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.AbsoluteSizeSpan;
+import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.StrikethroughSpan;
@@ -54,6 +55,10 @@ public class RichText {
         return source.contains(text);
     }
 
+    public int length(){
+        return builder.length();
+    }
+
     public boolean containOrAppend(CharSequence text) {
         if (text == null) return true;
         String source = builder.toString();
@@ -62,6 +67,11 @@ public class RichText {
             return false;
         }
         return true;
+    }
+
+    public RichText append(SpannableString spannableString){
+        builder.append(spannableString);
+        return this;
     }
 
     public RichText append(@StringRes int id) {
@@ -100,8 +110,21 @@ public class RichText {
         return this;
     }
 
+    public RichText appendColor(CharSequence text, int textColor,int bgColor) {
+        if (text == null) return this;
+        SpannableString spannableString = new SpannableString(text);
+        spannableString.setSpan(new ForegroundColorSpan(textColor), 0, text.length(), 0);
+        spannableString.setSpan(new BackgroundColorSpan(bgColor), 0, text.length(), 0);
+        builder.append(spannableString);
+        return this;
+    }
+
     public RichText appendColorRes(CharSequence text, @ColorRes int colorId) {
         return appendColor(text, ResUtil.getColor(colorId));
+    }
+
+    public RichText appendColorRes(CharSequence text, @ColorRes int textColorId, @ColorRes int bgColorId) {
+        return appendColor(text, ResUtil.getColor(textColorId),ResUtil.getColor(bgColorId));
     }
 
     public RichText appendSpColor(CharSequence text, float sizeSp, int color) {
@@ -129,6 +152,16 @@ public class RichText {
         int startIndex = source.indexOf(text.toString());
         int endIndex = startIndex + text.length();
         builder.setSpan(new ForegroundColorSpan(ResUtil.getColor(colorRes)), startIndex, endIndex, 0);
+        return this;
+    }
+
+    public RichText setBgColorRes(CharSequence text, int colorRes) {
+        if (text == null) return this;
+        containOrAppend(text);
+        String source = builder.toString();
+        int startIndex = source.indexOf(text.toString());
+        int endIndex = startIndex + text.length();
+        builder.setSpan(new BackgroundColorSpan(ResUtil.getColor(colorRes)), startIndex, endIndex, 0);
         return this;
     }
 

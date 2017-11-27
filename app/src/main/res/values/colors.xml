@@ -12,7 +12,11 @@
     <color name="grey_700">#616161</color>
     <color name="grey_800">#424242</color>
     <color name="grey_900">#212121</color>
+
+    <color name="white">#ffffff</color>
+
     <!--主要颜色-->
+    <color name="bg">#f0f0f0</color>
     <color name="main_bg">#f0f0f0</color>
     <color name="main_red">#f22f22</color>
     <color name="main_black">#000</color>
@@ -20,12 +24,14 @@
     <color name="main_light_red">#ff8585</color>
     <color name="main_light_blue">#77c6f7</color>
     <color name="main_orange">#ffae00</color>
+    <color name="main_light_orange">#fdf7d8</color>
     <!--字体颜色-->
     <color name="text_black">#333</color>
     <color name="text_dark_gray">#666</color>
     <color name="text_gray">#999</color>
     <color name="text_light_gray">#ccc</color>
     <color name="text_white">#fff</color>
+    <color name="text_orange">#bd864e</color>
     <!--分割线颜色-->
     <color name="div_light">#ddd</color>
     <color name="div_dark">#ccc</color>
@@ -54,4 +60,8 @@
     <color name="text_dialog_button_positive">@color/main_white</color>
     <color name="border_dialog_button_negative">#333</color>
     <color name="text_dialog_button_negative">@color/text_black</color>
+
+
+    <color name="bg_store_food">#c2360f</color>
+    <color name="bg_store_good">#338ad4</color>
 </resources>

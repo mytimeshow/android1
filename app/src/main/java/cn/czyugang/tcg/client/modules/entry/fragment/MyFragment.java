@@ -31,10 +31,12 @@ import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.entity.UserBase;
 import cn.czyugang.tcg.client.entity.UserDetail;
 import cn.czyugang.tcg.client.entity.UserInfo;
+import cn.czyugang.tcg.client.modules.address.activity.AddressManageActivity;
 import cn.czyugang.tcg.client.modules.balance.activity.BalanceActivity;
 import cn.czyugang.tcg.client.modules.entry.contract.MyContract;
 import cn.czyugang.tcg.client.modules.entry.presenter.MyPresenter;
 import cn.czyugang.tcg.client.modules.login.activity.LoginActivity;
+import cn.czyugang.tcg.client.modules.order.MyOrderActivity;
 import cn.czyugang.tcg.client.modules.person.CollectionActivity;
 import cn.czyugang.tcg.client.modules.person.FootmarkActivity;
 import cn.czyugang.tcg.client.modules.set.activity.SetActivity;
@@ -193,7 +195,7 @@ public class MyFragment extends BaseFragment implements MyContract.View {
                 //TODO 启动抵用券页面
                 break;
             case R.id.fl_order:
-                //TODO 启动订单列表
+                MyOrderActivity.startMyOrderActivity(getActivity());
                 break;
         }
     }
@@ -276,7 +278,9 @@ public class MyFragment extends BaseFragment implements MyContract.View {
             }));
 
             list.add(new Item("我的评价"));
-            list.add(new Item("地址管理"));
+            list.add(new Item("地址管理",()->{
+                AddressManageActivity.startAddressManageActivity();
+            }));
             list.add(new Item("客服"));
             list.add(new Item("跑腿"));
 

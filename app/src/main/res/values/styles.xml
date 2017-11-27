@@ -14,17 +14,20 @@
 
     <!--标题样式-->
     <style name="title_title">
+        <item name="android:id">@id/title</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dp_44</item>
         <item name="android:background">@color/main_white</item>
+        <item name="android:orientation">horizontal</item>
     </style>
 
     <style name="title_back">
         <item name="android:id">@id/title_back</item>
-        <item name="android:layout_width">@dimen/dp_38</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:padding">@dimen/dp_15</item>
+        <item name="android:layout_width">@dimen/dp_44</item>
+        <item name="android:layout_height">@dimen/dp_44</item>
+        <item name="android:padding">@dimen/dp_12</item>
         <item name="android:src">@drawable/ic_back_arrow</item>
+        <item name="android:layout_gravity">center_vertical</item>
     </style>
 
     <style name="title_text">
@@ -45,6 +48,64 @@
         <item name="android:textSize">@dimen/sp_14</item>
     </style>
 
+    <style name="title_im">
+    <item name="android:id">@id/title_im</item>
+    <item name="android:layout_width">@dimen/dp_20</item>
+    <item name="android:layout_height">@dimen/dp_20</item>
+    <item name="android:layout_gravity">center_vertical|right</item>
+    <item name="android:layout_marginLeft">@dimen/dp_18</item>
+    <item name="android:layout_marginRight">@dimen/dp_18</item>
+    <item name="android:src">@drawable/icon_im</item>
+</style>
+
+    <style name="title_more">
+        <item name="android:id">@id/title_more</item>
+        <item name="android:layout_width">@dimen/dp_20</item>
+        <item name="android:layout_height">@dimen/dp_20</item>
+        <item name="android:layout_gravity">center_vertical|right</item>
+        <item name="android:layout_marginLeft">@dimen/dp_18</item>
+        <item name="android:layout_marginRight">@dimen/dp_18</item>
+        <item name="android:src">@drawable/icon_more</item>
+    </style>
+
+    <style name="title_im_black" parent="title_im">
+        <item name="android:src">@drawable/icon_im</item>
+    </style>
+
+    <style name="title_more_black" parent="title_more">
+        <item name="android:src">@drawable/icon_more</item>
+    </style>
+
+    <!--图标-->
+    <style name="icon_15">
+        <item name="android:layout_width">@dimen/dp_15</item>
+        <item name="android:layout_height">@dimen/dp_15</item>
+        <item name="android:layout_marginLeft">@dimen/dp_10</item>
+        <item name="android:layout_marginRight">@dimen/dp_4</item>
+    </style>
+
+
+    <!--文字-->
+    <style name="text_14_black">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
+    <style name="text_14_dark_gray">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_dark_gray</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
+    <style name="text_16_black">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+    </style>
 
 
     <!--主按钮中号-->

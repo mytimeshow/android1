@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FlowLayout">
+        <attr name="horizontal_spacing" format="dimension" />
+        <attr name="vertical_spacing" format="dimension" />
+        <attr name="line_count" format="integer"/>
+    </declare-styleable>
+    <declare-styleable name="LabelLayout">
+        <attr name="child_layout" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="ActivityTextView">
+        <attr name="activity_type" format="string|reference"/>
+        <attr name="activity_text" format="string|reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="FiveStarView">
+        <attr name="five_star_score" format="integer"/>
+        <attr name="five_star_text" format="string|reference"/>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_90"
+    android:layout_height="@dimen/dp_53">
+
+    <TextView
+        android:id="@+id/item_name"
+        style="@style/text_14_dark_gray"
+        android:layout_height="@dimen/dp_53"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_24"
+        android:gravity="center_vertical"
+        android:text="商品分类最多八字"
+        android:lineSpacingMultiplier="1.2"
+        />
+    
+    <TextView
+        android:id="@+id/item_dot"
+        android:layout_width="@dimen/dp_18"
+        android:layout_height="@dimen/dp_18"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginRight="@dimen/dp_4"
+        android:layout_gravity="right"
+        android:background="@drawable/dot_red"
+        android:gravity="center"
+        android:text="1"
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/white"
+        />
+    
+</FrameLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        style="@style/title_title">
+        <ImageView
+            style="@style/title_back"/>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/good_detail_tab"
+            android:layout_width="@dimen/dp_180"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            />
+        <ImageView
+            style="@style/title_im_black"
+            android:layout_marginRight="@dimen/dp_48"/>
+        <ImageView
+            style="@style/title_more_black"/>
+    </FrameLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/good_detail_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        />
+</LinearLayout>

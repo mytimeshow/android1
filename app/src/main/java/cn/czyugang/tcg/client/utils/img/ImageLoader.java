@@ -6,6 +6,7 @@ import android.view.ViewTreeObserver;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import cn.czyugang.tcg.client.common.Config;
+import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.string.EncryptUtils;
 
 /**
@@ -36,7 +37,7 @@ public class ImageLoader {
      * @param height
      * @return
      */
-    private static String getImageUrl(String fileId, int width, int height) {
+    public static String getImageUrl(String fileId, int width, int height) {
         if (TextUtils.isEmpty(fileId)) {
             return null;
         }
@@ -45,5 +46,9 @@ public class ImageLoader {
                 "&w=" + width +
                 "&h=" + height +
                 "&watermark=NO&code=" + EncryptUtils.md5(fileId + "w" + width + "h" + +height + "NO");
+    }
+
+    public static String getImageUrl(String fileId) {
+        return getImageUrl(fileId, ResUtil.getWidthInPx(),ResUtil.getHeightInPx());
     }
 }

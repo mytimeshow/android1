@@ -24,7 +24,7 @@ public class AddressApi {
      *
      * @return
      */
-    public Observable<Response<List<Address>>> loadAddressList() {
+    public static Observable<Response<List<Address>>> loadAddressList() {
         return UserOAuth.getInstance()
                 .get("api/auth/v1/user/base/getUserAddress", null)
                 .map(s -> (Response<List<Address>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, new JsonParse.Type(List.class, Address.class))))

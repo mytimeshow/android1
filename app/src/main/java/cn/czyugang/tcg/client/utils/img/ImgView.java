@@ -27,4 +27,12 @@ public class ImgView extends SimpleDraweeView {
     public ImgView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
+
+    public void url(String url){
+        setImageURI(url);
+    }
+
+    public void id(String imgId){
+        ImageLoader.loadImageToView(imgId,this);
+    }
 }

@@ -366,6 +366,16 @@
 
         <activity android:name=".modules.person.CollectionActivity"/>
         <activity android:name=".modules.person.FootmarkActivity"/>
+        <activity android:name=".modules.store.StoreActivity"/>
+        <activity android:name=".modules.store.StoreInfoActivity"/>
+        <activity android:name=".modules.order.MyOrderActivity"/>
+        <activity android:name=".modules.order.ConfirmOrderActivity"/>
+        <activity android:name=".modules.order.SelectAddressActivity"/>
+        <activity android:name=".modules.order.SelectDeliveryActivity"/>
+        <activity android:name=".modules.order.PayOrderActivity"/>
+        <activity android:name=".modules.order.PayOrderWayActivity"/>
+        <activity android:name=".modules.common.ImgActivity"/>
+        <activity android:name=".modules.store.GoodDetailActivity"/>
 
     </application>
 </manifest>

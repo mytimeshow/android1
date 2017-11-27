@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <!--排序选择-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_10"
+        >
+
+        <TextView
+            android:id="@+id/goodslist_category_open"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawablePadding="@dimen/dp_4"
+            android:drawableRight="@drawable/ic_fold_arrow"
+            android:gravity="center"
+            android:text="商品分类"
+            android:textColor="@color/text_dark_gray"
+            android:textSize="@dimen/sp_14"
+            />
+
+        <include layout="@layout/space_h"/>
+
+        <TextView
+            android:id="@+id/goodslist_order_default"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="默认"
+            android:textColor="@color/text_dark_gray"
+            android:textSize="@dimen/sp_14"/>
+
+        <include layout="@layout/space_h"/>
+
+        <TextView
+            android:id="@+id/goodslist_order_news"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="新品"
+            android:textColor="@color/text_dark_gray"
+            android:textSize="@dimen/sp_14"/>
+
+        <include layout="@layout/space_h"/>
+
+        <TextView
+            android:id="@+id/goodslist_order_sale"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="销量"
+            android:textColor="@color/text_dark_gray"
+            android:textSize="@dimen/sp_14"/>
+
+        <include layout="@layout/space_h"/>
+
+        <TextView
+            android:id="@+id/goodslist_order_price"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingRight="@dimen/dp_2"
+            android:text="价格"
+            android:textColor="@color/text_dark_gray"
+            android:textSize="@dimen/sp_14"/>
+
+        <ImageView
+            android:id="@+id/goodslist_order_price_img"
+            android:layout_width="@dimen/dp_12"
+            android:layout_height="@dimen/dp_12"
+            android:src="@drawable/ic_price_order_grey"/>
+
+        <include layout="@layout/space_h"/>
+
+        <ImageView
+            android:id="@+id/goodslist_order_show"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_40"
+            android:paddingBottom="@dimen/dp_13"
+            android:paddingRight="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_13"
+            android:src="@drawable/icon_list_one"
+            />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/goodslist_foods"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_40"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/dp_10"
+        />
+
+    <!--分类-->
+    <View
+        android:id="@+id/goodslist_category_select"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_120"
+        android:layout_marginTop="@dimen/dp_40"
+        android:background="@color/white"
+        android:visibility="gone"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"
+        android:layout_marginTop="@dimen/dp_40"
+        android:background="@color/grey_350"/>
+
+</FrameLayout>

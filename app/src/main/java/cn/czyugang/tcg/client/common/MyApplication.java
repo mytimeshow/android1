@@ -12,6 +12,10 @@ import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFact
 import cn.czyugang.tcg.client.api.TencentApi;
 import cn.czyugang.tcg.client.api.WXApi;
 import cn.czyugang.tcg.client.api.WeiboApi;
+import cn.czyugang.tcg.client.utils.app.AppUtil;
+import cn.czyugang.tcg.client.utils.app.ResUtil;
+import cn.czyugang.tcg.client.utils.storage.FileStorage;
+import cn.czyugang.tcg.client.utils.storage.KeyStorage;
 
 /**
  * Created by wuzihong on 2017/8/29.
@@ -22,15 +26,27 @@ public class MyApplication extends Application {
     public static int sVersionCode;//当前版本号
     public static String sVersionName;//当前版本名
     private static Application application;
+    private static MyApplication myApplication;
+    public Object activityTransferData = null;//用于activity跳转时中转大数据
 
-    public static Application getContext(){
+    public static Application getContext() {
         return application;
+    }
+
+    public static MyApplication getInstance() {
+        return myApplication;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        application=this;
+        application = this;
+        myApplication = this;
+        ResUtil.register(application);
+        KeyStorage.register(application);
+        FileStorage.register(application);
+        AppUtil.register(application);
+
         Context context = getApplicationContext();
         getVersionInfo(context);
         //初始化全局配置

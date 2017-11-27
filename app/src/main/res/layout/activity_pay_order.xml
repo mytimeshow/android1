@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical">
+
+    <FrameLayout
+        style="@style/title_title">
+
+        <ImageView
+            style="@style/title_back"/>
+
+        <TextView
+            style="@style/title_text"
+            android:text="支付订单"/>
+    </FrameLayout>
+
+    <!--金额-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_75"
+        android:layout_marginTop="@dimen/dp_0.5"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/pay_order_need_text"
+                style="@style/text_16_black"
+                android:text="应付金额"/>
+
+            <TextView
+                android:id="@+id/pay_order_need_num"
+                style="@style/text_16_black"
+                android:layout_marginLeft="@dimen/dp_18"
+                android:layout_toRightOf="@id/pay_order_need_text"
+                android:text="￥64.00"
+                android:textColor="@color/main_red"/>
+
+            <TextView
+                android:id="@+id/pay_order_delivery_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@id/pay_order_need_text"
+                android:layout_below="@+id/pay_order_need_text"
+                android:layout_marginTop="@dimen/dp_8"
+                android:text="含运费"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/sp_12"/>
+
+            <TextView
+                android:id="@+id/pay_order_delivery_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pay_order_need_text"
+                android:layout_marginLeft="@dimen/dp_8"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_toRightOf="@+id/pay_order_delivery_text"
+                android:text="￥3.00"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/sp_12"/>
+
+        </RelativeLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <cn.czyugang.tcg.client.widget.SelectButton
+            android:id="@+id/pay_order_select_wallet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"/>
+
+        <TextView
+            style="@style/text_14_black"
+            android:layout_marginLeft="@dimen/dp_6"
+            android:text="使用钱包余额抵扣"/>
+
+        <include layout="@layout/space_h"/>
+
+        <TextView
+            android:id="@+id/pay_order_wallet"
+            style="@style/text_14_black"
+            android:drawablePadding="@dimen/dp_10"
+            android:drawableRight="@drawable/ic_question_grey_white"
+            android:paddingBottom="@dimen/dp_4"
+            android:paddingRight="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_4"
+            android:text=" -￥0.00"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_0.5"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <cn.czyugang.tcg.client.widget.SelectButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:visibility="invisible"/>
+
+        <TextView
+            style="@style/text_14_black"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:text="仍需支付"/>
+
+        <include layout="@layout/space_h"/>
+
+        <TextView
+            android:id="@+id/pay_order_final"
+            style="@style/text_14_black"
+            android:layout_marginRight="@dimen/dp_10"
+            android:text=" -￥0.00"
+            android:textColor="@color/main_red"
+            />
+
+    </LinearLayout>
+
+    <include layout="@layout/space_v"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_16_black"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:text="仍需支付："/>
+
+        <TextView
+            android:id="@+id/pay_order_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="￥10.00"
+            android:textColor="@color/main_red"
+            android:textSize="@dimen/sp_18"
+            android:textStyle="bold"/>
+
+        <include layout="@layout/space_h"/>
+
+        <TextView
+            android:id="@+id/pay_order_confirm"
+            android:layout_width="@dimen/dp_85"
+            android:layout_height="match_parent"
+            android:background="@color/main_red"
+            android:gravity="center"
+            android:text="立即支付"
+            android:textColor="@color/white"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
