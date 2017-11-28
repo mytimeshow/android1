@@ -15,20 +15,16 @@ import cn.czyugang.tcg.client.base.BaseFragment;
  */
 
 public class StoreHomeFragment extends BaseFragment {
-    private String id;
 
-    public static StoreHomeFragment newInstance(String id) {
+
+    public static StoreHomeFragment newInstance() {
         StoreHomeFragment fragment = new StoreHomeFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("id", id);
-        fragment.setArguments(bundle);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        id = getArguments().getString("id");
     }
 
     @Nullable

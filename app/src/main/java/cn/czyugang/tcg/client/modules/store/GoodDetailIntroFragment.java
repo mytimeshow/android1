@@ -1,24 +1,21 @@
 package cn.czyugang.tcg.client.modules.store;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseFragment;
-import cn.czyugang.tcg.client.entity.Store;
 
 /**
  * @author ruiaa
- * @date 2017/11/22
+ * @date 2017/11/27
  */
 
-public class StoreDetailFragment extends BaseFragment {
-
-    public static StoreDetailFragment newInstance() {
-        StoreDetailFragment fragment = new StoreDetailFragment();
+public class GoodDetailIntroFragment extends BaseFragment {
+    public static GoodDetailIntroFragment newInstance() {
+        GoodDetailIntroFragment fragment = new GoodDetailIntroFragment();
         return fragment;
     }
 
@@ -27,19 +24,14 @@ public class StoreDetailFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
     }
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_store_detail, container, false);
+        rootView = inflater.inflate(R.layout.fragment_good_detail_intro, container, false);
         return rootView;
     }
 
     @Override
     public String getLabel() {
-        return "详情";
-    }
-
-    public void init(Store store){
-
+        return "商品介绍";
     }
 }

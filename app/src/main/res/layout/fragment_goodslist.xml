@@ -35,7 +35,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="默认"
-            android:textColor="@color/text_dark_gray"
+            android:textColor="@color/main_red"
             android:textSize="@dimen/sp_14"/>
 
         <include layout="@layout/space_h"/>

@@ -49,14 +49,14 @@
     </style>
 
     <style name="title_im">
-    <item name="android:id">@id/title_im</item>
-    <item name="android:layout_width">@dimen/dp_20</item>
-    <item name="android:layout_height">@dimen/dp_20</item>
-    <item name="android:layout_gravity">center_vertical|right</item>
-    <item name="android:layout_marginLeft">@dimen/dp_18</item>
-    <item name="android:layout_marginRight">@dimen/dp_18</item>
-    <item name="android:src">@drawable/icon_im</item>
-</style>
+        <item name="android:id">@id/title_im</item>
+        <item name="android:layout_width">@dimen/dp_20</item>
+        <item name="android:layout_height">@dimen/dp_20</item>
+        <item name="android:layout_gravity">center_vertical|right</item>
+        <item name="android:layout_marginLeft">@dimen/dp_18</item>
+        <item name="android:layout_marginRight">@dimen/dp_18</item>
+        <item name="android:src">@drawable/icon_im</item>
+    </style>
 
     <style name="title_more">
         <item name="android:id">@id/title_more</item>
@@ -69,12 +69,22 @@
     </style>
 
     <style name="title_im_black" parent="title_im">
-        <item name="android:src">@drawable/icon_im</item>
+        <item name="android:src">@drawable/icon_im_black</item>
     </style>
 
     <style name="title_more_black" parent="title_more">
-        <item name="android:src">@drawable/icon_more</item>
+        <item name="android:src">@drawable/icon_more_black</item>
     </style>
+
+    <!--列表 → -->
+    <style name="arrow_right">
+        <item name="android:layout_width">@dimen/dp_14</item>
+        <item name="android:layout_height">@dimen/dp_14</item>
+        <item name="android:layout_marginRight">@dimen/dp_10</item>
+        <item name="android:src">@drawable/ic_goto_arrow</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
 
     <!--图标-->
     <style name="icon_15">

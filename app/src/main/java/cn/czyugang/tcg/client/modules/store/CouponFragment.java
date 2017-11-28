@@ -15,20 +15,14 @@ import cn.czyugang.tcg.client.base.BaseFragment;
  */
 
 public class CouponFragment extends BaseFragment {
-    private String id;
-
-    public static CouponFragment newInstance(String id) {
+    public static CouponFragment newInstance() {
         CouponFragment fragment = new CouponFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("id", id);
-        fragment.setArguments(bundle);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        id = getArguments().getString("id");
     }
 
     @Nullable

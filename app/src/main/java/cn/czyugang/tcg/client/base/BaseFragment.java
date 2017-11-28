@@ -10,7 +10,6 @@ import java.net.UnknownHostException;
 
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.common.UserOAuth;
-import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.modules.common.dialog.LoadingDialog;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
@@ -88,7 +87,7 @@ public class BaseFragment extends Fragment implements BaseView {
 
         @Override
         public void onNext(T response) {
-            if (((Response)response).getCode()!=200) showToast(((Response)response).getMessage());
+
         }
 
         @Override

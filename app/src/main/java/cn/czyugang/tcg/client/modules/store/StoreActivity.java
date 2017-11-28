@@ -19,13 +19,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.api.RecordApi;
 import cn.czyugang.tcg.client.api.StoreApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.base.BaseFragmentAdapter;
+import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.entity.Store;
+import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.utils.string.RichText;
@@ -80,7 +84,7 @@ public class StoreActivity extends BaseActivity {
     private FoodListFragment foodListFragment;
     private CommentFragment commentFragment;
     private StoreDetailFragment storeDetailFragment;
-    public Response<Store> response;
+    public Store store = null;
 
     public static void startStoreActivity(Activity activity, String id) {
         Intent intent = new Intent(activity, StoreActivity.class);
@@ -95,12 +99,32 @@ public class StoreActivity extends BaseActivity {
         ButterKnife.bind(this);
         id = getIntent().getStringExtra("id");
 
-        fragments.add(StoreHomeFragment.newInstance(id));
-        fragments.add(GoodsListFragment.newInstance());
-        fragments.add(FoodListFragment.newInstance());
-        fragments.add(CommentFragment.newInstance(id));
-        fragments.add(CouponFragment.newInstance(id));
-        fragments.add(StoreDetailFragment.newInstance(id));
+        StoreApi.getStoreById(id).subscribe(new NetObserver<Response<Store>>() {
+            @Override
+            public void onNext(Response<Store> storeResponse) {
+                super.onNext(storeResponse);
+                if (ErrorHandler.judge200(storeResponse)) {
+                    store = storeResponse.getData();
+                    store.init(storeResponse.getValues());
+
+                    initFragment(store.isFoodStore());
+                    isFoodStore(store.isFoodStore());
+                    setInfo(store);
+                    hadCollected(store.collected);
+                }
+            }
+        });
+
+        storeNotice.requestFocus();
+        input.setHint(RichText.newRichText("    搜索店内商品").addimgRes(0, 2, R.drawable.ic_search, R.dimen.dp_14).build());
+    }
+
+    private void initFragment(boolean isFood) {
+        fragments.add(StoreHomeFragment.newInstance());
+        fragments.add(isFood ? FoodListFragment.newInstance() : GoodsListFragment.newInstance());
+        fragments.add(CommentFragment.newInstance());
+        fragments.add(CouponFragment.newInstance());
+        fragments.add(StoreDetailFragment.newInstance());
 
         viewPager.setAdapter(new BaseFragmentAdapter(getSupportFragmentManager(), fragments));
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -111,8 +135,8 @@ public class StoreActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                storeBottomL.setVisibility(position==1?View.VISIBLE:View.GONE);
-                bottomBar.setVisibility(position==1?View.VISIBLE:View.GONE);
+                storeBottomL.setVisibility(position == 1 ? View.VISIBLE : View.GONE);
+                bottomBar.setVisibility(position == 1 ? View.VISIBLE : View.GONE);
             }
 
             @Override
@@ -124,20 +148,6 @@ public class StoreActivity extends BaseActivity {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         viewPager.setCurrentItem(1);
-
-        StoreApi.getStoreById(id).subscribe(new NetObserver<Response<Store>>() {
-            @Override
-            public void onNext(Response<Store> storeResponse) {
-                super.onNext(storeResponse);
-                response = storeResponse;
-                isFoodStore(response.getData().isFoodStore());
-                setInfo(response.getData());
-                hadCollected(response.getData().collected);
-            }
-        });
-
-        storeNotice.requestFocus();
-        input.setHint(RichText.newRichText("    搜索店内商品").addimgRes(0, 2, R.drawable.ic_search, R.dimen.dp_14).build());
     }
 
     private void isFoodStore(boolean is) {
@@ -164,6 +174,39 @@ public class StoreActivity extends BaseActivity {
 
     @OnClick(R.id.store_intro)
     public void onInfo() {
-        StoreInfoActivity.startStoreInfoActivity(this, response.getData());
+        StoreInfoActivity.startStoreInfoActivity(this, store);
+    }
+
+    @OnClick(R.id.store_collect)
+    public void onCollect() {
+        if (store == null) return;
+        if (store.collected) {
+            RecordApi.collectStore(store.id).subscribe(new NetObserver<Response>() {
+                @Override
+                public void onNext(Response response) {
+                    super.onNext(response);
+                    if (ErrorHandler.judge200(response)) {
+                        store.collected = false;
+                        hadCollected(store.collected);
+                    }
+                }
+            });
+        } else {
+            RecordApi.collectStore(store.id).subscribe(new NetObserver<Response>() {
+                @Override
+                public void onNext(Response response) {
+                    super.onNext(response);
+                    if (ErrorHandler.judge200(response)) {
+                        store.collected = true;
+                        hadCollected(store.collected);
+                    }
+                }
+            });
+        }
+    }
+
+    @OnTextChanged(R.id.title_input)
+    public void onSearchInput(CharSequence charSequence){
+        LogRui.i("onSearchInput####",charSequence);
     }
 }

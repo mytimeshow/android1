@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.czyugang.tcg.client.utils.JsonParse;
 import cn.czyugang.tcg.client.utils.LogRui;
 
 /**
@@ -17,8 +18,8 @@ import cn.czyugang.tcg.client.utils.LogRui;
 
 public class Store {
 
-    public static final int STORE_TYPE_GOODS=1;
-    public static final int STORE_TYPE_FOOD=2;
+    public static final int STORE_TYPE_GOODS = 1;
+    public static final int STORE_TYPE_FOOD = 2;
 
     /**
      * avatarId : string
@@ -49,7 +50,7 @@ public class Store {
     @SerializedName("businessCircleId")
     public String businessCircleId;
     @SerializedName("businessId")
-    public String businessId;
+    public String businessId;       //商户ID
     @SerializedName("businessStatus")
     public String businessStatus;   //营业状态（YES-是，NO-否）
     @SerializedName("createTime")
@@ -63,7 +64,7 @@ public class Store {
     @SerializedName("isAdvanceBooking")
     public String isAdvanceBooking;
     @SerializedName("isCatering")
-    public String isCatering;       //是否是餐饮业（YES-是，NO-否）
+    private String isCatering;       //接口错误，是否是餐饮业（YES-是，NO-否）
     @SerializedName("isExpress")
     public String isExpress;
     @SerializedName("isNonBusinessHours")
@@ -87,31 +88,52 @@ public class Store {
     @SerializedName("updateTime")
     public String updateTime;
 
-    public boolean collected=false;
-    public List<String> tagList=new ArrayList<>();
-    public double score=0;
+    public boolean isFoodStore = true;
+    public boolean collected = false;
+    public List<String> tagList = new ArrayList<>();
+    public double score = 0;
+    public double aveDeliveryTime = 0;
+    public DeliveryInfo logisticsDelivery = null;
 
-    public void init(JSONObject jsonObject){
-        if (jsonObject==null) return;
-        try{
-            collected=jsonObject.optString("isCollect").equals("YES");
-            JSONArray tags=jsonObject.optJSONArray("storeTagList");
-            if (tags!=null&&tags.length()>0){
-                for(int i=0,size=tags.length();i<size;i++)
+    public void init(JSONObject jsonObject) {
+        if (jsonObject == null) return;
+        try {
+            collected = jsonObject.optString("isCollect").equals("YES");
+            JSONArray tags = jsonObject.optJSONArray("storeTagList");
+            if (tags != null && tags.length() > 0) {
+                for (int i = 0, size = tags.length(); i < size; i++)
                     tagList.add(tags.optJSONObject(i).optString("name"));
             }
 
-        }catch (Exception e){
-            LogRui.e("init####",e);
+            JSONArray classify = jsonObject.optJSONArray("classifyOf" + id);
+            if (classify != null && classify.length() > 0) {
+                isFoodStore = !classify.getJSONObject(0).optString("classify", "").equals("MARKET");
+            }
+
+            aveDeliveryTime = jsonObject.optDouble("deliveryTime");
+
+            JSONObject logisticsDeliveryJ = jsonObject.optJSONObject("logisticsDeliverySetting");
+            if (logisticsDeliveryJ != null) {
+                logisticsDelivery = JsonParse.fromJson(logisticsDeliveryJ.toString(), DeliveryInfo.class);
+            }
+
+        } catch (Exception e) {
+            LogRui.e("init####", e);
         }
 
     }
 
-    public boolean isFoodStore(){
-        return isCatering.equals("YES");
+    public boolean isFoodStore() {
+        return isFoodStore;
     }
 
-    public boolean isOpening(){
+    public boolean isOpening() {
         return businessStatus.endsWith("YES");
+    }
+
+    public static class DeliveryInfo {
+        public double startDeliveryPrice;//起送价
+        public double deliveryPrice;   // 配送费
+        public String deliveryTime = "";// 配送时间
     }
 }

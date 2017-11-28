@@ -17,9 +17,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.api.StoreApi;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.entity.Good;
-import cn.czyugang.tcg.client.modules.common.ImgActivity;
+import cn.czyugang.tcg.client.entity.GoodCategory;
+import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.widget.RecycleViewDivider;
 
@@ -52,6 +54,14 @@ public class FoodListFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         storeActivity = (StoreActivity) getActivity();
+
+        StoreApi.getFoods(storeActivity.store.id).subscribe(new NetObserver<Response<List<GoodCategory>>>() {
+            @Override
+            public void onNext(Response<List<GoodCategory>> response) {
+                super.onNext(response);
+
+            }
+        });
     }
 
     @Nullable
@@ -163,16 +173,7 @@ public class FoodListFragment extends BaseFragment {
             holder.price.setText(String.format("￥%.2f",Math.random()*10));
             holder.imgView.id("919910512769269760");
 
-//            holder.itemView.setOnClickListener(v -> GoodDetailActivity.startGoodDetailActivity());
-            holder.itemView.setOnClickListener(v -> ImgActivity.startImgActivity("919910512769269760"));
-            ArrayList<String> list=new ArrayList<>();
-            list.add("919910512769269760");
-            list.add("919910512769269760");
-            list.add("919910512769269760");
-            list.add("919910512769269760");
-            list.add("919910512769269730");
-            list.add("919910512769269760");
-            holder.itemView.setOnClickListener(v -> ImgActivity.startImgActivity(list,3));
+            holder.itemView.setOnClickListener(v -> GoodDetailActivity.startGoodDetailActivity());
         }
 
         @Override

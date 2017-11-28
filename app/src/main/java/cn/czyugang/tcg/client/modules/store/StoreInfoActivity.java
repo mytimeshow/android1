@@ -10,10 +10,12 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.common.MyApplication;
 import cn.czyugang.tcg.client.entity.Store;
+import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.widget.ActivityTextView;
 import cn.czyugang.tcg.client.widget.FiveStarView;
@@ -60,10 +62,19 @@ public class StoreInfoActivity extends BaseActivity {
         img.id(store.avatarId);
         name.setText(store.name);
         star.setScore((float) (store.score));
-        delivered.setText("??? | ???");
-        ActivityTextView.create(activities, "?", "??? |   ???",R.dimen.dp_10);
+        delivered.setText("平台配送|"
+                + store.aveDeliveryTime + "分钟送达| "
+                + "起送￥" + store.logisticsDelivery.startDeliveryPrice
+                + "配送费￥" + store.logisticsDelivery.deliveryPrice + "\n"
+                + "配送时间： " + store.logisticsDelivery.deliveryTime + "\n"
+                + "店铺标签：" + CommonUtil.toString(store.tagList));
+        ActivityTextView.create(activities, "?", "??? |   ???", R.dimen.dp_10);
         notice.setText(store.notices);
     }
 
+    @OnClick(R.id.title_back)
+    public void onBack() {
+        finish();
+    }
 
 }

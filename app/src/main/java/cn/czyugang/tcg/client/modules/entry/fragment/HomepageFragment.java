@@ -35,6 +35,8 @@ public class HomepageFragment extends BaseFragment {
         rootView = inflater.inflate(R.layout.fragment_homepage, container, false);
         ButterKnife.bind(this, rootView);
         rootView.findViewById(R.id.homepage_store).setOnClickListener(v -> StoreActivity.startStoreActivity(getActivity(),"919122791461220353"));
+        //rootView.findViewById(R.id.homepage_store).setOnClickListener(v -> StoreActivity.startStoreActivity(getActivity(),"930278266785427456"));
+        //919122791461220353
         rootView.findViewById(R.id.homepage_order).setOnClickListener(v -> ConfirmOrderActivity.startConfirmOrderActivity());
 
 

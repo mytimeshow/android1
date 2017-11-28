@@ -15,20 +15,15 @@ import cn.czyugang.tcg.client.base.BaseFragment;
  */
 
 public class CommentFragment extends BaseFragment {
-    private String id;
 
-    public static CommentFragment newInstance(String id) {
+    public static CommentFragment newInstance() {
         CommentFragment fragment = new CommentFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("id", id);
-        fragment.setArguments(bundle);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        id = getArguments().getString("id");
     }
 
     @Nullable
