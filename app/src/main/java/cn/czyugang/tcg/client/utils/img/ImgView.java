@@ -47,10 +47,10 @@ public class ImgView extends SimpleDraweeView {
                 paint.setTextAlign(Paint.Align.CENTER);
                 paint.setTextSize(ResUtil.getDimenInPx(R.dimen.sp_10));
             }
-            paint.setColor(0x8F000000);
+            paint.setColor(0x7F000000);
             canvas.drawRect(0,getHeight()*0.75f,getWidth(),getHeight(),paint);
             paint.setColor(Color.WHITE);
-            canvas.drawText(disCount,getWidth()/2,getHeight()*0.9f,paint);
+            canvas.drawText(disCount,getWidth()/2,getHeight()*0.94f,paint);
         }
     }
 
