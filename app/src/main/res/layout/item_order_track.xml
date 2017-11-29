@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_90">
+
+    <ImageView
+        android:id="@+id/item_img"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@drawable/dot_dark_gray"
+        android:padding="@dimen/dp_4"
+        android:src="@drawable/icon_delivery_man_white"
+        android:scaleType="fitXY"
+        />
+
+    <TextView
+        android:id="@+id/item_time"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_20"
+        android:layout_marginLeft="@dimen/dp_50"
+        android:gravity="center_vertical"
+        android:text="2017-08-05 14:29:23"
+        android:textSize="@dimen/sp_12"
+        android:textColor="@color/text_gray"
+        />
+
+    <View
+        android:layout_width="@dimen/dp_0.5"
+        android:layout_height="@dimen/dp_60"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_26"
+        android:background="@color/grey_500"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_55"
+        android:layout_marginTop="@dimen/dp_26"
+        android:layout_marginLeft="@dimen/dp_50"
+        android:paddingLeft="@dimen/dp_8"
+        android:background="@color/white"
+        android:orientation="vertical"
+        >
+        
+        <TextView
+            android:id="@+id/item_status_title"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            style="@style/text_14_dark_gray"
+            android:text="订单已支付，券码待使用"/>
+
+        <Space
+            android:layout_width="1px"
+            android:layout_height="@dimen/dp_4"/>
+
+        <TextView
+            android:id="@+id/item_status"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:text="请前往门店出示此券码进行使用"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/text_gray"/>
+        
+    </LinearLayout>
+
+</FrameLayout>

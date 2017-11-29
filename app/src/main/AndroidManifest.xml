@@ -41,6 +41,9 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
+    <!--打电话-->
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+
     <application
         android:name=".common.MyApplication"
         android:allowBackup="false"
@@ -376,6 +379,9 @@
         <activity android:name=".modules.order.PayOrderWayActivity"/>
         <activity android:name=".modules.common.ImgActivity"/>
         <activity android:name=".modules.store.GoodDetailActivity"/>
+        <activity android:name=".modules.order.OrderDetailActivity"/>
+        <activity android:name=".modules.order.OrderTrackMapActivity"/>
+        <activity android:name=".modules.order.OrderTrackActivity"/>
 
     </application>
 </manifest>

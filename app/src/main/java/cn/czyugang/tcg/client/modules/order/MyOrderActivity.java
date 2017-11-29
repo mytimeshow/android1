@@ -17,6 +17,7 @@ import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.base.BaseFragmentAdapter;
+import cn.czyugang.tcg.client.modules.common.dialog.MessageDialog;
 
 /**
  * @author ruiaa
@@ -54,9 +55,11 @@ public class MyOrderActivity extends BaseActivity {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
     }
-
+    MessageDialog messageDialog;
     @OnClick(R.id.title_back)
     public void onBack(){
-        finish();
+        //finish();
+        messageDialog=MessageDialog.newInstance().setMessage("hhh").setNegativeButton("取消").setPositiveButton("确定");
+        messageDialog.show(getSupportFragmentManager(),"ll");
     }
 }

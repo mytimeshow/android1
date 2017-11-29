@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical">
+
+    <FrameLayout
+        style="@style/title_title">
+
+        <ImageView
+            style="@style/title_back"/>
+
+        <TextView
+            style="@style/title_text"
+            android:text="订单追踪"/>
+    </FrameLayout>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <!--配送方式-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_33"
+        android:background="@color/white"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dp_4"
+        android:paddingLeft="@dimen/dp_10"
+        >
+
+        <TextView
+            style="@style/text_14_dark_gray"
+            android:text="配送方式"
+            android:textColor="@color/text_middle_gray"
+            />
+
+        <TextView
+            android:id="@+id/order_track_delivery_type"
+            style="@style/text_14_black"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:text="到店自提"
+            />
+    </LinearLayout>
+
+    <!--自提券码/配送时间-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_33"
+        android:background="@color/white"
+        android:gravity="top"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_4"
+        >
+
+        <TextView
+            android:id="@+id/order_track_delivery_self"
+            style="@style/text_14_dark_gray"
+            android:text="自提券码/配送时间"
+            android:textColor="@color/text_middle_gray"
+            />
+
+        <TextView
+            android:id="@+id/order_track_delivery_time"
+            style="@style/text_14_black"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:text="1231 3214 6548     （已使用）"
+            />
+    </LinearLayout>
+
+    <!--配送员-->
+    <LinearLayout
+        android:id="@+id/order_track_distributorL"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+
+        <cn.czyugang.tcg.client.utils.img.ImgView
+            android:id="@+id/order_track_distributor_img"
+            android:layout_width="@dimen/dp_36"
+            android:layout_height="@dimen/dp_36"
+            android:layout_margin="@dimen/dp_10"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                style="@style/text_14_black"
+                android:text="配送员"/>
+            <TextView
+                android:id="@+id/order_track_distributor_name"
+                style="@style/text_14_black"
+                android:layout_marginTop="@dimen/dp_8"
+                android:text="小白鸽          13666666666"/>
+        </LinearLayout>
+
+        <include layout="@layout/space_h"/>
+
+        <ImageView
+            style="@style/arrow_right"/>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/order_track_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:background="@color/white">
+
+        <include layout="@layout/space_h"/>
+
+        <TextView
+            android:id="@+id/order_track_button_one"
+            style="@style/button_100"
+            />
+
+        <TextView
+            android:id="@+id/order_track_button_two"
+            style="@style/button_100"
+            />
+
+        <TextView
+            android:id="@+id/order_track_button_three"
+            style="@style/button_100"
+            android:background="@drawable/bg_rect_red"
+            android:textColor="@color/white"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

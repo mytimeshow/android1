@@ -6,4 +6,9 @@ package cn.czyugang.tcg.client.entity;
  */
 
 public class Order {
+
+    public String id="id";
+
+    public boolean selected=false;
+
 }

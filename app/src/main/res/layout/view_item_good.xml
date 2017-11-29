@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_80"
+    android:paddingLeft="@dimen/dp_10"
+    android:paddingRight="@dimen/dp_10"
+    android:paddingTop="@dimen/dp_10"
+    android:background="@color/white">
+
+    <cn.czyugang.tcg.client.utils.img.ImgView
+        android:id="@+id/item_img"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_60"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dp_10"
+        />
+
+    <TextView
+        android:id="@+id/item_goods_name"
+        style="@style/text_14_dark_gray"
+        android:layout_toLeftOf="@+id/item_price"
+        android:layout_toRightOf="@id/item_img"
+        android:text="商品名称"/>
+
+    <TextView
+        android:id="@+id/item_price"
+        style="@style/text_14_dark_gray"
+        android:layout_alignParentRight="true"
+        android:text="￥99.99"/>
+
+    <TextView
+        android:id="@+id/item_goods_spec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_goods_name"
+        android:layout_marginTop="@dimen/dp_6"
+        android:layout_toLeftOf="@+id/item_price"
+        android:layout_toRightOf="@id/item_img"
+        android:text="商品规格"
+        android:textColor="@color/text_light_gray"
+        android:textSize="@dimen/sp_12"/>
+
+    <TextView
+        android:id="@+id/item_goods_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_goods_spec"
+        android:layout_marginTop="@dimen/dp_6"
+        android:layout_toLeftOf="@+id/item_price"
+        android:layout_toRightOf="@id/item_img"
+        android:text="商品标签"
+        android:textColor="@color/main_light_blue"
+        android:textSize="@dimen/sp_12"
+        />
+
+    <TextView
+        android:id="@+id/item_price_origin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/item_goods_spec"
+        android:layout_alignParentRight="true"
+        android:text="￥199.99"
+        android:textColor="@color/text_light_gray"
+        android:textSize="@dimen/sp_12"/>
+
+    <TextView
+        android:id="@+id/item_one_nums"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/item_goods_tag"
+        android:layout_alignParentRight="true"
+        android:text="￥199.99"
+        android:textColor="@color/text_light_gray"
+        android:textSize="@dimen/sp_12"/>
+
+</RelativeLayout>

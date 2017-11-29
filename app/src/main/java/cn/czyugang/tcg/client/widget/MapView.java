@@ -22,7 +22,7 @@ import cn.czyugang.tcg.client.R;
  */
 
 public class MapView extends com.amap.api.maps.MapView {
-    private AMap mAMap;
+    public AMap mAMap;
 
     public MapView(Context context) {
         super(context);

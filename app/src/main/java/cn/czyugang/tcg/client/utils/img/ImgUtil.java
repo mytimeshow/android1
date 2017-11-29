@@ -3,6 +3,7 @@ package cn.czyugang.tcg.client.utils.img;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -118,7 +119,7 @@ public class ImgUtil {
         paint.setAntiAlias(true);
 
 
-        canvas.drawARGB(0,0,0,0);
+        canvas.drawARGB(0, 0, 0, 0);
         paint.setColor(0xff000000);
         canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
 
@@ -147,9 +148,9 @@ public class ImgUtil {
     *   尺寸压缩
     * */
     public static Bitmap compressBitmapBySize(@NonNull Bitmap bmp, float ratio) {
-        Bitmap result = Bitmap.createBitmap((int)(bmp.getWidth() * ratio), (int)(bmp.getHeight() * ratio), Bitmap.Config.ARGB_8888);
+        Bitmap result = Bitmap.createBitmap((int) (bmp.getWidth() * ratio), (int) (bmp.getHeight() * ratio), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(result);
-        Rect rect = new Rect(0, 0, (int)(bmp.getWidth() * ratio), (int)(bmp.getHeight() * ratio));
+        Rect rect = new Rect(0, 0, (int) (bmp.getWidth() * ratio), (int) (bmp.getHeight() * ratio));
         canvas.drawBitmap(bmp, null, rect, null);
 
         return result;
@@ -168,16 +169,26 @@ public class ImgUtil {
                 options -= 10;
             } else if (options > 30) {
                 options -= 5;
-            }else if (options>10){
-                options-=3;
-            }else {
+            } else if (options > 10) {
+                options -= 3;
+            } else {
                 options--;
             }
             // 这里压缩options%，把压缩后的数据存放到baos中
             bmp.compress(Bitmap.CompressFormat.JPEG, options, baos);
         }
 
-        byte[] bytes=baos.toByteArray();
-        return BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+        byte[] bytes = baos.toByteArray();
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
+
+    /*
+    *   宽高转换
+    * */
+    public static Bitmap transfer(@NonNull Bitmap bitmap, int w, int h) {
+        Matrix matrix = new Matrix();
+        matrix.postScale((float) w / (float) bitmap.getWidth(), (float) h / (float) bitmap.getHeight());
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+    }
+
 }

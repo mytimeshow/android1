@@ -38,12 +38,19 @@ public class CalculateOrderView extends LinearLayout {
 
     private List<Item> items = new ArrayList<>();
 
-    public void addItem(String type, String name, String price) {
-        items.add(new Item(type, name, price));
+    public CalculateOrderView addItem(String name, String price) {
+        items.add(new Item(null, name, price));
+        return this;
     }
 
-    public void addItem(String name, String price,View.OnClickListener listener) {
+    public CalculateOrderView addItem(String type, String name, String price) {
+        items.add(new Item(type, name, price));
+        return this;
+    }
+
+    public CalculateOrderView addItem(String name, String price,View.OnClickListener listener) {
         items.add(new Item(name, listener, price));
+        return this;
     }
 
     public void build() {

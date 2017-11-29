@@ -5,4 +5,49 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/order_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/bg"
+        />
+    <include layout="@layout/view_split_bar_light"/>
+    <LinearLayout
+        android:id="@+id/order_list_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:paddingRight="@dimen/dp_10"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        >
+
+        <include layout="@layout/space_h"/>
+
+        <TextView
+            android:id="@+id/order_list_delete"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_36"
+            android:background="@drawable/border_rect_black"
+            android:gravity="center"
+            android:text="删除订单"
+            android:textColor="@color/text_dark_gray"
+            android:textSize="@dimen/sp_14"
+            />
+
+        <TextView
+            android:id="@+id/order_list_pay"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_36"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:background="@drawable/bg_rect_red"
+            android:gravity="center"
+            android:text="合并付款"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14"
+            />
+
+    </LinearLayout>
+
 </LinearLayout>

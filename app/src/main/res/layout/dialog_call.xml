@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp_10"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialog_call"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_58"
+        android:background="@drawable/bg_rect_white_big_corner"
+        android:gravity="center"
+        android:text="拨打  123455667890"
+        android:textSize="@dimen/sp_20"
+        android:textColor="@color/text_black"/>
+
+    <TextView
+        android:id="@+id/dialog_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_58"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/bg_rect_white_big_corner"
+        android:gravity="center"
+        android:text="取消"
+        android:textSize="@dimen/sp_20"
+        android:textColor="@color/text_black"/>
+
+</LinearLayout>

@@ -41,7 +41,7 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
     //默认分割线：高度为2px，颜色为灰色
     public RecycleViewDivider(Context context, int orientation) {
         mOrientation = orientation;
-        mDivider=new ColorDrawable(0xffeeeeee);
+        mDivider = new ColorDrawable(0xffeeeeee);
     }
 
     //自定义分割线
@@ -90,6 +90,9 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
         }
     }
 
+    private boolean hadAddTopPadding = false;
+    private boolean hadAddLeftPadding = false;
+
     //绘制横向 item 分割线
     protected void drawHorizontal(Canvas canvas, RecyclerView parent) {
         final int left = parent.getPaddingLeft();
@@ -113,6 +116,11 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
             }
 
             if (drawTop && i == 0) {
+                if (!hadAddTopPadding) {
+                    hadAddTopPadding = true;
+                    child.setPadding(child.getPaddingLeft(), child.getPaddingTop() + mDividerHeight,
+                            child.getPaddingRight(), child.getPaddingBottom());
+                }
                 top = child.getTop() + layoutParams.topMargin;
                 bottom = top + mDividerHeight;
                 if (mDivider != null) {
@@ -162,6 +170,11 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
             }
 
             if (i == 0 && drawLeft) {
+                if (!hadAddLeftPadding) {
+                    hadAddLeftPadding = true;
+                    child.setPadding(child.getPaddingLeft() + mDividerHeight, child.getPaddingTop(),
+                            child.getPaddingRight(), child.getPaddingBottom());
+                }
                 left = child.getLeft();
                 right = left + mDividerHeight;
                 if (mDivider != null) {

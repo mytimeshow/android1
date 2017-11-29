@@ -1,10 +1,15 @@
 package cn.czyugang.tcg.client.utils.app;
 
+import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.StringRes;
+import android.support.v4.app.ActivityCompat;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
@@ -31,15 +36,15 @@ public class AppUtil {
 
     public static void register(Context appContext) {
         context = appContext.getApplicationContext();
-        Status_Bar_Height=getStatusBarHeight();
+        Status_Bar_Height = getStatusBarHeight();
     }
 
 
-    public static void toast(String text){
+    public static void toast(String text) {
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
     }
 
-    public static void toast(int id){
+    public static void toast(int id) {
         Toast.makeText(context, ResUtil.getString(id), Toast.LENGTH_SHORT).show();
     }
 
@@ -52,32 +57,56 @@ public class AppUtil {
         ClipboardManager manager = (ClipboardManager) context.getSystemService(
                 Context.CLIPBOARD_SERVICE);
         manager.setPrimaryClip(clipData);
-        if (successToast!=null&&!successToast.isEmpty()){
-            Toast.makeText(context,successToast, Toast.LENGTH_SHORT).show();
+        if (successToast != null && !successToast.isEmpty()) {
+            Toast.makeText(context, successToast, Toast.LENGTH_SHORT).show();
         }
     }
 
-    public static void copyToClipBoard(String textCopy, @StringRes int resId){
-        copyToClipBoard(textCopy,ResUtil.getString(resId));
+    public static void copyToClipBoard(String textCopy, @StringRes int successToast) {
+        copyToClipBoard(textCopy, ResUtil.getString(successToast));
     }
+
+    public static void copyToClipBoard(String textCopy) {
+        copyToClipBoard(textCopy, "已复制到粘贴板");
+    }
+
+
+    /*
+    *  电话 短信
+    * */
+    public static void call(Context context, String phone) {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(context, "app没有打电话权限", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
+            context.startActivity(intent);
+        }
+    }
+
+    public static void sms(Context context, String phone, String content) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + phone));
+        intent.putExtra("sms_body", content);
+        context.startActivity(intent);
+    }
+
 
     /*
      * 软键盘 显示与隐藏
      */
-    public static void hideKeyBoard(View target){
+    public static void hideKeyBoard(View target) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
             imm.hideSoftInputFromWindow(target.getWindowToken(), 0);
         }
     }
 
-    public static void showKeyBoard(final EditText target, long delay){
+    public static void showKeyBoard(final EditText target, long delay) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
-            if (delay==0){
+            if (delay == 0) {
                 target.requestFocus();
                 imm.showSoftInput(target, 0);
-            }else {
+            } else {
                 Observable.just(1)
                         .delay(delay, TimeUnit.MILLISECONDS)
                         .observeOn(AndroidSchedulers.mainThread())
@@ -89,21 +118,20 @@ public class AppUtil {
         }
     }
 
-    public static void showKeyBoardAndSaveHeight(EditText target){
+    public static void showKeyBoardAndSaveHeight(EditText target) {
 
     }
 
-    public static void showKeyBoard(EditText target){
-        showKeyBoard(target,200L);
+    public static void showKeyBoard(EditText target) {
+        showKeyBoard(target, 200L);
     }
 
-    public static void toggleSoftInput(View target){
+    public static void toggleSoftInput(View target) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
-            imm.toggleSoftInputFromWindow(target.getWindowToken(),0, 0);
+            imm.toggleSoftInputFromWindow(target.getWindowToken(), 0, 0);
         }
     }
-
 
 
     /*
