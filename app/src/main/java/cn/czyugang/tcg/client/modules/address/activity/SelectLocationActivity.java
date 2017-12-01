@@ -1,5 +1,6 @@
 package cn.czyugang.tcg.client.modules.address.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -44,6 +45,7 @@ import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseRecyclerAdapter;
 import cn.czyugang.tcg.client.base.DefaultItemDecoration;
 import cn.czyugang.tcg.client.common.LocationManager;
+import cn.czyugang.tcg.client.common.MyApplication;
 import cn.czyugang.tcg.client.modules.address.adapter.SelectLocationAdapter;
 import cn.czyugang.tcg.client.widget.MapView;
 
@@ -62,6 +64,10 @@ public class SelectLocationActivity extends BaseActivity implements View.OnFocus
     private final String CTGR_ALL = "汽车服务|汽车销售|汽车维修|摩托车服务|餐饮服务|购物服务|" +
             "生活服务|体育休闲服务|医疗保健服务|住宿服务|风景名胜|商务住宅|政府机构及社会团体|" +
             "科教文化服务|交通设施服务|金融保险服务|公司企业|道路附属设施|地名地址信息|公共设施";
+    @BindView(R.id.title)
+    View titleL ;
+    @BindView(R.id.title_text)
+    TextView titleText;
     @BindView(R.id.et_search)
     EditText et_search;
     @BindView(R.id.tv_cancel)
@@ -89,6 +95,33 @@ public class SelectLocationActivity extends BaseActivity implements View.OnFocus
     private String ctgr = CTGR_ALL;
     private PoiItem mPoiItem;
 
+    public static void startSelectLocationActivity(Activity activity,int requestCode){
+        Intent intent=new Intent(MyApplication.getContext(),SelectLocationActivity.class);
+        activity.startActivityForResult(intent,requestCode);
+    }
+
+    public static void startSelectLocationActivity(Activity activity,int requestCode,String title,String searchHint){
+        Intent intent=new Intent(MyApplication.getContext(),SelectLocationActivity.class);
+        intent.putExtra("title",title);
+        intent.putExtra("searchHint",searchHint);
+        activity.startActivityForResult(intent,requestCode);
+    }
+
+    private void parseIntentData(){
+        String title=getIntent().getStringExtra("title");
+        String searchHint=getIntent().getStringExtra("searchHint");
+        if (title!=null){
+            titleText.setText(title);
+            findViewById(R.id.iv_back).setVisibility(View.GONE);
+        }else {
+            titleL.setVisibility(View.GONE);
+            findViewById(R.id.title_bar).setVisibility(View.GONE);
+        }
+        if (searchHint!=null){
+            et_search.setHint(searchHint);
+        }
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +130,7 @@ public class SelectLocationActivity extends BaseActivity implements View.OnFocus
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
         mapView.onCreate(savedInstanceState);
         initView();
+        parseIntentData();
     }
 
     @Override
@@ -309,6 +343,14 @@ public class SelectLocationActivity extends BaseActivity implements View.OnFocus
         intent.putExtra(KEY_STREET, regeocodeResult.getRegeocodeAddress().getTownship());
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    public static String getStreet(Intent intent){
+        return intent.getStringExtra(KEY_STREET);
+    }
+
+    public static PoiItem getLocation(Intent intent){
+        return intent.getParcelableExtra(KEY_LOCATION);
     }
 
     @Override

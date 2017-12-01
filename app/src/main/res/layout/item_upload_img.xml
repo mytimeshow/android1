@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_88"
+    android:layout_height="@dimen/dp_88">
+
+    <cn.czyugang.tcg.client.utils.img.ImgView
+        android:id="@+id/item_upload_img"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_80"
+        android:layout_gravity="bottom|left"
+        />
+
+    <ImageView
+        android:id="@+id/item_upload_delete"
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_16"
+        android:layout_gravity="top|right"
+        android:src="@drawable/icon_delete"/>
+
+</FrameLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <FrameLayout
+        style="@style/title_title">
+
+        <ImageView
+            style="@style/title_back"/>
+
+        <TextView
+            style="@style/title_text"
+            android:text="申请状态"/>
+    </FrameLayout>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <TextView
+        android:id="@+id/apply_store_status"
+        style="@style/text_14_black"
+        android:layout_marginTop="@dimen/dp_68"
+        android:gravity="center"
+        android:text="您的申请已经提交，正在审核中。\n请耐心等待"
+        android:lineSpacingMultiplier="1.4"
+        />
+
+    <TextView
+        android:id="@+id/apply_store_status_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_44"
+        android:gravity="center"
+        android:text="业务经理：张圳玉\n联系电话：13635682586"
+        android:textColor="@color/text_gray"
+        android:textSize="@dimen/sp_12"
+        android:lineSpacingMultiplier="1.4"
+        />
+
+    <include layout="@layout/space_v"/>
+
+    <TextView
+        android:id="@+id/commit"
+        style="@style/button_bottom"
+        android:text="重新修改"
+        />
+
+</LinearLayout>

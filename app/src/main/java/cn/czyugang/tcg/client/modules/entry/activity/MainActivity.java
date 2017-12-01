@@ -63,6 +63,10 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    public void selectFragment(int index){
+        bottomBar.setSelectWithFrame(index);
+    }
+
     private void onChangeFragment(int index){
 
     }

@@ -31,6 +31,7 @@
     </style>
 
     <style name="title_text">
+        <item name="android:id">@id/title_text</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center</item>
@@ -85,6 +86,13 @@
         <item name="android:layout_gravity">center_vertical</item>
     </style>
 
+    <style name="arrow_down">
+        <item name="android:layout_width">@dimen/dp_14</item>
+        <item name="android:layout_height">@dimen/dp_14</item>
+        <item name="android:src">@drawable/icon_arrow_down</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
 
     <!--    item    40dp    -->
     <style name="item_40_group">
@@ -122,6 +130,16 @@
     </style>
 
 
+    <!--    item    40dp    -->
+    <style name="item_50_group">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_50</item>
+        <item name="android:paddingLeft">@dimen/dp_10</item>
+        <item name="android:paddingRight">@dimen/dp_10</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
 
     <!--文字按钮-->
     <style name="button_100">
@@ -135,38 +153,30 @@
         <item name="android:textColor">@color/text_dark_gray</item>
     </style>
 
+    <style name="button_bottom">
+        <item name="android:id">@id/commit</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_40</item>
+        <item name="android:layout_margin">@dimen/dp_10</item>
+        <item name="android:background">@drawable/bg_rect_red</item>
+        <item name="android:text">提交</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <style name="item_edit">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginLeft">@dimen/dp_15</item>
+        <item name="android:background">@null</item>
+        <item name="android:gravity">center_vertical|left</item>
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:hint">请输入</item>
+        <item name="android:textColorHint">@color/text_light_gray</item>
+    </style>
 
 
     <!--图标-->
@@ -191,6 +201,42 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/text_dark_gray</item>
         <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
+    <style name="text_14_gray">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_gray</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
+    <style name="text_14_middle_gray">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_middle_gray</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
+    <style name="text_14_light_gray">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_light_gray</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
+
+    <style name="text_12_dark_gray">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_dark_gray</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
+    <style name="text_12_gray">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_gray</item>
+        <item name="android:textSize">@dimen/sp_12</item>
     </style>
 
     <style name="text_16_black">

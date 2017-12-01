@@ -23,7 +23,7 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
     private Paint mPaint;
     private Drawable mDivider;
     private int mDividerHeight = 2;//分割线高度，默认为1px
-    private int mDividerWidth = 2;//分割线高度，默认为1px
+    private int mDividerWidth = 2;//分割线宽度，默认为1px
     private int mOrientation;//列表的方向：LinearLayoutManager.VERTICAL或LinearLayoutManager.HORIZONTAL
     private int offsetType = 0;//0 不偏移；1 右或下；2 左或上；3 左右或上下；4 所有
     private int fromTop = -1;
@@ -55,9 +55,9 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
     }
 
     //自定义分割线
-    public RecycleViewDivider(Context context, int orientation, int dividerHeight, int dividerColor) {
+    public RecycleViewDivider(Context context, int orientation, int dividerSize, int dividerColor) {
         this(context, orientation);
-        mDividerHeight = dividerHeight;
+        mDividerHeight = mDividerWidth = dividerSize;
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setColor(dividerColor);
         mPaint.setStyle(Paint.Style.FILL);
@@ -97,9 +97,8 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
     protected void drawHorizontal(Canvas canvas, RecyclerView parent) {
         final int left = parent.getPaddingLeft();
         final int right = parent.getMeasuredWidth() - parent.getPaddingRight();
-        final int childSize = parent.getChildCount();
         List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < childSize; i++) {
+        for (int i = 0,childSize = parent.getChildCount(); i < childSize; i++) {
             if (!drawBottom && i == childSize - 1) return;
             final View child = parent.getChildAt(i);
             RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
@@ -154,7 +153,7 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
             final View child = parent.getChildAt(i);
             RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
             int left = child.getRight() + layoutParams.rightMargin;
-            int right = left + mDividerHeight;
+            int right = left + mDividerWidth;
             if (list.contains(left)) continue;
             list.add(left);
             if (!drawRight) {
@@ -172,11 +171,11 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
             if (i == 0 && drawLeft) {
                 if (!hadAddLeftPadding) {
                     hadAddLeftPadding = true;
-                    child.setPadding(child.getPaddingLeft() + mDividerHeight, child.getPaddingTop(),
+                    child.setPadding(child.getPaddingLeft() + mDividerWidth, child.getPaddingTop(),
                             child.getPaddingRight(), child.getPaddingBottom());
                 }
                 left = child.getLeft();
-                right = left + mDividerHeight;
+                right = left + mDividerWidth;
                 if (mDivider != null) {
                     mDivider.setBounds(left, top, right, bottom);
                     mDivider.draw(canvas);

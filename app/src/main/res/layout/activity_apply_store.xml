@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        style="@style/title_title">
+
+        <ImageView
+            style="@style/title_back"/>
+
+        <TextView
+            style="@style/title_text"
+            android:text="入驻申请"/>
+    </FrameLayout>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/item_40_group">
+
+                <TextView
+                    style="@style/text_14_black"
+                    android:text="商户信息"/>
+            </LinearLayout>
+
+            <include layout="@layout/view_split_bar_light_margin"/>
+
+            <!--商户名称-->
+            <LinearLayout
+                style="@style/item_50_group">
+
+                <TextView
+                    style="@style/text_14_black"
+                    android:text="商户名称"/>
+
+                <EditText
+                    android:id="@+id/apply_store_merchant_name"
+                    style="@style/item_edit"
+                    android:hint="输入商户名称"
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/view_split_bar_light_margin"/>
+            <!--商户类型-->
+            <LinearLayout
+                style="@style/item_50_group">
+
+                <TextView
+                    style="@style/text_14_black"
+                    android:text="商户类型"/>
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/apply_store_merchant_type_personal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="个体商户"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/sp_14"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/apply_store_merchant_type_enterprise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:gravity="center_vertical"
+                        android:text="企业商户"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/sp_14"
+                        />
+                </RadioGroup>
+            </LinearLayout>
+
+            <include layout="@layout/view_split_bar_light_margin"/>
+            <!--联系人-->
+            <LinearLayout
+                style="@style/item_50_group">
+
+                <TextView
+                    style="@style/text_14_black"
+                    android:text="联系人"/>
+
+                <EditText
+                    android:id="@+id/apply_store_user_name"
+                    style="@style/item_edit"
+                    android:hint="输入联系人"
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/view_split_bar_light_margin"/>
+            <!--联系电话-->
+            <LinearLayout
+                style="@style/item_50_group">
+
+                <TextView
+                    style="@style/text_14_black"
+                    android:text="联系电话"/>
+
+                <EditText
+                    android:id="@+id/apply_store_user_phone"
+                    style="@style/item_edit"
+                    android:hint="输入联系电话"
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/view_split_bar_light_big"/>
+
+            <LinearLayout
+                style="@style/item_40_group">
+
+                <TextView
+                    style="@style/text_14_black"
+                    android:text="店铺信息"/>
+            </LinearLayout>
+
+            <include layout="@layout/view_split_bar_light_margin"/>
+            <!--店铺名称-->
+            <LinearLayout
+                style="@style/item_50_group">
+
+                <TextView
+                    style="@style/text_14_black"
+                    android:text="店铺名称"/>
+
+                <EditText
+                    android:id="@+id/apply_store_store_name"
+                    style="@style/item_edit"
+                    android:hint="输入店铺名称"
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/view_split_bar_light_margin"/>
+            <!--位置-->
+            <LinearLayout
+                android:id="@+id/apply_store_store_location"
+                style="@style/item_50_group">
+
+                <TextView
+                    style="@style/text_14_black"
+                    android:text="位置"/>
+
+                <TextView
+                    android:id="@+id/apply_store_store_location_text"
+                    style="@style/text_14_black"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:text=""/>
+
+                <include layout="@layout/space_h"/>
+
+                <ImageView
+                    style="@style/arrow_right"
+                    android:layout_marginRight="1px"/>
+            </LinearLayout>
+
+            <include layout="@layout/view_split_bar_light_margin"/>
+            <!--详细地址-->
+            <LinearLayout
+                style="@style/item_50_group">
+
+                <TextView
+                    style="@style/text_14_black"
+                    android:text="详细地址"/>
+
+                <EditText
+                    android:id="@+id/apply_store_store_detail_location"
+                    style="@style/item_edit"
+                    android:hint="输入店铺详细地址"
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/view_split_bar_light_margin"/>
+            <!--店铺主营-->
+            <LinearLayout
+                style="@style/item_50_group"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    style="@style/text_14_black"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:text="店铺主营"/>
+
+                <EditText
+                    android:id="@+id/apply_store_store_management"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_56"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginBottom="@dimen/dp_15"
+                    android:layout_marginRight="@dimen/dp_12"
+                    android:background="@drawable/bg_rect"
+                    android:padding="@dimen/dp_6"
+                    android:gravity="left|top"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/text_black"
+                    android:hint="简单描述店铺经营内容"
+                    android:textColorHint="@color/text_light_gray"
+                    />
+
+            </LinearLayout>
+
+            <include layout="@layout/view_split_bar_light_big"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/apply_store_commit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@drawable/bg_rect_red"
+            android:gravity="center"
+            android:text="提交"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16"/>
+    </FrameLayout>
+
+</LinearLayout>

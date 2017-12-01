@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
@@ -62,5 +63,15 @@ public class ImgView extends SimpleDraweeView {
         ImageLoader.loadImageToView(imgId,this);
     }
 
+    public void file(String path){
+        setImageURI("file://"+path);
+    }
 
+    public void drawableId(@DrawableRes int resId){
+        setImageURI("res://drawable/" + resId);
+    }
+
+    public void mipmapId(@DrawableRes int resId){
+        setImageURI("res://mipmap/" + resId);
+    }
 }

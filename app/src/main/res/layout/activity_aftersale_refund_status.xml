@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical">
+
+    <FrameLayout
+        style="@style/title_title">
+
+        <ImageView
+            style="@style/title_back"/>
+
+        <TextView
+            style="@style/title_text"
+            android:text="钱款去向"/>
+    </FrameLayout>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_110"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/refund_status_img"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginTop="@dimen/dp_15"
+            android:src="@drawable/icon_successful"/>
+
+        <TextView
+            android:id="@+id/refund_status_text"
+            style="@style/text_16_black"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="@dimen/dp_12"
+            android:text="退款成功"
+            />
+    </FrameLayout>
+<!--提交时间-->
+    <LinearLayout
+        style="@style/item_50_group"
+        android:layout_marginTop="@dimen/dp_10">
+        <TextView
+            style="@style/text_14_gray"
+            android:text="提交时间"/>
+        <include layout="@layout/space_h"/>
+        <TextView
+            android:id="@+id/refund_status_time_apply"
+            style="@style/text_14_black"
+            android:text="2017-08-31 16:33"/>
+    </LinearLayout>
+<!--到账时间-->
+    <include layout="@layout/view_split_bar_light_margin_bg"/>
+    <LinearLayout
+        android:id="@+id/refund_status_time_getL"
+        style="@style/item_50_group">
+        <TextView
+            style="@style/text_14_gray"
+            android:text="到账时间"/>
+        <include layout="@layout/space_h"/>
+        <TextView
+            android:id="@+id/refund_status_time_get"
+            style="@style/text_14_black"
+            android:text="2017-08-31 16:34"/>
+    </LinearLayout>
+
+    <include layout="@layout/view_split_bar_light_margin_bg"/>
+    <LinearLayout
+        style="@style/item_50_group">
+        <TextView
+            style="@style/text_14_gray"
+            android:text="银行信息"/>
+        <include layout="@layout/space_h"/>
+        <TextView
+            android:id="@+id/refund_status_bank"
+            style="@style/text_14_black"
+            android:text="工商银行（尾号XXXX）"/>
+    </LinearLayout>
+    <include layout="@layout/view_split_bar_light_margin_bg"/>
+
+    <!--退款金额-->
+    <LinearLayout
+        style="@style/item_50_group">
+        <TextView
+            style="@style/text_14_gray"
+            android:text="退款金额"/>
+        <include layout="@layout/space_h"/>
+        <TextView
+            android:id="@+id/refund_status_money"
+            style="@style/text_14_black"
+            android:text="￥99.89"/>
+    </LinearLayout>
+
+    <include layout="@layout/view_split_bar_light_margin_bg"/>
+    <!--交易号-->
+    <LinearLayout
+        android:id="@+id/refund_status_idL"
+        style="@style/item_50_group">
+        <TextView
+            style="@style/text_14_gray"
+            android:text="交易号"/>
+        <include layout="@layout/space_h"/>
+        <TextView
+            android:id="@+id/refund_status_id"
+            style="@style/text_14_black"
+            android:text="170831164ABCD1"/>
+    </LinearLayout>
+
+</LinearLayout>

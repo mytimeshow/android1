@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical">
+
+    <FrameLayout
+        style="@style/title_title">
+
+        <ImageView
+            style="@style/title_back"/>
+
+        <TextView
+            style="@style/title_text"
+            android:text="售后详情"/>
+    </FrameLayout>
+
+    <!--状态-->
+    <LinearLayout
+        android:id="@+id/aftersale_statusL"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_78"
+        android:background="@color/main_light_blue"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/aftersale_status"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:paddingBottom="@dimen/dp_2"
+            android:text="订单退款中，商家拒绝退款申请>"
+            android:textColor="@color/white"
+            />
+
+        <TextView
+            android:id="@+id/aftersale_status_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:paddingTop="@dimen/dp_4"
+            android:text="请在XX:XX:XX内处理，超时未处理将自动撤销申请"
+            android:textColor="@color/white"
+            />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--店铺名称-->
+            <LinearLayout
+                style="@style/item_40_group"
+                android:layout_marginTop="@dimen/dp_10">
+
+                <TextView
+                    style="@style/text_14_middle_gray"
+                    android:text="店铺名称"/>
+
+                <TextView
+                    android:id="@+id/aftersale_store_name"
+                    style="@style/text_14_black"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:text="喵喵喵喵喵星人生活坊"/>
+            </LinearLayout>
+
+            <!--售后编号-->
+            <LinearLayout
+                style="@style/item_40_group"
+                android:layout_height="@dimen/dp_28"
+                android:layout_marginTop="@dimen/dp_0.5"
+                android:paddingTop="@dimen/dp_8">
+
+                <TextView
+                    style="@style/text_14_middle_gray"
+                    android:text="售后编号"/>
+
+                <TextView
+                    android:id="@+id/aftersale_service_id"
+                    style="@style/text_14_dark_gray"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:text="170326095ABCD1"/>
+            </LinearLayout>
+
+            <!--售后类型-->
+            <LinearLayout
+                style="@style/item_40_group"
+                android:layout_height="@dimen/dp_28">
+
+                <TextView
+                    style="@style/text_14_middle_gray"
+                    android:text="售后类型"/>
+
+                <TextView
+                    android:id="@+id/aftersale_type"
+                    style="@style/text_14_dark_gray"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:text="仅退款"/>
+            </LinearLayout>
+
+            <!--退款金额-->
+            <LinearLayout
+                style="@style/item_40_group"
+                android:layout_height="@dimen/dp_28">
+
+                <TextView
+                    style="@style/text_14_middle_gray"
+                    android:text="退款金额"/>
+
+                <TextView
+                    android:id="@+id/aftersale_money"
+                    style="@style/text_14_dark_gray"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:text="￥99.89"/>
+            </LinearLayout>
+
+            <!--售后原因-->
+            <LinearLayout
+                style="@style/item_40_group"
+                android:layout_height="@dimen/dp_28">
+
+                <TextView
+                    style="@style/text_14_middle_gray"
+                    android:text="售后原因"/>
+
+                <TextView
+                    android:id="@+id/aftersale_reason"
+                    style="@style/text_14_dark_gray"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:text="质量问题"/>
+            </LinearLayout>
+
+            <!--补充说明-->
+            <LinearLayout
+                style="@style/item_40_group"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:minHeight="@dimen/dp_28"
+                android:paddingBottom="@dimen/dp_8"
+                android:paddingTop="@dimen/dp_8">
+
+                <TextView
+                    style="@style/text_14_middle_gray"
+                    android:text="补充说明"/>
+
+                <TextView
+                    android:id="@+id/aftersale_explain"
+                    style="@style/text_14_dark_gray"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:lineSpacingMultiplier="1.4"
+                    android:text="喵喵喵喵喵瞄喵喵喵喵喵喵喵喵喵喵喵喵喵\n喵\n喵\n喵\n喵"/>
+            </LinearLayout>
+
+            <!--申请时间-->
+            <LinearLayout
+                style="@style/item_40_group"
+                android:layout_height="@dimen/dp_28"
+                android:layout_marginTop="@dimen/dp_0.5">
+
+                <TextView
+                    style="@style/text_14_middle_gray"
+                    android:text="申请时间"/>
+
+                <TextView
+                    android:id="@+id/aftersale_time_apply"
+                    style="@style/text_14_dark_gray"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:text="2017-03-26 09:09:09"/>
+            </LinearLayout>
+
+            <!--退款时间-->
+            <LinearLayout
+                style="@style/item_40_group"
+                android:layout_height="@dimen/dp_28"
+                android:layout_marginTop="@dimen/dp_0.5">
+
+                <TextView
+                    style="@style/text_14_middle_gray"
+                    android:text="退款时间"/>
+
+                <TextView
+                    android:id="@+id/aftersale_time_refund"
+                    style="@style/text_14_dark_gray"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:text="2017-03-26 10:10:10"/>
+            </LinearLayout>
+            <!--关闭时间-->
+            <LinearLayout
+                style="@style/item_40_group"
+                android:layout_height="@dimen/dp_28"
+                android:layout_marginTop="@dimen/dp_0.5">
+
+                <TextView
+                    style="@style/text_14_middle_gray"
+                    android:text="关闭时间"/>
+
+                <TextView
+                    android:id="@+id/aftersale_time_close"
+                    style="@style/text_14_dark_gray"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:text="2017-03-26 10:10:10"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <include layout="@layout/space_h"/>
+
+        <TextView
+            android:id="@+id/aftersale_revoke"
+            style="@style/button_100"
+            android:text="撤销申请"/>
+
+        <TextView
+            android:id="@+id/aftersale_platform_interpose"
+            style="@style/button_100"
+            android:text="平台介入"/>
+
+        <TextView
+            android:id="@+id/aftersale_return_goods"
+            style="@style/button_100"
+            android:text="退货"/>
+
+    </LinearLayout>
+
+</LinearLayout>

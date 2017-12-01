@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <FrameLayout
+        style="@style/title_title">
+
+        <ImageView
+            style="@style/title_back"/>
+
+        <TextView
+            style="@style/title_text"
+            android:text="退款退货申请"/>
+    </FrameLayout>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <include layout="@layout/view_item_good"/>
+
+            <include layout="@layout/view_split_bar_light"/>
+
+            <!--商品状态-->
+            <LinearLayout
+                style="@style/item_40_group">
+
+                <TextView
+                    style="@style/item_40_name"
+                    android:text="商品状态"
+                    android:textColor="@color/text_dark_gray"
+                    />
+
+                <EditText
+                    android:id="@+id/refund_goods_status"
+                    style="@style/item_edit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="请选择商品状态"
+                    android:inputType="text"
+                    android:focusable="false"
+                    />
+
+                <ImageView
+                    android:id="@+id/refund_goods_status_arrow"
+                    style="@style/arrow_down"/>
+
+            </LinearLayout>
+
+            <include layout="@layout/view_split_bar_light_margin"/>
+
+            <!--退款原因-->
+            <LinearLayout
+                style="@style/item_40_group">
+
+                <TextView
+                    style="@style/item_40_name"
+                    android:text="退款原因"
+                    android:textColor="@color/text_dark_gray"
+                    />
+
+                <EditText
+                    android:id="@+id/refund_reason"
+                    style="@style/item_edit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="请选择退款原因"
+                    android:inputType="text"
+                    android:focusable="false"
+                    />
+
+                <ImageView
+                    style="@style/arrow_down"/>
+
+            </LinearLayout>
+
+            <include layout="@layout/view_split_bar_light_margin"/>
+
+
+            <!--退款金额-->
+            <LinearLayout
+                style="@style/item_40_group">
+
+                <TextView
+                    style="@style/item_40_name"
+                    android:text="退款金额"
+                    android:textColor="@color/text_dark_gray"
+                    />
+
+                <EditText
+                    android:id="@+id/refund_money_input"
+                    style="@style/item_edit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="请输入退款金额"
+                    android:inputType="numberDecimal"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/refund_money_max"
+                style="@style/text_12_gray"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_38"
+                android:background="@color/bg"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_8"
+                android:text="最多退￥199.98，含配送费￥3.00"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_10"
+                android:orientation="horizontal">
+                <TextView
+                    style="@style/text_14_dark_gray"
+                    android:text="退款说明"
+                    />
+                <TextView
+                    style="@style/text_14_dark_gray"
+                    android:layout_marginLeft="@dimen/dp_18"
+                    android:text="选填"
+                    android:textColor="@color/text_light_gray"
+                    />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/refund_explain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/dp_50"
+                android:background="@null"
+                android:padding="@dimen/dp_10"
+                android:maxLength="400"
+                android:textColor="@color/text_dark_gray"
+                />
+
+            <include layout="@layout/view_split_bar_light_big"/>
+
+            <LinearLayout
+                style="@style/item_40_group">
+                <TextView
+                    style="@style/text_14_dark_gray"
+                    android:text="上传凭证"/>
+                <TextView
+                    style="@style/text_14_light_gray"
+                    android:layout_marginLeft="@dimen/dp_13"
+                    android:text="最多5张"/>
+            </LinearLayout>
+
+            <include layout="@layout/view_split_bar_light"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/refund_upload_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dp_16"
+                android:paddingBottom="@dimen/dp_16"
+                android:paddingLeft="@dimen/dp_10"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_100"
+                android:background="@color/bg"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <TextView
+        style="@style/button_bottom"
+        android:text="提交申请"/>
+
+</LinearLayout>

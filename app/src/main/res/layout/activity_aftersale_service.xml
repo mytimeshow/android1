@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <FrameLayout
+        style="@style/title_title">
+
+        <ImageView
+            style="@style/title_back"/>
+
+        <TextView
+            style="@style/title_text"
+            android:text="服务选择"/>
+    </FrameLayout>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <include layout="@layout/view_item_good"/>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <!--仅退款-->
+    <LinearLayout
+        android:id="@+id/aftersale_refundL"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_64"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_10">
+
+        <ImageView
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:src="@drawable/icon_refund"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/text_14_black"
+                android:text="仅退款"/>
+
+            <TextView
+                style="@style/text_12_gray"
+                android:layout_marginTop="@dimen/dp_8"
+                android:text="未收到商品，或与卖家协商同意前提下申请"/>
+
+        </LinearLayout>
+
+        <ImageView
+            style="@style/arrow_right"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"
+        android:background="@color/white">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0.5"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:background="@color/bg"
+            />
+    </FrameLayout>
+
+    <!--退货退款-->
+    <LinearLayout
+        android:id="@+id/aftersale_return_goods"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_64"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_10">
+
+       <include layout="@layout/view_icon_exit"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/text_14_black"
+                android:text="退货退款"/>
+
+            <TextView
+                style="@style/text_12_gray"
+                android:layout_marginTop="@dimen/dp_8"
+                android:text="已收到商品，需要返还已收到的商品"/>
+
+        </LinearLayout>
+
+        <ImageView
+            style="@style/arrow_right"/>
+
+    </LinearLayout>
+
+</LinearLayout>

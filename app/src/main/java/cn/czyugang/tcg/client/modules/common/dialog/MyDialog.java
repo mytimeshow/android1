@@ -2,6 +2,7 @@ package cn.czyugang.tcg.client.modules.common.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -13,11 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
+
 
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
+import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
+import cn.czyugang.tcg.client.utils.img.QRCode;
 
 /**
  * @author ruiaa
@@ -29,12 +34,13 @@ public class MyDialog extends DialogFragment {
     private Builder builder;
     private View rootView;
     private View.OnClickListener toDismissListener=null;
+    private BindView bindView=null;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCanceledOnTouchOutside(builder.canceledOnTouchOutside);
         Window window = dialog.getWindow();
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         return dialog;
@@ -64,6 +70,7 @@ public class MyDialog extends DialogFragment {
         } else {
             initTitleMsg(inflater, container);
         }
+        if (bindView!=null) bindView.bindView(this);
         return rootView;
     }
 
@@ -115,6 +122,52 @@ public class MyDialog extends DialogFragment {
         return this;
     }
 
+    public MyDialog img(int id,int imgRes){
+        ((ImageView) rootView.findViewById(id)).setImageResource(imgRes);
+        return this;
+    }
+
+    public MyDialog img(int id, Bitmap bitmap){
+        ((ImageView) rootView.findViewById(id)).setImageBitmap(bitmap);
+        return this;
+    }
+
+    public MyDialog bindView(BindView bindView) {
+        this.bindView = bindView;
+        return this;
+    }
+
+    public static void phoneDialog(Activity activity,String phone){
+        MyDialog.Builder.newBuilder(activity)
+                .custom(R.layout.dialog_call)
+                .width(-1)
+                .gravity(Gravity.BOTTOM)
+                .build()
+                .show()
+                .bindView(myDialog -> {
+                    myDialog.text(R.id.dialog_call, "13138705415")
+                            .onClick(R.id.dialog_call, v -> AppUtil.call(activity, phone))
+                            .onClick(R.id.dialog_cancel);
+                });
+    }
+
+    public static void qrCodeDialog(Activity activity,final String qrStr){
+        MyDialog.Builder.newBuilder(activity)
+                .custom(R.layout.dialog_image)
+                .widthPercent(0.84f)
+                .height((int)(ResUtil.getWidthInPx()*0.84f))
+                .build()
+                .show()
+                .bindView(myDialog -> {
+                    myDialog.img(R.id.dialog_image, QRCode.createQRImage(qrStr))
+                            .onClick(R.id.dialog_image);
+                });
+    }
+
+    public static interface BindView{
+        void bindView(MyDialog myDialog);
+    }
+
     public static class Builder {
 
         private MyDialog dialog;
@@ -142,6 +195,8 @@ public class MyDialog extends DialogFragment {
         private int gravity = Gravity.CENTER;
         private int offsetX = 0;
         private int offsetY = 0;
+
+        private boolean canceledOnTouchOutside=false;
 
         public Builder(Activity activity) {
             width = ResUtil.getWidthInPx() - ResUtil.getDimenInPx(R.dimen.dp_40);
@@ -247,8 +302,8 @@ public class MyDialog extends DialogFragment {
         }
 
         /*
-                *   整体大小
-                * */
+         *   整体大小
+         * */
         public Builder width(int width) {
             this.width = width;
             return this;
@@ -259,23 +314,37 @@ public class MyDialog extends DialogFragment {
             return this;
         }
 
+        public Builder widthPercent(float widthPercent) {
+            this.width = (int)(ResUtil.getWidthInPx()*widthPercent);
+            return this;
+        }
+
+        public Builder heightPercent(float heightPercent) {
+            this.height = (int)(ResUtil.getHeightInPx()*heightPercent);
+            return this;
+        }
+
         /*
         *   位置
         * */
-        public Builder setGravity(int gravity) {
+        public Builder gravity(int gravity) {
             this.gravity = gravity;
             return this;
         }
 
-        public Builder setOffsetX(int offsetX) {
+        public Builder offsetX(int offsetX) {
             this.offsetX = offsetX;
             return this;
         }
 
-        public Builder setOffsetY(int offsetY) {
+        public Builder offsetY(int offsetY) {
             this.offsetY = offsetY;
             return this;
         }
 
+        public Builder canceledOnTouchOutside(boolean canceledOnTouchOutside) {
+            this.canceledOnTouchOutside = canceledOnTouchOutside;
+            return this;
+        }
     }
 }

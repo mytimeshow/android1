@@ -5,15 +5,36 @@
               android:orientation="vertical">
 
     <TextView
-        android:id="@+id/homepage_store"
+        android:id="@+id/homepage_store1"
         android:layout_width="@dimen/dp_180"
         android:layout_height="@dimen/dp_40"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dp_200"
+        android:layout_marginTop="@dimen/dp_120"
         android:background="@color/main_white"
         android:gravity="center"
         android:text="店铺：919122791461220353"
         />
+    <TextView
+        android:id="@+id/homepage_store2"
+        android:layout_width="@dimen/dp_180"
+        android:layout_height="@dimen/dp_40"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp_8"
+        android:background="@color/main_white"
+        android:gravity="center"
+        android:text="店铺：930278266785427456"
+        />
+    <TextView
+        android:id="@+id/homepage_store3"
+        android:layout_width="@dimen/dp_180"
+        android:layout_height="@dimen/dp_40"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp_8"
+        android:background="@color/main_white"
+        android:gravity="center"
+        android:text="店铺：918003175762620416"
+        />
+
 
 
     <TextView
@@ -25,6 +46,28 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="确认订单"
+        />
+
+    <TextView
+        android:id="@+id/homepage_aftersale_list"
+        android:layout_width="@dimen/dp_180"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_40"
+        android:background="@color/main_white"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="售后申请列表"
+        />
+
+    <TextView
+        android:id="@+id/homepage_aftersale_service"
+        android:layout_width="@dimen/dp_180"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_8"
+        android:background="@color/main_white"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="售后服务"
         />
 
 </LinearLayout>

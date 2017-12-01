@@ -93,7 +93,7 @@ public class Store {
     public List<String> tagList = new ArrayList<>();
     public double score = 0;
     public double aveDeliveryTime = 0;
-    public DeliveryInfo logisticsDelivery = null;
+    public DeliveryInfo logisticsDelivery = new DeliveryInfo();
 
     public void init(JSONObject jsonObject) {
         if (jsonObject == null) return;
@@ -131,9 +131,11 @@ public class Store {
         return businessStatus.endsWith("YES");
     }
 
+
+
     public static class DeliveryInfo {
-        public double startDeliveryPrice;//起送价
-        public double deliveryPrice;   // 配送费
+        public double startDeliveryPrice=0;//起送价
+        public double deliveryPrice=0;   // 配送费
         public String deliveryTime = "";// 配送时间
     }
 }

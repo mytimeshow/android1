@@ -8,10 +8,13 @@ import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.modules.common.dialog.LoadingDialog;
+import cn.czyugang.tcg.client.modules.entry.activity.MainActivity;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
@@ -23,6 +26,7 @@ import io.reactivex.disposables.Disposable;
  */
 
 public class BaseActivity extends AppCompatActivity implements BaseView {
+    private static List<BaseActivity> activityList = new ArrayList<>();
     protected Context context;
     private LoadingDialog mLoadingDialog;
     private Toast mToast;
@@ -31,6 +35,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activityList.add(this);
         context = getApplicationContext();
     }
 
@@ -77,10 +82,26 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        activityList.remove(this);
         mCompositeDisposable.dispose();
     }
 
-    protected abstract class NetObserver<T> implements Observer<T>  {
+    public static MainActivity clearAllActivityExceptMain() {
+        MainActivity mainActivity = null;
+        for (BaseActivity baseActivity : activityList) {
+            if (baseActivity instanceof MainActivity) {
+                if (mainActivity != null) mainActivity.finish();
+                mainActivity = (MainActivity) baseActivity;
+            } else {
+                baseActivity.finish();
+            }
+        }
+        activityList.clear();
+        if (mainActivity != null) activityList.add(mainActivity);
+        return mainActivity;
+    }
+
+    protected abstract class NetObserver<T> implements Observer<T> {
         @Override
         public void onSubscribe(@NonNull Disposable d) {
             mCompositeDisposable.add(d);

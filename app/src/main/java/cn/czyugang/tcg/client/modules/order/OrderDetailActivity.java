@@ -31,6 +31,7 @@ import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.common.MyApplication;
 import cn.czyugang.tcg.client.entity.Good;
 import cn.czyugang.tcg.client.entity.Order;
+import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgUtil;
@@ -168,9 +169,14 @@ public class OrderDetailActivity extends BaseActivity {
         AppUtil.copyToClipBoard(order.id);
     }
 
-    @OnClick(R.id.order_detail_call)
+    @OnClick({R.id.order_detail_call, R.id.order_detail_delivery_phone})
     public void onCall() {
-        AppUtil.call(this, "13138705415");
+        MyDialog.phoneDialog(this, "13138705415");
+    }
+
+    @OnClick({R.id.order_detail_coupon_open_qr,R.id.order_detail_coupon_qr})
+    public void onOpenQR(){
+        MyDialog.qrCodeDialog(this,"llll");
     }
 
     @OnClick(R.id.order_detail_statusL)

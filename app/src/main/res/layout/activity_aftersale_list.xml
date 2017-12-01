@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <FrameLayout
+        style="@style/title_title">
+        <ImageView
+            style="@style/title_back"/>
+        <TextView
+            style="@style/title_text"
+            android:text="退款/售后"/>
+    </FrameLayout>
+
+    <include layout="@layout/view_split_bar"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/aftersale_list_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_white"/>
+
+    <include layout="@layout/view_split_bar"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/aftersale_list_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"/>
+
+</LinearLayout>

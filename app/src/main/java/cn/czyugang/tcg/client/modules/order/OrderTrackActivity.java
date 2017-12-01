@@ -23,7 +23,6 @@ import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.common.MyApplication;
 import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.utils.CommonUtil;
-import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 
 /**
@@ -79,13 +78,7 @@ public class OrderTrackActivity extends BaseActivity {
 
     @OnClick(R.id.order_track_distributor_name)
     public void onCallDistributor() {
-        MyDialog.Builder.newBuilder(this)
-                .custom(R.layout.dialog_call)
-                .build()
-                .show()
-                .text(R.id.dialog_call, "13138705415")
-                .onClick(R.id.dialog_call, v -> AppUtil.call(this, "13138705415"))
-                .onClick(R.id.dialog_cancel);
+        MyDialog.phoneDialog(this, "13138705415");
     }
 
     private static class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.Holder> {

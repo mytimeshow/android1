@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            style="@style/item_40_group">
+
+            <TextView
+                android:id="@+id/item_store_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_shop"
+                android:drawablePadding="@dimen/dp_6"
+                android:text="店铺称名"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/sp_14"
+                />
+
+            <TextView
+                android:id="@+id/item_status"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="等待商家处理"
+                android:textColor="@color/text_dark_gray"
+                android:textSize="@dimen/sp_14"
+                />
+        </LinearLayout>
+
+        <include layout="@layout/view_split_bar_light"/>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/item_list"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_80"
+            android:background="@color/white"
+            android:visibility="gone"
+            />
+
+        <!--单种商品-->
+        <include
+            android:id="@+id/item_list_one"
+            layout="@layout/view_item_good"/>
+
+        <include layout="@layout/view_split_bar_light"/>
+
+        <LinearLayout
+            style="@style/item_40_group">
+
+            <include
+                android:id="@+id/item_img_return_goods"
+                layout="@layout/view_icon_exit"/>
+
+            <ImageView
+                android:id="@+id/item_img_refund"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:src="@drawable/icon_refund"
+                />
+
+            <TextView
+                android:id="@+id/item_type"
+                style="@style/text_14_dark_gray"
+                android:layout_marginLeft="@dimen/dp_4"
+                android:text="退货退款"/>
+
+            <TextView
+                android:id="@+id/item_refund_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_8"
+                android:background="@drawable/border_rect_blue"
+                android:paddingLeft="@dimen/dp_8"
+                android:paddingRight="@dimen/dp_8"
+                android:text="退款中"
+                android:textColor="@color/main_light_blue"
+                android:textSize="@dimen/sp_12"
+                />
+
+            <include layout="@layout/space_h"/>
+
+            <TextView
+                android:id="@+id/item_money"
+                style="@style/text_14_dark_gray"
+                android:text="退款金额：￥36.00"
+                />
+
+        </LinearLayout>
+
+        <include layout="@layout/view_split_bar_light"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_55">
+
+            <TextView
+                android:layout_width="@dimen/dp_58"
+                android:layout_height="@dimen/dp_22"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@drawable/border_rect_black"
+                android:gravity="center"
+                android:text="查看详情"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/sp_12"
+                />
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_60"
+        android:layout_gravity="center_vertical|right"
+        android:layout_marginRight="@dimen/dp_68"
+        android:src="@drawable/aftersale_apply_pass"
+        />
+
+</FrameLayout>

@@ -382,6 +382,15 @@
         <activity android:name=".modules.order.OrderDetailActivity"/>
         <activity android:name=".modules.order.OrderTrackMapActivity"/>
         <activity android:name=".modules.order.OrderTrackActivity"/>
+        <activity android:name=".modules.store.ApplyStoreActivity"/>
+        <activity android:name=".modules.store.ApplyStoreStatusActivity"/>
+        <activity android:name=".modules.aftersale.AftersaleListActivity"/>
+        <activity android:name=".modules.aftersale.AftersaleDetailActivity"/>
+        <activity android:name=".modules.aftersale.AftersaleTrackActivity"/>
+        <activity android:name=".modules.aftersale.AftersaleServiceActivity"/>
+        <activity android:name=".modules.aftersale.RefundActivity"/>
+        <activity android:name=".modules.aftersale.RefundApplyFinishActivity"/>
+        <activity android:name=".modules.aftersale.RefundStatusActivity"/>
 
     </application>
 </manifest>

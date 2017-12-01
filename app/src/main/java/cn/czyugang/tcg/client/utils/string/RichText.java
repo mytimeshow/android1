@@ -136,11 +136,11 @@ public class RichText {
         return this;
     }
 
-    public RichText appendSpColorRes(CharSequence text, @DimenRes int size, @DimenRes int color) {
+    public RichText appendSpColorRes(CharSequence text, @DimenRes int size, @ColorRes int color) {
         if (text == null) return this;
         SpannableString spannableString = new SpannableString(text);
         spannableString.setSpan(new AbsoluteSizeSpan(ResUtil.getDimenInPx(size)), 0, text.length(), 0);
-        spannableString.setSpan(new ForegroundColorSpan(color), 0, text.length(), 0);
+        spannableString.setSpan(new ForegroundColorSpan(ResUtil.getColor(color)), 0, text.length(), 0);
         builder.append(spannableString);
         return this;
     }
