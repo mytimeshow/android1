@@ -33,8 +33,8 @@ public class MyDialog extends DialogFragment {
 
     private Builder builder;
     private View rootView;
-    private View.OnClickListener toDismissListener=null;
-    private BindView bindView=null;
+    private View.OnClickListener toDismissListener = null;
+    private BindView bindView = null;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class MyDialog extends DialogFragment {
     public void onStart() {
         super.onStart();
         Window window = getDialog().getWindow();
-        window.setLayout(builder.width,builder.height);
+        window.setLayout(builder.width, builder.height);
         window.setGravity(builder.gravity);
         if (builder.offsetX != 0 && builder.offsetY != 0) {
             WindowManager.LayoutParams lp = window.getAttributes();
@@ -70,7 +70,7 @@ public class MyDialog extends DialogFragment {
         } else {
             initTitleMsg(inflater, container);
         }
-        if (bindView!=null) bindView.bindView(this);
+        if (bindView != null) bindView.bindView(this);
         return rootView;
     }
 
@@ -81,25 +81,45 @@ public class MyDialog extends DialogFragment {
 
     private void initMsg(LayoutInflater inflater, @Nullable ViewGroup container) {
         rootView = inflater.inflate(R.layout.dialog_message, container);
-        text(R.id.tv_message,builder.contentStr);
-        text(R.id.tv_negative,builder.negativeButton);
-        text(R.id.tv_positive,builder.positiveButton);
-        onClick(R.id.tv_negative, builder.negativeButtonClick == null ?
-                v -> dismiss() : builder.negativeButtonClick);
-        onClick(R.id.tv_positive, builder.positiveButtonClick == null ?
-                v -> dismiss() : builder.positiveButtonClick);
+        text(R.id.tv_message, builder.contentStr);
+        text(R.id.tv_negative, builder.negativeButton);
+        text(R.id.tv_positive, builder.positiveButton);
+        onClick(R.id.tv_negative, v -> {
+            if (builder.negativeButtonClick != null){
+                builder.negativeButtonClick.onClick(this);
+            }else {
+                dismiss();
+            }
+        });
+        onClick(R.id.tv_positive,  v -> {
+            if (builder.positiveButtonClick != null){
+                builder.positiveButtonClick.onClick(this);
+            }else {
+                dismiss();
+            }
+        });
     }
 
     private void initTitleMsg(LayoutInflater inflater, @Nullable ViewGroup container) {
         rootView = inflater.inflate(R.layout.dialog_title_message, container);
-        text(R.id.tv_title,builder.title);
-        text(R.id.tv_message,builder.contentStr);
-        text(R.id.tv_negative,builder.negativeButton);
-        text(R.id.tv_positive,builder.positiveButton);
-        onClick(R.id.tv_negative, builder.negativeButtonClick == null ?
-                v -> dismiss() : builder.negativeButtonClick);
-        onClick(R.id.tv_positive, builder.positiveButtonClick == null ?
-                v -> dismiss() : builder.positiveButtonClick);
+        text(R.id.tv_title, builder.title);
+        text(R.id.tv_message, builder.contentStr);
+        text(R.id.tv_negative, builder.negativeButton);
+        text(R.id.tv_positive, builder.positiveButton);
+        onClick(R.id.tv_negative,  v -> {
+            if (builder.negativeButtonClick != null){
+                builder.negativeButtonClick.onClick(this);
+            }else {
+                dismiss();
+            }
+        });
+        onClick(R.id.tv_positive,  v -> {
+            if (builder.positiveButtonClick != null){
+                builder.positiveButtonClick.onClick(this);
+            }else {
+                dismiss();
+            }
+        });
     }
 
     private void initCustom(LayoutInflater inflater, @Nullable ViewGroup container) {
@@ -112,22 +132,22 @@ public class MyDialog extends DialogFragment {
     }
 
     public MyDialog onClick(int id) {
-        if (toDismissListener==null) toDismissListener=v -> dismiss();
+        if (toDismissListener == null) toDismissListener = v -> dismiss();
         rootView.findViewById(id).setOnClickListener(toDismissListener);
         return this;
     }
 
-    public MyDialog text(int id,String str){
+    public MyDialog text(int id, String str) {
         ((TextView) rootView.findViewById(id)).setText(str);
         return this;
     }
 
-    public MyDialog img(int id,int imgRes){
+    public MyDialog img(int id, int imgRes) {
         ((ImageView) rootView.findViewById(id)).setImageResource(imgRes);
         return this;
     }
 
-    public MyDialog img(int id, Bitmap bitmap){
+    public MyDialog img(int id, Bitmap bitmap) {
         ((ImageView) rootView.findViewById(id)).setImageBitmap(bitmap);
         return this;
     }
@@ -137,7 +157,7 @@ public class MyDialog extends DialogFragment {
         return this;
     }
 
-    public static void phoneDialog(Activity activity,String phone){
+    public static void phoneDialog(Activity activity, String phone) {
         MyDialog.Builder.newBuilder(activity)
                 .custom(R.layout.dialog_call)
                 .width(-1)
@@ -151,11 +171,11 @@ public class MyDialog extends DialogFragment {
                 });
     }
 
-    public static void qrCodeDialog(Activity activity,final String qrStr){
+    public static void qrCodeDialog(Activity activity, final String qrStr) {
         MyDialog.Builder.newBuilder(activity)
                 .custom(R.layout.dialog_image)
                 .widthPercent(0.84f)
-                .height((int)(ResUtil.getWidthInPx()*0.84f))
+                .height((int) (ResUtil.getWidthInPx() * 0.84f))
                 .build()
                 .show()
                 .bindView(myDialog -> {
@@ -164,7 +184,7 @@ public class MyDialog extends DialogFragment {
                 });
     }
 
-    public static interface BindView{
+    public static interface BindView {
         void bindView(MyDialog myDialog);
     }
 
@@ -180,9 +200,9 @@ public class MyDialog extends DialogFragment {
         private String oneButton = "我知道了";
         private String negativeButton = "取消";
         private String positiveButton = "确定";
-        private View.OnClickListener oneButtonClick = null;
-        private View.OnClickListener negativeButtonClick = null;
-        private View.OnClickListener positiveButtonClick = null;
+        private OnButtonClickListener oneButtonClick = null;
+        private OnButtonClickListener negativeButtonClick = null;
+        private OnButtonClickListener positiveButtonClick = null;
 
         //自定义
         private int layoutId = -1;
@@ -196,7 +216,7 @@ public class MyDialog extends DialogFragment {
         private int offsetX = 0;
         private int offsetY = 0;
 
-        private boolean canceledOnTouchOutside=false;
+        private boolean canceledOnTouchOutside = false;
 
         public Builder(Activity activity) {
             width = ResUtil.getWidthInPx() - ResUtil.getDimenInPx(R.dimen.dp_40);
@@ -245,48 +265,48 @@ public class MyDialog extends DialogFragment {
         }
 
         public Builder onOneButton() {
-            this.oneButtonClick = v -> dialog.dismiss();
+            this.oneButtonClick = myDialog -> myDialog.dismiss();
             return this;
         }
 
         public Builder onPositiveButton() {
-            this.positiveButtonClick = v -> dialog.dismiss();
+            this.positiveButtonClick = myDialog -> myDialog.dismiss();
             return this;
         }
 
         public Builder onNegativeButton() {
-            this.negativeButtonClick = v -> dialog.dismiss();
+            this.negativeButtonClick = myDialog -> myDialog.dismiss();
             return this;
         }
 
-        public Builder onOneButton(View.OnClickListener oneButtonClick) {
+        public Builder onOneButton(OnButtonClickListener oneButtonClick) {
             this.oneButtonClick = oneButtonClick;
             return this;
         }
 
-        public Builder onPositiveButton(View.OnClickListener positiveButtonClick) {
+        public Builder onPositiveButton(OnButtonClickListener positiveButtonClick) {
             this.positiveButtonClick = positiveButtonClick;
             return this;
         }
 
-        public Builder onNegativeButton(View.OnClickListener negativeButtonClick) {
+        public Builder onNegativeButton(OnButtonClickListener negativeButtonClick) {
             this.negativeButtonClick = negativeButtonClick;
             return this;
         }
 
-        public Builder onOneButton(String oneButton, View.OnClickListener oneButtonClick) {
+        public Builder onOneButton(String oneButton, OnButtonClickListener oneButtonClick) {
             this.oneButton = oneButton;
             this.oneButtonClick = oneButtonClick;
             return this;
         }
 
-        public Builder onPositiveButton(String positiveButton, View.OnClickListener positiveButtonClick) {
+        public Builder onPositiveButton(String positiveButton, OnButtonClickListener positiveButtonClick) {
             this.positiveButton = positiveButton;
             this.positiveButtonClick = positiveButtonClick;
             return this;
         }
 
-        public Builder onNegativeButton(String negativeButton, View.OnClickListener negativeButtonClick) {
+        public Builder onNegativeButton(String negativeButton, OnButtonClickListener negativeButtonClick) {
             this.negativeButtonClick = negativeButtonClick;
             this.negativeButton = negativeButton;
             return this;
@@ -315,12 +335,12 @@ public class MyDialog extends DialogFragment {
         }
 
         public Builder widthPercent(float widthPercent) {
-            this.width = (int)(ResUtil.getWidthInPx()*widthPercent);
+            this.width = (int) (ResUtil.getWidthInPx() * widthPercent);
             return this;
         }
 
         public Builder heightPercent(float heightPercent) {
-            this.height = (int)(ResUtil.getHeightInPx()*heightPercent);
+            this.height = (int) (ResUtil.getHeightInPx() * heightPercent);
             return this;
         }
 
@@ -346,5 +366,9 @@ public class MyDialog extends DialogFragment {
             this.canceledOnTouchOutside = canceledOnTouchOutside;
             return this;
         }
+    }
+
+    public static interface OnButtonClickListener {
+        void onClick(MyDialog myDialog);
     }
 }

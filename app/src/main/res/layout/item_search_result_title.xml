@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="@dimen/dp_50"
+    >
+
+    <LinearLayout
+        android:id="@+id/item_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:background="@drawable/bg_rect_cir_red"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1px"
+            android:layout_weight="60"
+            />
+        <TextView
+            style="@style/text_12_gray"
+            android:textColor="@color/white"
+            android:text="点击筛选"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1px"
+            android:layout_weight="18"
+            />
+        <TextView
+            style="@style/text_14_gray"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="同城鸽欢庆日"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1px"
+            android:layout_weight="18"
+            />
+        <TextView
+            style="@style/text_12_gray"
+            android:textColor="@color/white"
+            android:text="活动商品"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1px"
+            android:layout_weight="60"
+            />
+    </LinearLayout>
+
+</FrameLayout>

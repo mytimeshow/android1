@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.modules.aftersale.AftersaleListActivity;
 import cn.czyugang.tcg.client.modules.aftersale.AftersaleServiceActivity;
 import cn.czyugang.tcg.client.modules.order.ConfirmOrderActivity;
+import cn.czyugang.tcg.client.modules.store.SearchActivity;
 import cn.czyugang.tcg.client.modules.store.StoreActivity;
 
 /**
@@ -47,5 +49,10 @@ public class HomepageFragment extends BaseFragment {
 
 
         return rootView;
+    }
+
+    @OnClick(R.id.homepage_search)
+    public void onSearch(){
+        SearchActivity.startSearchActivity();
     }
 }

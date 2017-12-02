@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 
+import java.util.Arrays;
 import java.util.List;
 
 import cn.czyugang.tcg.client.R;
@@ -18,6 +19,7 @@ public class LabelLayout extends FlowLayout {
 
     private boolean haveAdd=false;
     private int labelId= R.layout.view_label;
+    private OnClickItemListener onClickItemListener=null;
 
     public LabelLayout(Context context) {
         super(context);
@@ -33,49 +35,47 @@ public class LabelLayout extends FlowLayout {
         }
     }
 
-    public void setTexts(List<String> list){
-        if (list==null) return;
-        String[] strings=new String[list.size()];
-        list.toArray(strings);
-        setTexts(strings);
+    public void clear(){
+        removeAllViews();
     }
 
     public void setTexts(String[] strings){
         if (strings==null) return;
+        setTexts(Arrays.asList(strings));
+    }
+
+    public void setTexts(List<String> list){
+        if (list==null) return;
         if (haveAdd){
             removeAllViews();
         }else {
             haveAdd=true;
         }
         LayoutInflater inflater=LayoutInflater.from(getContext());
-        for (String s:strings){
+        for (String s:list){
             TextView textView=(TextView)inflater.inflate(labelId,this,false);
             textView.setText(s);
+            textView.setOnClickListener(v -> {
+                if (onClickItemListener!=null) onClickItemListener.onClick(((TextView)v).getText().toString(),(TextView)v);
+            });
             addView(textView);
         }
     }
 
     public static void setTextList(LabelLayout labelLayout, List<String> list){
-        if (list==null) return;
-        String[] strings=new String[list.size()];
-        list.toArray(strings);
-        setTextList(labelLayout,strings);
+        labelLayout.setTexts(list);
     }
-
 
     public static void setTextList(LabelLayout labelLayout, String[] strings){
-        if (strings==null) return;
-        if (labelLayout.haveAdd){
-            labelLayout.removeAllViews();
-        }else {
-            labelLayout.haveAdd=true;
-        }
-        LayoutInflater inflater=LayoutInflater.from(labelLayout.getContext());
-        for (String s:strings){
-            TextView textView=(TextView)inflater.inflate(labelLayout.labelId,labelLayout,false);
-            textView.setText(s);
-            labelLayout.addView(textView);
-        }
+        labelLayout.setTexts(strings);
     }
 
+    public LabelLayout setOnClickItemListener(OnClickItemListener onClickItemListener) {
+        this.onClickItemListener = onClickItemListener;
+        return this;
+    }
+
+    public static interface OnClickItemListener{
+        void onClick(String text,TextView textView);
+    }
 }

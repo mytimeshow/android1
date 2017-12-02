@@ -17,6 +17,7 @@
 
     <!--主要颜色-->
     <color name="bg">#f0f0f0</color>
+    <color name="bg_blur">#87000000</color>
     <color name="main_bg">#f0f0f0</color>
     <color name="main_red">#f22f22</color>
     <color name="main_black">#000</color>

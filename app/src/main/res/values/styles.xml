@@ -178,6 +178,25 @@
         <item name="android:textColorHint">@color/text_light_gray</item>
     </style>
 
+    <style name="search_edit">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_28</item>
+        <item name="android:layout_marginLeft">@dimen/dp_10</item>
+        <item name="android:layout_marginRight">@dimen/dp_10</item>
+        <item name="android:layout_marginTop">@dimen/dp_8</item>
+        <item name="android:layout_marginBottom">@dimen/dp_8</item>
+        <item name="android:background">@drawable/bg_search_edit</item>
+        <item name="android:paddingLeft">@dimen/dp_8</item>
+        <item name="android:paddingRight">@dimen/dp_8</item>
+        <item name="android:drawableLeft">@drawable/ic_search</item>
+        <item name="android:drawablePadding">@dimen/dp_8</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:hint">同城鸽海淘生活馆</item>
+        <item name="android:textColorHint">@color/grey_400</item>
+        <item name="android:textColor">@color/text_dark_gray</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
 
     <!--图标-->
     <style name="icon_15">

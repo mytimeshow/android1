@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/title_title">
+
+        <EditText
+            android:id="@+id/title_input"
+            style="@style/search_edit"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
+            />
+
+        <TextView
+            style="@style/title_right"
+            android:text="取消"
+            android:textColor="@color/text_black"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/search_typeL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/search_type_food"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_12"
+            android:paddingBottom="@dimen/dp_12"
+            android:drawableLeft="@drawable/icon_foods"
+            android:drawablePadding="@dimen/dp_8"
+            android:text="在外卖中搜索“”"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/text_dark_gray"
+            />
+        <include layout="@layout/view_split_bar_light"/>
+        <TextView
+            android:id="@+id/search_type_goods"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_12"
+            android:paddingBottom="@dimen/dp_12"
+            android:drawableLeft="@drawable/icon_shop"
+            android:drawablePadding="@dimen/dp_8"
+            android:text="在外卖中搜索“”"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/text_dark_gray"
+            />
+        <include layout="@layout/view_split_bar_light"/>
+
+    </LinearLayout>
+
+    <TextView
+        style="@style/text_14_gray"
+        android:layout_marginBottom="@dimen/dp_15"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="热门搜索"
+        />
+
+    <cn.czyugang.tcg.client.widget.LabelLayout
+        android:id="@+id/search_hot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        app:child_layout="@layout/view_search_label"
+        app:horizontal_spacing="@dimen/dp_8"
+        app:vertical_spacing="@dimen/dp_10"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginBottom="@dimen/dp_15"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_14_gray"
+            android:text="历史搜索"/>
+
+        <include layout="@layout/space_h"/>
+
+        <ImageView
+            android:id="@+id/search_delete_history"
+            android:layout_width="@dimen/dp_18"
+            android:layout_height="@dimen/dp_18"
+            android:src="@drawable/ic_bill_filter_delete"/>
+    </LinearLayout>
+
+    <cn.czyugang.tcg.client.widget.LabelLayout
+        android:id="@+id/search_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        app:child_layout="@layout/view_search_label"
+        app:horizontal_spacing="@dimen/dp_8"
+        app:vertical_spacing="@dimen/dp_10"
+        />
+
+</LinearLayout>

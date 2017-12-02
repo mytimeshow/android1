@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/dp_20"
+    android:paddingLeft="@dimen/dp_10"
+    android:paddingRight="@dimen/dp_10"
+    android:paddingTop="@dimen/dp_18"
+    >
+
+    <cn.czyugang.tcg.client.utils.img.ImgView
+        android:id="@+id/item_img"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="@dimen/dp_70"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_2"
+        />
+
+    <TextView
+        android:id="@+id/item_name"
+        style="@style/text_16_black"
+        android:layout_marginBottom="@dimen/dp_6"
+        android:layout_toRightOf="@id/item_img"
+        android:text="店铺名称称称成"
+        />
+
+    <TextView
+        android:id="@+id/item_sale"
+        style="@style/text_12_gray"
+        android:layout_alignParentRight="true"
+        android:text="30分钟 | 1.25 km"
+        />
+
+    <cn.czyugang.tcg.client.widget.FiveStarView
+        android:id="@+id/item_star"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_name"
+        android:layout_marginBottom="@dimen/dp_6"
+        android:layout_toRightOf="@id/item_img"
+        />
+
+    <TextView
+        android:id="@+id/item_delivery_time"
+        style="@style/text_12_gray"
+        android:layout_below="@+id/item_name"
+        android:layout_marginLeft="@dimen/dp_4"
+        android:layout_toRightOf="@+id/item_star"
+        android:text="| 已售999份"
+        />
+
+    <TextView
+        android:id="@+id/item_delivery_price"
+        style="@style/text_12_gray"
+        android:layout_below="@id/item_star"
+        android:layout_toRightOf="@id/item_img"
+        android:text="起步￥99 | 配送￥3起"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@drawable/dash_h_white"
+        android:layerType="software"
+        android:layout_alignBottom="@id/item_img"
+        />
+    
+    <cn.czyugang.tcg.client.widget.CalculateOrderView
+        android:id="@+id/item_activities"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_img"
+        android:layout_toRightOf="@id/item_img"
+        />
+    
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/item_goods"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_80"
+        android:layout_below="@id/item_activities"
+        android:layout_toRightOf="@id/item_img"
+        />
+
+</RelativeLayout>

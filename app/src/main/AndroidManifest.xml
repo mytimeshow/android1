@@ -391,6 +391,8 @@
         <activity android:name=".modules.aftersale.RefundActivity"/>
         <activity android:name=".modules.aftersale.RefundApplyFinishActivity"/>
         <activity android:name=".modules.aftersale.RefundStatusActivity"/>
+        <activity android:name=".modules.store.SearchActivity"/>
+        <activity android:name=".modules.store.SearchResultActivity"/>
 
     </application>
 </manifest>

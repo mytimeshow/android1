@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.utils.LogRui;
 
 
 /**
@@ -17,11 +18,12 @@ public class FlowLayout extends ViewGroup {
 
     private static final int DEFAULT_HORIZONTAL_SPACING = 5;
     private static final int DEFAULT_VERTICAL_SPACING = 5;
-    private static final int DEFAULT_LINE_COUNT=1000;
+    private static final int DEFAULT_LINE_COUNT = 1000;
 
-    private int verticalSpacing;
-    private int horizontalSpacing;
-    private int lineCount;
+    protected int verticalSpacing;
+    protected int horizontalSpacing;
+    protected int lineCount;
+    protected int colCount=-1;
 
 
     public FlowLayout(Context context) {
@@ -37,8 +39,9 @@ public class FlowLayout extends ViewGroup {
                     R.styleable.FlowLayout_horizontal_spacing, DEFAULT_HORIZONTAL_SPACING);
             verticalSpacing = a.getDimensionPixelSize(
                     R.styleable.FlowLayout_vertical_spacing, DEFAULT_VERTICAL_SPACING);
-            lineCount=a.getInteger(
-                    R.styleable.FlowLayout_line_count,DEFAULT_LINE_COUNT);
+            lineCount = a.getInteger(
+                    R.styleable.FlowLayout_line_count, DEFAULT_LINE_COUNT);
+            colCount = a.getInteger(R.styleable.FlowLayout_column_count, -1);
         } finally {
             a.recycle();
         }
@@ -67,15 +70,21 @@ public class FlowLayout extends ViewGroup {
 
         int lineHeight = 0;
 
+        int childWidthMeasureSpec=widthMeasureSpec;
+        if (colCount>0){
+            int childMaxWidth=(myWidth-paddingLeft-paddingRight-horizontalSpacing*(colCount-1))/colCount;
+            childWidthMeasureSpec=MeasureSpec.makeMeasureSpec(childMaxWidth,MeasureSpec.getMode(widthMeasureSpec));
+        }
 
-        int lines=1;
+
+        int lines = 1;
         // Measure each child and put the child to the right of previous child
         // if there's enough room for it, otherwise, wrap the line and put the child to next line.
         for (int i = 0, childCount = getChildCount(); i < childCount; ++i) {
             View child = getChildAt(i);
 
             if (child.getVisibility() != View.GONE) {
-                measureChild(child, widthMeasureSpec, heightMeasureSpec);
+                measureChild(child, childWidthMeasureSpec, heightMeasureSpec);
             } else {
                 continue;
             }
@@ -87,8 +96,8 @@ public class FlowLayout extends ViewGroup {
 
             if (childLeft + childWidth + paddingRight > myWidth) {
 
-                lines=lines+1;
-                if (lines>lineCount){
+                lines = lines + 1;
+                if (lines > lineCount) {
                     child.setVisibility(GONE);
                     continue;
                 }
@@ -120,7 +129,7 @@ public class FlowLayout extends ViewGroup {
 
         int lineHeight = 0;
 
-        int lines=1;
+        int lines = 1;
 
         for (int i = 0, childCount = getChildCount(); i < childCount; ++i) {
             View childView = getChildAt(i);
@@ -133,13 +142,14 @@ public class FlowLayout extends ViewGroup {
 
             int childWidth = childView.getMeasuredWidth();
             int childHeight = childView.getMeasuredHeight();
+            LogRui.i("onLayout####",childWidth);
 
             lineHeight = Math.max(childHeight, lineHeight);
 
             if (childLeft + childWidth + paddingRight > myWidth) {
 
-                lines=lines+1;
-                if (lines>lineCount){
+                lines = lines + 1;
+                if (lines > lineCount) {
                     childView.setVisibility(GONE);
                     continue;
                 }

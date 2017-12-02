@@ -25,6 +25,8 @@ public class FiveStarView extends LinearLayout {
     private ImageView star5;
     private TextView textView;
 
+    private int starResId=R.drawable.icon_yellowstar;
+
     public FiveStarView(Context context) {
         super(context);
         init(context);
@@ -64,16 +66,21 @@ public class FiveStarView extends LinearLayout {
 
     public void setScore(float score) {
         if (score <= 0) return;
-        if (score >= 1) star1.setImageResource(R.drawable.icon_yellowstar);
-        if (score >= 2) star2.setImageResource(R.drawable.icon_yellowstar);
-        if (score >= 3) star3.setImageResource(R.drawable.icon_yellowstar);
-        if (score >= 4) star4.setImageResource(R.drawable.icon_yellowstar);
-        if (score >= 5) star5.setImageResource(R.drawable.icon_yellowstar);
+        if (score >= 1) star1.setImageResource(starResId);
+        if (score >= 2) star2.setImageResource(starResId);
+        if (score >= 3) star3.setImageResource(starResId);
+        if (score >= 4) star4.setImageResource(starResId);
+        if (score >= 5) star5.setImageResource(starResId);
         setText(String.format("%.1f 分", (float)score));
     }
 
     public void setText(String text) {
         if (text == null) text = "";
         textView.setText(text);
+    }
+
+    public FiveStarView setStarResId(int starResId) {
+        this.starResId = starResId;
+        return this;
     }
 }

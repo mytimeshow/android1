@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/item_arrowL"
+        style="@style/item_40_group"
+        android:layout_height="@dimen/dp_44">
+        <TextView
+            android:id="@+id/item_name"
+            style="@style/text_14_dark_gray"/>
+        <include layout="@layout/space_h"/>
+        <ImageView
+            android:id="@+id/item_arrow"
+            android:layout_width="@dimen/dp_13"
+            android:layout_height="@dimen/dp_13"
+            android:src="@drawable/picture_orange_arrow_down"/>
+    </LinearLayout>
+
+    <cn.czyugang.tcg.client.widget.LabelLayout
+        android:id="@+id/item_labels"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_10"
+        app:child_layout="@layout/view_label_filter"
+        app:horizontal_spacing="@dimen/dp_8"
+        app:vertical_spacing="@dimen/dp_8"
+        app:column_count="3"
+        android:visibility="gone"
+        />
+
+</LinearLayout>
