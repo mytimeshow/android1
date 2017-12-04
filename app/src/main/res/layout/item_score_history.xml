@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingLeft="@dimen/dp_10"
+    >
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <TextView
+        android:id="@+id/item_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_14"
+        android:text="09-20"
+        android:textSize="@dimen/sp_10"
+        android:textColor="@color/text_gray"
+        />
+    
+    <TextView
+        android:id="@+id/item_name"
+        style="@style/text_14_dark_gray"
+        android:layout_marginTop="@dimen/dp_12"
+        android:layout_marginBottom="@dimen/dp_12"
+        android:layout_marginLeft="@dimen/dp_50"
+        android:text="资讯评论奖励"
+        android:lineSpacingMultiplier="1.4"
+        />
+
+    <TextView
+        android:id="@+id/item_score"
+        style="@style/text_14_black"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="@dimen/dp_10"
+        android:textColor="@color/main_red"
+        android:text="+333"
+        />
+    
+    <ImageView
+        android:id="@+id/item_invalid"
+        android:layout_width="@dimen/dp_68"
+        android:layout_height="@dimen/dp_42"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="@dimen/dp_90"
+        android:src="@drawable/tag_invalid"/>
+
+</FrameLayout>

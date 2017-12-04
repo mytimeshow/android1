@@ -3,23 +3,27 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/dp_14"
     android:paddingBottom="@dimen/dp_14"
     >
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"
+        android:background="@color/bg"/>
 
     <cn.czyugang.tcg.client.utils.img.ImgView
         android:id="@+id/item_img"
         android:layout_width="@dimen/dp_70"
         android:layout_height="@dimen/dp_70"
         android:layout_marginRight="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_2"
+        android:layout_marginTop="@dimen/dp_16"
         />
     
     <TextView
         android:id="@+id/item_name"
         style="@style/text_16_black"
         android:layout_toRightOf="@+id/item_img"
+        android:layout_marginTop="@dimen/dp_14"
         android:layout_marginBottom="@dimen/dp_6"
         android:text="好吃美味500可海鲜零食休闲美食"/>
     

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+    <FrameLayout
+        style="@style/title_title"
+        android:background="@color/black">
+
+        <ImageView
+            style="@style/title_back"
+            android:src="@drawable/ic_back_gray"/>
+
+        <TextView
+            style="@style/title_text"
+            android:text="输入二维码/条形码"
+            android:textColor="@color/white"/>
+
+        <ImageView
+            style="@style/title_right"
+            android:src="@drawable/icon_clock_gray"/>
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/scan_input"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_110"
+        android:background="@drawable/border_rect_grey"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_8"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_14"
+        />
+
+    <FrameLayout
+        android:id="@+id/scan_check_scan"
+        android:layout_width="@dimen/dp_130"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginLeft="@dimen/dp_28"
+        android:layout_marginTop="@dimen/dp_186"
+        android:background="@drawable/bg_rect_grey_222"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/scan_code"
+            android:layout_gravity="center"
+            android:drawablePadding="@dimen/dp_8"
+            android:text="切换扫码"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16"
+            />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/scan_input_confirm"
+        android:layout_width="@dimen/dp_130"
+        android:layout_height="@dimen/dp_40"
+        android:layout_gravity="right"
+        android:layout_marginRight="@dimen/dp_28"
+        android:layout_marginTop="@dimen/dp_186"
+        android:background="@drawable/bg_rect_red"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16"
+        />
+
+</FrameLayout>
