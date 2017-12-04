@@ -48,14 +48,14 @@ public class CollectionActivity extends BaseActivity {
     private List<BaseFragment> fragments;
 
     public static void startCollectionActivity() {
-        Intent intent = new Intent(MyApplication.getContext(), CollectionActivity.class);
-        MyApplication.getContext().startActivity(intent);
+        Intent intent = new Intent(getTopActivity(), CollectionActivity.class);
+        getTopActivity().startActivity(intent);
     }
 
     public static void startCollectionActivity(int showType) {
-        Intent intent = new Intent(MyApplication.getContext(), CollectionActivity.class);
+        Intent intent = new Intent(getTopActivity(), CollectionActivity.class);
         intent.putExtra("showType", showType);
-        MyApplication.getContext().startActivity(intent);
+        getTopActivity().startActivity(intent);
     }
 
     @Override

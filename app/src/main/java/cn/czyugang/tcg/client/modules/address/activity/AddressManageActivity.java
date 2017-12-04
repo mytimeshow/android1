@@ -38,8 +38,8 @@ public class AddressManageActivity extends BaseActivity implements AddressManage
     private AddressManageContract.Presenter mPresenter;
 
     public static void startAddressManageActivity() {
-        Intent intent = new Intent(MyApplication.getContext(), AddressManageActivity.class);
-        MyApplication.getContext().startActivity(intent);
+        Intent intent = new Intent(getTopActivity(), AddressManageActivity.class);
+        getTopActivity().startActivity(intent);
     }
 
     @Override

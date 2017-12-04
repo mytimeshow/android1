@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import cn.czyugang.tcg.client.R;
-import cn.czyugang.tcg.client.utils.LogRui;
 
 
 /**
@@ -142,7 +141,7 @@ public class FlowLayout extends ViewGroup {
 
             int childWidth = childView.getMeasuredWidth();
             int childHeight = childView.getMeasuredHeight();
-            LogRui.i("onLayout####",childWidth);
+
 
             lineHeight = Math.max(childHeight, lineHeight);
 

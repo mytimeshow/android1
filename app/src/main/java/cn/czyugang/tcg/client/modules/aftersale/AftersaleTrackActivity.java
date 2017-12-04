@@ -42,8 +42,8 @@ public class AftersaleTrackActivity extends BaseActivity {
     private TrackAdapter adapter;
 
     public static void startAftersaleTrackActivity() {
-        Intent intent = new Intent(MyApplication.getContext(), AftersaleTrackActivity.class);
-        MyApplication.getContext().startActivity(intent);
+        Intent intent = new Intent(getTopActivity(), AftersaleTrackActivity.class);
+        getTopActivity().startActivity(intent);
     }
 
     @Override

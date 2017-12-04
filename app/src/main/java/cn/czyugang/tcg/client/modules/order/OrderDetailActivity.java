@@ -84,8 +84,8 @@ public class OrderDetailActivity extends BaseActivity {
 
     public static void startOrderDetailActivity(Order order) {
         MyApplication.getInstance().activityTransferData = order;
-        Intent intent = new Intent(MyApplication.getContext(), OrderDetailActivity.class);
-        MyApplication.getContext().startActivity(intent);
+        Intent intent = new Intent(getTopActivity(), OrderDetailActivity.class);
+        getTopActivity().startActivity(intent);
     }
 
     @Override

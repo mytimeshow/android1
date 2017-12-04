@@ -26,8 +26,8 @@ public class OrderTrackMapActivity extends BaseActivity {
     MapView mapView;
 
     public static void startOrderTrackMapActivity() {
-        Intent intent = new Intent(MyApplication.getContext(), OrderTrackMapActivity.class);
-        MyApplication.getContext().startActivity(intent);
+        Intent intent = new Intent(getTopActivity(), OrderTrackMapActivity.class);
+        getTopActivity().startActivity(intent);
     }
 
     @Override

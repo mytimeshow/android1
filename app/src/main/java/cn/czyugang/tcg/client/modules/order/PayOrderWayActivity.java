@@ -29,8 +29,8 @@ public class PayOrderWayActivity extends BaseActivity {
     LinearLayout payWays;
 
     public static void startPayOrderWayActivity() {
-        Intent intent = new Intent(MyApplication.getContext(), PayOrderWayActivity.class);
-        MyApplication.getContext().startActivity(intent);
+        Intent intent = new Intent(getTopActivity(), PayOrderWayActivity.class);
+        getTopActivity().startActivity(intent);
     }
 
     @Override

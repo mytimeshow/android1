@@ -52,9 +52,9 @@ public class RefundActivity extends BaseActivity {
     private UploadImgAdapter adapter;
 
     public static void startRefundActivity(boolean onlyRefund) {
-        Intent intent = new Intent(MyApplication.getContext(), RefundActivity.class);
+        Intent intent = new Intent(getTopActivity(), RefundActivity.class);
         intent.putExtra("onlyRefund",onlyRefund);
-        MyApplication.getContext().startActivity(intent);
+        getTopActivity().startActivity(intent);
     }
 
     @Override

@@ -31,8 +31,8 @@ public class GoodDetailActivity extends BaseActivity {
     private List<BaseFragment> fragments=new ArrayList<>();
 
     public static void startGoodDetailActivity() {
-        Intent intent = new Intent(MyApplication.getContext(), GoodDetailActivity.class);
-        MyApplication.getContext().startActivity(intent);
+        Intent intent = new Intent(getTopActivity(), GoodDetailActivity.class);
+        getTopActivity().startActivity(intent);
     }
 
     @Override

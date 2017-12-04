@@ -22,8 +22,8 @@ import cn.czyugang.tcg.client.modules.order.OrderDetailActivity;
 public class RefundApplyFinishActivity extends BaseActivity {
 
     public static void startRefundApplyFinishActivity( ){
-        Intent intent=new Intent(MyApplication.getContext(),RefundApplyFinishActivity.class);
-        MyApplication.getContext().startActivity(intent);
+        Intent intent=new Intent(getTopActivity(),RefundApplyFinishActivity.class);
+        getTopActivity().startActivity(intent);
     }
 
     @Override

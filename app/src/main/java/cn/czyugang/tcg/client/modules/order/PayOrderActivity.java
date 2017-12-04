@@ -17,8 +17,8 @@ import cn.czyugang.tcg.client.common.MyApplication;
 
 public class PayOrderActivity extends BaseActivity {
     public static void startPayOrderActivity( ){
-        Intent intent=new Intent(MyApplication.getContext(),PayOrderActivity.class);
-        MyApplication.getContext().startActivity(intent);
+        Intent intent=new Intent(getTopActivity(),PayOrderActivity.class);
+        getTopActivity().startActivity(intent);
     }
 
     @Override

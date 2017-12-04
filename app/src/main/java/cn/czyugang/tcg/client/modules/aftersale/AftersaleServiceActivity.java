@@ -37,8 +37,8 @@ public class AftersaleServiceActivity extends BaseActivity {
     TextView goodsNum;
 
     public static void startAftersaleServiceActivity() {
-        Intent intent = new Intent(MyApplication.getContext(), AftersaleServiceActivity.class);
-        MyApplication.getContext().startActivity(intent);
+        Intent intent = new Intent(getTopActivity(), AftersaleServiceActivity.class);
+        getTopActivity().startActivity(intent);
     }
 
 

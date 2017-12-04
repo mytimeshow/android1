@@ -22,7 +22,6 @@ import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.common.MyApplication;
 import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
-import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.storage.AppKeyStorage;
 import cn.czyugang.tcg.client.widget.LabelLayout;
 
@@ -49,8 +48,8 @@ public class SearchActivity extends BaseActivity {
     LinearLayout typeL;
 
     public static void startSearchActivity() {
-        Intent intent = new Intent(MyApplication.getContext(), SearchActivity.class);
-        MyApplication.getContext().startActivity(intent);
+        Intent intent = new Intent(getTopActivity(), SearchActivity.class);
+        getTopActivity().startActivity(intent);
     }
 
     @Override
@@ -59,7 +58,7 @@ public class SearchActivity extends BaseActivity {
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
 
-        LogRui.i("onCreate####", AppKeyStorage.getSearchHistory());
+
         historyLabel.setTexts(AppKeyStorage.getSearchHistory());
         historyLabel.setOnClickItemListener((text,textView) -> SearchResultActivity.startSearchResultActivity(text));
 

@@ -29,8 +29,8 @@ public class ApplyStoreStatusActivity extends BaseActivity {
     TextView commit;
 
     public static void startApplyStoreStatusActivity() {
-        Intent intent = new Intent(MyApplication.getContext(), ApplyStoreStatusActivity.class);
-        MyApplication.getContext().startActivity(intent);
+        Intent intent = new Intent(getTopActivity(), ApplyStoreStatusActivity.class);
+        getTopActivity().startActivity(intent);
     }
 
     @Override

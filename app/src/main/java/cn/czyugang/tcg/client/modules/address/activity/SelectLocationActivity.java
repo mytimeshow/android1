@@ -45,7 +45,6 @@ import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseRecyclerAdapter;
 import cn.czyugang.tcg.client.base.DefaultItemDecoration;
 import cn.czyugang.tcg.client.common.LocationManager;
-import cn.czyugang.tcg.client.common.MyApplication;
 import cn.czyugang.tcg.client.modules.address.adapter.SelectLocationAdapter;
 import cn.czyugang.tcg.client.widget.MapView;
 
@@ -96,12 +95,12 @@ public class SelectLocationActivity extends BaseActivity implements View.OnFocus
     private PoiItem mPoiItem;
 
     public static void startSelectLocationActivity(Activity activity,int requestCode){
-        Intent intent=new Intent(MyApplication.getContext(),SelectLocationActivity.class);
+        Intent intent=new Intent(getTopActivity(),SelectLocationActivity.class);
         activity.startActivityForResult(intent,requestCode);
     }
 
     public static void startSelectLocationActivity(Activity activity,int requestCode,String title,String searchHint){
-        Intent intent=new Intent(MyApplication.getContext(),SelectLocationActivity.class);
+        Intent intent=new Intent(getTopActivity(),SelectLocationActivity.class);
         intent.putExtra("title",title);
         intent.putExtra("searchHint",searchHint);
         activity.startActivityForResult(intent,requestCode);

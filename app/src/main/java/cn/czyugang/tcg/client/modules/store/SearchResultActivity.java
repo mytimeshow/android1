@@ -47,10 +47,10 @@ public class SearchResultActivity extends BaseActivity {
     }
 
     public static void startSearchResultActivity(String key, int searchType) {
-        Intent intent = new Intent(MyApplication.getContext(), SearchResultActivity.class);
+        Intent intent = new Intent(getTopActivity(), SearchResultActivity.class);
         intent.putExtra("key", key);
         intent.putExtra("type", searchType);
-        MyApplication.getContext().startActivity(intent);
+        getTopActivity().startActivity(intent);
     }
 
     @Override

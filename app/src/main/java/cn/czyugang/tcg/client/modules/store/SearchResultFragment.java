@@ -290,7 +290,18 @@ public class SearchResultFragment extends BaseFragment {
     * */
     @OnClick(R.id.search_show_type)
     public void onShowType() {
-
+        if (!(adapter instanceof GoodsAdapter)) return;
+        GoodsAdapter goodsAdapter=(GoodsAdapter)adapter;
+        goodsAdapter.isSingleList = !goodsAdapter.isSingleList;
+        if (goodsAdapter.isSingleList) {
+            showType.setImageResource(R.drawable.icon_list_two);
+            ((GridLayoutManager) resultsR.getLayoutManager()).setSpanCount(1);
+            goodsAdapter.notifyDataSetChanged();
+        } else {
+            showType.setImageResource(R.drawable.icon_list_one);
+            ((GridLayoutManager) resultsR.getLayoutManager()).setSpanCount(2);
+            goodsAdapter.notifyDataSetChanged();
+        }
     }
 
     /*
@@ -396,6 +407,7 @@ public class SearchResultFragment extends BaseFragment {
     private static class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.Holder> {
         private List<Good> list;
         private Activity activity;
+        public boolean isSingleList = false;
 
         public GoodsAdapter(List<Good> list, Activity activity) {
             this.list = list;
@@ -423,8 +435,11 @@ public class SearchResultFragment extends BaseFragment {
 
         @Override
         public int getItemViewType(int position) {
-            return position == 0 ? R.layout.item_search_result_title : R.layout.item_search_result_goods;
+            return position == 0 ? R.layout.item_search_result_title :
+                    (isSingleList ? R.layout.item_search_result_goods : R.layout.item_search_result_goods_two);
         }
+
+
 
         class Holder extends RecyclerView.ViewHolder {
             View title;
@@ -435,17 +450,18 @@ public class SearchResultFragment extends BaseFragment {
             TextView price;
             TextView platformDelivery;
             LabelLayout labels;
+
             public Holder(View itemView) {
                 super(itemView);
                 title = itemView.findViewById(R.id.item_title);
 
-                goodImg=itemView.findViewById(R.id.item_img);
-                name=itemView.findViewById(R.id.item_name);
-                sale=itemView.findViewById(R.id.item_sale);
-                delivery=itemView.findViewById(R.id.item_delivery);
-                price=itemView.findViewById(R.id.item_price);
-                platformDelivery=itemView.findViewById(R.id.item_platform_delivery);
-                labels=itemView.findViewById(R.id.item_labels);
+                goodImg = itemView.findViewById(R.id.item_img);
+                name = itemView.findViewById(R.id.item_name);
+                sale = itemView.findViewById(R.id.item_sale);
+                delivery = itemView.findViewById(R.id.item_delivery);
+                price = itemView.findViewById(R.id.item_price);
+                platformDelivery = itemView.findViewById(R.id.item_platform_delivery);
+                labels = itemView.findViewById(R.id.item_labels);
             }
         }
     }
@@ -471,6 +487,12 @@ public class SearchResultFragment extends BaseFragment {
                 return;
             }
             Store data = list.get(position);
+            data.bindSearchResultGoodsImg(activity, holder.goodsImgs);
+            holder.activities.removeAllViews();
+            holder.activities.addActivityItem("减", "满20减5；满45减20");
+            holder.activities.addActivityItem("减", "满20减5；满45减20；满90减50");
+            holder.activities.addActivityItem("减", "满20减5；满45减20；满90减50；满500减110...");
+            holder.activities.build();
         }
 
         @Override
@@ -497,7 +519,14 @@ public class SearchResultFragment extends BaseFragment {
             public Holder(View itemView) {
                 super(itemView);
                 title = itemView.findViewById(R.id.item_title);
-                storeImg=itemView.findViewById(R.id.item_img);
+                storeImg = itemView.findViewById(R.id.item_img);
+                name = itemView.findViewById(R.id.item_name);
+                deliveryTime = itemView.findViewById(R.id.item_delivery_time);
+                sale = itemView.findViewById(R.id.item_sale);
+                stars = itemView.findViewById(R.id.item_star);
+                deliveryPrice = itemView.findViewById(R.id.item_delivery_price);
+                activities = itemView.findViewById(R.id.item_activities);
+                goodsImgs = itemView.findViewById(R.id.item_goods);
             }
         }
     }

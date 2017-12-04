@@ -43,16 +43,16 @@ public class ImgActivity extends BaseActivity {
     private ImgAdapter imgAdapter;
 
     public static void startImgActivity(String imgId) {
-        Intent intent = new Intent(MyApplication.getContext(), ImgActivity.class);
+        Intent intent = new Intent(getTopActivity(), ImgActivity.class);
         intent.putExtra("imgId", imgId);
-        MyApplication.getContext().startActivity(intent);
+        getTopActivity().startActivity(intent);
     }
 
     public static void startImgActivity(ArrayList<String> imgIds, int position) {
-        Intent intent = new Intent(MyApplication.getContext(), ImgActivity.class);
+        Intent intent = new Intent(getTopActivity(), ImgActivity.class);
         intent.putStringArrayListExtra("imgIds", imgIds);
         intent.putExtra("position", position);
-        MyApplication.getContext().startActivity(intent);
+        getTopActivity().startActivity(intent);
     }
 
     @Override

@@ -101,6 +101,10 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
         return mainActivity;
     }
 
+    public static BaseActivity getTopActivity(){
+        return activityList.get(activityList.size()-1);
+    }
+
     protected abstract class NetObserver<T> implements Observer<T> {
         @Override
         public void onSubscribe(@NonNull Disposable d) {

@@ -78,8 +78,8 @@ public class ConfirmOrderActivity extends BaseActivity {
     LinearLayout confirmOrder;
 
     public static void startConfirmOrderActivity() {
-        Intent intent = new Intent(MyApplication.getContext(), ConfirmOrderActivity.class);
-        MyApplication.getContext().startActivity(intent);
+        Intent intent = new Intent(getTopActivity(), ConfirmOrderActivity.class);
+        getTopActivity().startActivity(intent);
     }
 
     @Override

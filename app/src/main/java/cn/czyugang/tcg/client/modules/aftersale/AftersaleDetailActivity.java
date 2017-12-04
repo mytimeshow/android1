@@ -50,8 +50,8 @@ public class AftersaleDetailActivity extends BaseActivity {
     TextView returnGoods;
 
     public static void startAftersaleDetailActivity() {
-        Intent intent = new Intent(MyApplication.getContext(), AftersaleDetailActivity.class);
-        MyApplication.getContext().startActivity(intent);
+        Intent intent = new Intent(getTopActivity(), AftersaleDetailActivity.class);
+        getTopActivity().startActivity(intent);
     }
 
     @Override

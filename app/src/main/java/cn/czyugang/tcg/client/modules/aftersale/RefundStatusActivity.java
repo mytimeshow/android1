@@ -19,8 +19,8 @@ import cn.czyugang.tcg.client.common.MyApplication;
 
 public class RefundStatusActivity extends BaseActivity {
     public static void startRefundStatusActivity() {
-        Intent intent = new Intent(MyApplication.getContext(), RefundStatusActivity.class);
-        MyApplication.getContext().startActivity(intent);
+        Intent intent = new Intent(getTopActivity(), RefundStatusActivity.class);
+        getTopActivity().startActivity(intent);
     }
 
     @Override

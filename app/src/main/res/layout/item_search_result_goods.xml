@@ -5,8 +5,6 @@
     android:layout_height="wrap_content"
     android:paddingTop="@dimen/dp_14"
     android:paddingBottom="@dimen/dp_14"
-    android:paddingLeft="@dimen/dp_10"
-    android:paddingRight="@dimen/dp_10"
     >
 
 

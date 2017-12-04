@@ -34,8 +34,8 @@ public class AftersaleListActivity extends BaseActivity {
     private List<BaseFragment> fragments=new ArrayList<>();
 
     public static void startAftersaleListActivity() {
-        Intent intent = new Intent(MyApplication.getContext(), AftersaleListActivity.class);
-        MyApplication.getContext().startActivity(intent);
+        Intent intent = new Intent(getTopActivity(), AftersaleListActivity.class);
+        getTopActivity().startActivity(intent);
     }
 
 

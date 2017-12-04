@@ -48,8 +48,8 @@ public class OrderTrackActivity extends BaseActivity {
     private List<Track> trackList = new ArrayList<>();
 
     public static void startOrderTrackActivity() {
-        Intent intent = new Intent(MyApplication.getContext(), OrderTrackActivity.class);
-        MyApplication.getContext().startActivity(intent);
+        Intent intent = new Intent(getTopActivity(), OrderTrackActivity.class);
+        getTopActivity().startActivity(intent);
     }
 
     @Override

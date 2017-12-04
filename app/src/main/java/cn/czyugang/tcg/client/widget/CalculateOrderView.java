@@ -37,6 +37,17 @@ public class CalculateOrderView extends LinearLayout {
 
 
     private List<Item> items = new ArrayList<>();
+    private boolean foldable = true;
+
+    public void clear() {
+        items.clear();
+        removeAllViews();
+    }
+
+    public CalculateOrderView addActivityItem(String type, String name) {
+        items.add(new Item(type, name, null));
+        return this;
+    }
 
     public CalculateOrderView addItem(String name, String price) {
         items.add(new Item(null, name, price));
@@ -48,22 +59,30 @@ public class CalculateOrderView extends LinearLayout {
         return this;
     }
 
-    public CalculateOrderView addItem(String name, String price,View.OnClickListener listener) {
+    public CalculateOrderView addItem(String name, String price, View.OnClickListener listener) {
         items.add(new Item(name, listener, price));
         return this;
     }
 
+
+    public void hideOrShowMore() {
+        int size = getChildCount();
+        if (size <= 2) return;
+        int show = getChildAt(2).getVisibility() == GONE ? View.VISIBLE : View.GONE;
+    }
+
     public void build() {
-        for(Item item:items){
-            View view= LayoutInflater.from(getContext()).inflate(R.layout.view_calculate_order, this, false);
+        for (int i = 0, size = items.size(); i < size; i++) {
+            Item item = items.get(i);
+            View view = LayoutInflater.from(getContext()).inflate(R.layout.view_calculate_order, this, false);
             //LogRui.i("build####",view+"        "+getChildCount());
             ActivityTextView nameT = view.findViewById(R.id.view_calculate_order_name);
             TextView priceT = view.findViewById(R.id.view_calculate_order_price);
-            ImageView img=view.findViewById(R.id.view_calculate_order_img);
-            nameT.setText(R.color.text_dark_gray,R.dimen.sp_14);
+            ImageView img = view.findViewById(R.id.view_calculate_order_img);
+            nameT.setText(R.color.text_dark_gray, R.dimen.sp_14);
             nameT.setText(item.name);
-            if (item.type!=null) nameT.setType(item.type);
-            if (item.listener!=null) {
+            if (item.type != null) nameT.setType(item.type);
+            if (item.listener != null) {
                 img.setImageResource(item.icon);
                 img.setOnClickListener(item.listener);
             }

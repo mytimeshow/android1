@@ -15,7 +15,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
-import cn.czyugang.tcg.client.common.MyApplication;
 import cn.czyugang.tcg.client.modules.address.activity.SelectLocationActivity;
 
 /**
@@ -49,8 +48,8 @@ public class ApplyStoreActivity extends BaseActivity {
     private PoiItem poiItem = null;
 
     public static void startApplyStoreActivity() {
-        Intent intent = new Intent(MyApplication.getContext(), ApplyStoreActivity.class);
-        MyApplication.getContext().startActivity(intent);
+        Intent intent = new Intent(getTopActivity(), ApplyStoreActivity.class);
+        getTopActivity().startActivity(intent);
     }
 
     @Override

@@ -48,14 +48,14 @@ public class FootmarkActivity extends BaseActivity {
     private List<BaseFragment> fragments;
 
     public static void startFootmarkActivity() {
-        Intent intent = new Intent(MyApplication.getContext(), FootmarkActivity.class);
-        MyApplication.getContext().startActivity(intent);
+        Intent intent = new Intent(getTopActivity(), FootmarkActivity.class);
+        getTopActivity().startActivity(intent);
     }
 
     public static void startFootmarkActivity(int showType) {
-        Intent intent = new Intent(MyApplication.getContext(), FootmarkActivity.class);
+        Intent intent = new Intent(getTopActivity(), FootmarkActivity.class);
         intent.putExtra("showType", showType);
-        MyApplication.getContext().startActivity(intent);
+        getTopActivity().startActivity(intent);
     }
 
     @Override
