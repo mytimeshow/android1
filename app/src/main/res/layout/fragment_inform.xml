@@ -12,7 +12,7 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:background="@drawable/ic_placeholder"/>
         <android.support.design.widget.TabLayout
-            android:id="@+id/good_detail_tab"
+            android:id="@+id/inform_detail_tab"
             android:layout_width="@dimen/dp_180"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -29,7 +29,7 @@
     <include layout="@layout/view_split_bar_light"/>
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/good_detail_pager"
+        android:id="@+id/inform_detail_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"

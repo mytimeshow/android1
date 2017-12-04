@@ -3,7 +3,9 @@ package cn.czyugang.tcg.client.modules.entry.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +15,16 @@ import com.ruiaa.bottomnavigation.ItemView;
 import com.ruiaa.bottomnavigation.ScrollFrameView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseFragment;
+import cn.czyugang.tcg.client.base.BaseFragmentAdapter;
+import cn.czyugang.tcg.client.modules.store.GoodCommentFragment;
+import cn.czyugang.tcg.client.modules.store.GoodDetailFragment;
+import cn.czyugang.tcg.client.modules.store.GoodFragment;
 
 /**
  * @author ruiaa
@@ -30,13 +37,13 @@ import cn.czyugang.tcg.client.base.BaseFragment;
 
 public class InformFragment extends BaseFragment {
 
-    @BindView(R.id.inform_frame)
-    ScrollFrameView informFrame;
-    @BindView(R.id.inform_bottom)
-    BottomBarView bottomBar;
+    @BindView(R.id.inform_detail_tab)
+    TabLayout tabLayout;
+    @BindView(R.id.inform_detail_pager)
+    ViewPager viewPager;
 
     Context context=getContext();
-    private ArrayList<Fragment> fragments = new ArrayList<>();
+    private List<BaseFragment> fragments=new ArrayList<>();
 
 
     public static InformFragment newInstance() {
@@ -55,31 +62,16 @@ public class InformFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_inform, container, false);
         ButterKnife.bind(this, rootView);
-        bottomBar
-                .setImgSizeRes(R.dimen.dp_20)
-                .setTextImgDistanceRes(R.dimen.dp_4)
-                .setTextSize(14)
-                .addItem(new ItemView(bottomBar).setContent("最新资讯",null,null))
-                .addItem(new ItemView(bottomBar).setContent("我的关注",null,null))
-                .addItem(new ItemView(bottomBar).setContent("资讯栏目", null,null))
-                .setOnSelectListener(this::onChangeFragment)
-                .init();
+        fragments.add(GoodFragment.newInstance());
+        fragments.add(GoodDetailFragment.newInstance());
+        fragments.add(GoodCommentFragment.newInstance());
 
-        fragments.add(HomepageFragment.newInstance());
-        fragments.add(InformFragment.newInstance());
-        fragments.add(CategoryFragment.newInstance());
-
-        informFrame.setFragmentList(getActivity().getSupportFragmentManager(),fragments);
-        informFrame.setBottomBarView(bottomBar);
+        viewPager.setAdapter(new BaseFragmentAdapter(getActivity().getSupportFragmentManager(),fragments));
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
         return rootView;
     }
 
-    public void selectFragment(int index){
-        bottomBar.setSelectWithFrame(index);
-    }
 
-    private void onChangeFragment(int index){
-
-    }
 }
