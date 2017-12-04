@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -69,6 +70,9 @@ public class CalculateOrderView extends LinearLayout {
         int size = getChildCount();
         if (size <= 2) return;
         int show = getChildAt(2).getVisibility() == GONE ? View.VISIBLE : View.GONE;
+        for (int i = 2; i < size; i++) {
+            getChildAt(2).setVisibility(show);
+        }
     }
 
     public void build() {
@@ -87,8 +91,19 @@ public class CalculateOrderView extends LinearLayout {
                 img.setOnClickListener(item.listener);
             }
             priceT.setText(item.price);
-            addView(view);
 
+            if (i == 1 && foldable) {
+                ImageView imageView = (ImageView) LayoutInflater.from(getContext())
+                        .inflate(R.layout.view_icon_right, (ViewGroup) view, false);
+                imageView.setImageResource(R.drawable.icon_arrow_down);
+                imageView.setOnClickListener(v -> hideOrShowMore());
+                ((ViewGroup) view).addView(imageView);
+            }
+            if (i > 1 && foldable) {
+                view.setVisibility(GONE);
+            }
+
+            addView(view);
         }
     }
 

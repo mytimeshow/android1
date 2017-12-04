@@ -39,6 +39,7 @@ import cn.czyugang.tcg.client.modules.login.activity.LoginActivity;
 import cn.czyugang.tcg.client.modules.order.MyOrderActivity;
 import cn.czyugang.tcg.client.modules.person.CollectionActivity;
 import cn.czyugang.tcg.client.modules.person.FootmarkActivity;
+import cn.czyugang.tcg.client.modules.score.ScoreActivity;
 import cn.czyugang.tcg.client.modules.set.activity.SetActivity;
 import cn.czyugang.tcg.client.modules.store.ApplyStoreActivity;
 import cn.czyugang.tcg.client.utils.img.ImageLoader;
@@ -191,6 +192,7 @@ public class MyFragment extends BaseFragment implements MyContract.View {
                 break;
             case R.id.ll_points:
                 //TODO 启动我的分数页面
+                ScoreActivity.startScoreActivity();
                 break;
             case R.id.ll_coupon:
                 //TODO 启动抵用券页面

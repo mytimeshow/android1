@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        style="@style/title_title">
+
+        <ImageView
+            style="@style/title_back"/>
+
+        <TextView
+            style="@style/title_text"
+            android:text="积分明细"/>
+    </FrameLayout>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <LinearLayout
+        style="@style/item_40_group">
+
+        <include layout="@layout/space_h"/>
+
+        <TextView
+            android:id="@+id/score_history_filter"
+            style="@style/text_14_black"
+            android:drawablePadding="@dimen/dp_4"
+            android:drawableRight="@drawable/tri_down_gray"
+            android:text="所有记录"
+            />
+
+        <include layout="@layout/space_h"/>
+
+        <View
+            android:layout_width="@dimen/dp_0.5"
+            android:layout_height="@dimen/dp_20"
+            android:background="@color/bg"
+            />
+
+        <include layout="@layout/space_h"/>
+
+        <TextView
+            android:id="@+id/score_history_time"
+            style="@style/text_14_black"
+            android:drawablePadding="@dimen/dp_4"
+            android:drawableRight="@drawable/tri_down_gray"
+            android:text="近3个月"
+            />
+
+        <include layout="@layout/space_h"/>
+    </LinearLayout>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/score_history"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+        <cn.czyugang.tcg.client.widget.SpinnerSelectView
+            android:id="@+id/score_history_filterL"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_blur"
+            android:orientation="vertical"
+            android:visibility="gone"
+            />
+
+        <cn.czyugang.tcg.client.widget.SpinnerSelectView
+            android:id="@+id/score_history_timeL"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_blur"
+            android:orientation="vertical"
+            android:visibility="gone"
+            />
+
+    </FrameLayout>
+</LinearLayout>

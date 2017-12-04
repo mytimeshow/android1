@@ -143,7 +143,15 @@ public class SearchResultFragment extends BaseFragment {
 
         if (searchType == SEARCH_TYPE_GOODS) {
             adapter = new GoodsAdapter(goodList, getActivity());
-            resultsR.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 1);
+            gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    if(((GoodsAdapter)adapter).isSingleList) return 1;
+                    return position == 0 ? 2 : 1;
+                }
+            });
+            resultsR.setLayoutManager(gridLayoutManager);
         } else {
             adapter = new StoreAdapter(storeList, getActivity());
             resultsR.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -291,7 +299,7 @@ public class SearchResultFragment extends BaseFragment {
     @OnClick(R.id.search_show_type)
     public void onShowType() {
         if (!(adapter instanceof GoodsAdapter)) return;
-        GoodsAdapter goodsAdapter=(GoodsAdapter)adapter;
+        GoodsAdapter goodsAdapter = (GoodsAdapter) adapter;
         goodsAdapter.isSingleList = !goodsAdapter.isSingleList;
         if (goodsAdapter.isSingleList) {
             showType.setImageResource(R.drawable.icon_list_two);
@@ -327,6 +335,14 @@ public class SearchResultFragment extends BaseFragment {
         filterPriceMin.setText("");
         filterPriceMax.setText("");
         filterAdapter.notifyDataSetChanged();
+    }
+
+    /*
+    *   滚动到顶
+    * */
+    @OnClick(R.id.search_list_to_top)
+    public void onToTop(){
+        resultsR.getLayoutManager().scrollToPosition(0);
     }
 
     private static class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.Holder> {
@@ -407,7 +423,7 @@ public class SearchResultFragment extends BaseFragment {
     private static class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.Holder> {
         private List<Good> list;
         private Activity activity;
-        public boolean isSingleList = false;
+        public boolean isSingleList = true;
 
         public GoodsAdapter(List<Good> list, Activity activity) {
             this.list = list;
@@ -438,7 +454,6 @@ public class SearchResultFragment extends BaseFragment {
             return position == 0 ? R.layout.item_search_result_title :
                     (isSingleList ? R.layout.item_search_result_goods : R.layout.item_search_result_goods_two);
         }
-
 
 
         class Holder extends RecyclerView.ViewHolder {
@@ -488,7 +503,7 @@ public class SearchResultFragment extends BaseFragment {
             }
             Store data = list.get(position);
             data.bindSearchResultGoodsImg(activity, holder.goodsImgs);
-            holder.activities.removeAllViews();
+            holder.activities.clear();
             holder.activities.addActivityItem("减", "满20减5；满45减20");
             holder.activities.addActivityItem("减", "满20减5；满45减20；满90减50");
             holder.activities.addActivityItem("减", "满20减5；满45减20；满90减50；满500减110...");

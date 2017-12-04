@@ -393,6 +393,13 @@
         <activity android:name=".modules.aftersale.RefundStatusActivity"/>
         <activity android:name=".modules.store.SearchActivity"/>
         <activity android:name=".modules.store.SearchResultActivity"/>
+        <activity android:name=".modules.score.ScoreActivity"/>
+        <activity android:name=".modules.score.ScoreHistoryActivity"/>
+        <activity android:name=".modules.score.ScoreUseActivity"/>
+        <activity android:name=".modules.scan.ScanActivity"/>
+        <activity android:name=".modules.scan.ScanInputActivity"/>
+        <activity android:name=".modules.scan.ScanResultActivity"/>
+        <activity android:name=".modules.scan.ScanHistoryActivity"/>
 
     </application>
 </manifest>
