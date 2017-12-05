@@ -66,4 +66,7 @@
 
     <color name="bg_store_food">#c2360f</color>
     <color name="bg_store_good">#338ad4</color>
+
+    <color name="column_click_bg">#ffc9c9</color>
+    <color name="column_click_tv">#f22f22</color>
 </resources>

@@ -25,6 +25,8 @@ import cn.czyugang.tcg.client.base.BaseFragmentAdapter;
 import cn.czyugang.tcg.client.modules.store.GoodCommentFragment;
 import cn.czyugang.tcg.client.modules.store.GoodDetailFragment;
 import cn.czyugang.tcg.client.modules.store.GoodFragment;
+import cn.czyugang.tcg.client.utils.CommonUtil;
+import cn.czyugang.tcg.client.utils.app.ResUtil;
 
 /**
  * @author ruiaa
@@ -42,7 +44,7 @@ public class InformFragment extends BaseFragment {
     @BindView(R.id.inform_detail_pager)
     ViewPager viewPager;
 
-    Context context=getContext();
+
     private List<BaseFragment> fragments=new ArrayList<>();
 
 
@@ -64,10 +66,19 @@ public class InformFragment extends BaseFragment {
         ButterKnife.bind(this, rootView);
 
 
+        fragments.add(InformNewsFragment.newInstance());
+        fragments.add(InformFollowFragment.newInstance());
+        fragments.add(InformColumnFragment.newInstance());
+
         viewPager.setAdapter(new BaseFragmentAdapter(getActivity().getSupportFragmentManager(),fragments));
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
-
+        tabLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                CommonUtil.setTabLayoutIndicator(tabLayout, ResUtil.getDimenInPx(R.dimen.dp_12),ResUtil.getDimenInPx(R.dimen.dp_12));
+            }
+        },50);
         return rootView;
     }
 
