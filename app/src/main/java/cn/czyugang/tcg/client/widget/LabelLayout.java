@@ -20,6 +20,7 @@ public class LabelLayout extends FlowLayout {
     private boolean haveAdd=false;
     private int labelId= R.layout.view_label;
     private OnClickItemListener onClickItemListener=null;
+    public TextView selectTextView=null;
 
     public LabelLayout(Context context) {
         super(context);
@@ -56,6 +57,7 @@ public class LabelLayout extends FlowLayout {
             TextView textView=(TextView)inflater.inflate(labelId,this,false);
             textView.setText(s);
             textView.setOnClickListener(v -> {
+                selectTextView=(TextView) v;
                 if (onClickItemListener!=null) onClickItemListener.onClick(((TextView)v).getText().toString(),(TextView)v);
             });
             addView(textView);

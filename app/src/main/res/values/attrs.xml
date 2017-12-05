@@ -8,7 +8,6 @@
     </declare-styleable>
     <declare-styleable name="LabelLayout">
         <attr name="child_layout" format="reference"/>
-        <attr name="show_type" format="string"/>
     </declare-styleable>
 
     <declare-styleable name="ActivityTextView">
