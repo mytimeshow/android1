@@ -1,18 +1,12 @@
 package cn.czyugang.tcg.client.modules.entry.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.ruiaa.bottomnavigation.BottomBarView;
-import com.ruiaa.bottomnavigation.ItemView;
-import com.ruiaa.bottomnavigation.ScrollFrameView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +16,9 @@ import butterknife.ButterKnife;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.base.BaseFragmentAdapter;
-import cn.czyugang.tcg.client.modules.store.GoodCommentFragment;
-import cn.czyugang.tcg.client.modules.store.GoodDetailFragment;
-import cn.czyugang.tcg.client.modules.store.GoodFragment;
+import cn.czyugang.tcg.client.modules.inform.InformColumnFragment;
+import cn.czyugang.tcg.client.modules.inform.InformFollowFragment;
+import cn.czyugang.tcg.client.modules.inform.InformNewsFragment;
 import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 

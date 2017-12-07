@@ -1,4 +1,4 @@
-package cn.czyugang.tcg.client.modules.entry.fragment;
+package cn.czyugang.tcg.client.modules.inform;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

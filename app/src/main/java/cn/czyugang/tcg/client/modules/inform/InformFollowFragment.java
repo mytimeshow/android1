@@ -1,15 +1,15 @@
-package cn.czyugang.tcg.client.modules.entry.fragment;
+package cn.czyugang.tcg.client.modules.inform;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,17 +17,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnItemSelected;
 import butterknife.Unbinder;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseFragment;
-import cn.czyugang.tcg.client.base.BaseFragmentAdapter;
+import cn.czyugang.tcg.client.base.BaseRecyclerAdapter;
 import cn.czyugang.tcg.client.entity.FollowCotent;
-import cn.czyugang.tcg.client.modules.entry.adapter.FollowContentAdapter;
-import cn.czyugang.tcg.client.modules.store.GoodDetailIntroFragment;
-import cn.czyugang.tcg.client.modules.store.GoodDetailSpecFragment;
-import cn.czyugang.tcg.client.utils.CommonUtil;
-import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.widget.LabelLayout;
 
@@ -40,11 +34,6 @@ import static cn.czyugang.tcg.client.utils.app.ResUtil.getDrawable;
  */
 
 public class InformFollowFragment extends BaseFragment {
-    /*@BindView(R.id.inform_detail_tab)
-    TabLayout tabLayout;
-    @BindView(R.id.inform_detail_pager)
-    ViewPager viewPager;
-*/
 
     @BindView(R.id.tv_all_follow)
     TextView tvAllFollw;
@@ -60,6 +49,8 @@ public class InformFollowFragment extends BaseFragment {
     RecyclerView lvInformFollow;
 
     Unbinder unbinder;
+
+    private int CLICK_TYPE;
 
 
     public static InformFollowFragment newInstance() {
@@ -93,15 +84,19 @@ public class InformFollowFragment extends BaseFragment {
             @Override
             public void onClick(String text, TextView textView) {
 
-                columnType.selectTextView.setBackgroundColor(getResources().getColor(R.color.column_click_bg));
+
                 textView.setTextColor(getColor(R.color.main_red));
-                if(columnType.selectTextView!=null){
-                    textView.setBackgroundColor(getResources().getColor(R.color.grey_100));
+                textView.setBackgroundColor(getResources().getColor(R.color.column_click_bg));
+                if (columnType.lastSelectTextView != null) {
+                    columnType.lastSelectTextView.setTextColor(getResources().getColor(R.color.text_dark_gray));
+                    columnType.lastSelectTextView.setBackgroundColor(getResources().getColor(R.color.bg));
+
                 }
 
 
             }
         });
+        init();
 
         return rootView;
     }
@@ -112,45 +107,50 @@ public class InformFollowFragment extends BaseFragment {
     }
 
     @OnClick(R.id.tv_all_follow)
-    public void onAllFollow(){
+    public void onAllFollow() {
+        CLICK_TYPE=1;
         tvAllFollw.setTextColor(getResources().getColor(R.color.main_red));
         tvAllColumn.setTextColor(getResources().getColor(R.color.text_dark_gray));
         tvFollowPerson.setTextColor(getResources().getColor(R.color.text_dark_gray));
-        tvAllColumn.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_pull_down),null);
+        tvAllColumn.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.ic_pull_down), null);
         columnType.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.tv_all_column)
-    public void onAllColumn(){
+    public void onAllColumn() {
+        if ( CLICK_TYPE==1|| CLICK_TYPE==3){
+            columnType.setVisibility(View.VISIBLE);
+        }
+        CLICK_TYPE=2;
         tvAllColumn.setTextColor(getResources().getColor(R.color.main_red));
         tvAllFollw.setTextColor(getResources().getColor(R.color.text_dark_gray));
         tvFollowPerson.setTextColor(getResources().getColor(R.color.text_dark_gray));
-        tvAllColumn.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_pull_down_red),null);
-        if (tvAllColumn.isFocusable()){
-            if(columnType.getVisibility()==View.GONE){
+        if(CLICK_TYPE==2){
+            if (columnType.getVisibility() == View.GONE) {
                 columnType.setVisibility(View.VISIBLE);
-            }
-            if(columnType.getVisibility()==View.VISIBLE){
+                tvAllColumn.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.ic_pull_up), null);
+
+            }else if (columnType.getVisibility() == View.VISIBLE) {
                 columnType.setVisibility(View.GONE);
+                tvAllColumn.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.ic_pull_down_red), null);
             }
-        }else{
-            columnType.setVisibility(View.GONE);
         }
-        //tvAllColumn.setCompoundDrawablePadding(-30);
+
     }
 
     @OnClick(R.id.tv_follow_person)
-    public void onFollowPerson(){
+    public void onFollowPerson() {
+        CLICK_TYPE=3;
         tvFollowPerson.setTextColor(getResources().getColor(R.color.main_red));
         tvAllFollw.setTextColor(getResources().getColor(R.color.text_dark_gray));
         tvAllColumn.setTextColor(getResources().getColor(R.color.text_dark_gray));
-        tvAllColumn.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_pull_down),null);
+        tvAllColumn.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.ic_pull_down), null);
         columnType.setVisibility(View.GONE);
     }
 
-    private void init(){
+    private void init() {
         List<FollowCotent> followCotentsList = new ArrayList<FollowCotent>();
-        FollowCotent followCotent=new FollowCotent();
+        FollowCotent followCotent = new FollowCotent();
         followCotent.setName("博主名称");
         followCotent.setContent("内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容");
         followCotent.setCommentNum("1234567");
@@ -159,8 +159,56 @@ public class InformFollowFragment extends BaseFragment {
         followCotentsList.add(followCotent);
         followCotentsList.add(followCotent);
         followCotentsList.add(followCotent);
-        FollowContentAdapter followContentAdapter=new FollowContentAdapter(context);
+        FollowContentAdapter followContentAdapter = new FollowContentAdapter(followCotentsList,getActivity());
+        lvInformFollow.setLayoutManager(new LinearLayoutManager(getActivity()));
         lvInformFollow.setAdapter(followContentAdapter);
 
+    }
+
+
+     static class FollowContentAdapter extends RecyclerView.Adapter<FollowContentAdapter.Holder> {
+        private List<FollowCotent> list;
+        private Activity activity;
+
+        public FollowContentAdapter(List<FollowCotent> list, Activity activity) {
+            this.list = list;
+            this.activity = activity;
+        }
+        @Override
+        public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new Holder(LayoutInflater.from(activity).inflate(
+                   R.layout.item_follow_list ,parent,false));
+        }
+        @Override
+        public void onBindViewHolder(Holder holder, int position) {
+            FollowCotent data=list.get(position);
+            holder.followCommitNum.setText(data.getCommentNum());
+            holder.followThumbNum.setText(data.getThumbNum());
+            holder.followName.setText(data.getName());
+            holder.followContent.setText(data.getContent());
+        }
+        @Override
+        public int getItemCount() {
+            return list.size();
+        }
+
+
+        class Holder extends RecyclerView.ViewHolder {
+            ImgView followHead;
+            TextView followName;
+            TextView followCommitNum;
+            TextView followThumbNum;
+            TextView followContent;
+            ImgView followImg;
+            public Holder(View itemView) {
+                super(itemView);
+                followHead=itemView.findViewById(R.id.follow_list_head);
+                followName=itemView.findViewById(R.id.follow_list_name);
+                followCommitNum=itemView.findViewById(R.id.follw_list_commit_num);
+                followThumbNum=itemView.findViewById(R.id.follw_list_thumb_num);
+                followContent=itemView.findViewById(R.id.follow_list_content);
+                followImg=itemView.findViewById(R.id.follow_list_img);
+            }
+        }
     }
 }
