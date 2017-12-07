@@ -16,8 +16,6 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- 用于读取手机当前的状态-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- 写入扩展存储，向扩展卡写入数据-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!--高德地图所需权限-->
     <!--用于进行网络定位-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -41,8 +39,16 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
+
+    <!-- 存储 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!-- 震动 -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <!--打电话-->
     <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <!--相机-->
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".common.MyApplication"
@@ -366,7 +372,7 @@
             android:name="com.amap.api.v2.apikey"
             android:value="a29ac43262d81410e779e24a8d2a5a75" />
 
-
+        <activity android:name=".modules.common.WebActivity"/>
         <activity android:name=".modules.person.CollectionActivity"/>
         <activity android:name=".modules.person.FootmarkActivity"/>
         <activity android:name=".modules.store.StoreActivity"/>
@@ -400,6 +406,20 @@
         <activity android:name=".modules.scan.ScanInputActivity"/>
         <activity android:name=".modules.scan.ScanResultActivity"/>
         <activity android:name=".modules.scan.ScanHistoryActivity"/>
+
+        <!--二维码优惠-->
+        <activity android:name=".modules.scan.ScanGoodsDetailActivity"/>
+        <activity android:name=".modules.scan.ScanGoodsListActivity"/>
+        <activity android:name=".modules.scan.ScanStoreActivity"/>
+
+        <!--推广有礼-->
+        <activity android:name=".modules.promote.PromoterIntroActivity"/>
+        <activity android:name=".modules.promote.BecomePromoterActivity"/>
+        <activity android:name=".modules.promote.PromoteGoodListActivity"/>
+        <activity android:name=".modules.promote.PromoteGoodDetailActivity"/>
+        <activity android:name=".modules.promote.PromoterProfitActivity"/>
+
+        <!--降价拍-->
 
     </application>
 </manifest>

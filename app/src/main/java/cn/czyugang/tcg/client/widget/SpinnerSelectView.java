@@ -86,6 +86,13 @@ public class SpinnerSelectView extends LinearLayout {
         if (onSelectItemListener!=null) onSelectItemListener.onSelect(selectT.getText().toString());
     }
 
+    public void resetSelect(){
+        if (selectT!=null) selectT.setTextColor(ResUtil.getColor(R.color.text_dark_gray));
+        if (selectHook!=null) selectHook.setVisibility(GONE);
+        selectT=null;
+        selectHook=null;
+    }
+
     public static interface OnSelectItemListener {
         public void onSelect(String text);
     }

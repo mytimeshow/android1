@@ -19,4 +19,8 @@
         <attr name="five_star_score" format="integer"/>
         <attr name="five_star_text" format="string|reference"/>
     </declare-styleable>
+    <declare-styleable name="ImgView">
+        <attr name="round" format="boolean"/>
+        <attr name="noCache" format="boolean"/>
+    </declare-styleable>
 </resources>

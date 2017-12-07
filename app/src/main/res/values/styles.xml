@@ -206,8 +206,26 @@
         <item name="android:layout_marginRight">@dimen/dp_4</item>
     </style>
 
+    <style name="icon_bg_black_35">
+        <item name="android:layout_width">@dimen/dp_35</item>
+        <item name="android:layout_height">@dimen/dp_35</item>
+        <item name="android:layout_marginLeft">@dimen/dp_10</item>
+        <item name="android:layout_marginRight">@dimen/dp_10</item>
+        <item name="android:layout_marginTop">@dimen/dp_10</item>
+        <item name="android:background">@drawable/dot_dark_gray</item>
+        <item name="android:padding">@dimen/dp_8</item>
+    </style>
+
+
 
     <!--文字-->
+    <style name="text_14_white">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_white</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
     <style name="text_14_black">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -263,6 +281,25 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/text_black</item>
         <item name="android:textSize">@dimen/sp_16</item>
+    </style>
+    <style name="text_16_white">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+    </style>
+
+    <style name="text_18_black">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:textSize">@dimen/sp_18</item>
+    </style>
+    <style name="text_18_white">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/sp_18</item>
     </style>
 
 

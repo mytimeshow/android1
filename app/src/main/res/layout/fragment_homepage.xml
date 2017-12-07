@@ -44,6 +44,7 @@
         android:layout_height="wrap_content"
         />
 
+
     <TextView
         android:id="@+id/homepage_store1"
         android:layout_width="@dimen/dp_180"

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        style="@style/title_title">
+
+        <ImageView
+            style="@style/title_back"/>
+
+        <TextView
+            style="@style/title_text"
+            android:text="推广有礼"/>
+
+        <TextView
+            style="@style/title_right"
+            android:text="报表"
+            android:textColor="@color/text_black"/>
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.youth.banner.Banner
+                android:id="@+id/promote_banner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_150"
+                />
+
+            <!--成为推广员  邀请好友注册  精选商品清单-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_60"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/promote_become"
+                    style="@style/text_16_white"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_rect_red"
+                    android:gravity="center"
+                    android:text="成为推广员"
+                    />
+
+                <TextView
+                    android:id="@+id/promote_invite_register"
+                    style="@style/text_16_white"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/dp_16"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_rect_red"
+                    android:gravity="center"
+                    android:text="邀请好友注册"/>
+
+                <TextView
+                    android:id="@+id/promote_goods"
+                    style="@style/text_16_white"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_rect_red"
+                    android:gravity="center"
+                    android:text="精选商品清单"
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/view_split_bar_light_big"/>
+
+            <!--活动规则-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_44"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <include layout="@layout/space_h"/>
+
+                <View
+                    android:layout_width="@dimen/dp_32"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/text_black"
+                    />
+
+                <TextView
+                    style="@style/text_16_black"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:text="活动规则"
+                    />
+
+                <include layout="@layout/space_h"/>
+
+                <View
+                    android:layout_width="@dimen/dp_32"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/text_black"
+                    />
+            </LinearLayout>
+
+            <cn.czyugang.tcg.client.utils.img.ImgView
+                android:id="@+id/promote_intro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                />
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -43,6 +43,11 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
 
     private AddBankCardContract.Presenter mPresenter;
 
+    public static void startAddBankCardActivity( ){
+        Intent intent=new Intent(getTopActivity(),AddBankCardActivity.class);
+        getTopActivity().startActivity(intent);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

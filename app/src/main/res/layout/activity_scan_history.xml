@@ -5,4 +5,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <FrameLayout
+        style="@style/title_title">
+        <ImageView
+            style="@style/title_back"/>
+        <TextView
+            style="@style/title_text"
+            android:text="扫描历史"/>
+    </FrameLayout>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/scan_history"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_10"
+        />
+
 </LinearLayout>

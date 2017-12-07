@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:id="@+id/view_share_wechat"
+                android:layout_width="@dimen/dp_76"
+                android:layout_height="@dimen/dp_76">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_wechat"
+                    />
+
+                <TextView
+                    style="@style/text_14_white"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:text="微信好友"
+                    />
+            </FrameLayout>
+            <FrameLayout
+                android:id="@+id/view_share_wechat_circle"
+                android:layout_width="@dimen/dp_76"
+                android:layout_height="@dimen/dp_76">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_wechat_circle"
+                    />
+
+                <TextView
+                    style="@style/text_14_white"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:text="朋友圈"
+                    />
+            </FrameLayout>
+            <FrameLayout
+                android:id="@+id/view_share_qq"
+                android:layout_width="@dimen/dp_76"
+                android:layout_height="@dimen/dp_76">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_qq"
+                    />
+
+                <TextView
+                    style="@style/text_14_white"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:text="QQ好友"
+                    />
+            </FrameLayout>
+            <FrameLayout
+                android:id="@+id/view_share_qzone"
+                android:layout_width="@dimen/dp_76"
+                android:layout_height="@dimen/dp_76">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_qzone"
+                    />
+
+                <TextView
+                    style="@style/text_14_white"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:text="QQ空间"
+                    />
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/dp_40">
+
+            <FrameLayout
+                android:id="@+id/view_share_sina_blog"
+                android:layout_width="@dimen/dp_76"
+                android:layout_height="@dimen/dp_76">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_sina_blog"
+                    />
+
+                <TextView
+                    style="@style/text_14_white"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:text="微博"
+                    />
+            </FrameLayout>
+            <FrameLayout
+                android:id="@+id/view_share_scan"
+                android:layout_width="@dimen/dp_76"
+                android:layout_height="@dimen/dp_76"
+                >
+
+                <ImageView
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_qrcode"
+                    />
+
+                <TextView
+                    style="@style/text_14_white"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:text="当面扫码"
+                    />
+            </FrameLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
