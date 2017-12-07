@@ -14,7 +14,7 @@
         android:layout_marginRight="@dimen/dp_15"
         android:layout_weight="2">
         <cn.czyugang.tcg.client.utils.img.ImgView
-            android:id="@+id/follow_list_head"
+            android:id="@+id/inform_news_small_head"
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_15"
@@ -22,19 +22,19 @@
             app:round="true"
             />
         <TextView
-            android:id="@+id/follow_list_name"
+            android:id="@+id/inform_news_small_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_5"
             android:textColor="@color/text_gray"
-            android:textSize="@dimen/sp_12"
+            android:textSize="@dimen/sp_11"
             android:gravity="center"
-            android:layout_alignTop="@id/follow_list_head"
-            android:layout_alignBottom="@id/follow_list_head"
-            android:layout_toRightOf="@id/follow_list_head"
+            android:layout_alignTop="@id/inform_news_small_head"
+            android:layout_alignBottom="@id/inform_news_small_head"
+            android:layout_toRightOf="@id/inform_news_small_head"
             android:text="博主名称"/>
         <LinearLayout
-            android:id="@+id/follw_list_commit"
+            android:id="@+id/inform_news_small_commit"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_20"
             android:orientation="horizontal"
@@ -47,48 +47,48 @@
                 android:background="@drawable/ic_comment"
                 />
             <TextView
-                android:id="@+id/follw_list_commit_num"
+                android:id="@+id/inform_news_small_commit_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/sp_11"
+                android:text="215"/>
+
+        </LinearLayout>
+        <!--<LinearLayout
+            android:id="@+id/inform_news_small_thumb"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_20"
+            android:layout_marginLeft="@dimen/dp_60"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true">
+            <TextView
+
+                android:layout_width="@dimen/dp_12"
+                android:layout_height="@dimen/dp_12"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_thumb_up"
+                />
+            <TextView
+                android:id="@+id/inform_news_small_thumb_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/dp_5"
                 android:textColor="@color/text_gray"
                 android:textSize="@dimen/sp_12"
+
                 android:text="215"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/follw_list_thumb"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_20"
-            android:layout_marginLeft="@dimen/dp_60"
-            android:orientation="horizontal"
-            android:layout_alignParentBottom="true">
-        <TextView
-
-            android:layout_width="@dimen/dp_12"
-            android:layout_height="@dimen/dp_12"
-            android:layout_gravity="center"
-            android:background="@drawable/ic_thumb_up"
-            />
-        <TextView
-            android:id="@+id/follw_list_thumb_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/dp_5"
-            android:textColor="@color/text_gray"
-            android:textSize="@dimen/sp_12"
-
-            android:text="215"/>
-        </LinearLayout>
+        </LinearLayout>-->
 
         <TextView
-            android:id="@+id/follow_list_content"
+            android:id="@+id/inform_news_small_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/follw_list_commit"
-            android:layout_below="@id/follow_list_head"
+            android:layout_above="@+id/inform_news_small_commit"
+            android:layout_below="@id/inform_news_small_head"
             style="@style/text_14_dark_gray"
             android:lines="2"
             android:lineSpacingExtra="@dimen/dp_3"
@@ -99,7 +99,7 @@
     </RelativeLayout>
 
     <cn.czyugang.tcg.client.utils.img.ImgView
-        android:id="@+id/follow_list_img"
+        android:id="@+id/inform_news_small_img"
         android:layout_width="@dimen/dp_120"
         android:layout_height="@dimen/dp_90"
         android:src="@drawable/scan_nothing"

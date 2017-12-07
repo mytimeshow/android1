@@ -113,6 +113,10 @@ public class InformColumnFragment extends BaseFragment {
             return list.size();
         }
 
+        @Override
+        public long getItemId(int position) {
+            return super.getItemId(position);
+        }
 
         class Holder extends RecyclerView.ViewHolder {
             ImgView columnImg;

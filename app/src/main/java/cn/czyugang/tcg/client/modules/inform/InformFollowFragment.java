@@ -86,10 +86,10 @@ public class InformFollowFragment extends BaseFragment {
 
 
                 textView.setTextColor(getColor(R.color.main_red));
-                textView.setBackgroundColor(getResources().getColor(R.color.column_click_bg));
+                textView.setBackgroundResource(R.drawable.bg_rect_label_click);
                 if (columnType.lastSelectTextView != null) {
                     columnType.lastSelectTextView.setTextColor(getResources().getColor(R.color.text_dark_gray));
-                    columnType.lastSelectTextView.setBackgroundColor(getResources().getColor(R.color.bg));
+                    columnType.lastSelectTextView.setBackgroundResource(R.drawable.bg_rect);
 
                 }
 

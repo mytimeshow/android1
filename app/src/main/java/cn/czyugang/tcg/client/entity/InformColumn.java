@@ -6,9 +6,11 @@ package cn.czyugang.tcg.client.entity;
 
 public class InformColumn {
 
+    String bannerImg;
     String imgUrl;
     String name;
     String content;
+    String contentName;
     String followNum;
     boolean isFollow=false;
 
@@ -62,5 +64,21 @@ public class InformColumn {
 
     public void setFollow(boolean follow) {
         isFollow = follow;
+    }
+
+    public String getBannerImg() {
+        return bannerImg;
+    }
+
+    public void setBannerImg(String bannerImg) {
+        this.bannerImg = bannerImg;
+    }
+
+    public String getContentName() {
+        return contentName;
+    }
+
+    public void setContentName(String contentName) {
+        this.contentName = contentName;
     }
 }
