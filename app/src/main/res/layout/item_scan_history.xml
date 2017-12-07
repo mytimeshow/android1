@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingTop="@dimen/dp_16">
+
+    <ImageView
+        android:id="@+id/item_scan_img"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:src="@drawable/icon_dbarcode_light_gray"/>
+
+    <TextView
+        android:id="@+id/item_type"
+        style="@style/text_14_black"
+        android:layout_toRightOf="@id/item_scan_img"
+        android:layout_marginRight="@dimen/dp_30"
+        android:text="条形码 77878764646"
+        />
+
+    <TextView
+        android:id="@+id/item_content"
+        style="@style/text_14_light_gray"
+        android:layout_toRightOf="@id/item_scan_img"
+        android:layout_below="@id/item_type"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginRight="@dimen/dp_30"
+        android:text="wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
+        android:lineSpacingMultiplier="1.2"/>
+
+    <TextView
+        android:id="@+id/item_time"
+        style="@style/text_12_gray"
+        android:layout_toRightOf="@id/item_scan_img"
+        android:layout_below="@id/item_content"
+        android:layout_marginTop="@dimen/dp_4"
+        android:text="2017-8-14"/>
+
+    <ImageView
+        android:layout_width="@dimen/dp_14"
+        android:layout_height="@dimen/dp_14"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dp_10"
+        android:src="@drawable/ic_goto_arrow"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_below="@id/item_time"
+        android:layout_marginTop="@dimen/dp_12"
+        android:background="@color/bg"
+        />
+
+</RelativeLayout>

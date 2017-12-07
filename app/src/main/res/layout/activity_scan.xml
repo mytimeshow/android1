@@ -88,30 +88,26 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="@dimen/dp_130"
-        android:layout_height="@dimen/dp_40"
-        android:layout_marginLeft="@dimen/dp_50"
-        android:layout_marginTop="@dimen/dp_420"
-        android:background="@drawable/bg_rect_red"
-        android:gravity="center"
-        android:text="扫一扫"
-        android:textColor="@color/white"
-        android:textSize="@dimen/sp_16"
-        />
 
-    <TextView
+    <FrameLayout
         android:id="@+id/scan_input_code"
         android:layout_width="@dimen/dp_130"
         android:layout_height="@dimen/dp_40"
-        android:layout_gravity="right"
-        android:layout_marginRight="@dimen/dp_50"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dp_420"
-        android:background="@drawable/bg_rect_black"
-        android:gravity="center"
-        android:text="输入条码"
-        android:textColor="@color/white"
-        android:textSize="@dimen/sp_16"
-        />
+        android:background="@drawable/bg_rect_grey_222"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/icon_dbarcode_gray"
+            android:drawablePadding="@dimen/dp_10"
+            android:text="输入条码"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16"
+            />
+    </FrameLayout>
 
 </FrameLayout>

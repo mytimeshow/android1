@@ -1,5 +1,6 @@
 package cn.czyugang.tcg.client.modules.set.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -34,6 +35,11 @@ public class RealNameAuthActivity extends BaseActivity implements RealNameAuthCo
     TextView tv_confirm;
 
     private RealNameAuthContract.Presenter mPresenter;
+
+    public static void startRealNameAuthActivity( ){
+        Intent intent=new Intent(getTopActivity(),RealNameAuthActivity.class);
+        getTopActivity().startActivity(intent);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

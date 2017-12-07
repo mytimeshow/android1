@@ -17,7 +17,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.utils.app.AppUtil;
@@ -32,9 +31,8 @@ import cn.czyugang.tcg.client.utils.img.QRCode;
 public class MyDialog extends DialogFragment {
 
     private Builder builder;
-    private View rootView;
+    public View rootView;
     private View.OnClickListener toDismissListener = null;
-    private BindView bindView = null;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -52,12 +50,11 @@ public class MyDialog extends DialogFragment {
         Window window = getDialog().getWindow();
         window.setLayout(builder.width, builder.height);
         window.setGravity(builder.gravity);
-        if (builder.offsetX != 0 && builder.offsetY != 0) {
-            WindowManager.LayoutParams lp = window.getAttributes();
-            lp.x = builder.offsetX;
-            lp.y = builder.offsetY;
-            window.setAttributes(lp);
-        }
+        WindowManager.LayoutParams lp = window.getAttributes();
+        if (builder.offsetX != 0) lp.x = builder.offsetX;
+        if (builder.offsetY != 0) lp.y = builder.offsetY;
+        if (builder.dimAmount >= 0 && builder.dimAmount <= 1) lp.dimAmount = builder.dimAmount;
+        window.setAttributes(lp);
     }
 
     @Nullable
@@ -70,7 +67,7 @@ public class MyDialog extends DialogFragment {
         } else {
             initTitleMsg(inflater, container);
         }
-        if (bindView != null) bindView.bindView(this);
+        if (builder.bindView != null) builder.bindView.bindView(this);
         return rootView;
     }
 
@@ -85,16 +82,16 @@ public class MyDialog extends DialogFragment {
         text(R.id.tv_negative, builder.negativeButton);
         text(R.id.tv_positive, builder.positiveButton);
         onClick(R.id.tv_negative, v -> {
-            if (builder.negativeButtonClick != null){
+            if (builder.negativeButtonClick != null) {
                 builder.negativeButtonClick.onClick(this);
-            }else {
+            } else {
                 dismiss();
             }
         });
-        onClick(R.id.tv_positive,  v -> {
-            if (builder.positiveButtonClick != null){
+        onClick(R.id.tv_positive, v -> {
+            if (builder.positiveButtonClick != null) {
                 builder.positiveButtonClick.onClick(this);
-            }else {
+            } else {
                 dismiss();
             }
         });
@@ -106,17 +103,17 @@ public class MyDialog extends DialogFragment {
         text(R.id.tv_message, builder.contentStr);
         text(R.id.tv_negative, builder.negativeButton);
         text(R.id.tv_positive, builder.positiveButton);
-        onClick(R.id.tv_negative,  v -> {
-            if (builder.negativeButtonClick != null){
+        onClick(R.id.tv_negative, v -> {
+            if (builder.negativeButtonClick != null) {
                 builder.negativeButtonClick.onClick(this);
-            }else {
+            } else {
                 dismiss();
             }
         });
-        onClick(R.id.tv_positive,  v -> {
-            if (builder.positiveButtonClick != null){
+        onClick(R.id.tv_positive, v -> {
+            if (builder.positiveButtonClick != null) {
                 builder.positiveButtonClick.onClick(this);
-            }else {
+            } else {
                 dismiss();
             }
         });
@@ -152,23 +149,18 @@ public class MyDialog extends DialogFragment {
         return this;
     }
 
-    public MyDialog bindView(BindView bindView) {
-        this.bindView = bindView;
-        return this;
-    }
-
     public static void phoneDialog(Activity activity, String phone) {
         MyDialog.Builder.newBuilder(activity)
                 .custom(R.layout.dialog_call)
                 .width(-1)
                 .gravity(Gravity.BOTTOM)
-                .build()
-                .show()
                 .bindView(myDialog -> {
                     myDialog.text(R.id.dialog_call, "13138705415")
                             .onClick(R.id.dialog_call, v -> AppUtil.call(activity, phone))
                             .onClick(R.id.dialog_cancel);
-                });
+                })
+                .build()
+                .show();
     }
 
     public static void qrCodeDialog(Activity activity, final String qrStr) {
@@ -176,12 +168,61 @@ public class MyDialog extends DialogFragment {
                 .custom(R.layout.dialog_image)
                 .widthPercent(0.84f)
                 .height((int) (ResUtil.getWidthInPx() * 0.84f))
-                .build()
-                .show()
                 .bindView(myDialog -> {
                     myDialog.img(R.id.dialog_image, QRCode.createQRImage(qrStr))
                             .onClick(R.id.dialog_image);
-                });
+                })
+                .build()
+                .show();
+    }
+
+    public static void collectionBg(Activity activity, View view, final boolean hadCollect, OnButtonClickListener onButtonClickListener) {
+        int[] location = new int[2];
+        view.getLocationInWindow(location);
+        int x = location[0];
+        int y = location[1] - AppUtil.getStatusBarHeight();
+        Builder.newBuilder(activity)
+                .custom(R.layout.view_bg_collection)
+                .gravity(Gravity.TOP | Gravity.LEFT)
+                .offsetX(x)
+                .offsetY(y)
+                .width(view.getWidth())
+                .height(view.getHeight())
+                .canceledOnTouchOutside(true)
+                .bgAlpha(0)
+                .bindView(myDialog -> {
+                    TextView textView = myDialog.rootView.findViewById(R.id.view_collection);
+                    if (hadCollect) {
+                        textView.setText("已收藏");
+                        textView.setTextColor(ResUtil.getColor(R.color.main_red));
+                    }
+                    textView.setOnClickListener(v -> {
+                        if (onButtonClickListener != null) onButtonClickListener.onClick(myDialog);
+                    });
+                })
+                .build()
+                .show();
+    }
+
+    public static void showAllShare(Activity activity,final View.OnClickListener onEachShare){
+        MyDialog.Builder.newBuilder(activity)
+                .custom(R.layout.view_all_share)
+                .width(-1)
+                .height(-1)
+                .bindView(myDialog -> {
+                    View.OnClickListener onClickListener=v -> {
+                        myDialog.dismiss();
+                        onEachShare.onClick(v);
+                    };
+                    myDialog.onClick(R.id.view_share_wechat,onClickListener);
+                    myDialog.onClick(R.id.view_share_wechat_circle,onClickListener);
+                    myDialog.onClick(R.id.view_share_qq,onClickListener);
+                    myDialog.onClick(R.id.view_share_qzone,onClickListener);
+                    myDialog.onClick(R.id.view_share_sina_blog,onClickListener);
+                    myDialog.onClick(R.id.view_share_scan,onClickListener);
+                })
+                .build()
+                .show();
     }
 
     public static interface BindView {
@@ -204,6 +245,9 @@ public class MyDialog extends DialogFragment {
         private OnButtonClickListener negativeButtonClick = null;
         private OnButtonClickListener positiveButtonClick = null;
 
+        //视图
+        private BindView bindView = null;
+
         //自定义
         private int layoutId = -1;
 
@@ -215,6 +259,10 @@ public class MyDialog extends DialogFragment {
         private int gravity = Gravity.CENTER;
         private int offsetX = 0;
         private int offsetY = 0;
+
+        //背景透明度 0~1.0
+        private float dimAmount = -1;
+
 
         private boolean canceledOnTouchOutside = false;
 
@@ -321,6 +369,11 @@ public class MyDialog extends DialogFragment {
             return this;
         }
 
+        public Builder bindView(BindView bindView) {
+            this.bindView = bindView;
+            return this;
+        }
+
         /*
          *   整体大小
          * */
@@ -364,6 +417,11 @@ public class MyDialog extends DialogFragment {
 
         public Builder canceledOnTouchOutside(boolean canceledOnTouchOutside) {
             this.canceledOnTouchOutside = canceledOnTouchOutside;
+            return this;
+        }
+
+        public Builder bgAlpha(float dimAmount) {
+            this.dimAmount = dimAmount;
             return this;
         }
     }

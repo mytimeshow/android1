@@ -27,4 +27,15 @@ public class AppKeyStorage {
     public static void clearSearchHistory(){
         KeyStorage.delete("SearchHistory");
     }
+
+    /*
+    *   推广有礼  首次引导
+    * */
+    public static boolean isFirstOpenPromoterIntro(){
+        return KeyStorage.get("isFirstOpenPromoterIntro",true);
+    }
+
+    public static void saveHadOpenPromoterIntro(){
+        KeyStorage.put("isFirstOpenPromoterIntro",false);
+    }
 }

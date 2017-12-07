@@ -1,7 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <FrameLayout
+        style="@style/title_title">
+
+        <ImageView
+            style="@style/title_back"/>
+
+        <TextView
+            style="@style/title_text"
+            android:text="商品"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/scan_result_num"
+        style="@style/text_14_dark_gray"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/dp_0.5"
+        android:background="@color/white"
+        android:lineSpacingMultiplier="1.6"
+        android:paddingBottom="@dimen/dp_18"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_15"
+        android:text="商品条形码\n扫码结果   找到 个商品"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/scan_result_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        />
+
+    <FrameLayout
+        android:id="@+id/scan_result_empty"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_370"
+        android:layout_marginTop="@dimen/dp_0.5"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="@dimen/dp_240"
+            android:layout_height="@dimen/dp_150"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_80"
+            android:src="@drawable/scan_nothing"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_250"
+            android:text="找不到相关内容"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/dp_18"
+            />
+
+    </FrameLayout>
 
 </LinearLayout>

@@ -113,5 +113,6 @@ dependencies {
     compile 'cn.yipianfengye.android:zxing-library:2.2'
     compile 'com.github.LuckSiege.PictureSelector:picture_library:v2.1.6'
     compile 'com.contrarywind:Android-PickerView:3.2.7'
+    compile 'com.youth.banner:banner:1.4.10'
 
 }

@@ -49,6 +49,11 @@ public class AccountInfoActivity extends BaseActivity implements AccountInfoCont
 
     private AccountInfoContract.Presenter mPresenter;
 
+    public static void startAccountInfoActivity( ){
+        Intent intent=new Intent(getTopActivity(),AccountInfoActivity.class);
+        getTopActivity().startActivity(intent);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

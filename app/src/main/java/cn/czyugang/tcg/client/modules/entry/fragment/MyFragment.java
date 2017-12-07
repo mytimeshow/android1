@@ -39,6 +39,7 @@ import cn.czyugang.tcg.client.modules.login.activity.LoginActivity;
 import cn.czyugang.tcg.client.modules.order.MyOrderActivity;
 import cn.czyugang.tcg.client.modules.person.CollectionActivity;
 import cn.czyugang.tcg.client.modules.person.FootmarkActivity;
+import cn.czyugang.tcg.client.modules.promote.PromoterIntroActivity;
 import cn.czyugang.tcg.client.modules.score.ScoreActivity;
 import cn.czyugang.tcg.client.modules.set.activity.SetActivity;
 import cn.czyugang.tcg.client.modules.store.ApplyStoreActivity;
@@ -290,7 +291,9 @@ public class MyFragment extends BaseFragment implements MyContract.View {
             list.add(new Item("商家入驻",()->{
                 ApplyStoreActivity.startApplyStoreActivity();
             }));
-            list.add(new Item("推广有礼"));
+            list.add(new Item("推广有礼",()->{
+                PromoterIntroActivity.startPromoterIntroActivity();
+            }));
             list.add(new Item("邀请领红包"));
             list.add(new Item("分享领红包"));
 

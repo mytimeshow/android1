@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_blur"
+    >
+
+    <View
+        android:id="@+id/view_anchor"
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_220"
+        android:layout_centerHorizontal="true"
+        />
+
+
+    <TextView
+        android:id="@+id/view_promote_intro_invite"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_toLeftOf="@id/view_anchor"
+        android:layout_alignTop="@id/view_anchor"
+        android:background="@drawable/bg_rect_red"
+        android:gravity="center"
+        android:text="邀请好友注册"
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/view_promote_intro_goods"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:layout_toRightOf="@id/view_anchor"
+        android:layout_alignTop="@id/view_anchor"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@drawable/bg_rect_red"
+        android:gravity="center"
+        android:text="精选商品清单"
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/white"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_promote_intro_invite"
+        android:layout_alignLeft="@id/view_promote_intro_invite"
+        android:layout_alignRight="@id/view_promote_intro_invite"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/promote_intro_arrow_invite"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/view_promote_intro_goods"
+        android:layout_alignLeft="@id/view_promote_intro_goods"
+        android:layout_alignRight="@id/view_promote_intro_goods"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/promote_intro_arrow_goods"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/view_promote_intro_invite"
+        android:layout_alignBottom="@id/view_promote_intro_invite"
+        android:layout_alignLeft="@id/view_promote_intro_invite"
+        android:layout_alignRight="@id/view_promote_intro_invite"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/promote_intro_arrow_border"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/view_promote_intro_goods"
+        android:layout_alignTop="@id/view_promote_intro_goods"
+        android:layout_alignLeft="@id/view_promote_intro_goods"
+        android:layout_alignRight="@id/view_promote_intro_goods"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/promote_intro_arrow_border"/>
+
+    <ImageView
+        android:id="@+id/view_promote_intro_know"
+        android:layout_width="@dimen/dp_128"
+        android:layout_height="@dimen/dp_42"
+        android:src="@drawable/promote_intro_konw"
+        android:layout_below="@id/view_anchor"
+        android:layout_marginTop="@dimen/dp_170"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

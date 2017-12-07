@@ -24,6 +24,7 @@ import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.entity.Good;
 import cn.czyugang.tcg.client.entity.GoodCategory;
 import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 
@@ -202,6 +203,12 @@ public class GoodsListFragment extends BaseFragment {
             holder.imgView.id("919910512769269760");
 
             holder.itemView.setOnClickListener(v -> GoodDetailActivity.startGoodDetailActivity());
+            holder.itemView.setOnLongClickListener(v -> {
+                MyDialog.collectionBg(activity,v,false, myDialog -> {
+                    myDialog.dismiss();
+                });
+                return true;
+            });
         }
 
         @Override

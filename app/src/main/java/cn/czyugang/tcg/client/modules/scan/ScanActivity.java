@@ -19,6 +19,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
+import cn.czyugang.tcg.client.modules.common.WebActivity;
+import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.utils.LogRui;
 
 /**
@@ -42,7 +44,7 @@ public class ScanActivity extends BaseActivity {
         CaptureFragment captureFragment = new CaptureFragment();
         // 为二维码扫描界面设置定制化界面
         CodeUtils.setFragmentArgs(captureFragment, R.layout.view_scan);
-       //二维码解析回调函数
+        //二维码解析回调函数
         captureFragment.setAnalyzeCallback(new CodeUtils.AnalyzeCallback() {
             @Override
             public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
@@ -90,12 +92,12 @@ public class ScanActivity extends BaseActivity {
                 CodeUtils.analyzeBitmap(selectList.get(0).getCompressPath(), new CodeUtils.AnalyzeCallback() {
                     @Override
                     public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
-
+                        onScanSuccess(result);
                     }
 
                     @Override
                     public void onAnalyzeFailed() {
-
+                        onScanFail();
                     }
                 });
             } catch (Exception e) {
@@ -119,28 +121,40 @@ public class ScanActivity extends BaseActivity {
     }
 
     @OnClick(R.id.scan_input_code)
-    public void onInputCode(){
+    public void onInputCode() {
         ScanInputActivity.startScanInputActivity();
     }
 
     private void onScanSuccess(String result) {
-        ScanResultActivity.startScanResultActivity(result);
-/*        Intent resultIntent = new Intent();
-        Bundle bundle = new Bundle();
-        bundle.putInt(CodeUtils.RESULT_TYPE, CodeUtils.RESULT_SUCCESS);
-        bundle.putString(CodeUtils.RESULT_STRING, result);
-        resultIntent.putExtras(bundle);
-        ScanActivity.this.setResult(RESULT_OK, resultIntent);
-        ScanActivity.this.finish();*/
+        LogRui.i("onScanSuccess####",result);
+        //ScanResultActivity.startScanResultActivity(result);
+        //isOutsideUrl("http://www.baidu.com");
+        isScanDiscountGoods(result);
     }
 
     private void onScanFail() {
-/*        Intent resultIntent = new Intent();
-        Bundle bundle = new Bundle();
-        bundle.putInt(CodeUtils.RESULT_TYPE, CodeUtils.RESULT_FAILED);
-        bundle.putString(CodeUtils.RESULT_STRING, "");
-        resultIntent.putExtras(bundle);
-        ScanActivity.this.setResult(RESULT_OK, resultIntent);
-        ScanActivity.this.finish();*/
+
+    }
+
+    private void isOutsideUrl(final String url) {
+        MyDialog.Builder.newBuilder(this)
+                .contentStr("检测到此链接为外部链接，\n打开外部链接可能存在安全隐患，\n请注意您的个人隐私的保护哦~\n" + url)
+                .onNegativeButton()
+                .positiveButton("打开链接")
+                .onPositiveButton(myDialog -> {
+                    myDialog.dismiss();
+                    WebActivity.startWebActivity(this, url);
+                    finish();
+                })
+                .build()
+                .show();
+    }
+
+    private void isScanDiscountGoods(String result){
+        ScanGoodsDetailActivity.startScanGoodsDetailActivity(result);
+    }
+
+    private void isScanStore(String result){
+        ScanStoreActivity.startScanStoreActivity();
     }
 }
