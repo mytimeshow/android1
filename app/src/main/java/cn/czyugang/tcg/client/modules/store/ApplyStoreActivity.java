@@ -47,8 +47,8 @@ public class ApplyStoreActivity extends BaseActivity {
 
     private PoiItem poiItem = null;
 
-    public static void startApplyStoreActivity() {
-        Intent intent = new Intent(getTopActivity(), ApplyStoreActivity.class);
+    public static void startApplyStoreActivity( ){
+        Intent intent=new Intent(getTopActivity(),ApplyStoreActivity.class);
         getTopActivity().startActivity(intent);
     }
 

@@ -21,6 +21,8 @@
     </declare-styleable>
     <declare-styleable name="ImgView">
         <attr name="round" format="boolean"/>
+
         <attr name="noCache" format="boolean"/>
+
     </declare-styleable>
 </resources>
