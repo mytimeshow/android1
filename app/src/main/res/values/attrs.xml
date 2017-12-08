@@ -21,7 +21,8 @@
     </declare-styleable>
     <declare-styleable name="ImgView">
         <attr name="round" format="boolean"/>
-
+        <attr name="round_border_size" format="dimension|reference"/>
+        <attr name="round_border_color" format="color|reference"/>
         <attr name="noCache" format="boolean"/>
 
     </declare-styleable>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"
+        android:background="@color/main_bg"
+        android:layout_alignParentTop="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_140"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/inform_for_myself_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/sp_11"
+            android:gravity="left"
+            android:text="赞同了文章"/>
+
+        <TextView
+            android:id="@+id/inform_for_myself_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_toRightOf="@+id/inform_for_myself_type"
+            android:text="9分钟前"
+            android:gravity="right"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/sp_11" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:orientation="horizontal">
+        <cn.czyugang.tcg.client.utils.img.ImgView
+            android:id="@+id/inform_for_myself_img"
+            android:layout_width="@dimen/dp_120"
+            android:layout_height="@dimen/dp_90"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/scan_nothing"
+            />
+        <TextView
+            android:id="@+id/inform_for_myself_content"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_90"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_toLeftOf="@+id/inform_for_myself_img"
+            android:lines="2"
+            android:lineSpacingExtra="@dimen/dp_5"
+            android:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容"
+            />
+        <LinearLayout
+            android:id="@+id/inform_for_myself_commit"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_20"
+            android:layout_alignBottom="@+id/inform_for_myself_img"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_width="@dimen/dp_12"
+                android:layout_height="@dimen/dp_12"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_comment" />
+
+            <TextView
+                android:id="@+id/inform_for_myself_commit_content_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:text="215"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/sp_11" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/inform_for_myself_commit_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:gravity="center_vertical"
+        android:visibility="visible"
+        >
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0.5"
+            android:background="@color/main_bg"
+            android:layout_alignParentTop="true"/>
+        <cn.czyugang.tcg.client.utils.img.ImgView
+            android:id="@+id/inform_for_myself_commit_head"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:src="@drawable/ic_logout_avatar" />
+        <TextView
+            android:id="@+id/inform_for_myself_commit_contentmsg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:lines="1"
+            android:layout_toRightOf="@+id/inform_for_myself_commit_head"
+            android:text="行走的鸡腿： 王晶拍了那么多的烂片，终于良心发现了吗追龙确实..."
+            android:layout_alignTop="@+id/inform_for_myself_commit_head"
+            android:layout_alignBottom="@+id/inform_for_myself_commit_head"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/sp_11"
+            android:gravity="center_vertical"
+
+            />
+         
+        
+    </RelativeLayout>
+
+
+
+</LinearLayout>

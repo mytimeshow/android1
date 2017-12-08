@@ -442,5 +442,7 @@
         <activity android:name=".modules.groupon.GrouponGoodsActivity"/>
         <activity android:name=".modules.groupon.GrouponDetailActivity"/>
 
+        <!--资讯-->
+        <activity android:name=".modules.inform.MySelfActivity" />
     </application>
 </manifest>

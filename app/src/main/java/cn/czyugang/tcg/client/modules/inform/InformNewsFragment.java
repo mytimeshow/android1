@@ -18,8 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseFragment;
-import cn.czyugang.tcg.client.entity.InformColumn;
-import cn.czyugang.tcg.client.utils.LogRui;
+import cn.czyugang.tcg.client.entity.Inform;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 
 /**
@@ -47,9 +46,9 @@ public class InformNewsFragment extends BaseFragment {
         rootView = inflater.inflate(R.layout.fragment_inform_news, container, false);
         ButterKnife.bind(this, rootView);
 
-        List<InformColumn> list=new ArrayList<InformColumn>();
-        InformColumn informColumn=new InformColumn();
-        InformColumn informColumn2=new InformColumn();
+        List<Inform> list=new ArrayList<Inform>();
+        Inform informColumn=new Inform();
+        Inform informColumn2=new Inform();
         informColumn.setName("行走的鸡腿");
         informColumn2.setName("天天吃吃吃");
         //1234
@@ -143,10 +142,10 @@ public class InformNewsFragment extends BaseFragment {
 
 
     static class InformNewsAdapter extends RecyclerView.Adapter<InformNewsAdapter.Holder> {
-        private List<InformColumn> list;
+        private List<Inform> list;
         private Activity activity;
 
-        public InformNewsAdapter(List<InformColumn> list, Activity activity) {
+        public InformNewsAdapter(List<Inform> list, Activity activity) {
             this.list = list;
             this.activity = activity;
         }
@@ -159,7 +158,7 @@ public class InformNewsFragment extends BaseFragment {
 
         @Override
         public void onBindViewHolder(InformNewsAdapter.Holder holder, int position) {
-            InformColumn newsSmallColumnData =  list.get(position);
+            Inform newsSmallColumnData =  list.get(position);
             switch (getItemViewType(position)){
 
                 case R.layout.item_inform_news_banner:

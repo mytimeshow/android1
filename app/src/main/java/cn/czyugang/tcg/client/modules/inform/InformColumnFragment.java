@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseFragment;
-import cn.czyugang.tcg.client.entity.InformColumn;
+import cn.czyugang.tcg.client.entity.Inform;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 
 /**
@@ -47,14 +46,14 @@ public class InformColumnFragment extends BaseFragment {
         rootView = inflater.inflate(R.layout.fragment_inform_column, container, false);
         ButterKnife.bind(this, rootView);
 
-        List<InformColumn> informColumns=new ArrayList<InformColumn>();
-        InformColumn informColumn=new InformColumn();
+        List<Inform> informColumns=new ArrayList<Inform>();
+        Inform informColumn=new Inform();
         informColumn.setName("宇宙无敌大帅比");
         informColumn.setContent("啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦");
         informColumn.setFollow(false);
         informColumn.setFollowNum("442455");
         informColumns.add(informColumn);
-        InformColumn informColumn2=new InformColumn();
+        Inform informColumn2=new Inform();
         informColumn2.setName("Amshine");
         informColumn2.setContent("哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈 ");
         informColumn2.setFollow(true);
@@ -81,10 +80,10 @@ public class InformColumnFragment extends BaseFragment {
     }
 
     static class InformColumnAdapter extends RecyclerView.Adapter<InformColumnAdapter.Holder> {
-        private List<InformColumn> list;
+        private List<Inform> list;
         private Activity activity;
 
-        public InformColumnAdapter(List<InformColumn> list, Activity activity) {
+        public InformColumnAdapter(List<Inform> list, Activity activity) {
             this.list = list;
             this.activity = activity;
         }
@@ -95,7 +94,7 @@ public class InformColumnFragment extends BaseFragment {
         }
         @Override
         public void onBindViewHolder(Holder holder, int position) {
-            InformColumn data=list.get(position);
+            Inform data=list.get(position);
             holder.columnName.setText(data.getName());
             holder.columnContent.setText(data.getContent());
             holder.columnFollowNum.setText(data.getFollowNum());
