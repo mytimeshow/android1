@@ -44,8 +44,11 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingRight">@dimen/dp_15</item>
+        <item name="android:paddingTop">@dimen/dp_8</item>
+        <item name="android:paddingBottom">@dimen/dp_8</item>
+        <item name="android:paddingLeft">@dimen/dp_8</item>
         <item name="android:layout_gravity">center_vertical|right</item>
-        <item name="android:textColor">@color/text_gray</item>
+        <item name="android:textColor">@color/text_dark_gray</item>
         <item name="android:textSize">@dimen/sp_14</item>
     </style>
 
@@ -261,6 +264,12 @@
         <item name="android:textSize">@dimen/sp_14</item>
     </style>
 
+    <style name="text_12_black">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+    </style>
 
     <style name="text_12_dark_gray">
         <item name="android:layout_width">wrap_content</item>
@@ -273,6 +282,13 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/text_gray</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+    </style>
+
+    <style name="text_12_white">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_white</item>
         <item name="android:textSize">@dimen/sp_12</item>
     </style>
 

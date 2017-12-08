@@ -44,11 +44,12 @@ public class MainActivity extends BaseActivity {
                 .setImgSizeRes(R.dimen.dp_20)
                 .setTextImgDistanceRes(R.dimen.dp_4)
                 .setTextSize(12)
-                .addItem(new ItemView(bottomBar).setContent("首页", R.drawable.ic_address_location, R.drawable.ic_address_location))
-                .addItem(new ItemView(bottomBar).setContent("资讯", R.drawable.ic_address_location, R.drawable.ic_address_location))
-                .addItem(new ItemView(bottomBar).setContent("分类", R.drawable.ic_address_location, R.drawable.ic_address_location))
-                .addItem(new ItemView(bottomBar).setContent("购物车", R.drawable.ic_address_location, R.drawable.ic_address_location))
-                .addItem(new ItemView(bottomBar).setContent("我的", R.drawable.ic_address_location, R.drawable.ic_address_location))
+                .setTextColorRes(R.color.main_red,R.color.text_gray)
+                .addItem(new ItemView(bottomBar).setContent("商城", R.drawable.icon_mall_red, R.drawable.icon_mall))
+                .addItem(new ItemView(bottomBar).setContent("资讯", R.drawable.icon_local_red, R.drawable.icon_local))
+                .addItem(new ItemView(bottomBar).setContent("分类", R.drawable.icon_classify_red, R.drawable.icon_classify))
+                .addItem(new ItemView(bottomBar).setContent("购物车", R.drawable.trolley_red, R.drawable.trolley_grey))
+                .addItem(new ItemView(bottomBar).setContent("我的", R.drawable.icon_mine_red, R.drawable.icon_mine))
                 .setOnSelectListener(this::onChangeFragment)
                 .init();
 
@@ -58,16 +59,16 @@ public class MainActivity extends BaseActivity {
         fragments.add(TrolleyFragment.newInstance());
         fragments.add(MyFragment.newInstance());
 
-        mainFrame.setFragmentList(getSupportFragmentManager(),fragments);
+        mainFrame.setFragmentList(getSupportFragmentManager(), fragments);
         mainFrame.setBottomBarView(bottomBar);
 
     }
 
-    public void selectFragment(int index){
+    public void selectFragment(int index) {
         bottomBar.setSelectWithFrame(index);
     }
 
-    private void onChangeFragment(int index){
+    private void onChangeFragment(int index) {
 
     }
 }

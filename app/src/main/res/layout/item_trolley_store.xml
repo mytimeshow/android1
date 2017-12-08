@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    >
+
+    <!--店铺名称-->
+    <LinearLayout
+        style="@style/item_40_group">
+
+        <cn.czyugang.tcg.client.widget.SelectButton
+            android:id="@+id/item_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/item_name"
+            style="@style/text_14_black"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:drawableLeft="@drawable/icon_shop"
+            android:drawablePadding="@dimen/dp_4"
+            android:text="店铺名称KKKKKK"/>
+    </LinearLayout>
+
+    <!--凑单-->
+    <LinearLayout
+        android:id="@+id/item_more_activityL"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        android:background="@color/main_light_orange"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10">
+
+        <cn.czyugang.tcg.client.widget.ActivityTextView
+            android:id="@+id/item_more_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <include layout="@layout/space_h"/>
+
+        <TextView
+            android:id="@+id/item_more_activity_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/dp_2"
+            android:drawableRight="@drawable/ic_arrow_right_orange"
+            android:text="去凑单"
+            android:textColor="@color/text_orange"
+            android:textSize="@dimen/sp_12"
+            />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/item_goods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <include layout="@layout/view_split_bar_light"/>
+    <!--修改活动-->
+    <LinearLayout
+        android:id="@+id/item_activity_useL"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_35"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_38">
+
+        <cn.czyugang.tcg.client.widget.ActivityTextView
+            android:id="@+id/item_activity_use"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <include layout="@layout/space_h"/>
+
+        <TextView
+            android:id="@+id/item_activity_fix"
+            style="@style/text_12_black"
+            android:layout_marginRight="@dimen/dp_6"
+            android:padding="@dimen/dp_4"
+            android:text="修改"
+            />
+    </LinearLayout>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <!--打包费-->
+    <LinearLayout
+        android:id="@+id/item_pack_feeL"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_35"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_38">
+
+        <TextView
+            android:id="@+id/item_pack_fee"
+            style="@style/text_12_dark_gray"
+            android:text="打包费： ￥3.00"/>
+
+        <ImageView
+            android:id="@+id/item_pack_fee_ask"
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
+            android:padding="@dimen/dp_5"
+            android:src="@drawable/ic_bank_card_verify_explain"
+            />
+
+    </LinearLayout>
+
+    <include layout="@layout/view_split_bar_light_big"/>
+
+</LinearLayout>

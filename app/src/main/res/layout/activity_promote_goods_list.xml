@@ -4,17 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
 
     <FrameLayout
         style="@style/title_title">
+
         <ImageView
             style="@style/title_back"/>
+
         <TextView
             style="@style/title_text"
             android:text="精选商品清单"/>
     </FrameLayout>
+
     <include layout="@layout/view_split_bar_light"/>
+
     <EditText
         android:id="@+id/promote_goods_search"
         style="@style/search_edit"
@@ -160,10 +165,10 @@
                             android:layout_weight="1"
                             android:background="@drawable/bg_rect_white"
                             android:gravity="center"
-                            android:inputType="numberDecimal"
                             android:hint="最低价"
-                            android:textColorHint="@color/text_light_gray"
+                            android:inputType="numberDecimal"
                             android:textColor="@color/text_dark_gray"
+                            android:textColorHint="@color/text_light_gray"
                             android:textSize="@dimen/sp_14"
                             />
 
@@ -182,10 +187,10 @@
                             android:layout_weight="1"
                             android:background="@drawable/bg_rect_white"
                             android:gravity="center"
-                            android:inputType="numberDecimal"
                             android:hint="最高价"
-                            android:textColorHint="@color/text_light_gray"
+                            android:inputType="numberDecimal"
                             android:textColor="@color/text_dark_gray"
+                            android:textColorHint="@color/text_light_gray"
                             android:textSize="@dimen/sp_14"
                             />
                     </LinearLayout>

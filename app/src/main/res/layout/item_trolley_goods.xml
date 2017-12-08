@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <FrameLayout
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_60"
+        android:layout_marginTop="@dimen/dp_10">
+
+        <cn.czyugang.tcg.client.widget.SelectButton
+            android:id="@+id/item_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            />
+    </FrameLayout>
+
+    <cn.czyugang.tcg.client.utils.img.ImgView
+        android:id="@+id/item_img"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_60"
+        android:layout_marginLeft="@dimen/dp_40"
+        android:layout_marginRight="@dimen/dp_6"
+        android:layout_marginTop="@dimen/dp_10"
+        />
+
+    <!--商品名称-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_toRightOf="@id/item_img"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingRight="@dimen/dp_10">
+
+        <View
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_15"
+            android:layout_marginRight="@dimen/dp_4"
+            android:background="@drawable/tag_warm_up"
+            />
+
+        <TextView
+            style="@style/text_12_black"
+            android:text="商品1123123123123123"
+            />
+
+        <include layout="@layout/space_h"/>
+
+        <TextView
+            style="@style/text_12_black"
+            android:text="￥188.88"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/item_spec"
+        style="@style/text_12_gray"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_toRightOf="@id/item_img"
+        android:text="规格1+规格2+标签1,标签2"
+        />
+
+    <TextView
+        android:id="@+id/item_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/item_img"
+        android:layout_toRightOf="@id/item_img"
+        android:background="@drawable/border_rect_blue"
+        android:paddingLeft="@dimen/dp_6"
+        android:paddingRight="@dimen/dp_6"
+        android:paddingTop="@dimen/dp_1"
+        android:paddingBottom="@dimen/dp_1"
+        android:text="限惠2件，含1件原价商品"
+        android:textColor="@color/main_light_blue"
+        android:textSize="@dimen/dp_10"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/main_orange"
+        android:layout_alignLeft="@id/item_img"
+        android:layout_below="@id/item_img"
+        android:layout_marginTop="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_6"
+        android:paddingRight="@dimen/dp_6"
+        android:paddingTop="@dimen/dp_1"
+        android:paddingBottom="@dimen/dp_1"
+        android:text="活动价格标签"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_10"
+        />
+
+</RelativeLayout>

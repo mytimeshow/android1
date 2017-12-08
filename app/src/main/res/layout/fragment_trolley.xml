@@ -1,7 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
+    <FrameLayout
+        style="@style/title_title">
+        <TextView
+            style="@style/title_text"
+            android:text="购物车"/>
+        <TextView
+            style="@style/title_right"
+            android:text="编辑"/>
+    </FrameLayout>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/trolley_store_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50">
+
+        <!--正常购买-->
+        <LinearLayout
+            android:id="@+id/trolley_bottom_buy"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:id="@+id/trolley_money"
+                style="@style/text_14_dark_gray"
+                android:text="合计：\n￥666.66"/>
+            <include layout="@layout/space_h"/>
+            <TextView
+                android:id="@+id/trolley_buy"
+                style="@style/text_16_white"
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="match_parent"
+                android:background="@color/main_red"
+                android:gravity="center"
+                android:text="结算(2)"/>
+        </LinearLayout>
+
+        <!--编辑状态-->
+        <LinearLayout
+            android:id="@+id/trolley_bottom_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:visibility="gone">
+            <cn.czyugang.tcg.client.widget.SelectButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingBottom="@dimen/dp_8"
+                android:text="    全选"/>
+            <include layout="@layout/space_h"/>
+
+            <TextView
+                android:id="@+id/trolley_collect"
+                style="@style/text_16_white"
+                android:layout_width="@dimen/dp_85"
+                android:layout_height="match_parent"
+                android:background="@color/main_light_red"
+                android:gravity="center"
+                android:text="移入收藏"/>
+
+            <TextView
+                android:id="@+id/trolley_delete"
+                style="@style/text_16_white"
+                android:layout_width="@dimen/dp_85"
+                android:layout_height="match_parent"
+                android:background="@color/main_red"
+                android:gravity="center"
+                android:text="删除"/>
+
+        </LinearLayout>
+        
+    </FrameLayout>
+    
 </LinearLayout>

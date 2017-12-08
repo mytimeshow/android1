@@ -86,6 +86,12 @@ public class StoreActivity extends BaseActivity {
     private StoreDetailFragment storeDetailFragment;
     public Store store = null;
 
+    public static void startStoreActivity( String id){
+        Intent intent=new Intent(getTopActivity(),StoreActivity.class);
+        intent.putExtra("id", id);
+        getTopActivity().startActivity(intent);
+    }
+
     public static void startStoreActivity(Activity activity, String id) {
         Intent intent = new Intent(activity, StoreActivity.class);
         intent.putExtra("id", id);

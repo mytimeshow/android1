@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_item"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_56"
+    android:layout_marginTop="@dimen/dp_6"
+    android:paddingLeft="@dimen/dp_10"
+    android:paddingRight="@dimen/dp_10"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+
+    <cn.czyugang.tcg.client.utils.img.ImgView
+        android:id="@+id/item_img"
+        android:layout_width="@dimen/dp_35"
+        android:layout_height="@dimen/dp_35"
+        />
+
+    <TextView
+        android:id="@+id/item_name"
+        style="@style/text_12_white"
+        android:text="哎哎哎"
+        android:layout_marginLeft="@dimen/dp_10"/>
+
+    <include layout="@layout/space_h"/>
+
+    <TextView
+        android:id="@+id/item_time"
+        style="@style/text_12_white"
+        android:text="2017-05-24  09:16:26  开团"/>
+
+</LinearLayout>

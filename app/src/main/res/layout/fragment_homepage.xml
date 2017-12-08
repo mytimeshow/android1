@@ -50,7 +50,7 @@
         android:layout_width="@dimen/dp_180"
         android:layout_height="@dimen/dp_40"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dp_120"
+        android:layout_marginTop="@dimen/dp_40"
         android:background="@color/main_white"
         android:gravity="center"
         android:text="店铺：919122791461220353"
@@ -110,6 +110,17 @@
         android:background="@color/main_white"
         android:gravity="center"
         android:text="售后服务"
+        />
+
+    <TextView
+        android:id="@+id/homepage_groupon"
+        android:layout_width="@dimen/dp_180"
+        android:layout_height="@dimen/dp_40"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp_40"
+        android:background="@color/main_white"
+        android:gravity="center"
+        android:text="降价拍"
         />
 
     <android.support.v4.view.ViewPager

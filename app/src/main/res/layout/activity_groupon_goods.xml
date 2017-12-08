@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/groupon_goods"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/groupon_goods_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/dp_50"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--图片-->
+            <cn.czyugang.tcg.client.widget.MultiImgView
+                android:id="@+id/groupon_goods_multi_img"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_370"
+                />
+
+            <!--名称-->
+            <TextView
+                android:id="@+id/groupon_goods_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_12"
+                android:lineSpacingMultiplier="1.3"
+                android:text="大猫头包子"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/groupon_goods_name_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_6"
+                android:lineSpacingMultiplier="1.3"
+                android:text="大猫头包子大猫头包子大猫头包子大猫头包子大猫头包子大猫头包子"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/sp_12"
+                />
+            <!--价格 已售 -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/groupon_goods_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥25.55"
+                    android:textColor="@color/main_red"
+                    android:textSize="@dimen/sp_20"/>
+
+                <TextView
+                    android:id="@+id/groupon_goods_sale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:text="已售 999 件"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/sp_10"
+                    />
+            </FrameLayout>
+
+            <!--团购属性-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_45"
+                android:background="@color/main_red"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_4"
+                    android:src="@drawable/promote_tag"/>
+
+                <TextView
+                    android:id="@+id/groupon_goods_price_down"
+                    style="@style/text_12_white"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text="每多一人参团\n拼团价降￥XX"/>
+
+                <include layout="@layout/space_h"/>
+
+                <ImageView
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_4"
+                    android:src="@drawable/promote_price_down"/>
+
+                <TextView
+                    android:id="@+id/groupon_goods_price_min"
+                    style="@style/text_12_white"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text="拼团冰点价\n最低￥68.88"/>
+
+                <include layout="@layout/space_h"/>
+
+                <ImageView
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_4"
+                    android:src="@drawable/promote_24hours"/>
+
+                <TextView
+                    android:id="@+id/groupon_goods_time_limit"
+                    style="@style/text_12_white"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text="拼团有效时间\n24小时"/>
+
+            </LinearLayout>
+
+            <include layout="@layout/view_split_bar_light_big"/>
+
+            <!--拼团说明-->
+            <TextView
+                android:id="@+id/groupon_goods_explain"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_60"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.4"
+                android:text="开团并邀请他人参加，越多人参团，拼团价越低，详情见拼团玩法\n不想自己开团？可以参加以下鸽友团，拼团成功立即发货"
+                android:textColor="@color/text_dark_gray"
+                android:textSize="@dimen/sp_12"
+                />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/groupon_goods_group_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                />
+
+            <include layout="@layout/view_split_bar_light_big"/>
+            <!--评价-->
+            <LinearLayout
+                android:id="@+id/groupon_goods_commentL"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <cn.czyugang.tcg.client.widget.FiveStarView
+                    android:id="@+id/groupon_goods_five_star"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    />
+
+                <include layout="@layout/space_h"/>
+
+                <TextView
+                    android:id="@+id/groupon_goods_comment_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp_6"
+                    android:text="80条评价"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp_14"/>
+
+                <ImageView
+                    style="@style/arrow_right"
+                    />
+
+            </LinearLayout>
+
+            <include layout="@layout/view_split_bar_light"/>
+            <!--评价标签-->
+            <cn.czyugang.tcg.client.widget.LabelLayout
+                android:id="@+id/groupon_goods_comment_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+            <include layout="@layout/view_split_bar_light_big"/>
+
+            <TextView
+                android:id="@+id/groupon_goods_pull_detail"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_44"
+                android:gravity="center"
+                android:text="↑ 上拉查看图文详情"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/sp_12"
+                />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <ImageView
+        android:id="@+id/groupon_goods_back"
+        style="@style/icon_bg_black_35"
+        android:src="@drawable/ic_arrow_left_white"
+        />
+
+    <ImageView
+        android:id="@+id/groupon_goods_more"
+        style="@style/icon_bg_black_35"
+        android:layout_gravity="right"
+        android:src="@drawable/icon_more"
+        />
+
+    <!--底部购物-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:id="@+id/groupon_goods_store"
+            style="@style/text_12_dark_gray"
+            android:drawablePadding="@dimen/dp_4"
+            android:drawableTop="@drawable/icon_shop"
+            android:paddingLeft="@dimen/dp_16"
+            android:paddingRight="@dimen/dp_16"
+            android:text="店铺"
+            />
+
+        <TextView
+            android:id="@+id/groupon_goods_buy"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/main_light_red"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.2"
+            android:text="￥188\n直接购买"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12"
+            />
+
+        <TextView
+            android:id="@+id/groupon_goods_open_group"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/main_red"
+            android:gravity="center"
+            android:text="去开团"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_18"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/dp_50"
+        android:background="@color/bg"
+        />
+
+</FrameLayout>
