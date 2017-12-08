@@ -4,7 +4,7 @@ package cn.czyugang.tcg.client.entity;
  * Created by Administrator on 2017/12/6.
  */
 
-public class InformColumn {
+public class Inform {
 
     String bannerImg;
     String imgUrl;

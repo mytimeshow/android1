@@ -13,12 +13,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.base.BaseFragmentAdapter;
 import cn.czyugang.tcg.client.modules.inform.InformColumnFragment;
 import cn.czyugang.tcg.client.modules.inform.InformFollowFragment;
 import cn.czyugang.tcg.client.modules.inform.InformNewsFragment;
+import cn.czyugang.tcg.client.modules.inform.MySelfActivity;
 import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 
@@ -76,5 +78,9 @@ public class InformFragment extends BaseFragment {
         return rootView;
     }
 
+    @OnClick(R.id.img_head)
+    public void onMyHead(){
+        MySelfActivity.startMySelfActivity();
+    }
 
 }

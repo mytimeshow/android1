@@ -421,5 +421,7 @@
 
         <!--降价拍-->
 
+        <!--资讯-->
+        <activity android:name=".modules.inform.MySelfActivity" />
     </application>
 </manifest>
