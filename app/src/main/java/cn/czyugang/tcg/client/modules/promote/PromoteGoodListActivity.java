@@ -43,7 +43,7 @@ public class PromoteGoodListActivity extends BaseActivity {
     @BindView(R.id.promote_goods_orderL)
     SpinnerSelectView orderSpinner;
 
-    private List<Good> goodList=new ArrayList<>();
+    private List<Good> goodList = new ArrayList<>();
     private PromoteGoodsAdapter adapter;
 
     public static void startPromoteGoodListActivity() {
@@ -57,11 +57,11 @@ public class PromoteGoodListActivity extends BaseActivity {
         setContentView(R.layout.activity_promote_goods_list);
         ButterKnife.bind(this);
 
-        for(int i=0;i<10;i++){
+        for (int i = 0; i < 10; i++) {
             goodList.add(new Good());
         }
 
-        adapter=new PromoteGoodsAdapter(goodList,this);
+        adapter = new PromoteGoodsAdapter(goodList, this);
         goodsR.setLayoutManager(new LinearLayoutManager(this));
         goodsR.setAdapter(adapter);
 
@@ -72,9 +72,13 @@ public class PromoteGoodListActivity extends BaseActivity {
             orderSpinner.setVisibility(View.GONE);
             orderSale.setTextColor(ResUtil.getColor(R.color.text_dark_gray));
             orderCommission.setTextColor(ResUtil.getColor(R.color.text_dark_gray));
-        });
+        }).build();
     }
 
+    @OnClick(R.id.title_back)
+    public void onBack() {
+        finish();
+    }
 
     private void resetOrderUI() {
         orderSpinner.resetSelect();
@@ -85,42 +89,48 @@ public class PromoteGoodListActivity extends BaseActivity {
     }
 
     @OnClick(R.id.promote_goods_order_price)
-    public void onOrderPrice(){
-        orderSpinner.setVisibility(View.VISIBLE);
+    public void onOrderPrice() {
+        orderSpinner.setVisibility(orderSpinner.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
     }
 
     @OnClick(R.id.promote_goods_order_sale)
-    public void onOrderSale(){
+    public void onOrderSale() {
         resetOrderUI();
         orderSale.setTextColor(ResUtil.getColor(R.color.main_red));
     }
 
     @OnClick(R.id.promote_goods_order_commission)
-    public void onOrderCommission(){
+    public void onOrderCommission() {
         resetOrderUI();
         orderCommission.setTextColor(ResUtil.getColor(R.color.main_red));
     }
 
-    private static class PromoteGoodsAdapter extends RecyclerView.Adapter<PromoteGoodsAdapter.Holder> {
+    public static class PromoteGoodsAdapter extends RecyclerView.Adapter<PromoteGoodsAdapter.Holder> {
         private List<Good> list;
         private Activity activity;
+
         public PromoteGoodsAdapter(List<Good> list, Activity activity) {
             this.list = list;
             this.activity = activity;
         }
+
         @Override
         public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
             return new Holder(LayoutInflater.from(activity).inflate(
-                    R.layout.item_promote_goods,parent,false));
+                    R.layout.item_promote_goods, parent, false));
         }
+
         @Override
         public void onBindViewHolder(Holder holder, int position) {
-            Good data=list.get(position);
+            Good data = list.get(position);
+            holder.itemView.setOnClickListener(v -> PromoteGoodDetailActivity.startPromoteGoodDetailActivity());
         }
+
         @Override
         public int getItemCount() {
             return list.size();
         }
+
         class Holder extends RecyclerView.ViewHolder {
             public Holder(View itemView) {
                 super(itemView);

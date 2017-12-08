@@ -1,17 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/promote_goods_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <FrameLayout
         style="@style/title_title">
+
         <ImageView
             style="@style/title_back"/>
+
         <TextView
             style="@style/title_text"
             android:text="商品推广信息"/>
     </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_370">
+
+                <cn.czyugang.tcg.client.utils.img.ImgView
+                    android:id="@+id/promote_goods_detail_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_72"
+                    android:layout_gravity="bottom"
+                    android:background="#c6ffffff"
+                    android:paddingLeft="@dimen/dp_10">
+
+                    <TextView
+                        android:id="@+id/promote_goods_detail_name"
+                        style="@style/text_16_black"
+                        android:layout_marginRight="@dimen/dp_100"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:text="好吃美味500可海鲜零食休闲食"
+                        />
+
+                    <TextView
+                        android:id="@+id/promote_goods_detail_name_sub"
+                        style="@style/text_12_gray"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="@dimen/dp_2"
+                        android:layout_marginRight="@dimen/dp_100"
+                        android:lineSpacingMultiplier="1.2"
+                        android:text="好吃美味500可海鲜零食休闲食好吃美味500可海鲜零食休闲食好吃美味500可海鲜"
+                        />
+
+                    <TextView
+                        android:id="@+id/promote_goods_detail_open"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginRight="@dimen/dp_30"
+                        android:drawablePadding="@dimen/dp_4"
+                        android:drawableTop="@drawable/icon_detail"
+                        android:text="详情"
+                        android:textColor="@color/text_dark_gray"
+                        android:textSize="@dimen/sp_12"
+                        />
+
+                    <View
+                        android:layout_width="@dimen/dp_0.5"
+                        android:layout_height="@dimen/dp_40"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginRight="@dimen/dp_72"
+                        android:background="@color/bg"
+                        />
+                </FrameLayout>
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/promote_goods_detail_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingLeft="@dimen/dp_10"
+                android:text="￥9.99-9.99  已售11份"
+                android:textSize="@dimen/sp_16"
+                android:textColor="@color/main_red"
+                />
+            <TextView
+                android:id="@+id/promote_goods_detail_profit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dp_4"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:drawableLeft="@drawable/icon_commission"
+                android:drawablePadding="@dimen/dp_4"
+                android:text="佣金 6.66%（预计 ￥8.88）"
+                android:textSize="@dimen/sp_10"
+                android:textColor="@color/text_dark_gray"
+                />
+
+            <include layout="@layout/view_split_bar_light_big"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_44"
+                android:gravity="center"
+                android:text="相似商品"
+                android:textColor="@color/main_red"
+                android:textSize="@dimen/sp_16"
+                />
+            <include layout="@layout/view_split_bar_light"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/promote_goods_detail_similar_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+            <include layout="@layout/view_split_bar_light_big"/>
+        </LinearLayout>
+    </ScrollView>
+<include layout="@layout/view_split_bar_light"/>
+    <TextView
+        style="@style/button_bottom"
+        android:text="立即分享"/>
 
 </LinearLayout>

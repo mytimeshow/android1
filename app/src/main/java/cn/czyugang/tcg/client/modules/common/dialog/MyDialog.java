@@ -149,6 +149,7 @@ public class MyDialog extends DialogFragment {
         return this;
     }
 
+    //底部  电话号码+取消 按钮
     public static void phoneDialog(Activity activity, String phone) {
         MyDialog.Builder.newBuilder(activity)
                 .custom(R.layout.dialog_call)
@@ -163,6 +164,7 @@ public class MyDialog extends DialogFragment {
                 .show();
     }
 
+    //正方形 大屏 二维码
     public static void qrCodeDialog(Activity activity, final String qrStr) {
         MyDialog.Builder.newBuilder(activity)
                 .custom(R.layout.dialog_image)
@@ -176,6 +178,7 @@ public class MyDialog extends DialogFragment {
                 .show();
     }
 
+    //recyclerview 长按显示的 收藏 按钮
     public static void collectionBg(Activity activity, View view, final boolean hadCollect, OnButtonClickListener onButtonClickListener) {
         int[] location = new int[2];
         view.getLocationInWindow(location);
@@ -204,22 +207,45 @@ public class MyDialog extends DialogFragment {
                 .show();
     }
 
-    public static void showAllShare(Activity activity,final View.OnClickListener onEachShare){
+    //所有分享类型
+    public static void showAllShare(Activity activity, final View.OnClickListener onEachShare) {
         MyDialog.Builder.newBuilder(activity)
                 .custom(R.layout.view_all_share)
                 .width(-1)
                 .height(-1)
                 .bindView(myDialog -> {
-                    View.OnClickListener onClickListener=v -> {
+                    View.OnClickListener onClickListener = v -> {
                         myDialog.dismiss();
                         onEachShare.onClick(v);
                     };
-                    myDialog.onClick(R.id.view_share_wechat,onClickListener);
-                    myDialog.onClick(R.id.view_share_wechat_circle,onClickListener);
-                    myDialog.onClick(R.id.view_share_qq,onClickListener);
-                    myDialog.onClick(R.id.view_share_qzone,onClickListener);
-                    myDialog.onClick(R.id.view_share_sina_blog,onClickListener);
-                    myDialog.onClick(R.id.view_share_scan,onClickListener);
+                    myDialog.onClick(R.id.view_share_wechat, onClickListener);
+                    myDialog.onClick(R.id.view_share_wechat_circle, onClickListener);
+                    myDialog.onClick(R.id.view_share_qq, onClickListener);
+                    myDialog.onClick(R.id.view_share_qzone, onClickListener);
+                    myDialog.onClick(R.id.view_share_sina_blog, onClickListener);
+                    myDialog.onClick(R.id.view_share_scan, onClickListener);
+                })
+                .build()
+                .show();
+    }
+
+    //在点击处显示的 气泡toast
+    public static void bubbleToast(Activity activity, View view, final String text) {
+        int[] location = new int[2];
+        view.getLocationInWindow(location);
+        int x = location[0] + view.getWidth() / 2;
+        int y = ResUtil.getHeightInPx() - location[1];
+        Builder.newBuilder(activity)
+                .custom(R.layout.view_bubble_toast)
+                .gravity(Gravity.BOTTOM | Gravity.LEFT)
+                .offsetX(x)
+                .offsetY(y)
+                .width(-2)
+                .height(-2)
+                .canceledOnTouchOutside(true)
+                .bgAlpha(0)
+                .bindView(myDialog -> {
+                    myDialog.text(R.id.view_bubble_toast_text, text);
                 })
                 .build()
                 .show();

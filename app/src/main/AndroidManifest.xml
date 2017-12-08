@@ -373,23 +373,36 @@
             android:value="a29ac43262d81410e779e24a8d2a5a75" />
 
         <activity android:name=".modules.common.WebActivity"/>
+        <activity android:name=".modules.common.ImgActivity"/>
+
+        <!--收藏-->
         <activity android:name=".modules.person.CollectionActivity"/>
+        <!--足迹-->
         <activity android:name=".modules.person.FootmarkActivity"/>
+
+        <!--店铺 商品详情-->
         <activity android:name=".modules.store.StoreActivity"/>
         <activity android:name=".modules.store.StoreInfoActivity"/>
-        <activity android:name=".modules.order.MyOrderActivity"/>
+        <activity android:name=".modules.store.GoodDetailActivity"/>
+
+        <!--订单 确认/支付-->
         <activity android:name=".modules.order.ConfirmOrderActivity"/>
         <activity android:name=".modules.order.SelectAddressActivity"/>
         <activity android:name=".modules.order.SelectDeliveryActivity"/>
         <activity android:name=".modules.order.PayOrderActivity"/>
         <activity android:name=".modules.order.PayOrderWayActivity"/>
-        <activity android:name=".modules.common.ImgActivity"/>
-        <activity android:name=".modules.store.GoodDetailActivity"/>
+
+        <!--订单 列表/详情-->
+        <activity android:name=".modules.order.MyOrderActivity"/>
         <activity android:name=".modules.order.OrderDetailActivity"/>
         <activity android:name=".modules.order.OrderTrackMapActivity"/>
         <activity android:name=".modules.order.OrderTrackActivity"/>
+
+        <!--商家入驻-->
         <activity android:name=".modules.store.ApplyStoreActivity"/>
         <activity android:name=".modules.store.ApplyStoreStatusActivity"/>
+
+        <!--售后-->
         <activity android:name=".modules.aftersale.AftersaleListActivity"/>
         <activity android:name=".modules.aftersale.AftersaleDetailActivity"/>
         <activity android:name=".modules.aftersale.AftersaleTrackActivity"/>
@@ -397,11 +410,17 @@
         <activity android:name=".modules.aftersale.RefundActivity"/>
         <activity android:name=".modules.aftersale.RefundApplyFinishActivity"/>
         <activity android:name=".modules.aftersale.RefundStatusActivity"/>
+
+        <!--商品/店铺 搜索-->
         <activity android:name=".modules.store.SearchActivity"/>
         <activity android:name=".modules.store.SearchResultActivity"/>
+
+        <!--积分-->
         <activity android:name=".modules.score.ScoreActivity"/>
         <activity android:name=".modules.score.ScoreHistoryActivity"/>
         <activity android:name=".modules.score.ScoreUseActivity"/>
+
+        <!--扫码-->
         <activity android:name=".modules.scan.ScanActivity"/>
         <activity android:name=".modules.scan.ScanInputActivity"/>
         <activity android:name=".modules.scan.ScanResultActivity"/>
@@ -420,6 +439,8 @@
         <activity android:name=".modules.promote.PromoterProfitActivity"/>
 
         <!--降价拍-->
+        <activity android:name=".modules.groupon.GrouponGoodsActivity"/>
+        <activity android:name=".modules.groupon.GrouponDetailActivity"/>
 
     </application>
 </manifest>
