@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:orientation="vertical">
+
+        <FrameLayout
+            style="@style/title_title"
+            android:layout_height="@dimen/dp_45"
+            android:background="@color/transparent">
+            <ImageView
+                style="@style/title_back"
+                android:src="@drawable/ic_back_white"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="更换个人主页封面"
+                android:textSize="@dimen/sp_18"
+                android:layout_gravity="center"
+                android:textColor="@color/white"/>
+
+        </FrameLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:paddingLeft="@dimen/dp_10"
+        android:text="从相册里选择"
+        android:gravity="center_vertical"
+        android:background="@color/white"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:paddingLeft="@dimen/dp_10"
+        android:text="拍照上传"
+        android:gravity="center_vertical"
+        android:background="@color/white"/>
+
+</LinearLayout>

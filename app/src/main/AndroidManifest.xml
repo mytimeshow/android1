@@ -443,6 +443,8 @@
         <activity android:name=".modules.groupon.GrouponDetailActivity"/>
 
         <!--资讯-->
-        <activity android:name=".modules.inform.MySelfActivity" />
+        <activity android:name=".modules.inform.InformMySelfActivity" />
+        <activity android:name=".modules.inform.InformChangeCoverActivity" />
+        <activity android:name=".modules.inform.InformOrderMsgActivity" />
     </application>
 </manifest>

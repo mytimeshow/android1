@@ -72,6 +72,17 @@
         <item name="android:src">@drawable/icon_more</item>
     </style>
 
+    <style name="title_search">
+
+        <item name="android:layout_width">@dimen/dp_44</item>
+        <item name="android:layout_height">@dimen/dp_44</item>
+        <item name="android:layout_gravity">center_vertical|right</item>
+        <item name="android:padding">@dimen/dp_12</item>
+        <item name="android:layout_marginLeft">@dimen/dp_6</item>
+        <item name="android:layout_marginRight">@dimen/dp_6</item>
+        <item name="android:src">@drawable/ic_search_white</item>
+    </style>
+
     <style name="title_im_black" parent="title_im">
         <item name="android:src">@drawable/icon_im_black</item>
     </style>

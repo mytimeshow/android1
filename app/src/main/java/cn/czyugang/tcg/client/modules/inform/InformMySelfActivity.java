@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,26 +24,31 @@ import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.entity.MyInform;
 import cn.czyugang.tcg.client.modules.store.SearchActivity;
-import cn.czyugang.tcg.client.modules.store.SearchResultActivity;
+import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 
 /**
  * Created by Administrator on 2017/12/8.
  */
 
-public class MySelfActivity extends BaseActivity {
+public class InformMySelfActivity extends BaseActivity {
 
     @BindView(R.id.inform_for_myself_list)
     RecyclerView informForMyselfList;
+    @BindView(R.id.inform_appbar_layout)
+    AppBarLayout appBarLayout;
+
+    @BindView(R.id.myself_title_bg)
+    FrameLayout frameTitle;
    
     public static void startMySelfActivity( ){
-        Intent intent=new Intent(getTopActivity(),MySelfActivity.class);
+        Intent intent=new Intent(getTopActivity(),InformMySelfActivity.class);
         getTopActivity().startActivity(intent);
     }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_myself);
+        setContentView(R.layout.activity_inform_myself);
         ButterKnife.bind(this);
 
         List<MyInform> myInforms=new ArrayList<MyInform>();
@@ -68,11 +75,16 @@ public class MySelfActivity extends BaseActivity {
         MyInformAdapter myInformAdapter=new MyInformAdapter(myInforms,this);
         informForMyselfList.setLayoutManager(new LinearLayoutManager(this));
         informForMyselfList.setAdapter(myInformAdapter);
+
+        appBarLayout.addOnOffsetChangedListener((appBarLayout1, verticalOffset) -> {
+            LogRui.i("onCreate####"+verticalOffset+"            "+Math.abs(verticalOffset)/appBarLayout.getHeight());
+            frameTitle.setAlpha((float)(Math.abs(verticalOffset))/((float)(appBarLayout.getHeight())));
+        });
     }
 
 
 
-    @OnClick(R.id.img_search)
+    @OnClick(R.id.title_search_bg)
     public void onSearch(){
         SearchActivity.startSearchActivity();
     }
@@ -140,6 +152,16 @@ public class MySelfActivity extends BaseActivity {
 
             }
         }
+    }
+
+    @OnClick(R.id.title_back)
+    public void onBack(){
+        finish();
+    }
+
+    @OnClick(R.id.myself_cover)
+    public void onCover(){
+        InformChangeCoverActivity.startChangeCoverActivity();
     }
 
 }
