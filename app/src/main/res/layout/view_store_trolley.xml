@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44">
+
+        <cn.czyugang.tcg.client.widget.SelectButton
+            android:id="@+id/view_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/view_name"
+            style="@style/text_16_black"/>
+
+        <include layout="@layout/space_h"/>
+
+        <TextView
+            android:id="@+id/view_clear"
+            style="@style/text_14_dark_gray"
+            android:drawableLeft="@drawable/icon_clear"
+            android:drawablePadding="@dimen/dp_4"
+            android:text="清空"/>
+    </LinearLayout>
+
+    <cn.czyugang.tcg.client.widget.RecyclerViewMaxH
+        android:id="@+id/view_goods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <TextView
+        android:id="@+id/view_pack_fee"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:text="打包费  ￥3.00"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/sp_14"
+        />
+
+    <cn.czyugang.tcg.client.widget.BottomBalanceView
+        android:id="@+id/view_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+</LinearLayout>

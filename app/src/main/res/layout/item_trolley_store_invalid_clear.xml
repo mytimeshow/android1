@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_70"
+    android:background="@color/bg">
+
+    <TextView
+        android:id="@+id/item_clear"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_30"
+        android:background="@drawable/border_rect_red"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/main_red"
+        android:textSize="@dimen/sp_14"
+        android:text="清空失效商品"
+        />
+
+</FrameLayout>
