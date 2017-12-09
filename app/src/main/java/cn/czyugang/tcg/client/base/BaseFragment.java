@@ -13,6 +13,7 @@ import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.modules.common.dialog.LoadingDialog;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -26,12 +27,19 @@ public class BaseFragment extends Fragment implements BaseView {
     protected View rootView;
     private LoadingDialog mLoadingDialog;
     private Toast mToast;
+    public CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
         activity = (BaseActivity) getActivity();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mCompositeDisposable.dispose();
     }
 
     @Override
@@ -81,7 +89,7 @@ public class BaseFragment extends Fragment implements BaseView {
     protected abstract class NetObserver<T> implements Observer<T> {
         @Override
         public void onSubscribe(@NonNull Disposable d) {
-            activity.mCompositeDisposable.add(d);
+            mCompositeDisposable.add(d);
             showLoadingDialog();
         }
 

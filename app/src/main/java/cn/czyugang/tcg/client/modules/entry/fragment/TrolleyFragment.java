@@ -23,7 +23,10 @@ import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.entity.TrolleyGoods;
 import cn.czyugang.tcg.client.entity.TrolleyStore;
 import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
+import cn.czyugang.tcg.client.utils.rxbus.TrolleyBuyNumChangedEvent;
+import cn.czyugang.tcg.client.utils.rxbus.RxBus;
 import cn.czyugang.tcg.client.widget.ActivityTextView;
+import cn.czyugang.tcg.client.widget.GoodsPlusMinusView;
 import cn.czyugang.tcg.client.widget.RefreshLoadHelper;
 import cn.czyugang.tcg.client.widget.SelectButton;
 
@@ -56,6 +59,10 @@ public class TrolleyFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mCompositeDisposable.add(RxBus.toObservable(TrolleyBuyNumChangedEvent.class)
+                .subscribe(event -> {
+
+                }));
     }
 
     @Nullable
@@ -188,6 +195,17 @@ public class TrolleyFragment extends BaseFragment {
         @Override
         public void onBindViewHolder(Holder holder, int position) {
             TrolleyGoods data = list.get(position);
+
+            holder.plusMinusView.setNum(data.num);
+            holder.plusMinusView
+                    .setIsMultiSpec(false)
+                    .setOnPlusMinusListener(addNum -> {     //购物车
+                        data.add(addNum);
+                        RxBus.post(new TrolleyBuyNumChangedEvent(data.good));
+                        return data.num;
+                    })
+                    .setNum(data.num);
+
         }
 
         @Override
@@ -201,8 +219,13 @@ public class TrolleyFragment extends BaseFragment {
         }
 
         class Holder extends RecyclerView.ViewHolder {
+            SelectButton selectButton;
+            GoodsPlusMinusView plusMinusView;
+
             public Holder(View itemView) {
                 super(itemView);
+                selectButton = itemView.findViewById(R.id.item_select);
+                plusMinusView = itemView.findViewById(R.id.item_plus_minus);
             }
         }
     }

@@ -8,7 +8,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_44">
+        android:layout_height="@dimen/dp_44"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10">
 
         <cn.czyugang.tcg.client.widget.SelectButton
             android:id="@+id/view_select"
@@ -30,6 +34,8 @@
             android:text="清空"/>
     </LinearLayout>
 
+    <include layout="@layout/view_split_bar_light"/>
+
     <cn.czyugang.tcg.client.widget.RecyclerViewMaxH
         android:id="@+id/view_goods"
         android:layout_width="match_parent"
@@ -48,6 +54,8 @@
         android:textColor="@color/text_black"
         android:textSize="@dimen/sp_14"
         />
+
+    <include layout="@layout/view_split_bar_light"/>
 
     <cn.czyugang.tcg.client.widget.BottomBalanceView
         android:id="@+id/view_bottom"

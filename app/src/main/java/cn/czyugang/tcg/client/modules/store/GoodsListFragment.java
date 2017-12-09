@@ -24,9 +24,13 @@ import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.entity.Good;
 import cn.czyugang.tcg.client.entity.GoodCategory;
 import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.modules.common.dialog.GoodsSpecDialog;
 import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
+import cn.czyugang.tcg.client.utils.rxbus.RxBus;
+import cn.czyugang.tcg.client.utils.rxbus.TrolleyBuyNumChangedEvent;
+import cn.czyugang.tcg.client.widget.GoodsPlusMinusView;
 
 /**
  * @author ruiaa
@@ -118,6 +122,10 @@ public class GoodsListFragment extends BaseFragment {
         return "商品";
     }
 
+    public void refreshBuyNums(){
+
+    }
+
     @OnClick(R.id.goodslist_order_show)
     public void onShowType() {
         adapter.isSingleList = !adapter.isSingleList;
@@ -179,7 +187,7 @@ public class GoodsListFragment extends BaseFragment {
         orderPriceImg.setImageResource(R.drawable.ic_price_order_grey);
     }
 
-    private static class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.Holder> {
+    private class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.Holder> {
         private List<Good> list;
         private Activity activity;
         public boolean isSingleList = false;
@@ -209,6 +217,17 @@ public class GoodsListFragment extends BaseFragment {
                 });
                 return true;
             });
+
+            holder.plusMinusView.setIsMultiSpec(data.isMultiSpec())
+                    .setOnOpenSpecListener(()->{
+                        GoodsSpecDialog.showSpecDialog(storeActivity,data);
+                    })
+                    .setOnPlusMinusListener(addNum -> {      //店铺  goodsList
+                        int num=storeActivity.trolleyStore.addGood(data,"",addNum);
+                        RxBus.post(new TrolleyBuyNumChangedEvent(data));
+                        return num;
+                    })
+                    .setNum(storeActivity.trolleyStore.getGoodsBuyNum(data.id));
         }
 
         @Override
@@ -227,9 +246,7 @@ public class GoodsListFragment extends BaseFragment {
             TextView nameSub;
             TextView sale;
             TextView price;
-            TextView buyNum;
-            View plus;
-            View minus;
+            GoodsPlusMinusView plusMinusView;
 
             public Holder(View itemView) {
                 super(itemView);
@@ -238,9 +255,7 @@ public class GoodsListFragment extends BaseFragment {
                 nameSub = itemView.findViewById(R.id.item_name_sub);
                 sale = itemView.findViewById(R.id.item_sale);
                 price = itemView.findViewById(R.id.item_price);
-                buyNum = itemView.findViewById(R.id.item_num);
-                plus = itemView.findViewById(R.id.item_plus);
-                minus = itemView.findViewById(R.id.item_minus);
+                plusMinusView=itemView.findViewById(R.id.item_plus);
             }
         }
     }

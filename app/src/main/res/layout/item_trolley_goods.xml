@@ -162,54 +162,11 @@
             android:paddingBottom="@dimen/dp_10"
             android:id="@+id/frameLayout">
 
-            <LinearLayout
+            <cn.czyugang.tcg.client.widget.GoodsPlusMinusView
+                android:id="@+id/item_plus_minus"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_24"
-                android:background="@drawable/border_rect_grey"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                >
-
-                <View
-                    android:id="@+id/item_minus"
-                    android:layout_width="@dimen/dp_10"
-                    android:layout_height="@dimen/dp_2"
-                    android:layout_marginLeft="@dimen/dp_8"
-                    android:layout_marginRight="@dimen/dp_8"
-                    android:background="@color/grey_350"
-                    />
-
-                <View
-                    android:id="@+id/item_minus_bar"
-                    android:layout_width="@dimen/dp_1"
-                    android:layout_height="match_parent"
-                    android:background="@color/grey_350"
-                    />
-
-                <TextView
-                    android:id="@+id/item_num"
-                    style="@style/text_14_black"
-                    android:gravity="center"
-                    android:minWidth="@dimen/dp_35"
-                    android:text="0"
-                    />
-
-                <View
-                    android:id="@+id/item_num_bar"
-                    android:layout_width="@dimen/dp_1"
-                    android:layout_height="match_parent"
-                    android:background="@color/grey_350"
-                    />
-
-                <ImageView
-                    android:id="@+id/item_plus"
-                    android:layout_width="@dimen/dp_26"
-                    android:layout_height="@dimen/dp_26"
-                    android:padding="@dimen/dp_8"
-                    android:src="@drawable/icon_add"
-                    />
-
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                />
 
         </FrameLayout>
 

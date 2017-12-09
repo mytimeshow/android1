@@ -60,6 +60,7 @@ public class LabelLayout extends FlowLayout {
                 if (onClickItemListener!=null) onClickItemListener.onClick(((TextView)v).getText().toString(),(TextView)v);
                 lastSelectTextView =(TextView) v;
             });
+            if (lastSelectTextView==null) lastSelectTextView=textView;
             addView(textView);
         }
     }

@@ -9,7 +9,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,6 +28,8 @@ import cn.czyugang.tcg.client.base.BaseFragmentAdapter;
 import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.entity.Store;
+import cn.czyugang.tcg.client.entity.TrolleyStore;
+import cn.czyugang.tcg.client.modules.common.dialog.StoreTrolleyDialog;
 import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
@@ -67,12 +68,6 @@ public class StoreActivity extends BaseActivity {
     EditText input;
 
     //底部购物
-    @BindView(R.id.store_trolley_img)
-    ImageView trolleyImg;
-    @BindView(R.id.store_good_nums)
-    TextView buyGoodNums;
-    @BindView(R.id.store_buy_commit)
-    TextView buyCommit;
     @BindView(R.id.store_bottomL)
     BottomBalanceView bottomBalanceView;
     @BindView(R.id.store_bottom_bar)
@@ -81,14 +76,16 @@ public class StoreActivity extends BaseActivity {
 
     private String id;
     private List<BaseFragment> fragments = new ArrayList<>();
-    private StoreHomeFragment storeHomeFragment;
-    private FoodListFragment foodListFragment;
-    private CommentFragment commentFragment;
-    private StoreDetailFragment storeDetailFragment;
+    private FoodListFragment foodListFragment = null;
+    private GoodsListFragment goodsListFragment = null;
     public Store store = null;
 
-    public static void startStoreActivity( String id){
-        Intent intent=new Intent(getTopActivity(),StoreActivity.class);
+    //购物车
+    public TrolleyStore trolleyStore = null;
+    private StoreTrolleyDialog storeTrolleyDialog = null;
+
+    public static void startStoreActivity(String id) {
+        Intent intent = new Intent(getTopActivity(), StoreActivity.class);
         intent.putExtra("id", id);
         getTopActivity().startActivity(intent);
     }
@@ -106,6 +103,9 @@ public class StoreActivity extends BaseActivity {
         ButterKnife.bind(this);
         id = getIntent().getStringExtra("id");
 
+        storeNotice.requestFocus();
+        input.setHint(RichText.newRichText("    搜索店内商品").addimgRes(0, 2, R.drawable.ic_search, R.dimen.dp_14).build());
+
         StoreApi.getStoreById(id).subscribe(new NetObserver<Response<Store>>() {
             @Override
             public void onNext(Response<Store> storeResponse) {
@@ -122,13 +122,18 @@ public class StoreActivity extends BaseActivity {
             }
         });
 
-        storeNotice.requestFocus();
-        input.setHint(RichText.newRichText("    搜索店内商品").addimgRes(0, 2, R.drawable.ic_search, R.dimen.dp_14).build());
+        initTrolleyStore();
     }
 
     private void initFragment(boolean isFood) {
         fragments.add(StoreHomeFragment.newInstance());
-        fragments.add(isFood ? FoodListFragment.newInstance() : GoodsListFragment.newInstance());
+        if (isFood) {
+            foodListFragment = FoodListFragment.newInstance();
+            fragments.add(foodListFragment);
+        } else {
+            goodsListFragment = GoodsListFragment.newInstance();
+            fragments.add(goodsListFragment);
+        }
         fragments.add(CommentFragment.newInstance());
         fragments.add(CouponFragment.newInstance());
         fragments.add(StoreDetailFragment.newInstance());
@@ -151,11 +156,37 @@ public class StoreActivity extends BaseActivity {
 
             }
         });
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(5);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         viewPager.setCurrentItem(1);
     }
+
+    /*
+    *   购物车
+    * */
+    private void initTrolleyStore() {
+        trolleyStore = new TrolleyStore();
+
+        bottomBalanceView.trolleyImg.setOnClickListener(v -> {
+            if (storeTrolleyDialog == null) {
+                storeTrolleyDialog = new StoreTrolleyDialog();
+                storeTrolleyDialog.setTrolleyStore(trolleyStore, this);
+                storeTrolleyDialog.setOnDismissRefresh(dialog -> {
+                    if (foodListFragment != null) foodListFragment.refreshBuyNums();
+                    if (goodsListFragment != null) goodsListFragment.refreshBuyNums();
+                });
+            }
+            storeTrolleyDialog.show(getFragmentManager(), "StoreTrolleyDialog");
+        });
+
+        refreshBottomTrolley();
+    }
+
+    public void refreshBottomTrolley() {
+        if (trolleyStore == null) return;
+    }
+
 
     private void isFoodStore(boolean is) {
         title.setBackgroundResource(is ? R.color.bg_store_food : R.color.bg_store_good);
@@ -188,7 +219,7 @@ public class StoreActivity extends BaseActivity {
     public void onCollect() {
         if (store == null) return;
         if (store.collected) {
-            RecordApi.collectStore(store.id).subscribe(new NetObserver<Response>() {
+            RecordApi.deleteCollectStore(store.id).subscribe(new NetObserver<Response>() {
                 @Override
                 public void onNext(Response response) {
                     super.onNext(response);
@@ -213,7 +244,7 @@ public class StoreActivity extends BaseActivity {
     }
 
     @OnTextChanged(R.id.title_input)
-    public void onSearchInput(CharSequence charSequence){
-        LogRui.i("onSearchInput####",charSequence);
+    public void onSearchInput(CharSequence charSequence) {
+        LogRui.i("onSearchInput####", charSequence);
     }
 }

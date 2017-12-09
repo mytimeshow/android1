@@ -275,6 +275,13 @@
         <item name="android:textSize">@dimen/sp_14</item>
     </style>
 
+    <style name="text_14_red">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/main_red</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
     <style name="text_12_black">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
