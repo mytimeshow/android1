@@ -22,8 +22,8 @@ android {
         applicationId "cn.czyugang.tcg.client"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 100
+        versionName "10.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
@@ -52,7 +52,7 @@ android {
             shrinkResources false
             buildConfigField "boolean", "LOG_OPEN", "true"
             buildConfigField "long", "BUILD_TIMEMILLIS", System.currentTimeMillis() + "L"
-           // signingConfig signingConfigs.debug
+            // signingConfig signingConfigs.debug
         }
         release {
             debuggable false

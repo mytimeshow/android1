@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_76">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_24"
+            android:background="@color/white"
+            />
+
+        <View
+            android:layout_width="@dimen/dp_76"
+            android:layout_height="@dimen/dp_76"
+            android:layout_marginLeft="@dimen/dp_7"
+            android:background="@color/white"
+            />
+
+        <cn.czyugang.tcg.client.utils.img.ImgView
+            android:id="@+id/view_img"
+            android:layout_width="@dimen/dp_70"
+            android:layout_height="@dimen/dp_70"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            />
+
+        <TextView
+            android:id="@+id/view_name"
+            style="@style/text_16_black"
+            android:layout_marginLeft="@dimen/dp_95"
+            android:layout_marginTop="@dimen/dp_32"
+            android:text="商品名称名称名称名称"
+            />
+
+        <TextView
+            android:id="@+id/view_remain"
+            style="@style/text_12_gray"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dp_2"
+            android:layout_marginLeft="@dimen/dp_95"
+            android:text="库存：5"
+            />
+
+        <ImageView
+            android:id="@+id/view_close"
+            android:layout_width="@dimen/dp_35"
+            android:layout_height="@dimen/dp_35"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_28"
+            android:padding="@dimen/dp_10"
+            android:src="@drawable/icon_close_gray"
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp_10"
+        >
+
+        <TextView
+            android:id="@+id/view_select_spec"
+            style="@style/text_14_red"
+            android:layout_marginTop="@dimen/dp_12"
+            android:text="已选：规格1.1+规格2.2+标签1.2,标签1.3"/>
+
+        <TextView
+            android:id="@+id/view_discount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/border_rect_light_blue"
+            android:paddingBottom="@dimen/dp_1"
+            android:paddingLeft="@dimen/dp_4"
+            android:paddingRight="@dimen/dp_4"
+            android:paddingTop="@dimen/dp_1"
+            android:text="限制 5.72折"
+            android:textColor="@color/main_light_blue"
+            android:textSize="@dimen/dp_10"
+            />
+
+        <include layout="@layout/view_split_bar_light"/>
+    </LinearLayout>
+
+    <cn.czyugang.tcg.client.widget.RecyclerViewMaxH
+        android:id="@+id/view_spec_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/dp_10"
+        />
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/view_price"
+            style="@style/text_18_black"
+            android:text="￥99.99"
+            />
+
+        <include layout="@layout/space_h"/>
+
+        <cn.czyugang.tcg.client.widget.GoodsPlusMinusView
+            android:id="@+id/view_plus_minus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

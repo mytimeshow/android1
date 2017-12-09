@@ -22,7 +22,11 @@ import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.entity.Good;
 import cn.czyugang.tcg.client.entity.GoodCategory;
 import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.modules.common.dialog.GoodsSpecDialog;
 import cn.czyugang.tcg.client.utils.img.ImgView;
+import cn.czyugang.tcg.client.utils.rxbus.RxBus;
+import cn.czyugang.tcg.client.utils.rxbus.TrolleyBuyNumChangedEvent;
+import cn.czyugang.tcg.client.widget.GoodsPlusMinusView;
 import cn.czyugang.tcg.client.widget.RecycleViewDivider;
 
 /**
@@ -132,6 +136,11 @@ public class FoodListFragment extends BaseFragment {
         return "商品";
     }
 
+
+    public void refreshBuyNums(){
+
+    }
+
     private void onSelectCategory(Good good) {
         if (categoryAdapter.selectCategory == good) return;
         categoryAdapter.selectCategory = good;
@@ -174,6 +183,18 @@ public class FoodListFragment extends BaseFragment {
             holder.imgView.id("919910512769269760");
 
             holder.itemView.setOnClickListener(v -> GoodDetailActivity.startGoodDetailActivity());
+
+
+            holder.plusMinusView.setIsMultiSpec(data.isMultiSpec())
+                    .setOnOpenSpecListener(()->{
+                        GoodsSpecDialog.showSpecDialog(storeActivity,data);
+                    })
+                    .setOnPlusMinusListener(addNum -> {     //店铺 foodlist
+                        int num=storeActivity.trolleyStore.addGood(data,"",addNum);
+                        RxBus.post(new TrolleyBuyNumChangedEvent(data));
+                        return num;
+                    })
+                    .setNum(storeActivity.trolleyStore.getGoodsBuyNum(data.id));
         }
 
         @Override
@@ -194,9 +215,7 @@ public class FoodListFragment extends BaseFragment {
             TextView nameSub;
             TextView sale;
             TextView price;
-            TextView buyNum;
-            View plus;
-            View minus;
+            GoodsPlusMinusView plusMinusView;
 
             public Holder(View itemView, int type) {
                 super(itemView);
@@ -209,9 +228,7 @@ public class FoodListFragment extends BaseFragment {
                 nameSub = itemView.findViewById(R.id.item_name_sub);
                 sale = itemView.findViewById(R.id.item_sale);
                 price = itemView.findViewById(R.id.item_price);
-                buyNum = itemView.findViewById(R.id.item_num);
-                plus = itemView.findViewById(R.id.item_plus);
-                minus = itemView.findViewById(R.id.item_minus);
+                plusMinusView=itemView.findViewById(R.id.item_plus);
             }
         }
 

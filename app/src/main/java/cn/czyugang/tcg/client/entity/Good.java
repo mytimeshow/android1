@@ -2,6 +2,9 @@ package cn.czyugang.tcg.client.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author ruiaa
  * @date 2017/11/22
@@ -127,5 +130,15 @@ public class Good {
 
     public boolean isSaleAble(){
         return enableSale.equals("ENABLE");
+    }
+
+    public List<GoodsSpec> getGoodsSpec(){
+        List<GoodsSpec> list=new ArrayList<>();
+        list.add(new GoodsSpec());
+        list.add(new GoodsSpec());
+        list.add(new GoodsSpec());
+        list.add(new GoodsSpec());
+        list.add(new GoodsSpec());
+        return list;
     }
 }
