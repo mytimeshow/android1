@@ -20,6 +20,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseFragment;
+import cn.czyugang.tcg.client.entity.TrolleyGoods;
 import cn.czyugang.tcg.client.entity.TrolleyStore;
 import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.widget.ActivityTextView;
@@ -44,7 +45,7 @@ public class TrolleyFragment extends BaseFragment {
     LinearLayout bottomEditL;
     private Unbinder unbinder;
 
-    private List<TrolleyStore> trolleyList=new ArrayList<>();
+    private List<TrolleyStore> trolleyList = new ArrayList<>();
     private TrolleyAdapter adapter;
 
     public static TrolleyFragment newInstance() {
@@ -63,12 +64,13 @@ public class TrolleyFragment extends BaseFragment {
         rootView = inflater.inflate(R.layout.fragment_trolley, container, false);
         unbinder = ButterKnife.bind(this, rootView);
 
-        for (int i=0;i<10;i++){
+        for (int i = 0; i < 10; i++) {
             trolleyList.add(new TrolleyStore());
         }
+        trolleyList.add(new TrolleyStore().setViewType(R.layout.item_trolley_store_ad));
 
 
-        adapter=new TrolleyAdapter(trolleyList,getActivity());
+        adapter = new TrolleyAdapter(trolleyList, getActivity());
         storeR.setLayoutManager(new LinearLayoutManager(getActivity()));
         storeR.setAdapter(adapter);
         new RefreshLoadHelper(getActivity()).build(storeR);
@@ -83,11 +85,11 @@ public class TrolleyFragment extends BaseFragment {
     }
 
     @OnClick(R.id.title_right)
-    public void onEdit(){
-        if (bottomEditL.getVisibility()==View.GONE){
+    public void onEdit() {
+        if (bottomEditL.getVisibility() == View.GONE) {
             bottomEditL.setVisibility(View.VISIBLE);
             edit.setText("完成");
-        }else {
+        } else {
             bottomEditL.setVisibility(View.GONE);
             edit.setText("编辑");
         }
@@ -96,27 +98,44 @@ public class TrolleyFragment extends BaseFragment {
     private static class TrolleyAdapter extends RecyclerView.Adapter<TrolleyAdapter.Holder> {
         private List<TrolleyStore> list;
         private Activity activity;
+
         public TrolleyAdapter(List<TrolleyStore> list, Activity activity) {
             this.list = list;
             this.activity = activity;
         }
+
         @Override
         public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
             return new Holder(LayoutInflater.from(activity).inflate(
-                    R.layout.item_trolley_store,parent,false));
+                    viewType, parent, false));
         }
+
         @Override
         public void onBindViewHolder(Holder holder, int position) {
-            TrolleyStore data=list.get(position);
-
+            TrolleyStore data = list.get(position);
+            if (data.viewType == R.layout.item_trolley_store_invalid_title) return;
+            if (data.viewType == R.layout.item_trolley_store_invalid_clear) {
+                return;
+            }
+            if (data.viewType == R.layout.item_trolley_store_ad) {
+                return;
+            }
+            data.bindGoodsAdapter(activity, holder.goodsR, false);
             holder.packFeeAsk.setOnClickListener(v -> {
-                MyDialog.bubbleToast(activity,v,"啊啊ajdk哎哎哎");
+                MyDialog.bubbleToast(activity, v, "啊啊ajdk哎哎哎");
             });
         }
+
         @Override
         public int getItemCount() {
             return list.size();
         }
+
+        @Override
+        public int getItemViewType(int position) {
+            return list.get(position).viewType;
+        }
+
         class Holder extends RecyclerView.ViewHolder {
             SelectButton selectButton;
             TextView name;
@@ -133,19 +152,57 @@ public class TrolleyFragment extends BaseFragment {
 
             public Holder(View itemView) {
                 super(itemView);
-                selectButton=itemView.findViewById(R.id.item_select);
-                name=itemView.findViewById(R.id.item_name);
-                moreActivityL=itemView.findViewById(R.id.item_more_activityL);
-                moreActivity=itemView.findViewById(R.id.item_more_activity);
-                moreActivityAction=itemView.findViewById(R.id.item_more_activity_add);
-                goodsR=itemView.findViewById(R.id.item_goods);
-                useActivityL=itemView.findViewById(R.id.item_activity_useL);
-                useActivity=itemView.findViewById(R.id.item_activity_use);
-                fixActivity=itemView.findViewById(R.id.item_activity_fix);
-                packFeeL=itemView.findViewById(R.id.item_pack_feeL);
-                packFee=itemView.findViewById(R.id.item_pack_fee);
-                packFeeAsk=itemView.findViewById(R.id.item_pack_fee_ask);
+                selectButton = itemView.findViewById(R.id.item_select);
+                name = itemView.findViewById(R.id.item_name);
+                moreActivityL = itemView.findViewById(R.id.item_more_activityL);
+                moreActivity = itemView.findViewById(R.id.item_more_activity);
+                moreActivityAction = itemView.findViewById(R.id.item_more_activity_add);
+                goodsR = itemView.findViewById(R.id.item_goods);
+                useActivityL = itemView.findViewById(R.id.item_activity_useL);
+                useActivity = itemView.findViewById(R.id.item_activity_use);
+                fixActivity = itemView.findViewById(R.id.item_activity_fix);
+                packFeeL = itemView.findViewById(R.id.item_pack_feeL);
+                packFee = itemView.findViewById(R.id.item_pack_fee);
+                packFeeAsk = itemView.findViewById(R.id.item_pack_fee_ask);
 
+            }
+        }
+    }
+
+    public static class TrolleyGoodsAdapter extends RecyclerView.Adapter<TrolleyGoodsAdapter.Holder> {
+        private List<TrolleyGoods> list;
+        private Activity activity;
+        public boolean isStoreTrolley = false;
+
+        public TrolleyGoodsAdapter(List<TrolleyGoods> list, Activity activity) {
+            this.list = list;
+            this.activity = activity;
+        }
+
+        @Override
+        public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new Holder(LayoutInflater.from(activity).inflate(
+                    viewType, parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(Holder holder, int position) {
+            TrolleyGoods data = list.get(position);
+        }
+
+        @Override
+        public int getItemCount() {
+            return list.size();
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return isStoreTrolley ? R.layout.item_trolley_store_goods : R.layout.item_trolley_goods;
+        }
+
+        class Holder extends RecyclerView.ViewHolder {
+            public Holder(View itemView) {
+                super(itemView);
             }
         }
     }

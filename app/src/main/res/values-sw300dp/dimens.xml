@@ -181,6 +181,7 @@
 <dimen name="dp_490">392dp</dimen>
 <dimen name="dp_500">400dp</dimen>
 <dimen name="sp_8">6sp</dimen>
+<dimen name="sp_9">7sp</dimen>
 <dimen name="sp_10">8sp</dimen>
 <dimen name="sp_11">8sp</dimen>
 <dimen name="sp_12">9sp</dimen>

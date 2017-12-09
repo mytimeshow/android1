@@ -6,4 +6,9 @@ package cn.czyugang.tcg.client.entity;
  */
 
 public class TrolleyGoods {
+    public Good good;
+    public boolean isSelect=true;
+    public int num=0;
+    private String spec="";
+    private String taste="";
 }

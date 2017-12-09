@@ -114,5 +114,6 @@ dependencies {
     compile 'com.github.LuckSiege.PictureSelector:picture_library:v2.1.6'
     compile 'com.contrarywind:Android-PickerView:3.2.7'
     compile 'com.youth.banner:banner:1.4.10'
+    compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0'
 
 }

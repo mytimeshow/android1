@@ -54,7 +54,7 @@ public class ImgView extends ImageView {
     }
 
     private Paint paint = null;
-    private String disCount = null;
+    private String disCount = "网络图片";
     private boolean isRound = false;
     private boolean noCache = false;
 

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              >
+							android:orientation="vertical">
 
     <FrameLayout
         style="@style/title_title"
@@ -15,7 +14,8 @@
             android:layout_height="@dimen/dp_24"
             android:layout_gravity="left|center"
             android:layout_marginLeft="@dimen/dp_10"
-            android:src="@drawable/ic_logout_avatar"/>
+						android:src="@drawable/ic_logout_avatar"/>
+            
         <android.support.design.widget.TabLayout
             android:id="@+id/inform_detail_tab"
             android:layout_width="@dimen/dp_260"
@@ -27,9 +27,9 @@
             android:id="@+id/img_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_search"
             android:layout_gravity="right|center"
-            android:layout_marginRight="@dimen/dp_10"/>
+            android:layout_marginRight="@dimen/dp_10"
+            android:background="@drawable/ic_search"/>
     </FrameLayout>
 
     <include layout="@layout/view_split_bar_light"/>

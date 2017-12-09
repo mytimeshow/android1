@@ -33,6 +33,7 @@ import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.utils.string.RichText;
+import cn.czyugang.tcg.client.widget.BottomBalanceView;
 import cn.czyugang.tcg.client.widget.LabelLayout;
 
 /**
@@ -73,7 +74,7 @@ public class StoreActivity extends BaseActivity {
     @BindView(R.id.store_buy_commit)
     TextView buyCommit;
     @BindView(R.id.store_bottomL)
-    LinearLayout storeBottomL;
+    BottomBalanceView bottomBalanceView;
     @BindView(R.id.store_bottom_bar)
     View bottomBar;
 
@@ -141,7 +142,7 @@ public class StoreActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                storeBottomL.setVisibility(position == 1 ? View.VISIBLE : View.GONE);
+                bottomBalanceView.setVisibility(position == 1 ? View.VISIBLE : View.GONE);
                 bottomBar.setVisibility(position == 1 ? View.VISIBLE : View.GONE);
             }
 
