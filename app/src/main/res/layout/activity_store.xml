@@ -124,6 +124,7 @@
                     android:layout_marginRight="@dimen/dp_25"
                     android:layout_toLeftOf="@+id/store_collect"
                     android:background="@drawable/dash_v_white"
+                    android:layerType="software"
                     />
 
                 <cn.czyugang.tcg.client.widget.LabelLayout

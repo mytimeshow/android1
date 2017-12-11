@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        style="@style/title_title"
+        android:background="@color/white">
+
+        <ImageView
+            style="@style/title_back"
+            android:src="@drawable/ic_back_arrow" />
+        <TextView
+            android:id="@+id/inform_label_content_title_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="# 电影圈 #"
+            android:textColor="@color/text_dark_gray"
+            android:textSize="@dimen/sp_18"/>
+
+        <ImageView style="@style/title_search"
+            android:src="@drawable/ic_search"/>
+
+
+    </FrameLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/inform_label_content_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

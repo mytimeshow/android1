@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.entity.MyInform;
 import cn.czyugang.tcg.client.modules.store.SearchActivity;
 import cn.czyugang.tcg.client.utils.LogRui;
+import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 
 /**
@@ -40,6 +42,7 @@ public class InformMySelfActivity extends BaseActivity {
 
     @BindView(R.id.myself_title_bg)
     FrameLayout frameTitle;
+
    
     public static void startMySelfActivity( ){
         Intent intent=new Intent(getTopActivity(),InformMySelfActivity.class);
@@ -89,7 +92,7 @@ public class InformMySelfActivity extends BaseActivity {
         SearchActivity.startSearchActivity();
     }
 
-    static class MyInformAdapter extends RecyclerView.Adapter<MyInformAdapter.Holder> {
+    public static class MyInformAdapter extends RecyclerView.Adapter<MyInformAdapter.Holder> {
         private List<MyInform> list;
         private Activity activity;
 
@@ -113,6 +116,12 @@ public class InformMySelfActivity extends BaseActivity {
             }else{
                 holder.commit.setVisibility(View.GONE);
             }
+            if (activity==InformOrderSelfActivity.instance){
+                holder.typeLinearLayout.setVisibility(View.GONE);
+                holder.commit.setVisibility(View.GONE);
+            }else{
+                holder.typeLinearLayout.setVisibility(View.VISIBLE);
+            }
 
         }
         @Override
@@ -131,6 +140,8 @@ public class InformMySelfActivity extends BaseActivity {
             TextView informTime;
             TextView informContent;
             TextView informCommitNum;
+            LinearLayout typeLinearLayout;
+
 
             //评论详情部分
             RelativeLayout commit;
@@ -148,6 +159,9 @@ public class InformMySelfActivity extends BaseActivity {
                 commit=itemView.findViewById(R.id.inform_for_myself_commit_content);
                 commitHead=itemView.findViewById(R.id.inform_for_myself_commit_head);
                 commitContent=itemView.findViewById(R.id.inform_for_myself_commit_contentmsg);
+                //顶部文章状态和时间显示部分
+                typeLinearLayout=itemView.findViewById(R.id.inform_for_myself_type_linear);
+
 
 
             }
@@ -162,6 +176,16 @@ public class InformMySelfActivity extends BaseActivity {
     @OnClick(R.id.myself_cover)
     public void onCover(){
         InformChangeCoverActivity.startChangeCoverActivity();
+    }
+
+    @OnClick(R.id.inform_for_myself_follow)
+    void toMyFollow(){
+        InformSelfFollowActivity.startInformSelfFollowActivity("我的关注");
+    }
+
+    @OnClick(R.id.inform_for_myself_fans)
+    void toMyFans(){
+        InformSelfFansActivity.startInformSelfFansActivity("我的粉丝");
     }
 
 }

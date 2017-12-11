@@ -316,6 +316,12 @@
         <item name="android:textColor">@color/text_black</item>
         <item name="android:textSize">@dimen/sp_16</item>
     </style>
+    <style name="text_16_grey">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_dark_gray</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+    </style>
     <style name="text_16_white">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

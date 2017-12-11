@@ -166,7 +166,7 @@ public class InformFollowFragment extends BaseFragment {
     }
 
 
-     static class FollowContentAdapter extends RecyclerView.Adapter<FollowContentAdapter.Holder> {
+     public static class FollowContentAdapter extends RecyclerView.Adapter<FollowContentAdapter.Holder> {
         private List<FollowCotent> list;
         private Activity activity;
 
@@ -186,6 +186,9 @@ public class InformFollowFragment extends BaseFragment {
             holder.followThumbNum.setText(data.getThumbNum());
             holder.followName.setText(data.getName());
             holder.followContent.setText(data.getContent());
+            holder.itemView.setOnClickListener(v -> {
+                InformOrderSelfActivity.startInformOrderSelfActivity();
+            });
         }
         @Override
         public int getItemCount() {

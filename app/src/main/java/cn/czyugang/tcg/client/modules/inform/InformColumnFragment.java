@@ -14,8 +14,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnItemClick;
-import butterknife.OnItemSelected;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.entity.Inform;
@@ -108,7 +106,7 @@ public class InformColumnFragment extends BaseFragment {
             }
 
             holder.itemView.setOnClickListener(v -> {
-                InformOrderMsgActivity.startInformOrderMsgActivity();
+                InformColumnMsgActivity.startInformOrderMsgActivity();
             });
         }
         @Override

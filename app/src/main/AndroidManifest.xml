@@ -445,6 +445,11 @@
         <!--资讯-->
         <activity android:name=".modules.inform.InformMySelfActivity" />
         <activity android:name=".modules.inform.InformChangeCoverActivity" />
-        <activity android:name=".modules.inform.InformOrderMsgActivity" />
+        <activity android:name=".modules.inform.InformColumnMsgActivity" />
+        <activity android:name=".modules.inform.InformOrderSelfActivity" />
+        <activity android:name=".modules.inform.InformSelfFollowActivity" />
+        <activity android:name=".modules.inform.InformSelfFansActivity" />
+        <activity android:name=".modules.inform.InformLableContentActivity" />
+        <activity android:name=".modules.inform.InformEditArticleActivity" />
     </application>
 </manifest>
