@@ -451,5 +451,6 @@
         <activity android:name=".modules.inform.InformSelfFansActivity" />
         <activity android:name=".modules.inform.InformLableContentActivity" />
         <activity android:name=".modules.inform.InformEditArticleActivity" />
+        <activity android:name=".modules.inform.InformDetailsActivity" />
     </application>
 </manifest>

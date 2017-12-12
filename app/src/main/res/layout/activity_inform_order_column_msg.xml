@@ -25,7 +25,7 @@
                 <cn.czyugang.tcg.client.utils.img.ImgView
                     android:id="@+id/myself_cover"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_85"
+                    android:layout_height="@dimen/dp_114"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/dp_75">
+                    android:layout_marginTop="@dimen/dp_106">
                     <TextView
                         android:id="@+id/inform_order_isfollow"
                         android:layout_width="@dimen/dp_60"
@@ -56,7 +56,7 @@
                     android:layout_width="@dimen/dp_65"
                     android:layout_height="@dimen/dp_65"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/dp_50"
+                    android:layout_marginTop="@dimen/dp_85"
                     android:src="@drawable/ic_logout_avatar" />
 
                 <LinearLayout
@@ -87,7 +87,7 @@
                     android:layout_marginBottom="@dimen/dp_20"
                     android:layout_marginLeft="@dimen/dp_60"
                     android:layout_marginRight="@dimen/dp_60"
-                    android:layout_marginTop="@dimen/dp_130"
+                    android:layout_marginTop="@dimen/dp_164"
                     android:gravity="center"
                     android:lineSpacingExtra="@dimen/dp_5"
                     android:lines="2"
@@ -241,4 +241,13 @@
 
         <ImageView style="@style/title_search" />
     </FrameLayout>
+    <Button
+        android:id="@+id/inform_order_edit_article"
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="@dimen/dp_50"
+        android:layout_gravity="right|bottom"
+        android:background="@drawable/pulish_btn"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        />
 </FrameLayout>

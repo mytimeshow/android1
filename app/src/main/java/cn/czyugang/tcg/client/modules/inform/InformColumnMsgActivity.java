@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +44,8 @@ public class InformColumnMsgActivity extends BaseActivity {
 
     @BindView(R.id.inform_order_name)
     TextView orderName;
+
+
 
     boolean isFollow = true;
 
@@ -108,7 +111,10 @@ public class InformColumnMsgActivity extends BaseActivity {
 
     }
 
-
+    @OnClick(R.id.inform_order_edit_article)
+    void toEditArticle(){
+        InformEditArticleActivity.startInformEditArticleActivity();
+    }
     static class SmallInformAdapter extends RecyclerView.Adapter<InformColumnMsgActivity.SmallInformAdapter.Holder> {
         private List<Inform> list;
         private Activity activity;
