@@ -2,6 +2,9 @@ package cn.czyugang.tcg.client.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author ruiaa
  * @date 2017/11/22
@@ -50,5 +53,26 @@ public class GoodCategory {
     @SerializedName("remark")
     public String remark;
 
+    public List<GoodCategory> secondCategoryList=null;
 
+    public String toString(){
+        return name+"#"+remark+"  "+(secondCategoryList==null?"":"  子"+secondCategoryList.toString());
+    }
+
+    public List<String> getSeconds(){
+        if (secondCategoryList==null) return null;
+        List<String> seconds=new ArrayList<>();
+        for(GoodCategory category:secondCategoryList){
+            seconds.add(category.name);
+        }
+        return seconds;
+    }
+
+    public String getSecondCategoryId(String name){
+        if (secondCategoryList==null) return null;
+        for(GoodCategory category:secondCategoryList){
+            if (category.name.equals(name)) return category.id;
+        }
+        return null;
+    }
 }

@@ -94,7 +94,7 @@ public class Store {
     @SerializedName("updateTime")
     public String updateTime;
 
-    public boolean isFoodStore = true;
+    public boolean isFoodStore = false;
     public boolean collected = false;
     public List<String> tagList = new ArrayList<>();
     public double score = 0;
@@ -110,27 +110,31 @@ public class Store {
     public void init(JSONObject jsonObject) {
         if (jsonObject == null) return;
         try {
+            //是否已收藏
             collected = jsonObject.optString("isCollect").equals("YES");
+
+            //标签
             JSONArray tags = jsonObject.optJSONArray("storeTagList");
             if (tags != null && tags.length() > 0) {
                 for (int i = 0, size = tags.length(); i < size; i++)
                     tagList.add(tags.optJSONObject(i).optString("name"));
             }
 
+            //店铺分类
             JSONArray classify = jsonObject.optJSONArray("classifyOf" + id);
             if (classify != null && classify.length() > 0) {
                 isFoodStore = !classify.getJSONObject(0).optString("classify", "").equals("MARKET");
             }
 
+            //配送信息
             aveDeliveryTime = jsonObject.optDouble("deliveryTime");
-
             JSONObject logisticsDeliveryJ = jsonObject.optJSONObject("logisticsDeliverySetting");
             if (logisticsDeliveryJ != null) {
                 logisticsDelivery = JsonParse.fromJson(logisticsDeliveryJ.toString(), DeliveryInfo.class);
             }
 
         } catch (Exception e) {
-            LogRui.e("init####", e);
+            LogRui.e("parse####", e);
         }
 
     }

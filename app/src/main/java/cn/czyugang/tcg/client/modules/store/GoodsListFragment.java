@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,14 +24,17 @@ import cn.czyugang.tcg.client.api.StoreApi;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.entity.Good;
 import cn.czyugang.tcg.client.entity.GoodCategory;
-import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.entity.GoodsResponse;
 import cn.czyugang.tcg.client.modules.common.dialog.GoodsSpecDialog;
 import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
+import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.utils.rxbus.RxBus;
 import cn.czyugang.tcg.client.utils.rxbus.TrolleyBuyNumChangedEvent;
 import cn.czyugang.tcg.client.widget.GoodsPlusMinusView;
+import cn.czyugang.tcg.client.widget.LabelLayout;
+import cn.czyugang.tcg.client.widget.RecyclerViewMaxH;
 
 /**
  * @author ruiaa
@@ -55,7 +59,9 @@ public class GoodsListFragment extends BaseFragment {
     @BindView(R.id.goodslist_foods)
     RecyclerView goodsR;
     @BindView(R.id.goodslist_category_select)
-    View categorySelect;
+    View categoryL;
+    @BindView(R.id.goodslist_category_list)
+    RecyclerViewMaxH categoryR;
     Unbinder unbinder;
 
     private StoreActivity storeActivity;
@@ -63,7 +69,11 @@ public class GoodsListFragment extends BaseFragment {
     private GoodsAdapter adapter;
     private int pagerIndex = 0;
     private String currentClassifyId = null;
+    private String currentOrder = null;
     private int orderByPriceType = 0;
+
+    private CategoryAdapter categoryAdapter;
+    private List<GoodCategory> categoryList = new ArrayList<>();
 
     public static GoodsListFragment newInstance() {
         GoodsListFragment fragment = new GoodsListFragment();
@@ -82,34 +92,40 @@ public class GoodsListFragment extends BaseFragment {
         rootView = inflater.inflate(R.layout.fragment_goodslist, container, false);
         unbinder = ButterKnife.bind(this, rootView);
 
-        for (int i = 0; i < 30; i++) {
-            goodList.add(new Good());
-        }
 
         adapter = new GoodsAdapter(goodList, getActivity());
         goodsR.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         goodsR.setAdapter(adapter);
 
-        StoreApi.getGoods(storeActivity.store.id, null, null).subscribe(new NetObserver<Response<List<GoodCategory>>>() {
-            @Override
-            public void onNext(Response<List<GoodCategory>> response) {
-                super.onNext(response);
-            }
-        });
+        refreshGoods(true);
 
         return rootView;
     }
 
-    private void refreshGoods(String order) {
+    private void refreshGoods(boolean firstLoad) {
         pagerIndex = 0;
-        StoreApi.getGoods(storeActivity.store.id, currentClassifyId, order).subscribe(new NetObserver<Response<List<GoodCategory>>>() {
+        StoreApi.getGoods(storeActivity.store.id, currentClassifyId, currentOrder).subscribe(new NetObserver<GoodsResponse>() {
             @Override
-            public void onNext(Response<List<GoodCategory>> response) {
+            public void onNext(GoodsResponse response) {
                 super.onNext(response);
+                response.parse();
+                goodList.addAll(response.data);
+                adapter.notifyDataSetChanged();
+                if (firstLoad) {
+                    categoryList.add(null);
+                    categoryList.addAll(response.goodCategoryList);
+                    categoryAdapter = new CategoryAdapter(categoryList, getActivity());
+                    categoryR.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    categoryR.setAdapter(categoryAdapter);
+                    categoryR.setMaxHeightRes(R.dimen.dp_280);
+                }
             }
         });
     }
 
+    private void refreshGoods() {
+        refreshGoods(false);
+    }
 
     @Override
     public void onDestroyView() {
@@ -122,7 +138,7 @@ public class GoodsListFragment extends BaseFragment {
         return "商品";
     }
 
-    public void refreshBuyNums(){
+    public void refreshBuyNums() {
 
     }
 
@@ -140,23 +156,33 @@ public class GoodsListFragment extends BaseFragment {
         }
     }
 
+    //分类
+    @OnClick(R.id.goodslist_category_open)
+    public void onOpenCategory() {
+        categoryL.setVisibility(categoryL.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
+    }
+
+    //排序
     @OnClick(R.id.goodslist_order_default)
     public void onOrderDefault() {
-        refreshGoods(null);
+        currentOrder = null;
+        refreshGoods();
         initOrderUi();
         orderDefault.setTextColor(ResUtil.getColor(R.color.main_red));
     }
 
     @OnClick(R.id.goodslist_order_news)
     public void onOrderNews() {
-        refreshGoods("new");
+        currentOrder = "new";
+        refreshGoods();
         initOrderUi();
         orderNews.setTextColor(ResUtil.getColor(R.color.main_red));
     }
 
     @OnClick(R.id.goodslist_order_sale)
     public void onOrderSale() {
-        refreshGoods("productSales");
+        currentOrder = "productSales";
+        refreshGoods();
         initOrderUi();
         orderSale.setTextColor(ResUtil.getColor(R.color.main_red));
     }
@@ -164,13 +190,16 @@ public class GoodsListFragment extends BaseFragment {
     @OnClick(R.id.goodslist_order_price)
     public void onOrderPrice() {
         if (orderByPriceType == 0) {
-            refreshGoods("priceASC");
+            currentOrder = "priceASC";
+            refreshGoods();
             orderByPriceType = 1;
         } else if (orderByPriceType > 0) {
-            refreshGoods("priceDESC");
+            currentOrder = "priceDESC";
+            refreshGoods();
             orderByPriceType = -1;
         } else {
-            refreshGoods("priceASC");
+            currentOrder = "priceASC";
+            refreshGoods();
             orderByPriceType = 1;
         }
         initOrderUi();
@@ -207,23 +236,28 @@ public class GoodsListFragment extends BaseFragment {
         public void onBindViewHolder(Holder holder, int position) {
             Good data = list.get(position);
 
-            holder.price.setText(String.format("￥%.2f", Math.random() * 10));
-            holder.imgView.id("919910512769269760");
+            holder.imgView.id(data.pic);
+            holder.name.setText(data.title);
+            CommonUtil.setTextViewSingleLine(holder.name);
+            if (holder.nameSub != null) holder.nameSub.setText(data.subTitle);
+            holder.sale.setText(String.valueOf(data.sales));//已售11份  评价22
+            holder.price.setText(data.getShowPriceStr());
+            holder.tag.setText(data.getTag());
 
             holder.itemView.setOnClickListener(v -> GoodDetailActivity.startGoodDetailActivity());
             holder.itemView.setOnLongClickListener(v -> {
-                MyDialog.collectionBg(activity,v,false, myDialog -> {
+                MyDialog.collectionBg(activity, v, false, myDialog -> {
                     myDialog.dismiss();
                 });
                 return true;
             });
 
             holder.plusMinusView.setIsMultiSpec(data.isMultiSpec())
-                    .setOnOpenSpecListener(()->{
-                        GoodsSpecDialog.showSpecDialog(storeActivity,data);
+                    .setOnOpenSpecListener(() -> {
+                        GoodsSpecDialog.showSpecDialog(storeActivity, data);
                     })
                     .setOnPlusMinusListener(addNum -> {      //店铺  goodsList
-                        int num=storeActivity.trolleyStore.addGood(data,"",addNum);
+                        int num = storeActivity.trolleyStore.addGood(data, "", addNum);
                         RxBus.post(new TrolleyBuyNumChangedEvent(data));
                         return num;
                     })
@@ -245,6 +279,7 @@ public class GoodsListFragment extends BaseFragment {
             TextView name;
             TextView nameSub;
             TextView sale;
+            TextView tag;
             TextView price;
             GoodsPlusMinusView plusMinusView;
 
@@ -254,8 +289,78 @@ public class GoodsListFragment extends BaseFragment {
                 name = itemView.findViewById(R.id.item_name);
                 nameSub = itemView.findViewById(R.id.item_name_sub);
                 sale = itemView.findViewById(R.id.item_sale);
+                tag = itemView.findViewById(R.id.item_tag);
                 price = itemView.findViewById(R.id.item_price);
-                plusMinusView=itemView.findViewById(R.id.item_plus);
+                plusMinusView = itemView.findViewById(R.id.item_plus);
+            }
+        }
+    }
+
+    private class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder> {
+        private List<GoodCategory> list;
+        private Activity activity;
+        private TextView currentSelectCategory = null;
+
+        public CategoryAdapter(List<GoodCategory> list, Activity activity) {
+            this.list = list;
+            this.activity = activity;
+        }
+
+        @Override
+        public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new Holder(LayoutInflater.from(activity).inflate(
+                    R.layout.item_goods_list_category, parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(Holder holder, int position) {
+            GoodCategory data = list.get(position);
+            if (data == null) {
+                holder.name.setText("全部分类");
+                if (currentSelectCategory == null) {
+                    currentSelectCategory = holder.name;
+                    currentSelectCategory.setTextColor(ResUtil.getColor(R.color.main_red));
+                }
+            } else {
+                holder.name.setText(data.name);
+                holder.labelLayout.setTexts(data.getSeconds());
+            }
+            holder.name.setOnClickListener(v -> {
+                currentSelectCategory.setTextColor(ResUtil.getColor(R.color.text_black));
+                currentSelectCategory = holder.name;
+                currentSelectCategory.setTextColor(ResUtil.getColor(R.color.main_red));
+                if (data == null) {
+                    currentClassifyId = null;
+                    refreshGoods();
+                } else {
+                    currentClassifyId = data.id;
+                    refreshGoods();
+                }
+                categoryL.setVisibility( View.GONE);
+            });
+            holder.labelLayout.setOnClickItemListener((text, textView) -> {
+                currentSelectCategory.setTextColor(ResUtil.getColor(R.color.text_black));
+                currentSelectCategory = textView;
+                currentSelectCategory.setTextColor(ResUtil.getColor(R.color.main_red));
+                currentClassifyId = data.getSecondCategoryId(text);
+                refreshGoods();
+                categoryL.setVisibility( View.GONE);
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return list.size();
+        }
+
+        class Holder extends RecyclerView.ViewHolder {
+            TextView name;
+            LabelLayout labelLayout;
+
+            public Holder(View itemView) {
+                super(itemView);
+                name = itemView.findViewById(R.id.item_name);
+                labelLayout = itemView.findViewById(R.id.item_labels);
             }
         }
     }

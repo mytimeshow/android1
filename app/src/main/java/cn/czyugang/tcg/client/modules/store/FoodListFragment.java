@@ -32,6 +32,8 @@ import cn.czyugang.tcg.client.widget.RecycleViewDivider;
 /**
  * @author ruiaa
  * @date 2017/11/22
+ *
+ *  店铺商品列表 外卖餐饮类
  */
 
 public class FoodListFragment extends BaseFragment {

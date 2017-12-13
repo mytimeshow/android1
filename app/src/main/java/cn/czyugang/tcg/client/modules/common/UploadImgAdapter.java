@@ -57,7 +57,7 @@ public class UploadImgAdapter extends RecyclerView.Adapter<UploadImgAdapter.Hold
                 list.remove(data);
                 notifyItemRemoved(p);
             });
-            holder.imgView.file(data.path);
+            holder.imgView.imgFile(data.path);
             holder.imgView.setOnClickListener(null);
         }
     }

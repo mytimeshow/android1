@@ -105,11 +105,11 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
         return activityList.get(activityList.size()-1);
     }
 
-    protected abstract class NetObserver<T> implements Observer<T> {
+    public static  abstract class NetObserver<T> implements Observer<T> {
         @Override
         public void onSubscribe(@NonNull Disposable d) {
-            mCompositeDisposable.add(d);
-            showLoadingDialog();
+            getTopActivity().mCompositeDisposable.add(d);
+            getTopActivity().showLoadingDialog();
         }
 
         @Override
@@ -119,13 +119,13 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
 
         @Override
         public void onError(@NonNull Throwable e) {
-            showError(e);
-            dismissLoadingDialog();
+            getTopActivity().showError(e);
+            getTopActivity().dismissLoadingDialog();
         }
 
         @Override
         public void onComplete() {
-            dismissLoadingDialog();
+            getTopActivity().dismissLoadingDialog();
         }
     }
 }

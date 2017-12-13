@@ -8,14 +8,14 @@ import org.json.JSONObject;
  */
 
 public class Response<D> {
-    private int code;
-    private D data;
-    private JSONObject values;
-    private int totalSize;
-    private int currentPage;
-    private int totalPage;
-    private String accessTime;
-    private String message;
+    public int code;
+    public D data;
+    public JSONObject values;
+    public int totalSize;
+    public int currentPage;
+    public int totalPage;
+    public String accessTime;
+    public String message;
 
     public int getCode() {
         return code;

@@ -444,5 +444,9 @@
 
         <!--资讯-->
         <activity android:name=".modules.inform.MySelfActivity" />
+
+        <!--im-->
+        <activity android:name=".modules.im.ImListActivity"/>
+        <activity android:name=".modules.im.ImChatActivity"/>
     </application>
 </manifest>

@@ -2,9 +2,11 @@ package cn.czyugang.tcg.client.utils;
 
 import android.support.annotation.DimenRes;
 import android.support.design.widget.TabLayout;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -87,5 +89,11 @@ public class CommonUtil {
             child.setLayoutParams(params);
             child.invalidate();
         }
+    }
+
+    public static void setTextViewSingleLine(TextView textView){
+        if (textView==null) return;
+        textView.setSingleLine(true);
+        textView.setEllipsize(TextUtils.TruncateAt.END);
     }
 }

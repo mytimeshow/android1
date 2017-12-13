@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
+import cn.czyugang.tcg.client.modules.entry.activity.MainActivity;
+import cn.czyugang.tcg.client.modules.im.ImChatActivity;
 import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.QRCode;
@@ -147,6 +149,104 @@ public class MyDialog extends DialogFragment {
     public MyDialog img(int id, Bitmap bitmap) {
         ((ImageView) rootView.findViewById(id)).setImageBitmap(bitmap);
         return this;
+    }
+
+    //右上角 更多    消息，分享，购物车，首页，收藏
+    public static void moreDialog(Activity activity,final View.OnClickListener onEachShare,boolean showCollect){
+        MyDialog.Builder.newBuilder(activity)
+                .custom(R.layout.view_more)
+                .width(-2)
+                .gravity(Gravity.TOP|Gravity.RIGHT)
+                .bindView(myDialog -> {
+                    if (!showCollect) myDialog.rootView.findViewById(R.id.more_collect).setVisibility(View.GONE);
+                    View.OnClickListener onClickListener = v -> {
+                        myDialog.dismiss();
+                        onEachShare.onClick(v);
+                    };
+                    myDialog.onClick(R.id.more_msg,onClickListener)
+                            .onClick(R.id.more_share,onClickListener)
+                            .onClick(R.id.more_trolley,onClickListener)
+                            .onClick(R.id.more_homepage,onClickListener)
+                            .onClick(R.id.more_collect,onClickListener);
+                })
+                .build()
+                .show();
+    }
+
+    public static void moreDialog(Activity activity,View.OnClickListener onClickListener){
+        moreDialog(activity, onClickListener,false);
+    }
+
+    //右上角 更多    消息，分享，购物车，首页，收藏
+    public static void moreDialog(Activity activity,final MoreDialogListener moreDialogListener){
+        MyDialog.Builder.newBuilder(activity)
+                .custom(R.layout.view_more)
+                .width(-2)
+                .gravity(Gravity.TOP|Gravity.RIGHT)
+                .bindView(myDialog -> {
+                    if (!moreDialogListener.showCollect()) myDialog.rootView.findViewById(R.id.more_collect).setVisibility(View.GONE);
+                    View.OnClickListener onClickListener = v -> {
+                        myDialog.dismiss();
+                        switch (v.getId()){
+                            case R.id.more_msg:{
+                                moreDialogListener.onMsg();
+                                break;
+                            }
+                            case R.id.more_share:{
+                                moreDialogListener.onShare();
+                                break;
+                            }
+                            case R.id.more_trolley:{
+                                moreDialogListener.onTrolley();
+                                break;
+                            }
+                            case R.id.more_homepage:{
+                                moreDialogListener.onHomepage();
+                                break;
+                            }
+                            case R.id.more_collect:{
+                                moreDialogListener.onCollect();
+                                break;
+                            }
+
+                        }
+                    };
+                    myDialog.onClick(R.id.more_msg,onClickListener)
+                            .onClick(R.id.more_share,onClickListener)
+                            .onClick(R.id.more_trolley,onClickListener)
+                            .onClick(R.id.more_homepage,onClickListener)
+                            .onClick(R.id.more_collect,onClickListener);
+                })
+                .build()
+                .show();
+    }
+
+    public static class MoreDialogListener{
+        public void onMsg(){
+            ImChatActivity.startImChatActivity();
+        }
+
+        public void onShare(){
+            showAllShare(BaseActivity.getTopActivity(),v -> {
+
+            });
+        }
+
+        public void onTrolley(){
+            MainActivity.openAndSelectFragment(3);
+        }
+
+        public void onHomepage(){
+            MainActivity.openAndSelectFragment(0);
+        }
+
+        public void onCollect(){
+
+        }
+
+        public boolean showCollect(){
+            return false;
+        }
     }
 
     //底部  电话号码+取消 按钮

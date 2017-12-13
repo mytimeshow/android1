@@ -5,6 +5,8 @@ import java.util.List;
 
 import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.entity.GoodCategory;
+import cn.czyugang.tcg.client.entity.GoodsResponse;
+import cn.czyugang.tcg.client.entity.GoodsSpecResponse;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.entity.Store;
 import cn.czyugang.tcg.client.entity.StoreImg;
@@ -41,7 +43,7 @@ public class StoreApi {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    //店铺商品
+    //店铺商品  外卖
     public static Observable<Response<List<GoodCategory>>> getFoods(String id) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("storeId",id);
@@ -51,8 +53,8 @@ public class StoreApi {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
-
-    public static Observable<Response<List<GoodCategory>>> getGoods(String id,String classifyId,String order) {
+    //店铺商品  商超
+    public static Observable<GoodsResponse> getGoods(String id, String classifyId, String order) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("storeId",id);
         map.put("page",1);
@@ -61,30 +63,40 @@ public class StoreApi {
         if (order!=null){
             switch (order){
                 case "new":{
-                    map.put("orderFields",new String[]{"new"});
-                    map.put("orderTypes",new String[]{"DESC"});
+                    map.put("orderFields","new");
+                    map.put("orderTypes","DESC");
                     break;
                 }
                 case "productSales":{
-                    map.put("orderFields",new String[]{"productSales"});
-                    map.put("orderTypes",new String[]{"DESC"});
+                    map.put("orderFields","productSales");
+                    map.put("orderTypes","DESC");
                     break;
                 }
                 case "priceASC":{
-                    map.put("orderFields",new String[]{"price"});
-                    map.put("orderTypes",new String[]{"ASC"});
+                    map.put("orderFields","price");
+                    map.put("orderTypes","ASC");
                     break;
                 }
                 case "priceDESC":{
-                    map.put("orderFields",new String[]{"price"});
-                    map.put("orderTypes",new String[]{"DESC"});
+                    map.put("orderFields","price");
+                    map.put("orderTypes","DESC");
                     break;
                 }
             }
         }
         return UserOAuth.getInstance()
                 .get("api/auth/v1/product/shopping/getMarketProductInStore", map)
-                .map(s -> (Response<List<GoodCategory>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, new JsonParse.Type(List.class, GoodCategory.class))))
+                .map(s -> (GoodsResponse) JsonParse.fromJson(s, GoodsResponse.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static Observable<GoodsSpecResponse> getGoodsSpec(String storeInventoryId){
+        HashMap<String,Object> map=new HashMap<>();
+        map.put("storeInventoryId",storeInventoryId);
+        return UserOAuth.getInstance()
+                .get("/api/auth/v1/product/shopping/getAttributes",map)
+                .map(s -> (GoodsSpecResponse)JsonParse.fromJson(s,GoodsSpecResponse.class))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

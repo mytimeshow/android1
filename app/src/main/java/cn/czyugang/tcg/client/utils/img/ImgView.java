@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.view.ViewTreeObserver;
@@ -15,6 +16,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
+
+import java.io.File;
 
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
@@ -98,9 +101,13 @@ public class ImgView extends ImageView {
         }
     }
 
-    public void file(String path) {
+    public void imgFile(String path) {
         //setImageURI("file://"+path);
         glide(path);
+    }
+
+    public void videoFile(String path) {
+        glide(Uri.fromFile(new File(path)));
     }
 
     public void drawableId(@DrawableRes int resId) {
