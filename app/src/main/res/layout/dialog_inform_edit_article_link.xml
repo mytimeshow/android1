@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/dp_20"
+    android:paddingBottom="@dimen/dp_20"
+    android:background="@drawable/bg_rect_white_big_corner"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:gravity="center"
+        style="@style/text_16_grey"
+        android:text="插入超链接"/>
+
+    <EditText
+        android:id="@+id/edit_article_link_title"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:background="@drawable/border_rect_grey"
+        android:lines="1"
+        android:hint="超链接标题（ 选填 ）"
+        android:textColorHint="@color/grey_350"
+        style="@style/text_14_black"/>
+    <EditText
+        android:id="@+id/edit_article_link_content"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_15"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:background="@drawable/border_rect_grey"
+        android:lines="1"
+        android:hint="超链接地址（ http://... ）"
+        android:textColorHint="@color/grey_350"
+        style="@style/text_14_black"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20">
+        <TextView
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/dp_5"
+            android:gravity="center"
+            android:background="@drawable/border_rect_dark_grey"
+            android:text="取消"/>
+        <TextView
+            android:id="@+id/btnOK"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:gravity="center"
+            android:background="@drawable/bg_rect_dark_grey"
+            style="@style/text_14_white"
+            android:text="确认" />
+    </LinearLayout>
+    
+
+
+</LinearLayout>

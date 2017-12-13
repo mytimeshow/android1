@@ -16,24 +16,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_10"
-            android:layout_marginLeft="@dimen/dp_5"
-            android:layout_marginRight="@dimen/dp_5"
-            android:gravity="center"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_5"
+            android:gravity="center_vertical"
+            android:layout_gravity="center"
             android:lines="2"
             android:lineSpacingExtra="@dimen/dp_5"
-            android:text="飞越疯人院：哈哈哈哈哈哈哈哈哈或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或"
+            android:text="飞越疯人院：哈哈哈哈哈哈哈哈哈或或哈哈哈哈或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或
+            或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或"
             android:textSize="@dimen/sp_11"
             android:textColor="@color/text_gray"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_0.5"
             android:background="@color/text_gray"/>
+
         <TextView
-            android:id="@+id/dialog_inform_commment_content_report_list1"
+            android:id="@+id/dialog_inform_commment_reply"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_58"
             android:gravity="center"
-            android:text="垃圾营销"
+            android:text="回复"
+            android:textSize="@dimen/sp_20"
+            android:textColor="@color/text_black"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0.5"
+            android:background="@color/text_gray"/>
+
+        <TextView
+            android:id="@+id/dialog_inform_commment_thumbs"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_58"
+            android:gravity="center"
+            android:text="点赞"
             android:textSize="@dimen/sp_20"
             android:textColor="@color/text_black"/>
         <View
@@ -41,49 +57,14 @@
             android:layout_height="@dimen/dp_0.5"
             android:background="@color/text_gray"/>
         <TextView
-            android:id="@+id/dialog_inform_commment_content_report_list2"
+            android:id="@+id/dialog_inform_commment_report"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_58"
             android:gravity="center"
-            android:text="违法信息"
+            android:text="举报"
             android:textSize="@dimen/sp_20"
             android:textColor="@color/text_black"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_0.5"
-            android:background="@color/text_gray"/>
-        <TextView
-            android:id="@+id/dialog_inform_commment_content_report_list3"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_58"
-            android:gravity="center"
-            android:text="有害信息"
-            android:textSize="@dimen/sp_20"
-            android:textColor="@color/text_black"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_0.5"
-            android:background="@color/text_gray"/>
-        <TextView
-            android:id="@+id/dialog_inform_commment_content_report_list4"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_58"
-            android:gravity="center"
-            android:text="不实信息"
-            android:textSize="@dimen/sp_20"
-            android:textColor="@color/text_black"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_0.5"
-            android:background="@color/text_gray"/>
-        <TextView
-            android:id="@+id/dialog_inform_commment_content_report_list5"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_58"
-            android:gravity="center"
-            android:text="内容抄袭"
-            android:textSize="@dimen/sp_20"
-            android:textColor="@color/text_black"/>
+
     </LinearLayout>
 
 

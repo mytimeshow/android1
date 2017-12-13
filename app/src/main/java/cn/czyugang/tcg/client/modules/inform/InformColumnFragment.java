@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.entity.Inform;
+import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 
 /**
@@ -107,6 +108,13 @@ public class InformColumnFragment extends BaseFragment {
 
             holder.itemView.setOnClickListener(v -> {
                 InformColumnMsgActivity.startInformOrderMsgActivity();
+            });
+            holder.columnIsFollow.setOnClickListener(v -> {
+                holder.columnIsFollow.setText(data.isFollow()?"+关注":"已关注");
+                holder.columnIsFollow.setBackgroundResource(data.isFollow()?R.drawable.bg_rect_cir_red:R.drawable.bg_rect_cir_grey_ccc);
+                data.setFollow(data.isFollow()?false:true);
+                MyDialog.informEditLinkDialog(activity);
+                MyDialog.informEditSourceDialog(activity);
             });
         }
         @Override

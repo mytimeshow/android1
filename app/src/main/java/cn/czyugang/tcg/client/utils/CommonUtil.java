@@ -96,4 +96,10 @@ public class CommonUtil {
         textView.setSingleLine(true);
         textView.setEllipsize(TextUtils.TruncateAt.END);
     }
+
+    public static void setTextViewLinesWithEllipsis(TextView textView,int lines){
+        if (textView==null) return;
+        textView.setLines(lines);
+        textView.setEllipsize(TextUtils.TruncateAt.END);
+    }
 }

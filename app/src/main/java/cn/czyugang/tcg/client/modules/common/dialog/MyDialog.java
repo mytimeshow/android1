@@ -14,13 +14,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.modules.entry.activity.MainActivity;
 import cn.czyugang.tcg.client.modules.im.ImChatActivity;
+import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.QRCode;
@@ -152,99 +155,101 @@ public class MyDialog extends DialogFragment {
     }
 
     //右上角 更多    消息，分享，购物车，首页，收藏
-    public static void moreDialog(Activity activity,final View.OnClickListener onEachShare,boolean showCollect){
+    public static void moreDialog(Activity activity, final View.OnClickListener onEachShare, boolean showCollect) {
         MyDialog.Builder.newBuilder(activity)
                 .custom(R.layout.view_more)
                 .width(-2)
-                .gravity(Gravity.TOP|Gravity.RIGHT)
+                .gravity(Gravity.TOP | Gravity.RIGHT)
                 .bindView(myDialog -> {
-                    if (!showCollect) myDialog.rootView.findViewById(R.id.more_collect).setVisibility(View.GONE);
+                    if (!showCollect)
+                        myDialog.rootView.findViewById(R.id.more_collect).setVisibility(View.GONE);
                     View.OnClickListener onClickListener = v -> {
                         myDialog.dismiss();
                         onEachShare.onClick(v);
                     };
-                    myDialog.onClick(R.id.more_msg,onClickListener)
-                            .onClick(R.id.more_share,onClickListener)
-                            .onClick(R.id.more_trolley,onClickListener)
-                            .onClick(R.id.more_homepage,onClickListener)
-                            .onClick(R.id.more_collect,onClickListener);
+                    myDialog.onClick(R.id.more_msg, onClickListener)
+                            .onClick(R.id.more_share, onClickListener)
+                            .onClick(R.id.more_trolley, onClickListener)
+                            .onClick(R.id.more_homepage, onClickListener)
+                            .onClick(R.id.more_collect, onClickListener);
                 })
                 .build()
                 .show();
     }
 
-    public static void moreDialog(Activity activity,View.OnClickListener onClickListener){
-        moreDialog(activity, onClickListener,false);
+    public static void moreDialog(Activity activity, View.OnClickListener onClickListener) {
+        moreDialog(activity, onClickListener, false);
     }
 
     //右上角 更多    消息，分享，购物车，首页，收藏
-    public static void moreDialog(Activity activity,final MoreDialogListener moreDialogListener){
+    public static void moreDialog(Activity activity, final MoreDialogListener moreDialogListener) {
         MyDialog.Builder.newBuilder(activity)
                 .custom(R.layout.view_more)
                 .width(-2)
-                .gravity(Gravity.TOP|Gravity.RIGHT)
+                .gravity(Gravity.TOP | Gravity.RIGHT)
                 .bindView(myDialog -> {
-                    if (!moreDialogListener.showCollect()) myDialog.rootView.findViewById(R.id.more_collect).setVisibility(View.GONE);
+                    if (!moreDialogListener.showCollect())
+                        myDialog.rootView.findViewById(R.id.more_collect).setVisibility(View.GONE);
                     View.OnClickListener onClickListener = v -> {
                         myDialog.dismiss();
-                        switch (v.getId()){
-                            case R.id.more_msg:{
+                        switch (v.getId()) {
+                            case R.id.more_msg: {
                                 moreDialogListener.onMsg();
                                 break;
                             }
-                            case R.id.more_share:{
+                            case R.id.more_share: {
                                 moreDialogListener.onShare();
                                 break;
                             }
-                            case R.id.more_trolley:{
+                            case R.id.more_trolley: {
                                 moreDialogListener.onTrolley();
                                 break;
                             }
-                            case R.id.more_homepage:{
+                            case R.id.more_homepage: {
                                 moreDialogListener.onHomepage();
                                 break;
                             }
-                            case R.id.more_collect:{
+                            case R.id.more_collect: {
                                 moreDialogListener.onCollect();
                                 break;
                             }
 
                         }
                     };
-                    myDialog.onClick(R.id.more_msg,onClickListener)
-                            .onClick(R.id.more_share,onClickListener)
-                            .onClick(R.id.more_trolley,onClickListener)
-                            .onClick(R.id.more_homepage,onClickListener)
-                            .onClick(R.id.more_collect,onClickListener);
+                    myDialog.onClick(R.id.more_msg, onClickListener)
+                            .onClick(R.id.more_share, onClickListener)
+                            .onClick(R.id.more_trolley, onClickListener)
+                            .onClick(R.id.more_homepage, onClickListener)
+                            .onClick(R.id.more_collect, onClickListener);
                 })
                 .build()
                 .show();
     }
 
-    public static class MoreDialogListener{
-        public void onMsg(){
+    public static class MoreDialogListener {
+        public void onMsg() {
             ImChatActivity.startImChatActivity();
         }
 
-        public void onShare(){
-            showAllShare(BaseActivity.getTopActivity(),v -> {
+        public void onShare() {
+            showAllShare(BaseActivity.getTopActivity(), v -> {
 
             });
         }
 
-        public void onTrolley(){
+        public void onTrolley() {
             MainActivity.openAndSelectFragment(3);
         }
 
-        public void onHomepage(){
+        public void onHomepage() {
             MainActivity.openAndSelectFragment(0);
         }
 
-        public void onCollect(){
+        public void onCollect() {
 
         }
 
-        public boolean showCollect(){
+        public boolean showCollect() {
             return false;
         }
     }
@@ -260,6 +265,147 @@ public class MyDialog extends DialogFragment {
                             .onClick(R.id.dialog_call, v -> AppUtil.call(activity, phone))
                             .onClick(R.id.dialog_cancel);
                 })
+                .build()
+                .show();
+    }
+
+    //底部  回复+点赞+举报+取消 按钮
+    public static void informCommentOperationDialog(Activity activity,String content) {
+        MyDialog.Builder.newBuilder(activity)
+                .custom(R.layout.dialog_inform_comment_operation)
+                .width(-1)
+                .gravity(Gravity.BOTTOM)
+                .bindView(myDialog -> {
+                    TextView commentCotent=myDialog.rootView.findViewById(R.id.dialog_inform_commment_content);
+                    commentCotent.setText(content);
+                    CommonUtil.setTextViewLinesWithEllipsis(commentCotent,2);
+                    myDialog.onClick(R.id.dialog_inform_commment_reply, v -> {
+                        informCommentSendContentDialog(activity);
+                        myDialog.dismiss();
+                    })
+                            .onClick(R.id.dialog_inform_commment_report, v -> {
+                                informCommentReportDialog(activity,content);
+                                myDialog.dismiss();
+                            })
+                            .onClick(R.id.dialog_cancel);
+
+                })
+                .canceledOnTouchOutside(true)
+                .build()
+                .show();
+    }
+
+    //底部  回复+举报+取消 按钮
+    public static void informCommentContentOperationDialog(Activity activity, String content) {
+        MyDialog.Builder.newBuilder(activity)
+                .custom(R.layout.dialog_inform_comment_content_operation)
+                .width(-1)
+                .gravity(Gravity.BOTTOM)
+                .bindView(myDialog -> {
+                    TextView commentCotent=myDialog.rootView.findViewById(R.id.dialog_inform_commment_content);
+                    commentCotent.setText(content);
+                    CommonUtil.setTextViewLinesWithEllipsis(commentCotent,2);
+                    myDialog.onClick(R.id.dialog_inform_commment_content_reply, v -> {
+                        informCommentSendContentDialog(activity);
+                        myDialog.dismiss();
+                    })
+                            .onClick(R.id.dialog_inform_commment_content_report, v -> {
+                                informCommentReportDialog(activity,content);
+                                myDialog.dismiss();
+                            })
+                            .onClick(R.id.dialog_cancel);
+                })
+                .canceledOnTouchOutside(true)
+                .build()
+                .show();
+    }
+
+    //底部  举报详情+取消 按钮
+    public static void informCommentReportDialog(Activity activity,String content) {
+        MyDialog.Builder.newBuilder(activity)
+                .custom(R.layout.dialog_inform_comment_report)
+                .width(-1)
+                .gravity(Gravity.BOTTOM)
+                .bindView(myDialog -> {;
+                    myDialog.onClick(R.id.dialog_cancel)
+                            .onClick(R.id.dialog_inform_commment_content_report_list1, v -> {
+                                TextView commentCotent=myDialog.rootView.findViewById(R.id.dialog_inform_commment_content);
+                                commentCotent.setText(content);
+                                CommonUtil.setTextViewLinesWithEllipsis(commentCotent,2);
+                                Toast.makeText(activity,"垃圾营销",Toast.LENGTH_SHORT).show();
+                                myDialog.dismiss();
+                            })
+                            .onClick(R.id.dialog_inform_commment_content_report_list2, v -> {
+                                Toast.makeText(activity,"违法信息",Toast.LENGTH_SHORT).show();
+                                myDialog.dismiss();
+                            })
+                            .onClick(R.id.dialog_inform_commment_content_report_list3, v -> {
+                                Toast.makeText(activity,"有害信息",Toast.LENGTH_SHORT).show();
+                                myDialog.dismiss();
+                            })
+                            .onClick(R.id.dialog_inform_commment_content_report_list4, v -> {
+                                Toast.makeText(activity,"不实信息",Toast.LENGTH_SHORT).show();
+                                myDialog.dismiss();
+
+                            })
+                            .onClick(R.id.dialog_inform_commment_content_report_list5, v -> {
+                                Toast.makeText(activity,"内容抄袭",Toast.LENGTH_SHORT).show();
+                                myDialog.dismiss();
+                            });
+                })
+                .canceledOnTouchOutside(true)
+                .build()
+                .show();
+    }
+
+    //底部  编辑评论详情+发送 按钮
+    public static void informCommentSendContentDialog(Activity activity) {
+        MyDialog.Builder.newBuilder(activity)
+                .custom(R.layout.dialog_inform_comment_edit_content)
+                .width(-1)
+                .gravity(Gravity.BOTTOM)
+                .bindView(myDialog -> {
+
+                })
+                .canceledOnTouchOutside(true)
+                .build()
+                .show();
+    }
+
+    //居中 编辑来源
+    public static void informEditSourceDialog(Activity activity) {
+        MyDialog.Builder.newBuilder(activity)
+                .custom(R.layout.dialog_inform_edit_article_source)
+                .widthPercent(0.8f)
+                .gravity(Gravity.CENTER)
+                .bindView(myDialog -> {
+                    EditText source=myDialog.rootView.findViewById(R.id.edit_article_source);
+                    TextView btnOK=myDialog.rootView.findViewById(R.id.btnOK);
+                    btnOK.setBackgroundResource(source.getText().toString().equals("")||source.getText()==null?R.drawable.bg_rect_dark_grey:R.drawable.bg_rect_black);
+                    myDialog.onClick(R.id.btnOK,v -> {
+                        if (source.getText().equals("")){
+
+                        }else {
+                            myDialog.dismiss();
+                        }
+                    });
+                    myDialog.onClick(R.id.btnCancel);
+                })
+                .canceledOnTouchOutside(true)
+                .build()
+                .show();
+    }
+
+    //居中 编辑链接
+    public static void informEditLinkDialog(Activity activity) {
+        MyDialog.Builder.newBuilder(activity)
+                .custom(R.layout.dialog_inform_edit_article_link)
+                .widthPercent(0.8f)
+                .gravity(Gravity.CENTER)
+                .bindView(myDialog -> {
+
+                })
+                .canceledOnTouchOutside(true)
                 .build()
                 .show();
     }

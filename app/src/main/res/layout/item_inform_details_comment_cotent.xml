@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="@dimen/dp_5"
     android:background="@color/white"
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_10"
         android:layout_marginBottom="@dimen/dp_10">
         
         <cn.czyugang.tcg.client.utils.img.ImgView
@@ -75,17 +76,23 @@
         android:layout_marginTop="@dimen/dp_5"
         android:layout_marginBottom="@dimen/dp_5"
         android:text="hhhhhhhhhhhhhhhhhhhhhh
-        hhhhhhhhhhhhhhhhhhh
-        hhhhhhhhhhhh"
+ hhhhhhhhhhhhhhhhhhh
+ hhhhhhhhhhhh"
         android:textSize="@dimen/sp_11"
         android:textColor="@color/text_gray"
         android:lineSpacingExtra="@dimen/dp_5"/>
-
-    <android.support.v7.widget.RecyclerView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:background="@drawable/bg_inform_comment">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            >
 
-    </android.support.v7.widget.RecyclerView>
+        </android.support.v7.widget.RecyclerView>
+    </FrameLayout>
+
 
 </LinearLayout>
