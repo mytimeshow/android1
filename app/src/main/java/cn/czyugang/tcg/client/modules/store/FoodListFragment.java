@@ -140,7 +140,7 @@ public class FoodListFragment extends BaseFragment {
 
 
     public void refreshBuyNums(){
-
+        foodAdapter.notifyDataSetChanged();
     }
 
     private void onSelectCategory(Good good) {
@@ -189,10 +189,14 @@ public class FoodListFragment extends BaseFragment {
 
             holder.plusMinusView.setIsMultiSpec(data.isMultiSpec())
                     .setOnOpenSpecListener(()->{
-                        GoodsSpecDialog.showSpecDialog(storeActivity,data);
+                        GoodsSpecDialog.showSpecDialog(storeActivity,data,(trolleyGoods, num) -> {
+                            storeActivity.trolleyStore.addGood(trolleyGoods,num);
+                            storeActivity.refreshBottomTrolley();
+                            refreshBuyNums();
+                        });
                     })
                     .setOnPlusMinusListener(addNum -> {     //店铺 foodlist
-                        int num=storeActivity.trolleyStore.addGood(data,"",addNum);
+                        int num=storeActivity.trolleyStore.addGood(data,addNum);
                         RxBus.post(new TrolleyBuyNumChangedEvent(data));
                         return num;
                     })

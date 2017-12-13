@@ -2,9 +2,6 @@ package cn.czyugang.tcg.client.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author ruiaa
  * @date 2017/11/22
@@ -115,10 +112,15 @@ public class Good {
     public String webDescribe = "";
 
     public String pic = "";
-    public String inventoryId="";   //库存
+
+    /*
+    *   inventoryOfId[0]
+    * */
+    public String inventoryId="";   //库存  inventoryOfId[0].id -->  /api/auth/v1/product/shopping/getAttributes?storeInventoryId -->  GoodsSpecResponse
+    public double packagePrice=0; //包装费  inventoryOfId[0].packagePrice
     public double showPrice=0;
     public int showRemain=0;
-    public List<GoodsSpec> goodsSpecList=new ArrayList<>();
+    public GoodsSpecResponse specResponse=null;    //规格
 
     public boolean isMultiSpec() {
         return skuType.equals("MULTI");
@@ -138,6 +140,10 @@ public class Good {
 
     public int getShowRemain(String spec) {
         return showRemain;
+    }
+
+    public String getPackagePriceStr(){
+        return String.format("￥%.2f", packagePrice);
     }
 
     public CharSequence getTag() {

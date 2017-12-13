@@ -53,8 +53,6 @@ public class StoreTrolleyDialog extends DialogFragment {
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         window.setWindowAnimations(R.style.BottomDialogAnimation);
 
-        dialog.setOnShowListener(d -> refresh());
-
         return dialog;
     }
 
@@ -105,6 +103,10 @@ public class StoreTrolleyDialog extends DialogFragment {
             bottomBalanceView.refresh();
         });
 
+        trolleyStore.bindGoodsAdapter(activity, goods, true,trolleyStore);
+        bottomBalanceView.refresh();
+        selectButton.setChecked(false);
+
         return rootView;
     }
 
@@ -115,13 +117,6 @@ public class StoreTrolleyDialog extends DialogFragment {
             disposableRefreshBottomTrolley.dispose();
             disposableRefreshBottomTrolley = null;
         }
-    }
-
-    private void refresh() {
-        if (trolleyStore == null) return;
-        trolleyStore.bindGoodsAdapter(activity, goods, true);
-        bottomBalanceView.refresh();
-        selectButton.setChecked(false);
     }
 
     public void setTrolleyStore(TrolleyStore trolleyStore, Activity activity) {

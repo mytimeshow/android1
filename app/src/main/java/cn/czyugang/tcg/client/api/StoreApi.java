@@ -10,6 +10,8 @@ import cn.czyugang.tcg.client.entity.GoodsSpecResponse;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.entity.Store;
 import cn.czyugang.tcg.client.entity.StoreImg;
+import cn.czyugang.tcg.client.entity.TrolleyResponse;
+import cn.czyugang.tcg.client.utils.AmapLocationUtil;
 import cn.czyugang.tcg.client.utils.JsonParse;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -35,7 +37,7 @@ public class StoreApi {
     //店铺环境图片
     public static Observable<Response<List<StoreImg>>> getStoreEnvironmentImgs(String id) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("storeId",id);
+        map.put("storeId", id);
         return UserOAuth.getInstance()
                 .get("api/auth/v1/store/apply/pic/get", map)
                 .map(s -> (Response<List<StoreImg>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, new JsonParse.Type(List.class, StoreImg.class))))
@@ -46,40 +48,41 @@ public class StoreApi {
     //店铺商品  外卖
     public static Observable<Response<List<GoodCategory>>> getFoods(String id) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("storeId",id);
+        map.put("storeId", id);
         return UserOAuth.getInstance()
                 .get("api/auth/v1/product/shopping/getProductInStore", map)
                 .map(s -> (Response<List<GoodCategory>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, new JsonParse.Type(List.class, GoodCategory.class))))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
     //店铺商品  商超
     public static Observable<GoodsResponse> getGoods(String id, String classifyId, String order) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("storeId",id);
-        map.put("page",1);
-        map.put("size",20);
-        if (classifyId!=null) map.put("classifyId",classifyId);
-        if (order!=null){
-            switch (order){
-                case "new":{
-                    map.put("orderFields","new");
-                    map.put("orderTypes","DESC");
+        map.put("storeId", id);
+        map.put("page", 1);
+        map.put("size", 20);
+        if (classifyId != null) map.put("classifyId", classifyId);
+        if (order != null) {
+            switch (order) {
+                case "new": {
+                    map.put("orderFields", "new");
+                    map.put("orderTypes", "DESC");
                     break;
                 }
-                case "productSales":{
-                    map.put("orderFields","productSales");
-                    map.put("orderTypes","DESC");
+                case "productSales": {
+                    map.put("orderFields", "productSales");
+                    map.put("orderTypes", "DESC");
                     break;
                 }
-                case "priceASC":{
-                    map.put("orderFields","price");
-                    map.put("orderTypes","ASC");
+                case "priceASC": {
+                    map.put("orderFields", "price");
+                    map.put("orderTypes", "ASC");
                     break;
                 }
-                case "priceDESC":{
-                    map.put("orderFields","price");
-                    map.put("orderTypes","DESC");
+                case "priceDESC": {
+                    map.put("orderFields", "price");
+                    map.put("orderTypes", "DESC");
                     break;
                 }
             }
@@ -91,12 +94,25 @@ public class StoreApi {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public static Observable<GoodsSpecResponse> getGoodsSpec(String storeInventoryId){
-        HashMap<String,Object> map=new HashMap<>();
-        map.put("storeInventoryId",storeInventoryId);
+    //商品规格
+    public static Observable<GoodsSpecResponse> getGoodsSpec(String storeInventoryId) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("storeInventoryId", storeInventoryId);
         return UserOAuth.getInstance()
-                .get("/api/auth/v1/product/shopping/getAttributes",map)
-                .map(s -> (GoodsSpecResponse)JsonParse.fromJson(s,GoodsSpecResponse.class))
+                .get("/api/auth/v1/product/shopping/getAttributes", map)
+                .map(s -> (GoodsSpecResponse) JsonParse.fromJson(s, GoodsSpecResponse.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    //购物车
+    public static Observable<TrolleyResponse> getTrolley(String storeId) {
+        HashMap<String, Object> map = new HashMap<>();
+        if (storeId != null) map.put("storeId", storeId);
+        map.put("location", AmapLocationUtil.getXY());
+        return UserOAuth.getInstance()
+                .get("/api/auth/v1/product/shopping/shoppingCart/get", map)
+                .map(s -> (TrolleyResponse) JsonParse.fromJson(s, TrolleyResponse.class))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
