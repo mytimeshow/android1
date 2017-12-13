@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,7 +24,7 @@ public class InformEditArticleActivity extends BaseActivity {
     LinearLayout typeContent;
 
     @BindView(R.id.edit_article_type)
-    TextView type;
+    Button type;
 
     public static void startInformEditArticleActivity( ){
         Intent intent=new Intent(getTopActivity(),InformEditArticleActivity.class);
@@ -58,4 +59,6 @@ public class InformEditArticleActivity extends BaseActivity {
         type.setText("转载");
         typeContent.setVisibility(View.GONE);
     }
+
+
 }
