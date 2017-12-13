@@ -13,6 +13,8 @@ import com.aspsine.swipetoloadlayout.SwipeRefreshTrigger;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.aspsine.swipetoloadlayout.SwipeTrigger;
 
+import cn.czyugang.tcg.client.R;
+
 /**
  * @author ruiaa
  * @date 2017/12/8
@@ -67,6 +69,7 @@ public class RefreshLoadHelper {
         public RefreshHeaderView(Context context) {
             super(context);
             setGravity(Gravity.CENTER_VERTICAL);
+
         }
 
         public RefreshHeaderView(Context context, AttributeSet attrs) {

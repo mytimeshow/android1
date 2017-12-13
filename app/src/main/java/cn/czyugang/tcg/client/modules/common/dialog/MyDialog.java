@@ -278,7 +278,7 @@ public class MyDialog extends DialogFragment {
         private int layoutId = -1;
 
         //大小
-        private int width = 100;
+        private int width = WindowManager.LayoutParams.WRAP_CONTENT;
         private int height = WindowManager.LayoutParams.WRAP_CONTENT;
 
         //位置
