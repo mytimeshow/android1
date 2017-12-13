@@ -71,4 +71,8 @@ public class MainActivity extends BaseActivity {
     private void onChangeFragment(int index) {
 
     }
+
+    public static void openAndSelectFragment(int index){
+        clearAllActivityExceptMain().selectFragment(index);
+    }
 }

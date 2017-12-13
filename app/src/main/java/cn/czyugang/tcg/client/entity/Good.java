@@ -85,8 +85,14 @@ public class Good {
     public String enableSale = "";//    是否可售（ENABLE:可售，DISABLE:不可售）
     @SerializedName("id")
     public String id = "";
+    @SerializedName("order")
+    public int order=0;
     @SerializedName("praise")
     public int praise = 0;
+    @SerializedName("productId")
+    public String productId = "";
+    @SerializedName("qrCodeUrl")
+    public String qrCodeUrl = "";
     @SerializedName("recycled")
     public String recycled = "";
     @SerializedName("sales")
@@ -105,10 +111,41 @@ public class Good {
     public String updateTime = "";
     @SerializedName("userId")
     public String userId = "";
+    @SerializedName("webDescribe")
+    public String webDescribe = "";
 
+    public String pic = "";
+    public String inventoryId="";   //库存
+    public double showPrice=0;
+    public int showRemain=0;
+    public List<GoodsSpec> goodsSpecList=new ArrayList<>();
+
+    public boolean isMultiSpec() {
+        return skuType.equals("MULTI");
+    }
+
+    public boolean isSaleAble() {
+        return enableSale.equals("ENABLE");
+    }
+
+    public double getShowPrice() {
+        return showPrice;
+    }
+
+    public String getShowPriceStr(){
+        return String.format("￥%.2f", showPrice);
+    }
+
+    public int getShowRemain(String spec) {
+        return showRemain;
+    }
+
+    public CharSequence getTag() {
+        return "";
+    }
 
     /*
-    *   本地分类信息
+    *   本地外卖分类信息
     * */
     public boolean isCategory = false;
     public String categoryStr = "";
@@ -122,23 +159,5 @@ public class Good {
         good.categoryStr = categoryStr;
         good.categoryP = categoryP;
         return good;
-    }
-
-    public boolean isMultiSpec() {
-        return !skuType.equals("SINGLE");
-    }
-
-    public boolean isSaleAble(){
-        return enableSale.equals("ENABLE");
-    }
-
-    public List<GoodsSpec> getGoodsSpec(){
-        List<GoodsSpec> list=new ArrayList<>();
-        list.add(new GoodsSpec());
-        list.add(new GoodsSpec());
-        list.add(new GoodsSpec());
-        list.add(new GoodsSpec());
-        list.add(new GoodsSpec());
-        return list;
     }
 }

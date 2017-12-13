@@ -7,7 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,7 +20,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnTextChanged;
+import butterknife.OnEditorAction;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.api.RecordApi;
 import cn.czyugang.tcg.client.api.StoreApi;
@@ -29,8 +31,11 @@ import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.entity.Store;
 import cn.czyugang.tcg.client.entity.TrolleyStore;
+import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.modules.common.dialog.StoreTrolleyDialog;
+import cn.czyugang.tcg.client.modules.im.ImChatActivity;
 import cn.czyugang.tcg.client.utils.LogRui;
+import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.utils.string.RichText;
@@ -210,6 +215,28 @@ public class StoreActivity extends BaseActivity {
         finish();
     }
 
+    @OnEditorAction(R.id.title_input)
+    public boolean onEditAction(TextView v, int actionId,KeyEvent event){
+        if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
+            String text = input.getText().toString().trim();
+            if (text.isEmpty()) return false;
+            LogRui.i("onEditAction####",text);
+            AppUtil.hideKeyBoard(input);
+            return true;
+        }
+        return false;
+    }
+    
+    @OnClick(R.id.title_im)
+    public void onIm(){
+        ImChatActivity.startImChatActivity();
+    }
+
+    @OnClick(R.id.title_more)
+    public void onMore(){
+        MyDialog.moreDialog(this,new MyDialog.MoreDialogListener());
+    }
+    
     @OnClick(R.id.store_intro)
     public void onInfo() {
         StoreInfoActivity.startStoreInfoActivity(this, store);
@@ -243,8 +270,4 @@ public class StoreActivity extends BaseActivity {
         }
     }
 
-    @OnTextChanged(R.id.title_input)
-    public void onSearchInput(CharSequence charSequence) {
-        LogRui.i("onSearchInput####", charSequence);
-    }
 }

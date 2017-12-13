@@ -1,9 +1,12 @@
 package cn.czyugang.tcg.client.widget;
 
 import android.content.Context;
+import android.support.annotation.DimenRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+
+import cn.czyugang.tcg.client.utils.app.ResUtil;
 
 
 /**
@@ -37,5 +40,9 @@ public class RecyclerViewMaxH extends RecyclerView {
 
     public void setMaxHeight(int maxHeight) {
         this.maxHeight = maxHeight;
+    }
+
+    public void setMaxHeightRes(@DimenRes  int maxHeight) {
+        this.maxHeight = ResUtil.getDimenInPx(maxHeight);
     }
 }

@@ -452,5 +452,11 @@
         <activity android:name=".modules.inform.InformLableContentActivity" />
         <activity android:name=".modules.inform.InformEditArticleActivity" />
         <activity android:name=".modules.inform.InformDetailsActivity" />
+        <activity android:name=".modules.inform.MySelfActivity" />
+
+        <!--im-->
+        <activity android:name=".modules.im.ImListActivity"/>
+        <activity android:name=".modules.im.ImChatActivity"/>
+
     </application>
 </manifest>

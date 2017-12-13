@@ -20,8 +20,11 @@ import android.widget.TextView;
 import java.util.List;
 
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.api.StoreApi;
+import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.entity.Good;
 import cn.czyugang.tcg.client.entity.GoodsSpec;
+import cn.czyugang.tcg.client.entity.GoodsSpecResponse;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.widget.GoodsPlusMinusView;
@@ -84,6 +87,13 @@ public class GoodsSpecDialog extends DialogFragment {
         plusMinusView = rootView.findViewById(R.id.view_plus_minus);
 
 
+        imgView.id(good.pic);
+        name.setText(good.title);
+        remain.setText(String.valueOf(good.showRemain));
+        price.setText(good.getShowPriceStr());
+
+        selectSpec.setText(getSelectSpec());
+
         close.setOnClickListener(v -> dismiss());
 
         plusMinusView.setIsMultiSpec(false)
@@ -93,7 +103,7 @@ public class GoodsSpecDialog extends DialogFragment {
                 .setNum(num);
         labelR.setLayoutManager(new LinearLayoutManager(getActivity()));
         labelR.setMaxHeight(ResUtil.getDimenInPx(R.dimen.dp_280));
-        labelR.setAdapter(new GoodsSpecAdapter(good.getGoodsSpec(), getActivity()));
+        labelR.setAdapter(new GoodsSpecAdapter(good.goodsSpecList, getActivity()));
 
         return rootView;
     }
@@ -111,6 +121,7 @@ public class GoodsSpecDialog extends DialogFragment {
 
     public GoodsSpecDialog setGood(Good good) {
         this.good = good;
+        if (good.goodsSpecList.size()==0) getAllSpec();
         return this;
     }
 
@@ -118,7 +129,31 @@ public class GoodsSpecDialog extends DialogFragment {
         new GoodsSpecDialog().setGood(good).show(activity.getFragmentManager(), "GoodsSpecDialog");
     }
 
-    private static class GoodsSpecAdapter extends RecyclerView.Adapter<GoodsSpecAdapter.Holder> {
+    private void getAllSpec(){
+        StoreApi.getGoodsSpec(good.inventoryId)
+                .subscribe(new BaseActivity.NetObserver<GoodsSpecResponse>() {
+                    @Override
+                    public void onNext(GoodsSpecResponse goodsSpecResponse) {
+                        goodsSpecResponse.parse();
+
+                    }
+                });
+    }
+
+    private String getSelectSpec() {
+        StringBuilder builder = new StringBuilder();
+        boolean isFirst = true;
+        for (GoodsSpec spec : good.goodsSpecList) {
+            if (!isFirst) {
+                builder.append(",");
+            }
+            isFirst = false;
+            builder.append(spec.selectLabel);
+        }
+        return builder.toString();
+    }
+
+    private class GoodsSpecAdapter extends RecyclerView.Adapter<GoodsSpecAdapter.Holder> {
         private List<GoodsSpec> list;
         private Activity activity;
 
@@ -145,6 +180,7 @@ public class GoodsSpecDialog extends DialogFragment {
                 textView.setBackgroundResource(R.drawable.bg_rect_light_red);
                 textView.setTextColor(ResUtil.getColor(R.color.white));
                 data.selectLabel = text;
+                selectSpec.setText(getSelectSpec());
             });
             holder.labelLayout.lastSelectTextView.setBackgroundResource(R.drawable.bg_rect_light_red);
             holder.labelLayout.lastSelectTextView.setTextColor(ResUtil.getColor(R.color.white));

@@ -40,14 +40,16 @@ public class TrolleyStore {
             if (trolleyGoodsMap.get(key).num <= 0) {
                 if (goodsList != null) goodsList.remove(trolleyGoodsMap.get(key));
                 trolleyGoodsMap.remove(key);
+                return 0;
             }
+            return trolleyGoodsMap.get(key).num;
         } else {
             if (addNum <= 0) return addNum;
             TrolleyGoods t = new TrolleyGoods(good, spec, addNum);
             trolleyGoodsMap.put(key, t);
             if (goodsList != null) goodsList.add(t);
+            return addNum;
         }
-        return trolleyGoodsMap.get(key).num;
     }
 
     //全选

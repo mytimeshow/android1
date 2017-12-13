@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_110"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/more_msg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_message"/>
+        
+
+        <TextView
+            style="@style/text_18_black"
+            android:layout_marginLeft="@dimen/dp_42"
+            android:layout_gravity="center_vertical"
+            android:text="消息"/>
+        
+    </FrameLayout>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <FrameLayout
+        android:id="@+id/more_share"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/icon_share"/>
+
+
+        <TextView
+            style="@style/text_18_black"
+            android:layout_marginLeft="@dimen/dp_42"
+            android:layout_gravity="center_vertical"
+            android:text="分享"/>
+
+    </FrameLayout>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <FrameLayout
+        android:id="@+id/more_trolley"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/trolley_black"/>
+
+
+        <TextView
+            style="@style/text_18_black"
+            android:layout_marginLeft="@dimen/dp_42"
+            android:layout_gravity="center_vertical"
+            android:text="购物车"/>
+
+    </FrameLayout>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <FrameLayout
+        android:id="@+id/more_homepage"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/icon_shop"/>
+
+
+        <TextView
+            style="@style/text_18_black"
+            android:layout_marginLeft="@dimen/dp_42"
+            android:layout_gravity="center_vertical"
+            android:text="首页"/>
+
+    </FrameLayout>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <FrameLayout
+        android:id="@+id/more_collect"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/icon_collect_gray"/>
+
+
+        <TextView
+            style="@style/text_18_black"
+            android:layout_marginLeft="@dimen/dp_42"
+            android:layout_gravity="center_vertical"
+            android:text="收藏"/>
+
+    </FrameLayout>
+
+
+</LinearLayout>

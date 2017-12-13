@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:drawablePadding="@dimen/dp_4"
-            android:drawableRight="@drawable/ic_fold_arrow"
+            android:drawableRight="@drawable/ic_unfold_arrow"
             android:gravity="center"
             android:text="商品分类"
             android:textColor="@color/text_dark_gray"
@@ -103,14 +103,22 @@
         />
 
     <!--分类-->
-    <View
+    <FrameLayout
         android:id="@+id/goodslist_category_select"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_120"
+        android:layout_height="match_parent"
         android:layout_marginTop="@dimen/dp_40"
-        android:background="@color/white"
+        android:background="@color/bg_blur"
         android:visibility="gone"
-        />
+        >
+
+        <cn.czyugang.tcg.client.widget.RecyclerViewMaxH
+            android:id="@+id/goodslist_category_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </FrameLayout>
 
     <View
         android:layout_width="match_parent"
