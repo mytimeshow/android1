@@ -25,6 +25,7 @@ import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.entity.Good;
 import cn.czyugang.tcg.client.entity.GoodsSpec;
 import cn.czyugang.tcg.client.entity.GoodsSpecResponse;
+import cn.czyugang.tcg.client.entity.TrolleyGoods;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.widget.GoodsPlusMinusView;
@@ -39,7 +40,9 @@ import cn.czyugang.tcg.client.widget.RecyclerViewMaxH;
 public class GoodsSpecDialog extends DialogFragment {
 
     private Good good;
+    private OnBuyListener onBuyListener=null;
 
+    private View rootView;
     private View close;
     private ImgView imgView;
     private TextView name;
@@ -75,7 +78,7 @@ public class GoodsSpecDialog extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.view_goods_spec, container);
+        rootView = inflater.inflate(R.layout.view_goods_spec, container);
         close = rootView.findViewById(R.id.view_close);
         imgView = rootView.findViewById(R.id.view_img);
         name = rootView.findViewById(R.id.view_name);
@@ -89,11 +92,6 @@ public class GoodsSpecDialog extends DialogFragment {
 
         imgView.id(good.pic);
         name.setText(good.title);
-        remain.setText(String.valueOf(good.showRemain));
-        price.setText(good.getShowPriceStr());
-
-        selectSpec.setText(getSelectSpec());
-
         close.setOnClickListener(v -> dismiss());
 
         plusMinusView.setIsMultiSpec(false)
@@ -103,9 +101,24 @@ public class GoodsSpecDialog extends DialogFragment {
                 .setNum(num);
         labelR.setLayoutManager(new LinearLayoutManager(getActivity()));
         labelR.setMaxHeight(ResUtil.getDimenInPx(R.dimen.dp_280));
-        labelR.setAdapter(new GoodsSpecAdapter(good.goodsSpecList, getActivity()));
+
+        refreshSpec();
 
         return rootView;
+    }
+
+
+    //设置与规格相关的
+    private void refreshSpec() {
+        if (good.specResponse == null || rootView == null) return;
+        if (labelR.getAdapter() == null) {
+            good.specResponse.resetSelectLabel();   //首次打开，重置已选属性值为第一个
+            labelR.setAdapter(new GoodsSpecAdapter(good.specResponse.data, getActivity()));
+        }
+        price.setText(good.specResponse.getPriceStr());
+        remain.setText("库存："+good.specResponse.getInventory());
+        selectSpec.setText(good.specResponse.getShowSelectSpec());
+        plusMinusView.setClickable(true);
     }
 
     @Override
@@ -116,41 +129,34 @@ public class GoodsSpecDialog extends DialogFragment {
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-
+        if (onBuyListener!=null) onBuyListener.onBuyListener(good.specResponse.buy(good),num);
     }
 
     public GoodsSpecDialog setGood(Good good) {
         this.good = good;
-        if (good.goodsSpecList.size()==0) getAllSpec();
+        if (good.specResponse==null||good.specResponse.values==null) getAllSpec();
         return this;
     }
 
-    public static void showSpecDialog(Activity activity, Good good) {
-        new GoodsSpecDialog().setGood(good).show(activity.getFragmentManager(), "GoodsSpecDialog");
+    public GoodsSpecDialog setOnBuyListener(OnBuyListener onBuyListener) {
+        this.onBuyListener = onBuyListener;
+        return this;
     }
 
-    private void getAllSpec(){
+    public static void showSpecDialog(Activity activity, Good good,OnBuyListener onBuyListener) {
+        new GoodsSpecDialog().setGood(good).setOnBuyListener(onBuyListener).show(activity.getFragmentManager(), "GoodsSpecDialog");
+    }
+
+    private void getAllSpec() {
         StoreApi.getGoodsSpec(good.inventoryId)
                 .subscribe(new BaseActivity.NetObserver<GoodsSpecResponse>() {
                     @Override
                     public void onNext(GoodsSpecResponse goodsSpecResponse) {
                         goodsSpecResponse.parse();
-
+                        good.specResponse=goodsSpecResponse;
+                        refreshSpec();
                     }
                 });
-    }
-
-    private String getSelectSpec() {
-        StringBuilder builder = new StringBuilder();
-        boolean isFirst = true;
-        for (GoodsSpec spec : good.goodsSpecList) {
-            if (!isFirst) {
-                builder.append(",");
-            }
-            isFirst = false;
-            builder.append(spec.selectLabel);
-        }
-        return builder.toString();
     }
 
     private class GoodsSpecAdapter extends RecyclerView.Adapter<GoodsSpecAdapter.Holder> {
@@ -173,14 +179,14 @@ public class GoodsSpecDialog extends DialogFragment {
             GoodsSpec data = list.get(position);
 
             holder.name.setText(data.name);
-            holder.labelLayout.setTexts(data.labels);
+            holder.labelLayout.setTexts(data.labelList);
             holder.labelLayout.setOnClickItemListener((text, textView) -> {
                 holder.labelLayout.lastSelectTextView.setBackgroundResource(R.drawable.border_rect_grey);
                 holder.labelLayout.lastSelectTextView.setTextColor(ResUtil.getColor(R.color.text_black));
                 textView.setBackgroundResource(R.drawable.bg_rect_light_red);
                 textView.setTextColor(ResUtil.getColor(R.color.white));
                 data.selectLabel = text;
-                selectSpec.setText(getSelectSpec());
+                refreshSpec();
             });
             holder.labelLayout.lastSelectTextView.setBackgroundResource(R.drawable.bg_rect_light_red);
             holder.labelLayout.lastSelectTextView.setTextColor(ResUtil.getColor(R.color.white));
@@ -201,5 +207,9 @@ public class GoodsSpecDialog extends DialogFragment {
                 labelLayout = itemView.findViewById(R.id.item_labels);
             }
         }
+    }
+
+    public interface OnBuyListener{
+        void onBuyListener(TrolleyGoods trolleyGoods,int num);
     }
 }

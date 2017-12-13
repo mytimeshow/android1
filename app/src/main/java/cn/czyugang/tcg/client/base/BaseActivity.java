@@ -32,6 +32,8 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     private Toast mToast;
     public CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
+    private volatile int requestLoadingDialogTimes = 0;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,14 +46,17 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
         if (mLoadingDialog == null) {
             mLoadingDialog = LoadingDialog.newInstance();
         }
-        if (!mLoadingDialog.isAdded()) {
+        if (requestLoadingDialogTimes == 0) {
             mLoadingDialog.show(getSupportFragmentManager(), "LoadingDialog");
         }
+        requestLoadingDialogTimes++;
     }
 
     @Override
     public void dismissLoadingDialog() {
-        if (mLoadingDialog != null) {
+        requestLoadingDialogTimes--;
+        if (requestLoadingDialogTimes >= 0 && mLoadingDialog != null) {
+            requestLoadingDialogTimes = 0;
             mLoadingDialog.dismissAllowingStateLoss();
             mLoadingDialog = null;
         }
@@ -101,11 +106,11 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
         return mainActivity;
     }
 
-    public static BaseActivity getTopActivity(){
-        return activityList.get(activityList.size()-1);
+    public static BaseActivity getTopActivity() {
+        return activityList.get(activityList.size() - 1);
     }
 
-    public static  abstract class NetObserver<T> implements Observer<T> {
+    public static abstract class NetObserver<T> implements Observer<T> {
         @Override
         public void onSubscribe(@NonNull Disposable d) {
             getTopActivity().mCompositeDisposable.add(d);

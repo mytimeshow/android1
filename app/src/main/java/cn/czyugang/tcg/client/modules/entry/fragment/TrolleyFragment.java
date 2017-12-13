@@ -127,7 +127,7 @@ public class TrolleyFragment extends BaseFragment {
             if (data.viewType == R.layout.item_trolley_store_ad) {
                 return;
             }
-            data.bindGoodsAdapter(activity, holder.goodsR, false);
+            data.bindGoodsAdapter(activity, holder.goodsR, false,data);
             holder.packFeeAsk.setOnClickListener(v -> {
                 MyDialog.bubbleToast(activity, v, "啊啊ajdk哎哎哎");
             });
@@ -179,11 +179,15 @@ public class TrolleyFragment extends BaseFragment {
     public static class TrolleyGoodsAdapter extends RecyclerView.Adapter<TrolleyGoodsAdapter.Holder> {
         private List<TrolleyGoods> list;
         private Activity activity;
+        private TrolleyStore trolleyStore;
         public boolean isStoreTrolley = false;
 
-        public TrolleyGoodsAdapter(List<TrolleyGoods> list, Activity activity) {
+
+
+        public TrolleyGoodsAdapter(List<TrolleyGoods> list, Activity activity,TrolleyStore trolleyStore) {
             this.list = list;
             this.activity = activity;
+            this.trolleyStore=trolleyStore;
         }
 
         @Override
@@ -200,7 +204,7 @@ public class TrolleyFragment extends BaseFragment {
             holder.plusMinusView
                     .setIsMultiSpec(false)
                     .setOnPlusMinusListener(addNum -> {     //购物车
-                        data.add(addNum);
+                        trolleyStore.addGood(data,addNum);
                         RxBus.post(new TrolleyBuyNumChangedEvent(data.good));
                         return data.num;
                     })

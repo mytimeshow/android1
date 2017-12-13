@@ -22,19 +22,16 @@ public class TrolleyStore {
     private HashMap<String, TrolleyGoods> trolleyGoodsMap = new HashMap<>();
 
     public TrolleyStore() {
-        trolleyGoodsMap.put("8888##kkkkk", new TrolleyGoods(new Good(), "kkkkk", 9));
-        trolleyGoodsMap.put("8878##kkkkk", new TrolleyGoods(new Good(), "kkkkk", 9));
     }
 
     //商品购物车本地标识 id + spec
-    public String getTrolleyGoodsKey(Good good, String spec) {
-        if (spec == null) spec = "";
-        return good.id + "##" + spec;
+    public String getTrolleyGoodsKey(Good good, String storeInventoryId) {
+        return good.id + "##" + storeInventoryId;
     }
 
-    //添加商品
-    public int addGood(Good good, String spec, int addNum) {
-        String key = getTrolleyGoodsKey(good, spec);
+    //添加商品  单规格
+    public int addGood(Good good, int addNum) {
+        String key = getTrolleyGoodsKey(good, "");
         if (trolleyGoodsMap.containsKey(key)) {
             trolleyGoodsMap.get(key).add(addNum);
             if (trolleyGoodsMap.get(key).num <= 0) {
@@ -45,11 +42,28 @@ public class TrolleyStore {
             return trolleyGoodsMap.get(key).num;
         } else {
             if (addNum <= 0) return addNum;
-            TrolleyGoods t = new TrolleyGoods(good, spec, addNum);
+            TrolleyGoods t = new TrolleyGoods(good, addNum);
             trolleyGoodsMap.put(key, t);
             if (goodsList != null) goodsList.add(t);
             return addNum;
         }
+    }
+
+    //添加商品  单规格 多规格
+    public int addGood(TrolleyGoods trolleyGoods,int addNum) {
+        String key = getTrolleyGoodsKey(trolleyGoods.good,trolleyGoods.storeInventoryId);
+        if (!trolleyGoodsMap.containsKey(key)) {
+            trolleyGoods.add(addNum);
+            trolleyGoodsMap.put(key, trolleyGoods);
+        }else {
+            trolleyGoodsMap.get(key).add(addNum);
+        }
+        if (trolleyGoodsMap.get(key).num <= 0) {
+            if (goodsList != null) goodsList.remove(trolleyGoodsMap.get(key));
+            trolleyGoodsMap.remove(key);
+            return 0;
+        }
+        return trolleyGoodsMap.get(key).num;
     }
 
     //全选
@@ -85,7 +99,7 @@ public class TrolleyStore {
     transient public TrolleyFragment.TrolleyGoodsAdapter adapter = null;
     transient public List<TrolleyGoods> goodsList = null;
 
-    public void bindGoodsAdapter(Activity activity, RecyclerView recyclerView, boolean isStoreTrolley) {
+    public void bindGoodsAdapter(Activity activity, RecyclerView recyclerView, boolean isStoreTrolley,TrolleyStore trolleyStore) {
         if (goodsList == null) {
             goodsList = new ArrayList<>();
             goodsList.addAll(trolleyGoodsMap.values());
@@ -93,7 +107,7 @@ public class TrolleyStore {
 
         if (recyclerView == null) return;
         if (adapter == null) {
-            adapter = new TrolleyFragment.TrolleyGoodsAdapter(goodsList, activity);
+            adapter = new TrolleyFragment.TrolleyGoodsAdapter(goodsList, activity,trolleyStore);
             adapter.isStoreTrolley = isStoreTrolley;
         }
         if (recyclerView.getLayoutManager() == null)

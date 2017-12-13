@@ -32,8 +32,8 @@ public class GoodsResponse extends Response<List<Good>> {
             Collections.sort(data, new Comparator<Good>() {
                 @Override
                 public int compare(Good o1, Good o2) {
-                    if (o1.order>o2.order) return -1;
-                    if (o1.order<o2.order) return 1;
+                    if (o1.order>o2.order) return 1;
+                    if (o1.order<o2.order) return -1;
                     return 0;
                 }
             });
@@ -42,7 +42,8 @@ public class GoodsResponse extends Response<List<Good>> {
             List<Good> goodInfoList =JsonParse.fromJson(values.getString("productInfoList"),new JsonParse.Type(List.class,Good.class));
             JSONArray picArray=values.getJSONArray("picList");
             for(int i=0,size=picArray.length();i<size;i++){
-                JSONObject jsonObject=picArray.getJSONObject(i);
+                JSONObject jsonObject=picArray.optJSONObject(i);
+                if (jsonObject==null) continue;
                 String goodId=jsonObject.getString("productId");
                 for(Good good: goodInfoList){
                     if (goodId.equals(good.id)) {
@@ -85,14 +86,19 @@ public class GoodsResponse extends Response<List<Good>> {
             for (Good g:data){
                 JSONArray jsonArray=values.optJSONArray("inventoryOf"+g.id);
                 if (jsonArray!=null&&jsonArray.length()!=0) {
-                    JSONObject jsonObject=jsonArray.getJSONObject(0);
+                    JSONObject jsonObject=jsonArray.optJSONObject(0);
+                    if (jsonObject==null) continue;
                     g.inventoryId=jsonObject.optString("id");
+                    g.packagePrice=jsonObject.optDouble("packagePrice");
                     g.showPrice=jsonObject.optDouble("price");
                     g.showRemain=jsonObject.optInt("currentInventory");
                 }
             }
 
-            LogRui.i("parse####",goodCategoryList);
+/*            for(Good good:data){
+                LogRui.i("parse#### id"+good.id+"     order"+good.order+"    price"+good.showPrice);
+            }*/
+
         }catch (JSONException e){
             LogRui.e("parse####",e);
         }

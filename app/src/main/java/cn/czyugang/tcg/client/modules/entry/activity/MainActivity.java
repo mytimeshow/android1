@@ -19,6 +19,7 @@ import cn.czyugang.tcg.client.modules.entry.fragment.HomepageFragment;
 import cn.czyugang.tcg.client.modules.entry.fragment.InformFragment;
 import cn.czyugang.tcg.client.modules.entry.fragment.MyFragment;
 import cn.czyugang.tcg.client.modules.entry.fragment.TrolleyFragment;
+import cn.czyugang.tcg.client.utils.AmapLocationUtil;
 
 /**
  * Created by wuzihong on 2017/9/13.
@@ -62,6 +63,7 @@ public class MainActivity extends BaseActivity {
         mainFrame.setFragmentList(getSupportFragmentManager(), fragments);
         mainFrame.setBottomBarView(bottomBar);
 
+        AmapLocationUtil.startOnceLocation();
     }
 
     public void selectFragment(int index) {

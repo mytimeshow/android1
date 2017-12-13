@@ -8,20 +8,28 @@ package cn.czyugang.tcg.client.entity;
 public class TrolleyGoods {
 
     public Good good;
+    public String spec = "";
+    public double price=0;
+    public double packagePrice=0;
+    public String storeInventoryId="";
+
     public boolean isSelect = true;
     public int num = 0;
-    public String spec = "";
 
     public TrolleyGoods() {
     }
 
-    public TrolleyGoods(Good good, String spec, int num) {
+    public TrolleyGoods(Good good,int num) {
         this.good = good;
         this.num = num;
-        this.spec = spec;
+        price=good.showPrice;
+        packagePrice=good.packagePrice;
+        storeInventoryId=good.inventoryId;
     }
 
-    public void add(int addNum) {
+
+
+    void add(int addNum) {
         num += addNum;
     }
 

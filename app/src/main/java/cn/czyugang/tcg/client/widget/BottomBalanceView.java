@@ -48,6 +48,7 @@ public class BottomBalanceView extends LinearLayout {
         price=findViewById(R.id.view_balance_price);
         commit=findViewById(R.id.view_balance_commit);
         rest=findViewById(R.id.view_balance_rest);
+        setOnClickListener(v -> {});
     }
 
     public void setTrolleyStore(TrolleyStore trolleyStore){

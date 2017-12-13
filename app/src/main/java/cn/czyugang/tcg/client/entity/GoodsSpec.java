@@ -30,10 +30,23 @@ public class GoodsSpec {
     public String uiKey;
     @SerializedName("updateTime")
     public String updateTime;
-    @SerializedName("productAttributeRelationList")
-    public List<ProductAttributeRelationListBean> productAttributeRelationList;
 
-    public static class ProductAttributeRelationListBean {
+
+    public List<GoodsSpecValue> goodsSpecValueList=null;
+    public List<String> labelList =new ArrayList<>();
+    transient public String selectLabel="";
+    transient public boolean isPowerfulToPriceSpec =false;
+
+    public void initLabelList(){
+        if (goodsSpecValueList==null) return;
+        for(GoodsSpecValue goodsSpecValue:goodsSpecValueList){
+            labelList.add(goodsSpecValue.value);
+        }
+        selectLabel=labelList.get(0);
+    }
+
+
+    public static class GoodsSpecValue {
 
         @SerializedName("baseId")
         public String baseId;
@@ -54,34 +67,10 @@ public class GoodsSpec {
         @SerializedName("updateTime")
         public String updateTime;
         @SerializedName("value")
-        public String value;
+        public String value="";
         @SerializedName("valueTemplateId")
         public String valueTemplateId;
     }
 
 
-
-
-
-
-
-
-
-    public List<String> labels=new ArrayList<>();
-    transient public String selectLabel="";
-
-    public GoodsSpec() {
-        name="kkk";
-        labels.add("kkklllf");
-        labels.add("kkklllf");
-        labels.add("kkklllf");
-        labels.add("kkklllf");
-        labels.add("kkklllf");
-        labels.add("kkklllf");
-        labels.add("kkklllf");
-        labels.add("kkklllf");
-        labels.add("kkklllf");
-
-        selectLabel=labels.get(0);
-    }
 }

@@ -30,6 +30,7 @@ import cn.czyugang.tcg.client.base.BaseFragmentAdapter;
 import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.entity.Store;
+import cn.czyugang.tcg.client.entity.TrolleyResponse;
 import cn.czyugang.tcg.client.entity.TrolleyStore;
 import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.modules.common.dialog.StoreTrolleyDialog;
@@ -111,26 +112,13 @@ public class StoreActivity extends BaseActivity {
         storeNotice.requestFocus();
         input.setHint(RichText.newRichText("    搜索店内商品").addimgRes(0, 2, R.drawable.ic_search, R.dimen.dp_14).build());
 
-        StoreApi.getStoreById(id).subscribe(new NetObserver<Response<Store>>() {
-            @Override
-            public void onNext(Response<Store> storeResponse) {
-                super.onNext(storeResponse);
-                if (ErrorHandler.judge200(storeResponse)) {
-                    store = storeResponse.getData();
-                    store.init(storeResponse.getValues());
-
-                    initFragment(store.isFoodStore());
-                    isFoodStore(store.isFoodStore());
-                    setInfo(store);
-                    hadCollected(store.collected);
-                }
-            }
-        });
-
-        initTrolleyStore();
+        getStoreInfo(id);
+        getTrolleyStore(id);
     }
 
-    private void initFragment(boolean isFood) {
+    private void initFragment() {
+        if (store == null || trolleyStore == null) return;
+        boolean isFood = store.isFoodStore();
         fragments.add(StoreHomeFragment.newInstance());
         if (isFood) {
             foodListFragment = FoodListFragment.newInstance();
@@ -170,9 +158,24 @@ public class StoreActivity extends BaseActivity {
     /*
     *   购物车
     * */
-    private void initTrolleyStore() {
-        trolleyStore = new TrolleyStore();
+    private void getTrolleyStore(String storeId) {
+        StoreApi.getTrolley(storeId).subscribe(new NetObserver<TrolleyResponse>() {
+            @Override
+            public void onNext(TrolleyResponse response) {
+                super.onNext(response);
+                if (ErrorHandler.judge200(response)) {
+                    trolleyStore = new TrolleyStore();
 
+                    initFragment();
+                    initBottomTrolley();
+                    refreshBottomTrolley();
+                    refreshGoodsListBuyNum();
+                }
+            }
+        });
+    }
+
+    private void initBottomTrolley() {
         bottomBalanceView.trolleyImg.setOnClickListener(v -> {
             if (storeTrolleyDialog == null) {
                 storeTrolleyDialog = new StoreTrolleyDialog();
@@ -184,14 +187,38 @@ public class StoreActivity extends BaseActivity {
             }
             storeTrolleyDialog.show(getFragmentManager(), "StoreTrolleyDialog");
         });
-
-        refreshBottomTrolley();
     }
 
     public void refreshBottomTrolley() {
         if (trolleyStore == null) return;
+        bottomBalanceView.setTrolleyStore(trolleyStore);
+        bottomBalanceView.refresh();
     }
 
+    public void refreshGoodsListBuyNum() {
+        if (foodListFragment != null) foodListFragment.refreshBuyNums();
+        if (goodsListFragment != null) goodsListFragment.refreshBuyNums();
+    }
+
+    /*
+    *   店铺的分类 信息 收藏
+    * */
+    private void getStoreInfo(String storeId) {
+        StoreApi.getStoreById(storeId).subscribe(new NetObserver<Response<Store>>() {
+            @Override
+            public void onNext(Response<Store> storeResponse) {
+                super.onNext(storeResponse);
+                if (ErrorHandler.judge200(storeResponse)) {
+                    store = storeResponse.getData();
+                    store.init(storeResponse.getValues());
+                    initFragment();
+                    isFoodStore(store.isFoodStore());
+                    setInfo(store);
+                    hadCollected(store.collected);
+                }
+            }
+        });
+    }
 
     private void isFoodStore(boolean is) {
         title.setBackgroundResource(is ? R.color.bg_store_food : R.color.bg_store_good);
@@ -210,33 +237,34 @@ public class StoreActivity extends BaseActivity {
                 ResUtil.getDrawable(had ? R.drawable.icon_collect_down : R.drawable.icon_collect), null, null);
     }
 
+
     @OnClick(R.id.title_back)
     public void onBack() {
         finish();
     }
 
     @OnEditorAction(R.id.title_input)
-    public boolean onEditAction(TextView v, int actionId,KeyEvent event){
+    public boolean onEditAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
             String text = input.getText().toString().trim();
             if (text.isEmpty()) return false;
-            LogRui.i("onEditAction####",text);
+            LogRui.i("onEditAction####", text);
             AppUtil.hideKeyBoard(input);
             return true;
         }
         return false;
     }
-    
+
     @OnClick(R.id.title_im)
-    public void onIm(){
+    public void onIm() {
         ImChatActivity.startImChatActivity();
     }
 
     @OnClick(R.id.title_more)
-    public void onMore(){
-        MyDialog.moreDialog(this,new MyDialog.MoreDialogListener());
+    public void onMore() {
+        MyDialog.moreDialog(this, new MyDialog.MoreDialogListener());
     }
-    
+
     @OnClick(R.id.store_intro)
     public void onInfo() {
         StoreInfoActivity.startStoreInfoActivity(this, store);
