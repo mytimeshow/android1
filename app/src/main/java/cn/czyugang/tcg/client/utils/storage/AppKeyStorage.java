@@ -1,7 +1,11 @@
 package cn.czyugang.tcg.client.utils.storage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import cn.czyugang.tcg.client.entity.TrolleyStore;
 
 /**
  * Created by ruiaa on 2017/8/8.
@@ -37,5 +41,32 @@ public class AppKeyStorage {
 
     public static void saveHadOpenPromoterIntro(){
         KeyStorage.put("isFirstOpenPromoterIntro",false);
+    }
+
+    /*
+    *   本地购物车
+    * */
+    public static TrolleyStore getTrolleyStore(String storeId){
+        Map<String,TrolleyStore> trolleyStoreMap=KeyStorage.get("TrolleyStoreMap");
+        if (trolleyStoreMap==null||!trolleyStoreMap.containsKey(storeId)) return new TrolleyStore();
+        return trolleyStoreMap.get(storeId);
+    }
+
+    public static void saveTrolleyStore(String storeId,TrolleyStore trolleyStore){
+        Map<String,TrolleyStore> trolleyStoreMap=KeyStorage.get("TrolleyStoreMap");
+        if (trolleyStoreMap==null) trolleyStoreMap=new HashMap<>();
+        trolleyStoreMap.put(storeId,trolleyStore);
+        KeyStorage.put("TrolleyStoreMap",trolleyStoreMap);
+    }
+
+    public static void clearTrolleyStore(String storeId){
+        Map<String,TrolleyStore> trolleyStoreMap=KeyStorage.get("TrolleyStoreMap");
+        if (trolleyStoreMap==null) trolleyStoreMap=new HashMap<>();
+        if (storeId==null) {
+            trolleyStoreMap.clear();
+        }else {
+            trolleyStoreMap.remove(storeId);
+        }
+        KeyStorage.put("TrolleyStoreMap",trolleyStoreMap);
     }
 }

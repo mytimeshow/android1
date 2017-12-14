@@ -40,7 +40,7 @@ import cn.czyugang.tcg.client.widget.RecyclerViewMaxH;
 public class GoodsSpecDialog extends DialogFragment {
 
     private Good good;
-    private OnBuyListener onBuyListener=null;
+    private OnBuyListener onBuyListener = null;
 
     private View rootView;
     private View close;
@@ -96,7 +96,12 @@ public class GoodsSpecDialog extends DialogFragment {
 
         plusMinusView.setIsMultiSpec(false)
                 .setOnPlusMinusListener(addNum -> {     //规格弹框
-                    return num += addNum;
+                    int inventory = good.specResponse.getInventory();
+                    num += addNum;
+                    if (inventory < num) {
+                        num = inventory;
+                    }
+                    return num;
                 })
                 .setNum(num);
         labelR.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -116,9 +121,15 @@ public class GoodsSpecDialog extends DialogFragment {
             labelR.setAdapter(new GoodsSpecAdapter(good.specResponse.data, getActivity()));
         }
         price.setText(good.specResponse.getPriceStr());
-        remain.setText("库存："+good.specResponse.getInventory());
         selectSpec.setText(good.specResponse.getShowSelectSpec());
         plusMinusView.setClickable(true);
+
+        int inventory = good.specResponse.getInventory();
+        remain.setText("库存：" + inventory);
+        if (inventory <= 0) {
+            plusMinusView.setNum(0);
+            plusMinusView.setClickable(false);
+        }
     }
 
     @Override
@@ -129,12 +140,12 @@ public class GoodsSpecDialog extends DialogFragment {
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        if (onBuyListener!=null) onBuyListener.onBuyListener(good.specResponse.buy(good),num);
+        if (onBuyListener != null) onBuyListener.onBuyListener(good.specResponse.buy(good), num);
     }
 
     public GoodsSpecDialog setGood(Good good) {
         this.good = good;
-        if (good.specResponse==null||good.specResponse.values==null) getAllSpec();
+        if (good.specResponse == null || good.specResponse.values == null) getAllSpec();
         return this;
     }
 
@@ -143,7 +154,7 @@ public class GoodsSpecDialog extends DialogFragment {
         return this;
     }
 
-    public static void showSpecDialog(Activity activity, Good good,OnBuyListener onBuyListener) {
+    public static void showSpecDialog(Activity activity, Good good, OnBuyListener onBuyListener) {
         new GoodsSpecDialog().setGood(good).setOnBuyListener(onBuyListener).show(activity.getFragmentManager(), "GoodsSpecDialog");
     }
 
@@ -153,7 +164,7 @@ public class GoodsSpecDialog extends DialogFragment {
                     @Override
                     public void onNext(GoodsSpecResponse goodsSpecResponse) {
                         goodsSpecResponse.parse();
-                        good.specResponse=goodsSpecResponse;
+                        good.specResponse = goodsSpecResponse;
                         refreshSpec();
                     }
                 });
@@ -209,7 +220,7 @@ public class GoodsSpecDialog extends DialogFragment {
         }
     }
 
-    public interface OnBuyListener{
-        void onBuyListener(TrolleyGoods trolleyGoods,int num);
+    public interface OnBuyListener {
+        void onBuyListener(TrolleyGoods trolleyGoods, int num);
     }
 }

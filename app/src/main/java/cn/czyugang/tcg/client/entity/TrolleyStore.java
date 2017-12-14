@@ -19,51 +19,59 @@ import cn.czyugang.tcg.client.modules.entry.fragment.TrolleyFragment;
 public class TrolleyStore {
 
 
-    private HashMap<String, TrolleyGoods> trolleyGoodsMap = new HashMap<>();
+    public HashMap<String, TrolleyGoods> trolleyGoodsMap = new HashMap<>();
 
     public TrolleyStore() {
+
     }
 
     //商品购物车本地标识 id + spec
-    public String getTrolleyGoodsKey(Good good, String storeInventoryId) {
-        return good.id + "##" + storeInventoryId;
+    public String getTrolleyGoodsKey(String goodId, String storeInventoryId, String specId) {
+        return goodId + "##" + storeInventoryId + "##" + specId;
+    }
+
+    public String getTrolleyGoodsKey(TrolleyGoods trolleyGoods) {
+        return getTrolleyGoodsKey(trolleyGoods.goodId, trolleyGoods.storeInventoryId, trolleyGoods.specId);
     }
 
     //添加商品  单规格
     public int addGood(Good good, int addNum) {
-        String key = getTrolleyGoodsKey(good, "");
+        String key = getTrolleyGoodsKey(good.id, good.inventoryId, "");
+        TrolleyGoods t;
         if (trolleyGoodsMap.containsKey(key)) {
-            trolleyGoodsMap.get(key).add(addNum);
-            if (trolleyGoodsMap.get(key).num <= 0) {
-                if (goodsList != null) goodsList.remove(trolleyGoodsMap.get(key));
-                trolleyGoodsMap.remove(key);
-                return 0;
-            }
-            return trolleyGoodsMap.get(key).num;
+            t = trolleyGoodsMap.get(key);
         } else {
-            if (addNum <= 0) return addNum;
-            TrolleyGoods t = new TrolleyGoods(good, addNum);
-            trolleyGoodsMap.put(key, t);
-            if (goodsList != null) goodsList.add(t);
-            return addNum;
+            t = new TrolleyGoods(good, 0);
         }
+        return addGood(t, addNum);
     }
 
     //添加商品  单规格 多规格
-    public int addGood(TrolleyGoods trolleyGoods,int addNum) {
-        String key = getTrolleyGoodsKey(trolleyGoods.good,trolleyGoods.storeInventoryId);
+    public int addGood(TrolleyGoods trolleyGoods, int addNum) {
+        String key = getTrolleyGoodsKey(trolleyGoods);
         if (!trolleyGoodsMap.containsKey(key)) {
-            trolleyGoods.add(addNum);
             trolleyGoodsMap.put(key, trolleyGoods);
-        }else {
-            trolleyGoodsMap.get(key).add(addNum);
         }
-        if (trolleyGoodsMap.get(key).num <= 0) {
-            if (goodsList != null) goodsList.remove(trolleyGoodsMap.get(key));
-            trolleyGoodsMap.remove(key);
+        trolleyGoods = trolleyGoodsMap.get(key);
+        trolleyGoods.add(addNum);
+
+        if (trolleyGoods.num <= 0) {
+            deleteGood(trolleyGoods);
             return 0;
+        } else {
+            trolleyGoods.setDeleteFlag(false);
+            if (goodsList != null && !goodsList.contains(trolleyGoods)) goodsList.add(trolleyGoods);
         }
-        return trolleyGoodsMap.get(key).num;
+        return trolleyGoods.num;
+    }
+
+    //删除商品
+    public int deleteGood(TrolleyGoods trolleyGoods) {
+        String key = getTrolleyGoodsKey(trolleyGoods);
+        trolleyGoods = trolleyGoodsMap.get(key);
+        if (goodsList != null) goodsList.remove(trolleyGoods);
+        trolleyGoods.setDeleteFlag(true);
+        return 0;
     }
 
     //全选
@@ -74,23 +82,52 @@ public class TrolleyStore {
     }
 
     //清空
-    public void clear(TrolleyGoods t) {
-        if (t == null) return;
-        trolleyGoodsMap.remove(getTrolleyGoodsKey(t.good, t.spec));
-        if (goodsList != null) goodsList.remove(t);
-    }
-
     public void clearAll() {
-        trolleyGoodsMap.clear();
-        goodsList.clear();
+        for (TrolleyGoods trolleyGoods : trolleyGoodsMap.values()) {
+            trolleyGoods.setDeleteFlag(true);
+        }
+        if (goodsList != null) goodsList.clear();
     }
 
+    //所有商品数量
     public int getGoodsBuyNum(String goodsId) {
         int num = 0;
         for (TrolleyGoods t : trolleyGoodsMap.values()) {
-            if (t.good.id.equals(goodsId)) num += t.num;
+            if (!t.hadDeleted() && t.goodId.equals(goodsId)) num += t.num;
         }
         return num;
+    }
+
+    public int getGoodsBuyNum() {
+        int num = 0;
+        for (TrolleyGoods t : trolleyGoodsMap.values()) {
+            if (!t.hadDeleted()&&t.isSelect) num += t.num;
+        }
+        return num;
+    }
+
+    public double getAllPrice(){
+        double d=0;
+        for (TrolleyGoods t : trolleyGoodsMap.values()) {
+            if (!t.hadDeleted()&&t.isSelect) d += t.getAllPrice();
+        }
+        return d;
+    }
+
+    public String getAllPriceStr(){
+        return String.format("￥%.2f", getAllPrice());
+    }
+
+    public double getAllPackagePrice(){
+        double d=0;
+        for (TrolleyGoods t : trolleyGoodsMap.values()) {
+            if (!t.hadDeleted()&&t.isSelect) d += t.getAllPackagePrice();
+        }
+        return d;
+    }
+
+    public String getAllPackagePriceStr(){
+        return String.format("￥%.2f", getAllPackagePrice());
     }
 
     /*
@@ -99,16 +136,18 @@ public class TrolleyStore {
     transient public TrolleyFragment.TrolleyGoodsAdapter adapter = null;
     transient public List<TrolleyGoods> goodsList = null;
 
-    public void bindGoodsAdapter(Activity activity, RecyclerView recyclerView, boolean isStoreTrolley,TrolleyStore trolleyStore) {
+    public void bindGoodsAdapter(Activity activity, RecyclerView recyclerView, boolean isInStore, TrolleyStore trolleyStore) {
         if (goodsList == null) {
             goodsList = new ArrayList<>();
-            goodsList.addAll(trolleyGoodsMap.values());
+            for (TrolleyGoods t : trolleyGoodsMap.values()) {
+                if (!t.hadDeleted()) goodsList.add(t);
+            }
         }
 
         if (recyclerView == null) return;
         if (adapter == null) {
-            adapter = new TrolleyFragment.TrolleyGoodsAdapter(goodsList, activity,trolleyStore);
-            adapter.isStoreTrolley = isStoreTrolley;
+            adapter = new TrolleyFragment.TrolleyGoodsAdapter(goodsList, activity, trolleyStore);
+            adapter.isInStore = isInStore;
         }
         if (recyclerView.getLayoutManager() == null)
             recyclerView.setLayoutManager(new LinearLayoutManager(activity));

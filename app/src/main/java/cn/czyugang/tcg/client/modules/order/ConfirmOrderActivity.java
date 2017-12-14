@@ -1,22 +1,29 @@
 package cn.czyugang.tcg.client.modules.order;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.api.StoreApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
-import cn.czyugang.tcg.client.common.MyApplication;
+import cn.czyugang.tcg.client.common.ErrorHandler;
+import cn.czyugang.tcg.client.entity.OrderPreSettleResponse;
+import cn.czyugang.tcg.client.entity.Store;
 import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.widget.CalculateOrderView;
 
@@ -42,8 +49,17 @@ public class ConfirmOrderActivity extends BaseActivity {
     TextView addressName;
     @BindView(R.id.confirm_order_address_location)
     TextView addressLocation;
+    @BindView(R.id.confirm_order_address_bottom)
+    TextView addressBottom;
     @BindView(R.id.confirm_order_delivery)
     TextView delivery;
+
+    @BindView(R.id.confirm_order_money)
+    TextView money;
+    @BindView(R.id.confirm_order_commit)
+    TextView commit;
+
+
     @BindView(R.id.confirm_order_store_name)
     TextView storeName;
     @BindView(R.id.confirm_order_store_delivery)
@@ -68,17 +84,18 @@ public class ConfirmOrderActivity extends BaseActivity {
     CalculateOrderView orderCalculate;
     @BindView(R.id.confirm_order_message)
     EditText messageInput;
-    @BindView(R.id.confirm_order_address_bottom)
-    TextView addressBottom;
-    @BindView(R.id.confirm_order_money)
-    TextView money;
-    @BindView(R.id.confirm_order_commit)
-    TextView commit;
-    @BindView(R.id.confirm_order)
-    LinearLayout confirmOrder;
+
+
+    private String shoppingCartIds="";
 
     public static void startConfirmOrderActivity() {
         Intent intent = new Intent(getTopActivity(), ConfirmOrderActivity.class);
+        getTopActivity().startActivity(intent);
+    }
+
+    public static void startConfirmOrderActivity(String shoppingCartIds){
+        Intent intent=new Intent(getTopActivity(),ConfirmOrderActivity.class);
+        intent.putExtra("shoppingCartIds",shoppingCartIds);
         getTopActivity().startActivity(intent);
     }
 
@@ -87,6 +104,7 @@ public class ConfirmOrderActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
         ButterKnife.bind(this);
+        shoppingCartIds=getIntent().getStringExtra("shoppingCartIds");
 
         orderCalculate.addItem("减", "满1减20", "-￥ 1.0");
         orderCalculate.addItem("减", "满1减20", "-￥ 2.0");
@@ -100,6 +118,16 @@ public class ConfirmOrderActivity extends BaseActivity {
             @Override
             public void onScrollChanged() {
                 addressBottom.setVisibility(scrollView.getScrollY() > 70 ? View.VISIBLE : View.GONE);
+            }
+        });
+
+        StoreApi.preSettleTrolley(shoppingCartIds,null,null).subscribe(new NetObserver<OrderPreSettleResponse>() {
+            @Override
+            public void onNext(OrderPreSettleResponse response) {
+                super.onNext(response);
+                if (ErrorHandler.judge200(response)){
+
+                }
             }
         });
     }
@@ -117,5 +145,32 @@ public class ConfirmOrderActivity extends BaseActivity {
     @OnClick(R.id.confirm_order_commit)
     public void onCommit(){
         PayOrderActivity.startPayOrderActivity();
+    }
+
+    private static class SettleStoreAdapter extends RecyclerView.Adapter<SettleStoreAdapter.Holder> {
+        private List<Store> list;
+        private Activity activity;
+        public SettleStoreAdapter(List<Store> list, Activity activity) {
+            this.list = list;
+            this.activity = activity;
+        }
+        @Override
+        public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new Holder(LayoutInflater.from(activity).inflate(
+                    R.layout.item_settle_store,parent,false));
+        }
+        @Override
+        public void onBindViewHolder(Holder holder, int position) {
+            Store data=list.get(position);
+        }
+        @Override
+        public int getItemCount() {
+            return list.size();
+        }
+        class Holder extends RecyclerView.ViewHolder {
+            public Holder(View itemView) {
+                super(itemView);
+            }
+        }
     }
 }

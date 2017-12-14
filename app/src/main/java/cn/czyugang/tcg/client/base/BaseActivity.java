@@ -114,7 +114,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
         @Override
         public void onSubscribe(@NonNull Disposable d) {
             getTopActivity().mCompositeDisposable.add(d);
-            getTopActivity().showLoadingDialog();
+            if (showLoading())getTopActivity().showLoadingDialog();
         }
 
         @Override
@@ -125,12 +125,16 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
         @Override
         public void onError(@NonNull Throwable e) {
             getTopActivity().showError(e);
-            getTopActivity().dismissLoadingDialog();
+            if (showLoading()) getTopActivity().dismissLoadingDialog();
         }
 
         @Override
         public void onComplete() {
-            getTopActivity().dismissLoadingDialog();
+            if (showLoading()) getTopActivity().dismissLoadingDialog();
+        }
+
+        public boolean showLoading(){
+            return true;
         }
     }
 }
