@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +23,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.api.InformApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.entity.MyInform;
+import cn.czyugang.tcg.client.entity.MyInformResponse;
+import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.modules.store.SearchActivity;
 import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
@@ -43,6 +47,8 @@ public class InformMySelfActivity extends BaseActivity {
     @BindView(R.id.myself_title_bg)
     FrameLayout frameTitle;
 
+    List<MyInform> myInforms=new ArrayList<MyInform>();
+    MyInformAdapter myInformAdapter;
    
     public static void startMySelfActivity( ){
         Intent intent=new Intent(getTopActivity(),InformMySelfActivity.class);
@@ -54,30 +60,31 @@ public class InformMySelfActivity extends BaseActivity {
         setContentView(R.layout.activity_inform_myself);
         ButterKnife.bind(this);
 
-        List<MyInform> myInforms=new ArrayList<MyInform>();
-        MyInform myInform=new MyInform();
-        myInform.setCommitNum("46121");
-        myInform.setType("发表了文章");
-        myInform.setContent("哈哈哈哈或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或");
-        MyInform myInform2=new MyInform();
-        myInform2.setCommitNum("7685446");
-        myInform2.setType("赞同了评论");
-        myInform2.setContent("内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容");
 
-        myInforms.add(myInform);
-        myInforms.add(myInform2);
-        myInforms.add(myInform);
-        myInforms.add(myInform);
-        myInforms.add(myInform);
-        myInforms.add(myInform2);
-        myInforms.add(myInform2);
-        myInforms.add(myInform);
-        myInforms.add(myInform);
+//
+//        MyInform myInform=new MyInform();
+//        myInform.setCommitNum("46121");
+//        myInform.setType("发表了文章");
+//        myInform.setContent("哈哈哈哈或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或");
+//        MyInform myInform2=new MyInform();
+//        myInform2.setCommitNum("7685446");
+//        myInform2.setType("赞同了评论");
+//        myInform2.setContent("内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容");
+//
+//        myInforms.add(myInform);
+//        myInforms.add(myInform2);
+//        myInforms.add(myInform);
+//        myInforms.add(myInform);
+//        myInforms.add(myInform);
+//        myInforms.add(myInform2);
+//        myInforms.add(myInform2);
+//        myInforms.add(myInform);
+//        myInforms.add(myInform);
+
+        refreshInform(true);
 
 
-        MyInformAdapter myInformAdapter=new MyInformAdapter(myInforms,this);
-        informForMyselfList.setLayoutManager(new LinearLayoutManager(this));
-        informForMyselfList.setAdapter(myInformAdapter);
+
 
         appBarLayout.addOnOffsetChangedListener((appBarLayout1, verticalOffset) -> {
             LogRui.i("onCreate####"+verticalOffset+"            "+Math.abs(verticalOffset)/appBarLayout.getHeight());
@@ -85,6 +92,20 @@ public class InformMySelfActivity extends BaseActivity {
         });
     }
 
+    private void refreshInform(boolean firstLoad) {
+        InformApi.getInformByMyself().subscribe(new NetObserver<MyInformResponse>() {
+            @Override
+            public void onNext(MyInformResponse response) {
+                super.onNext(response);
+                Toast.makeText(InformMySelfActivity.this,response.data.toString(),Toast.LENGTH_SHORT).show();
+                response.parse();
+                myInforms.addAll(response.data);
+                myInformAdapter=new MyInformAdapter(myInforms,InformMySelfActivity.this);
+                informForMyselfList.setLayoutManager(new LinearLayoutManager(InformMySelfActivity.this));
+                informForMyselfList.setAdapter(myInformAdapter);
+            }
+        });
+    }
 
 
     @OnClick(R.id.title_search_bg)

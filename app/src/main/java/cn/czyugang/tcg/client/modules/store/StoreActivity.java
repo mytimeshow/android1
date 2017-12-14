@@ -125,6 +125,11 @@ public class StoreActivity extends BaseActivity {
                     hadCollected(store.collected);
                 }
             }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+            }
         });
 
         initTrolleyStore();

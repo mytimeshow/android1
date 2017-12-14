@@ -1,5 +1,7 @@
 package cn.czyugang.tcg.client.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Administrator on 2017/12/6.
  */
@@ -7,6 +9,7 @@ package cn.czyugang.tcg.client.entity;
 public class Inform {
 
     String bannerImg;
+
     String imgUrl;
     String name;
     String content;
