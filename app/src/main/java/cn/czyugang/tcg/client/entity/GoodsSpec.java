@@ -36,6 +36,7 @@ public class GoodsSpec {
     public List<String> labelList =new ArrayList<>();
     transient public String selectLabel="";
     transient public boolean isPowerfulToPriceSpec =false;
+    transient public boolean isCustomTag=false;
 
     public void initLabelList(){
         if (goodsSpecValueList==null) return;
@@ -45,6 +46,13 @@ public class GoodsSpec {
         selectLabel=labelList.get(0);
     }
 
+
+    public String getSelectId(){
+        for(GoodsSpecValue specValue:goodsSpecValueList){
+            if (specValue.value.equals(selectLabel)) return specValue.id;
+        }
+        return goodsSpecValueList.get(0).id;
+    }
 
     public static class GoodsSpecValue {
 

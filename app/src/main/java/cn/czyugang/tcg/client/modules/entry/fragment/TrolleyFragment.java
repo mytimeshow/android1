@@ -23,9 +23,11 @@ import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.entity.TrolleyGoods;
 import cn.czyugang.tcg.client.entity.TrolleyStore;
 import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
+import cn.czyugang.tcg.client.modules.common.dialog.StoreTrolleyDialog;
 import cn.czyugang.tcg.client.utils.rxbus.TrolleyBuyNumChangedEvent;
 import cn.czyugang.tcg.client.utils.rxbus.RxBus;
 import cn.czyugang.tcg.client.widget.ActivityTextView;
+import cn.czyugang.tcg.client.widget.BottomBalanceView;
 import cn.czyugang.tcg.client.widget.GoodsPlusMinusView;
 import cn.czyugang.tcg.client.widget.RefreshLoadHelper;
 import cn.czyugang.tcg.client.widget.SelectButton;
@@ -180,7 +182,9 @@ public class TrolleyFragment extends BaseFragment {
         private List<TrolleyGoods> list;
         private Activity activity;
         private TrolleyStore trolleyStore;
-        public boolean isStoreTrolley = false;
+        public boolean isInStore = false;
+        private BottomBalanceView bottomBalanceView;
+        private StoreTrolleyDialog storeTrolleyDialog=null;
 
 
 
@@ -188,6 +192,21 @@ public class TrolleyFragment extends BaseFragment {
             this.list = list;
             this.activity = activity;
             this.trolleyStore=trolleyStore;
+        }
+
+        public TrolleyGoodsAdapter setBottomBalanceView(BottomBalanceView bottomBalanceView) {
+            this.bottomBalanceView = bottomBalanceView;
+            return this;
+        }
+
+        public TrolleyGoodsAdapter setStoreTrolleyDialog(StoreTrolleyDialog storeTrolleyDialog) {
+            this.storeTrolleyDialog = storeTrolleyDialog;
+            return this;
+        }
+
+        private void refreshOtherOnChange(){
+            if (bottomBalanceView!=null) bottomBalanceView.refresh();
+            if (storeTrolleyDialog!=null) storeTrolleyDialog.refreshPackFee();
         }
 
         @Override
@@ -205,11 +224,32 @@ public class TrolleyFragment extends BaseFragment {
                     .setIsMultiSpec(false)
                     .setOnPlusMinusListener(addNum -> {     //购物车
                         trolleyStore.addGood(data,addNum);
-                        RxBus.post(new TrolleyBuyNumChangedEvent(data.good));
+                        refreshOtherOnChange();
                         return data.num;
                     })
                     .setNum(data.num);
 
+            holder.hotTag.setVisibility(View.GONE);
+            holder.name.setText(data.name);
+            holder.spec.setText(data.spec);
+            holder.discountTag.setVisibility(View.GONE);
+            holder.price.setText(data.getPriceStr());
+            if (holder.activityPrice!=null) holder.activityPrice.setVisibility(View.GONE);
+            if (holder.activityTime!=null) holder.activityTime.setVisibility(View.GONE);
+
+            holder.delete.setOnClickListener(v -> {
+                trolleyStore.deleteGood(data);
+                notifyDataSetChanged();
+                refreshOtherOnChange();
+            });
+            if (holder.collect!=null) holder.collect.setOnClickListener(v -> {
+
+            });
+
+            holder.selectButton.setChecked(data.isSelect);
+            holder.selectButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                refreshOtherOnChange();
+            });
         }
 
         @Override
@@ -219,17 +259,37 @@ public class TrolleyFragment extends BaseFragment {
 
         @Override
         public int getItemViewType(int position) {
-            return isStoreTrolley ? R.layout.item_trolley_store_goods : R.layout.item_trolley_goods;
+            return isInStore ? R.layout.item_trolley_store_goods : R.layout.item_trolley_goods;
         }
 
         class Holder extends RecyclerView.ViewHolder {
             SelectButton selectButton;
             GoodsPlusMinusView plusMinusView;
+            View hotTag;
+            TextView name;
+            TextView spec;
+            View editSpec;
+            TextView discountTag;
+            TextView price;
+            TextView activityPrice;
+            TextView activityTime;
+            TextView delete;
+            TextView collect;
 
             public Holder(View itemView) {
                 super(itemView);
                 selectButton = itemView.findViewById(R.id.item_select);
                 plusMinusView = itemView.findViewById(R.id.item_plus_minus);
+                hotTag= itemView.findViewById(R.id.item_hot_tag);
+                name= itemView.findViewById(R.id.item_name);
+                spec= itemView.findViewById(R.id.item_spec);
+                editSpec= itemView.findViewById(R.id.item_spec_edit);
+                discountTag= itemView.findViewById(R.id.item_tag);
+                price= itemView.findViewById(R.id.item_price);
+                activityPrice= itemView.findViewById(R.id.item_activity_price);
+                activityTime= itemView.findViewById(R.id.item_activity_price_time);
+                delete= itemView.findViewById(R.id.item_delete);
+                collect= itemView.findViewById(R.id.item_collect);
             }
         }
     }

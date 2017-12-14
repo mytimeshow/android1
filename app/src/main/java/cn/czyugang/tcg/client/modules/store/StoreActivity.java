@@ -30,7 +30,6 @@ import cn.czyugang.tcg.client.base.BaseFragmentAdapter;
 import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.entity.Store;
-import cn.czyugang.tcg.client.entity.TrolleyResponse;
 import cn.czyugang.tcg.client.entity.TrolleyStore;
 import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.modules.common.dialog.StoreTrolleyDialog;
@@ -39,6 +38,7 @@ import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
+import cn.czyugang.tcg.client.utils.storage.AppKeyStorage;
 import cn.czyugang.tcg.client.utils.string.RichText;
 import cn.czyugang.tcg.client.widget.BottomBalanceView;
 import cn.czyugang.tcg.client.widget.LabelLayout;
@@ -116,6 +116,12 @@ public class StoreActivity extends BaseActivity {
         getTrolleyStore(id);
     }
 
+    @Override
+    protected void onDestroy() {
+        AppKeyStorage.saveTrolleyStore(id,trolleyStore);
+        super.onDestroy();
+    }
+
     private void initFragment() {
         if (store == null || trolleyStore == null) return;
         boolean isFood = store.isFoodStore();
@@ -159,20 +165,13 @@ public class StoreActivity extends BaseActivity {
     *   购物车
     * */
     private void getTrolleyStore(String storeId) {
-        StoreApi.getTrolley(storeId).subscribe(new NetObserver<TrolleyResponse>() {
-            @Override
-            public void onNext(TrolleyResponse response) {
-                super.onNext(response);
-                if (ErrorHandler.judge200(response)) {
-                    trolleyStore = new TrolleyStore();
+        //AppKeyStorage.clearTrolleyStore(null);
+        trolleyStore = AppKeyStorage.getTrolleyStore(storeId);
 
-                    initFragment();
-                    initBottomTrolley();
-                    refreshBottomTrolley();
-                    refreshGoodsListBuyNum();
-                }
-            }
-        });
+        initFragment();
+        initBottomTrolley();
+        refreshBottomTrolley();
+        refreshGoodsListBuyNum();
     }
 
     private void initBottomTrolley() {
@@ -183,6 +182,7 @@ public class StoreActivity extends BaseActivity {
                 storeTrolleyDialog.setOnDismissRefresh(dialog -> {
                     if (foodListFragment != null) foodListFragment.refreshBuyNums();
                     if (goodsListFragment != null) goodsListFragment.refreshBuyNums();
+                    refreshBottomTrolley();
                 });
             }
             storeTrolleyDialog.show(getFragmentManager(), "StoreTrolleyDialog");
@@ -198,6 +198,10 @@ public class StoreActivity extends BaseActivity {
     public void refreshGoodsListBuyNum() {
         if (foodListFragment != null) foodListFragment.refreshBuyNums();
         if (goodsListFragment != null) goodsListFragment.refreshBuyNums();
+    }
+
+    private void postTrolley(){
+
     }
 
     /*

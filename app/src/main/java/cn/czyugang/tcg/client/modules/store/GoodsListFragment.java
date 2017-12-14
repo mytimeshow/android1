@@ -30,8 +30,6 @@ import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
-import cn.czyugang.tcg.client.utils.rxbus.RxBus;
-import cn.czyugang.tcg.client.utils.rxbus.TrolleyBuyNumChangedEvent;
 import cn.czyugang.tcg.client.widget.GoodsPlusMinusView;
 import cn.czyugang.tcg.client.widget.LabelLayout;
 import cn.czyugang.tcg.client.widget.RecyclerViewMaxH;
@@ -263,7 +261,7 @@ public class GoodsListFragment extends BaseFragment {
                     })
                     .setOnPlusMinusListener(addNum -> {      //店铺  goodsList
                         int num = storeActivity.trolleyStore.addGood(data, addNum);
-                        RxBus.post(new TrolleyBuyNumChangedEvent(data));
+                        storeActivity.refreshBottomTrolley();
                         return num;
                     })
                     .setNum(storeActivity.trolleyStore.getGoodsBuyNum(data.id));

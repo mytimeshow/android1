@@ -7,10 +7,15 @@ import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.entity.GoodCategory;
 import cn.czyugang.tcg.client.entity.GoodsResponse;
 import cn.czyugang.tcg.client.entity.GoodsSpecResponse;
+import cn.czyugang.tcg.client.entity.OrderPreSettleResponse;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.entity.Store;
 import cn.czyugang.tcg.client.entity.StoreImg;
+import cn.czyugang.tcg.client.entity.TrolleyCheckResponse;
+import cn.czyugang.tcg.client.entity.TrolleyGoods;
+import cn.czyugang.tcg.client.entity.TrolleyPost;
 import cn.czyugang.tcg.client.entity.TrolleyResponse;
+import cn.czyugang.tcg.client.entity.TrolleyStore;
 import cn.czyugang.tcg.client.utils.AmapLocationUtil;
 import cn.czyugang.tcg.client.utils.JsonParse;
 import io.reactivex.Observable;
@@ -99,20 +104,56 @@ public class StoreApi {
         HashMap<String, Object> map = new HashMap<>();
         map.put("storeInventoryId", storeInventoryId);
         return UserOAuth.getInstance()
-                .get("/api/auth/v1/product/shopping/getAttributes", map)
+                .get("api/auth/v1/product/shopping/getAttributes", map)
                 .map(s -> (GoodsSpecResponse) JsonParse.fromJson(s, GoodsSpecResponse.class))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    //购物车
+    //查询购物车
     public static Observable<TrolleyResponse> getTrolley(String storeId) {
         HashMap<String, Object> map = new HashMap<>();
         if (storeId != null) map.put("storeId", storeId);
         map.put("location", AmapLocationUtil.getXY());
         return UserOAuth.getInstance()
-                .get("/api/auth/v1/product/shopping/shoppingCart/get", map)
+                .get("api/auth/v1/product/shopping/shoppingCart/get", map)
                 .map(s -> (TrolleyResponse) JsonParse.fromJson(s, TrolleyResponse.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    //同步购物车
+    public static Observable<Response<List<TrolleyGoods>>> syncTrolleyGoods(TrolleyStore trolleyStore) {
+        HashMap<String, Object> innerMap = new HashMap<>();
+        innerMap.put("localShoppingCartVOList", TrolleyPost.newTrolleyPostList(trolleyStore));
+        return UserOAuth.getInstance()
+                .post("api/auth/v1/product/shopping/shoppingCart/sync", innerMap)
+                .map(s -> (Response<List<TrolleyGoods>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, new JsonParse.Type(List.class, TrolleyGoods.class))))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    //结算前检查购物车
+    public static Observable<TrolleyCheckResponse> checkTrolley(String shoppingCartIds) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("shoppingCartIds", shoppingCartIds);
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/product/shopping/shoppingCart/check", map)
+                .map(s -> (TrolleyCheckResponse) JsonParse.fromJson(s, TrolleyCheckResponse.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
+
+    //结算购物车预加载接口
+    public static Observable<OrderPreSettleResponse> preSettleTrolley(String shoppingCartIds, String addressId, String deliveryWays) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("shoppingCartIds", shoppingCartIds);
+        if (addressId != null) map.put("addressId", addressId);
+        if (deliveryWays != null) map.put("deliveryWays", deliveryWays);
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/product/shopping/shoppingCart/preSettle", map)
+                .map(s -> (OrderPreSettleResponse) JsonParse.fromJson(s, OrderPreSettleResponse.class))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

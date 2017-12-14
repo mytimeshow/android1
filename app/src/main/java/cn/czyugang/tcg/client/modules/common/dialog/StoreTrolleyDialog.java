@@ -18,12 +18,9 @@ import android.widget.TextView;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.entity.TrolleyStore;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
-import cn.czyugang.tcg.client.utils.rxbus.TrolleyBuyNumChangedEvent;
-import cn.czyugang.tcg.client.utils.rxbus.RxBus;
 import cn.czyugang.tcg.client.widget.BottomBalanceView;
 import cn.czyugang.tcg.client.widget.RecyclerViewMaxH;
 import cn.czyugang.tcg.client.widget.SelectButton;
-import io.reactivex.disposables.Disposable;
 
 /**
  * @author ruiaa
@@ -42,8 +39,6 @@ public class StoreTrolleyDialog extends DialogFragment {
     private BottomBalanceView bottomBalanceView;
     private DialogInterface.OnDismissListener onDismissListener = null;
 
-    private Disposable disposableRefreshBottomTrolley = null;
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
@@ -53,6 +48,9 @@ public class StoreTrolleyDialog extends DialogFragment {
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         window.setWindowAnimations(R.style.BottomDialogAnimation);
 
+        dialog.setOnShowListener(dialog1 -> {
+            refreshAll();
+        });
         return dialog;
     }
 
@@ -89,7 +87,7 @@ public class StoreTrolleyDialog extends DialogFragment {
 
         selectButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
             trolleyStore.selectAll(isChecked);
-            trolleyStore.adapter.notifyDataSetChanged();
+            goods.getAdapter().notifyDataSetChanged();
             bottomBalanceView.refresh();
         });
         clear.setOnClickListener(v -> {
@@ -99,24 +97,30 @@ public class StoreTrolleyDialog extends DialogFragment {
             dismiss();
         });
 
-        disposableRefreshBottomTrolley = RxBus.toObservable(TrolleyBuyNumChangedEvent.class).subscribe(event -> {
-            bottomBalanceView.refresh();
-        });
+        return rootView;
+    }
 
-        trolleyStore.bindGoodsAdapter(activity, goods, true,trolleyStore);
+    private void refreshAll() {
+        if (goods.getAdapter() == null) {
+            trolleyStore.bindGoodsAdapter(activity, goods, true, trolleyStore);
+            trolleyStore.adapter
+                    .setBottomBalanceView(bottomBalanceView)
+                    .setStoreTrolleyDialog(this);
+        } else {
+            goods.getAdapter().notifyDataSetChanged();
+        }
         bottomBalanceView.refresh();
         selectButton.setChecked(false);
+        refreshPackFee();
+    }
 
-        return rootView;
+    public void refreshPackFee() {
+        packFee.setText(trolleyStore.getAllPackagePriceStr());
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (disposableRefreshBottomTrolley != null) {
-            disposableRefreshBottomTrolley.dispose();
-            disposableRefreshBottomTrolley = null;
-        }
     }
 
     public void setTrolleyStore(TrolleyStore trolleyStore, Activity activity) {
