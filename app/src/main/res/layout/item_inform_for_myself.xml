@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="赞同了文章"
+                android:text="回复了评论"
                 android:textColor="@color/text_gray"
                 android:textSize="@dimen/sp_11" />
 
@@ -112,6 +112,7 @@
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
+        android:background="@color/white"
         android:visibility="visible">
 
         <View
@@ -126,15 +127,17 @@
             android:layout_height="@dimen/dp_20"
             android:layout_marginBottom="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_10"
-            android:src="@drawable/ic_logout_avatar" />
+            android:layout_marginRight="@dimen/dp_5"
+            android:src="@drawable/ic_logout_avatar"
+            />
 
         <TextView
             android:id="@+id/inform_for_myself_commit_contentmsg"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/inform_for_myself_commit_head"
-            android:layout_alignTop="@+id/inform_for_myself_commit_head"
-            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_height="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+
             android:layout_toRightOf="@+id/inform_for_myself_commit_head"
             android:gravity="center_vertical"
             android:lines="1"

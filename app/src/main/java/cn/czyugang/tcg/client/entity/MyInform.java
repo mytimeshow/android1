@@ -1,18 +1,50 @@
 package cn.czyugang.tcg.client.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Administrator on 2017/12/8.
  */
 
+/*    创建时间：  "createTime": "2017-12-14T02:16:11.370Z",
+      id：  "id": "string",
+      资讯id：  "infoId": "string",
+      对象id：  "objectId": "string",
+      类型：  "type": "string",
+      用户id：  "userId": "string"
+      */
+
+
 public class MyInform {
 
-    String type;
-    String time;
-    String commitNum;
-    String content;
-    String imgUrl;
-    String commitContent;
-    String commitHead;
+    @SerializedName("type")
+    public String type;
+    @SerializedName("createTime")
+    public String time;
+    @SerializedName("name")
+    public String name;
+    @SerializedName("id")
+    public String id;
+
+    public String title="";
+
+    //对象id
+    @SerializedName("objectId")
+    public String objectId;
+    //用户id
+    @SerializedName("userId")
+    public String userId;
+    //资讯id
+    @SerializedName("infoId")
+    public String infoId;
+
+
+    public String commitNum;
+    public String content;
+    public String imgUrl;
+    public String commitContent;
+    public String commitHead;
+
 
     public void MyInform(){
 

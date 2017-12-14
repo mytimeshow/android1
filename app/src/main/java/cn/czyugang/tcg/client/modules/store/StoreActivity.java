@@ -112,7 +112,7 @@ public class StoreActivity extends BaseActivity {
         storeNotice.requestFocus();
         input.setHint(RichText.newRichText("    搜索店内商品").addimgRes(0, 2, R.drawable.ic_search, R.dimen.dp_14).build());
 
-        getStoreInfo(id);
+		getStoreInfo(id);
         getTrolleyStore(id);
     }
 
