@@ -73,7 +73,7 @@
                 android:layout_toLeftOf="@+id/inform_for_myself_img"
                 android:lineSpacingExtra="@dimen/dp_5"
                 android:lines="2"
-                android:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容" />
+                android:text="内容内容内容内容内容内容内容内容内容内容" />
 
             <LinearLayout
                 android:id="@+id/inform_for_myself_commit"

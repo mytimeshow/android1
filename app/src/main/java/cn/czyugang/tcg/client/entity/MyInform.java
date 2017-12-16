@@ -26,8 +26,6 @@ public class MyInform {
     @SerializedName("id")
     public String id;
 
-    public String title="";
-
     //对象id
     @SerializedName("objectId")
     public String objectId;
@@ -44,6 +42,7 @@ public class MyInform {
     public String imgUrl;
     public String commitContent;
     public String commitHead;
+    public String title="";
 
 
     public void MyInform(){
