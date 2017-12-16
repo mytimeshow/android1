@@ -18,6 +18,10 @@ import cn.czyugang.tcg.client.utils.app.ResUtil;
  */
 
 public class CommonUtil {
+    public static String formatPrice(double price){
+        return String.format("￥%.2f",price);
+    }
+
     @SuppressWarnings({"rawtypes", "unchecked"})
     public static void move(List<?> list, int from, int to) {
         final List l = list;

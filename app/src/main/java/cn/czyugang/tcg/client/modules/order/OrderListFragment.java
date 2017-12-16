@@ -19,8 +19,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.api.OrderApi;
+import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.entity.Order;
+import cn.czyugang.tcg.client.entity.OrderResponse;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.widget.RecycleViewDivider;
 import cn.czyugang.tcg.client.widget.SelectButton;
@@ -82,7 +85,19 @@ public class OrderListFragment extends BaseFragment {
             adapter.setShowSelectButton(true);
         }
 
+        getOrders();
+
         return rootView;
+    }
+
+    private void getOrders(){
+        OrderApi.getAllOrder(0, -1, null).subscribe(new BaseActivity.NetObserver<OrderResponse>() {
+            @Override
+            public void onNext(OrderResponse response) {
+                super.onNext(response);
+                response.parse();
+            }
+        });
     }
 
     @Override

@@ -31,7 +31,7 @@ public class MyOrderActivity extends BaseActivity {
     @BindView(R.id.myorder_pager)
     ViewPager viewPager;
 
-    private List<BaseFragment> fragments=new ArrayList<>();
+    private List<BaseFragment> fragments = new ArrayList<>();
 
     public static void startMyOrderActivity(Activity activity) {
         Intent intent = new Intent(activity, MyOrderActivity.class);
@@ -50,16 +50,18 @@ public class MyOrderActivity extends BaseActivity {
         fragments.add(OrderListFragment.newInstance(OrderListFragment.MYORDER_TYPE_NO_RECEIVED));
         fragments.add(OrderListFragment.newInstance(OrderListFragment.MYORDER_TYPE_NO_COMMENT));
 
-        viewPager.setAdapter(new BaseFragmentAdapter(getSupportFragmentManager(),fragments));
+        viewPager.setAdapter(new BaseFragmentAdapter(getSupportFragmentManager(), fragments));
         viewPager.setOffscreenPageLimit(3);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
     }
+
     MessageDialog messageDialog;
+
     @OnClick(R.id.title_back)
-    public void onBack(){
+    public void onBack() {
         //finish();
-        messageDialog=MessageDialog.newInstance().setMessage("hhh").setNegativeButton("取消").setPositiveButton("确定");
-        messageDialog.show(getSupportFragmentManager(),"ll");
+        messageDialog = MessageDialog.newInstance().setMessage("hhh").setNegativeButton("取消").setPositiveButton("确定");
+        messageDialog.show(getSupportFragmentManager(), "ll");
     }
 }

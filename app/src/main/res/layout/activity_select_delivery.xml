@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/bg"
     android:orientation="vertical">
 
@@ -17,149 +18,190 @@
             android:text="选择配送方式"/>
     </FrameLayout>
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_40"
-        android:layout_marginTop="@dimen/dp_0.5"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        >
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <ImageView
-            style="@style/icon_15"
-            android:src="@drawable/icon_shop"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!--店铺名-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginTop="@dimen/dp_0.5"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                >
 
-        <TextView
-            android:id="@+id/select_delivery_store_name"
-            style="@style/text_14_black"
-            android:text="店铺名名名名名名名称"
-            />
-    </LinearLayout>
+                <ImageView
+                    style="@style/icon_15"
+                    android:src="@drawable/icon_shop"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/select_delivery_goods"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_80"
-        android:layout_marginTop="@dimen/dp_0.5"
-        android:background="@color/white"
-        android:padding="@dimen/dp_10"
-        />
+                <TextView
+                    android:id="@+id/select_delivery_store_name"
+                    style="@style/text_14_black"
+                    android:text="店铺名名名名名名名称"
+                    />
+            </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_40"
-        android:layout_marginTop="@dimen/dp_11"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+            <!--商品图片-->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/select_delivery_goods"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_80"
+                android:layout_marginTop="@dimen/dp_0.5"
+                android:background="@color/white"
+                android:padding="@dimen/dp_10"
+                />
 
-        <ImageView
-            style="@style/icon_15"
-            android:src="@drawable/icon_delivery"/>
+            <!--配送方式-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginTop="@dimen/dp_11"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-        <TextView
-            style="@style/text_14_black"
-            android:text="配送方式"
-            />
+                <ImageView
+                    style="@style/icon_15"
+                    android:src="@drawable/icon_delivery"/>
 
-    </LinearLayout>
+                <TextView
+                    style="@style/text_14_black"
+                    android:text="配送方式"
+                    />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_40"
-        android:layout_marginTop="@dimen/dp_0.5"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/select_delivery_platform"
-            android:layout_width="@dimen/dp_80"
-            android:layout_height="@dimen/dp_26"
-            android:background="@drawable/border_rect_red"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:gravity="center"
-            android:text="平台配送"
-            android:textColor="@color/main_red"
-            android:textSize="@dimen/sp_14"
-            />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginTop="@dimen/dp_0.5"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/select_delivery_self"
-            android:layout_width="@dimen/dp_80"
-            android:layout_height="@dimen/dp_26"
-            android:background="@drawable/border_rect_grey"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:gravity="center"
-            android:text="上门自提"
-            android:textColor="@color/text_black"
-            android:textSize="@dimen/sp_14"
-            />
+                <TextView
+                    android:id="@+id/select_delivery_platform"
+                    android:layout_width="@dimen/dp_80"
+                    android:layout_height="@dimen/dp_26"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:background="@drawable/border_rect_red"
+                    android:gravity="center"
+                    android:text="平台配送"
+                    android:textColor="@color/main_red"
+                    android:textSize="@dimen/sp_14"
+                    />
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/select_delivery_self"
+                    android:layout_width="@dimen/dp_80"
+                    android:layout_height="@dimen/dp_26"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:background="@drawable/border_rect_grey"
+                    android:gravity="center"
+                    android:text="上门自提"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp_14"
+                    />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_40"
-        android:layout_marginTop="@dimen/dp_11"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+            </LinearLayout>
 
-        <ImageView
-            style="@style/icon_15"
-            android:src="@drawable/icon_time"/>
+            <!--配送时间-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginTop="@dimen/dp_11"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-        <TextView
-            style="@style/text_14_black"
-            android:text="配送时间"
-            />
-    </LinearLayout>
+                <ImageView
+                    style="@style/icon_15"
+                    android:src="@drawable/icon_time"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_40"
-        android:layout_marginTop="@dimen/dp_0.5"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+                <TextView
+                    style="@style/text_14_black"
+                    android:text="配送时间"
+                    />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/select_delivery_time1"
-            style="@style/text_14_black"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:text="尽快送达"
-            />
-        <View
-            android:layout_width="@dimen/dp_2"
-            android:layout_height="@dimen/dp_20"
-            android:layout_marginLeft="@dimen/dp_8"
-            android:layout_marginRight="@dimen/dp_8"
-            android:background="@color/grey_200"/>
-        <TextView
-            android:id="@+id/select_delivery_time2"
-            style="@style/text_14_black"
-            android:text="大约 10:30 送达"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginTop="@dimen/dp_0.5"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-        <include layout="@layout/space_h"/>
-        
-        <TextView
-            android:id="@+id/select_delivery_change"
-            style="@style/text_14_dark_gray"
-            android:drawableRight="@drawable/ic_goto_arrow"
-            android:drawablePadding="@dimen/dp_8"
-            android:paddingRight="@dimen/dp_10"
-            android:paddingLeft="@dimen/dp_10"
-            android:paddingTop="@dimen/dp_4"
-            android:paddingBottom="@dimen/dp_4"
-            android:text="修改"
-            />
-        
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/select_delivery_time"
+                    style="@style/text_14_black"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:text="尽快送达 | 大约 10:30 送达"
+                    />
 
+                <include layout="@layout/space_h"/>
 
-    <include layout="@layout/space_v"/>
+                <TextView
+                    android:id="@+id/select_delivery_change"
+                    style="@style/text_14_dark_gray"
+                    android:drawablePadding="@dimen/dp_8"
+                    android:drawableRight="@drawable/ic_goto_arrow"
+                    android:paddingBottom="@dimen/dp_4"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_4"
+                    android:text="修改"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/select_delivery_timeL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <include layout="@layout/view_split_bar_light"/>
+                <TextView
+                    style="@style/text_14_black"
+                    android:text="期望送达时间"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:gravity="center"
+                    android:background="@color/white"
+                    />
+                <include layout="@layout/view_split_bar_light"/>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <cn.czyugang.tcg.client.widget.RecyclerViewMaxH
+                        android:id="@+id/select_delivery_time_day"
+                        android:layout_width="@dimen/dp_130"
+                        android:layout_height="wrap_content"
+                        app:max_height="@dimen/dp_200"
+                        />
+                    <cn.czyugang.tcg.client.widget.RecyclerViewMaxH
+                        android:id="@+id/select_delivery_time_hour"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_130"
+                        android:background="@color/white"
+                        app:max_height="@dimen/dp_200"
+                        />
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
     <TextView
         android:id="@+id/select_delivery_rest"

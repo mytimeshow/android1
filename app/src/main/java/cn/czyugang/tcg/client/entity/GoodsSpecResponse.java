@@ -145,7 +145,6 @@ public class GoodsSpecResponse extends Response<List<GoodsSpec>> {
         });
         String idsStr=ids.toString().replaceAll(" ","");;
         idsStr=idsStr.substring(1,idsStr.length()-1);
-        LogRui.i("getShowSelectSpecId####",idsStr);
         return idsStr;
     }
 

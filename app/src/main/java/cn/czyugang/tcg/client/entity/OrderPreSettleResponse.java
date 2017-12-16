@@ -36,7 +36,7 @@ public class OrderPreSettleResponse extends Response<List<Store>> {
 
     public void parse() {
         for (Store store : data) {
-            moreInfoHashMap.put(store.id, new StoreMoreInfo());
+            moreInfoHashMap.put(store.id, new StoreMoreInfo(store.id));
         }
         try {
             if (values == null) return;
@@ -194,6 +194,13 @@ public class OrderPreSettleResponse extends Response<List<Store>> {
         }
     }
 
+    public void setDeliveryTimeAndWay(Map<String, String> timeMap, Map<String, String> wayMap) {
+        for(StoreMoreInfo moreInfo:moreInfoHashMap.values()){
+            if (timeMap.containsKey(moreInfo.storeId)) moreInfo.selectedDeliveryTime=timeMap.get(moreInfo.storeId);
+            if (wayMap.containsKey(moreInfo.storeId)) moreInfo.selectedDeliveryWay=wayMap.get(moreInfo.storeId);
+        }
+    }
+
     public boolean isAllInDeliveryRange() {
         for (StoreMoreInfo moreInfo : moreInfoHashMap.values()) {
             if (!moreInfo.isInDeliveryRange) return false;
@@ -210,6 +217,7 @@ public class OrderPreSettleResponse extends Response<List<Store>> {
     }
 
     public static class StoreMoreInfo {
+        public String storeId = "";
         public List<TrolleyGoods> trolleyGoodsList;
         public List<String> imgList = new ArrayList<>();
         private ImgAdapter imgAdapter = null;
@@ -222,6 +230,11 @@ public class OrderPreSettleResponse extends Response<List<Store>> {
         public List<DeliveryTime> deliveryTimeList;
         public String selectedDeliveryWay = "";
         public String selectedDeliveryTime = "";
+        public String noteToStore="";
+
+        public StoreMoreInfo(String storeId) {
+            this.storeId = storeId;
+        }
 
         public int getGoodsNum() {
             if (trolleyGoodsList == null) return 0;
@@ -246,15 +259,15 @@ public class OrderPreSettleResponse extends Response<List<Store>> {
             recyclerView.setAdapter(imgAdapter);
         }
 
-        public boolean arrowDeliveryPlatform(){
+        public boolean arrowDeliveryPlatform() {
             return deliveryType.contains("PLATFORM");
         }
 
-        public boolean arrowDeliveryStore(){
+        public boolean arrowDeliveryStore() {
             return deliveryType.contains("STORE");
         }
 
-        public boolean arrowDeliveryFETCH(){
+        public boolean arrowDeliveryFETCH() {
             return deliveryType.contains("FETCH");
         }
 
