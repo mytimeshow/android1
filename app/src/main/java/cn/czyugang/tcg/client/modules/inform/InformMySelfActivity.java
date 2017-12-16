@@ -29,6 +29,7 @@ import cn.czyugang.tcg.client.entity.MyInform;
 import cn.czyugang.tcg.client.entity.MyInformResponse;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.modules.store.SearchActivity;
+import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
@@ -97,7 +98,7 @@ public class InformMySelfActivity extends BaseActivity {
             @Override
             public void onNext(MyInformResponse response) {
                 super.onNext(response);
-                Toast.makeText(InformMySelfActivity.this,response.data.toString(),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(InformMySelfActivity.this,response.data.toString(),Toast.LENGTH_SHORT).show();
                 response.parse();
                 myInforms.addAll(response.data);
                 myInformAdapter=new MyInformAdapter(myInforms,InformMySelfActivity.this);
@@ -129,11 +130,39 @@ public class InformMySelfActivity extends BaseActivity {
         @Override
         public void onBindViewHolder(Holder holder, int position) {
             MyInform data=list.get(position);
+            CommonUtil.setTextViewLinesWithEllipsis(holder.informContent,2);
+            CommonUtil.setTextViewLinesWithEllipsis(holder.commitContent,1);
             holder.informContent.setText(data.getContent());
             holder.informCommitNum.setText(data.getCommitNum());
-            holder.informType.setText(data.getType());
-            if(data.getType().equals("赞同了评论")){
+            holder.commitContent.setText(data.getCommitContent());
+
+            if(data.getType().equals("INFO")){
+                holder.informType.setText("发表了文章");
+                holder.commit.setVisibility(View.GONE);
+            }
+            else if(data.getType().equals("COMMENT")){
+                holder.informType.setText("评论了文章");
                 holder.commit.setVisibility(View.VISIBLE);
+            }
+            else if(data.getType().equals("REPLY")){
+                holder.informType.setText("回复了评论");
+                holder.commit.setVisibility(View.VISIBLE);
+            }
+            else if(data.getType().equals("LIKE_COMMENT")){
+                holder.informType.setText("点赞并且评论了资讯");
+                holder.commit.setVisibility(View.VISIBLE);
+            }
+            else if(data.getType().equals("LIKE_REPLY")){
+                holder.informType.setText("点赞并且回复了评论");
+                holder.commit.setVisibility(View.VISIBLE);
+            }
+            else if(data.getType().equals("LIKE_INFO")){
+                holder.informType.setText("点赞了资讯");
+                holder.commit.setVisibility(View.GONE);
+            }
+            else if(data.getType().equals("KEEP_INFO")){
+                holder.informType.setText("收藏了资讯");
+                holder.commit.setVisibility(View.GONE);
             }else{
                 holder.commit.setVisibility(View.GONE);
             }
