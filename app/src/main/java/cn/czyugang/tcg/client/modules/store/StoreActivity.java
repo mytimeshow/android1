@@ -112,13 +112,18 @@ public class StoreActivity extends BaseActivity {
         storeNotice.requestFocus();
         input.setHint(RichText.newRichText("    搜索店内商品").addimgRes(0, 2, R.drawable.ic_search, R.dimen.dp_14).build());
 
-		getStoreInfo(id);
+        getStoreInfo(id);
         getTrolleyStore(id);
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        AppKeyStorage.saveTrolleyStore(id, trolleyStore);
+    }
+
+    @Override
     protected void onDestroy() {
-        AppKeyStorage.saveTrolleyStore(id,trolleyStore);
         super.onDestroy();
     }
 
@@ -165,7 +170,7 @@ public class StoreActivity extends BaseActivity {
     *   购物车
     * */
     private void getTrolleyStore(String storeId) {
-        //AppKeyStorage.clearTrolleyStore(null);
+        if (false) AppKeyStorage.clearTrolleyStore(null);
         trolleyStore = AppKeyStorage.getTrolleyStore(storeId);
 
         initFragment();
@@ -200,7 +205,7 @@ public class StoreActivity extends BaseActivity {
         if (goodsListFragment != null) goodsListFragment.refreshBuyNums();
     }
 
-    private void postTrolley(){
+    private void postTrolley() {
 
     }
 

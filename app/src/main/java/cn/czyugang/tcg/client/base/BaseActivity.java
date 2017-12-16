@@ -106,6 +106,22 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
         return mainActivity;
     }
 
+    public static MainActivity clearAllActivityExceptMainAndTop() {
+        MainActivity mainActivity = null;
+        for (int i = 0, size = activityList.size()-1; i < size; i++) {
+            BaseActivity baseActivity = activityList.get(i);
+            if (baseActivity instanceof MainActivity) {
+                if (mainActivity != null) mainActivity.finish();
+                mainActivity = (MainActivity) baseActivity;
+            } else {
+                baseActivity.finish();
+            }
+        }
+        activityList.clear();
+        if (mainActivity != null) activityList.add(mainActivity);
+        return mainActivity;
+    }
+
     public static BaseActivity getTopActivity() {
         return activityList.get(activityList.size() - 1);
     }
@@ -114,7 +130,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
         @Override
         public void onSubscribe(@NonNull Disposable d) {
             getTopActivity().mCompositeDisposable.add(d);
-            if (showLoading())getTopActivity().showLoadingDialog();
+            if (showLoading()) getTopActivity().showLoadingDialog();
         }
 
         @Override
@@ -133,7 +149,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
             if (showLoading()) getTopActivity().dismissLoadingDialog();
         }
 
-        public boolean showLoading(){
+        public boolean showLoading() {
             return true;
         }
     }

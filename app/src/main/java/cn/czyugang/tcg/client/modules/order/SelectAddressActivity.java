@@ -74,6 +74,10 @@ public class SelectAddressActivity extends BaseActivity {
         AddAddressActivity.startAddAddressActivityForAdd();
     }
 
+    public static String getAddressId(Intent data){
+        return data.getStringExtra("addressId");
+    }
+
     static class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> {
         private List<Address> list;
         private Activity activity;
@@ -90,6 +94,13 @@ public class SelectAddressActivity extends BaseActivity {
                     R.layout.item_select_address, parent, false));
         }
 
+        private void onSelect(String addressId){
+            Intent intent=new Intent();
+            intent.putExtra("addressId",addressId);
+            activity.setResult(Activity.RESULT_OK,intent);
+            activity.finish();
+        }
+
         @Override
         public void onBindViewHolder(Holder holder, int position) {
             if (selectAddress == null) selectAddress = list.get(0);
@@ -97,6 +108,7 @@ public class SelectAddressActivity extends BaseActivity {
             holder.name.setText(data.getLinkman() + "   " + data.getPhone());
             holder.location.setText(data.getAddress());
             holder.isDefault.setVisibility(data.isDefaultAddress() ? View.VISIBLE : View.GONE);
+            holder.isDisable.setVisibility(View.INVISIBLE);
             holder.edit.setOnClickListener(v -> {
                 AddAddressActivity.startAddAddressActivityForEdit(data);
             });
@@ -104,10 +116,12 @@ public class SelectAddressActivity extends BaseActivity {
             holder.select.setOnClickListener(v -> {
                 selectAddress = data;
                 notifyDataSetChanged();
+                onSelect(selectAddress.id);
             });
             holder.itemView.setOnClickListener(v -> {
                 selectAddress = data;
                 notifyDataSetChanged();
+                onSelect(selectAddress.id);
             });
         }
 

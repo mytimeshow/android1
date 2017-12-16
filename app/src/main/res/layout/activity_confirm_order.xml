@@ -183,7 +183,7 @@
         android:textColor="@color/text_orange"
         android:visibility="gone"
         />
-
+<include layout="@layout/view_split_bar_light"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"

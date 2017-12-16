@@ -20,6 +20,7 @@ import cn.czyugang.tcg.client.entity.TrolleyCheckResponse;
 import cn.czyugang.tcg.client.entity.TrolleyGoods;
 import cn.czyugang.tcg.client.entity.TrolleyStore;
 import cn.czyugang.tcg.client.modules.order.ConfirmOrderActivity;
+import cn.czyugang.tcg.client.utils.LogRui;
 
 /**
  * @author ruiaa
@@ -72,6 +73,7 @@ public class BottomBalanceView extends LinearLayout {
                 if (ErrorHandler.judge200(response)) {
                     for (TrolleyGoods sync : response.data)
                         sync.setInfoFromSyncToLocal(trolleyStore);
+                    LogRui.d("****onNext####同步购物车");
                     checkTrolley();
                 }
             }
@@ -94,6 +96,7 @@ public class BottomBalanceView extends LinearLayout {
             public void onNext(TrolleyCheckResponse response) {
                 super.onNext(response);
                 if (ErrorHandler.judge200(response)) {
+                    LogRui.d("****onNext####结算前检查购物车");
                     if (response.errorTrolleyGoods.isEmpty()) {
                         ConfirmOrderActivity.startConfirmOrderActivity(shoppingCartIds);
                     }

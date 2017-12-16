@@ -8,7 +8,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
-import cn.czyugang.tcg.client.common.MyApplication;
 
 /**
  * @author ruiaa
@@ -16,6 +15,11 @@ import cn.czyugang.tcg.client.common.MyApplication;
  */
 
 public class PayOrderActivity extends BaseActivity {
+
+    private String fromActivity="";
+    private String orderId="";
+
+
     public static void startPayOrderActivity( ){
         Intent intent=new Intent(getTopActivity(),PayOrderActivity.class);
         getTopActivity().startActivity(intent);

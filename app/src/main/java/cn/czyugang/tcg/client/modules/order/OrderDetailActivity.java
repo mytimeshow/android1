@@ -116,6 +116,8 @@ public class OrderDetailActivity extends BaseActivity {
             mapView.onCreate(savedInstanceState);
             initMapView();
         }
+
+
     }
 
     @Override

@@ -1,5 +1,6 @@
 package cn.czyugang.tcg.client.api;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -154,6 +155,33 @@ public class StoreApi {
         return UserOAuth.getInstance()
                 .get("api/auth/v1/product/shopping/shoppingCart/preSettle", map)
                 .map(s -> (OrderPreSettleResponse) JsonParse.fromJson(s, OrderPreSettleResponse.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    //结算购物车(下单)
+    public static Observable<Response<List<String>>> settleTrolley(OrderPreSettleResponse orderPreSettleResponse){
+        HashMap<String, Object> map = new HashMap<>();
+        List<HashMap<String,String>> deliveryWayList=new ArrayList<>();
+        for(OrderPreSettleResponse.StoreMoreInfo storeMoreInfo:orderPreSettleResponse.moreInfoHashMap.values()){
+            HashMap<String, String> deliveryMap = new HashMap<>();
+            deliveryMap.put("deliveryWay", OrderPreSettleResponse.StoreMoreInfo.transferDeliveryType(storeMoreInfo.selectedDeliveryWay));
+            deliveryMap.put("expectDeliveryTime",storeMoreInfo.selectedDeliveryTime);
+            deliveryMap.put("note",storeMoreInfo.noteToStore);
+            deliveryMap.put("storeId",storeMoreInfo.storeId);
+            deliveryWayList.add(deliveryMap);
+        }
+        List<String> shoppingCartIdList=new ArrayList<>();
+        for(TrolleyGoods trolleyGoods:orderPreSettleResponse.trolleyGoodsMap.values()){
+            shoppingCartIdList.add(trolleyGoods.trolleyId);
+        }
+        map.put("addressId",orderPreSettleResponse.address.id);
+        map.put("deliveryWayList",deliveryWayList);
+        map.put("shoppingCartIdList",shoppingCartIdList);
+
+        return UserOAuth.getInstance()
+                .post("api/auth/v1/product/shopping/shoppingCart/settle", map)
+                .map(s -> (Response<List<String>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class,new JsonParse.Type(List.class,String.class))))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

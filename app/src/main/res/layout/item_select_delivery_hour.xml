@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_40">
+
+    <TextView
+        android:id="@+id/item_name"
+        style="@style/text_14_dark_gray"
+        android:paddingLeft="@dimen/dp_10"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_vertical"/>
+
+    <TextView
+        android:id="@+id/item_price"
+        style="@style/text_12_dark_gray"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_gravity="center_vertical|right"/>
+
+</FrameLayout>
