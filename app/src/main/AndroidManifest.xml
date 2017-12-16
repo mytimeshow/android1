@@ -389,6 +389,7 @@
 
         <!--订单 确认/支付-->
         <activity android:name=".modules.order.ConfirmOrderActivity"/>
+        <activity android:name=".modules.order.OrderGoodsListActivity"/>
         <activity android:name=".modules.order.SelectAddressActivity"/>
         <activity android:name=".modules.order.SelectDeliveryActivity"/>
         <activity android:name=".modules.order.PayOrderActivity"/>
@@ -454,7 +455,6 @@
         <activity android:name=".modules.inform.InformLableContentActivity" />
         <activity android:name=".modules.inform.InformEditArticleActivity" />
         <activity android:name=".modules.inform.InformDetailsActivity" />
-        <activity android:name=".modules.inform.MySelfActivity" />
 
         <!--im-->
         <activity android:name=".modules.im.ImListActivity"/>

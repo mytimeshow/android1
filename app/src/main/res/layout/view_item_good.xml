@@ -2,10 +2,12 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_80"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingLeft="@dimen/dp_10"
     android:paddingRight="@dimen/dp_10"
     android:paddingTop="@dimen/dp_10"
+    android:paddingBottom="@dimen/dp_10"
     android:background="@color/white">
 
     <cn.czyugang.tcg.client.utils.img.ImgView
@@ -17,7 +19,7 @@
         />
 
     <TextView
-        android:id="@+id/item_goods_name"
+        android:id="@+id/item_name"
         style="@style/text_14_dark_gray"
         android:layout_toLeftOf="@+id/item_price"
         android:layout_toRightOf="@id/item_img"
@@ -27,13 +29,14 @@
         android:id="@+id/item_price"
         style="@style/text_14_dark_gray"
         android:layout_alignParentRight="true"
+        android:layout_marginLeft="@dimen/dp_10"
         android:text="￥99.99"/>
 
     <TextView
-        android:id="@+id/item_goods_spec"
+        android:id="@+id/item_spec"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/item_goods_name"
+        android:layout_below="@+id/item_name"
         android:layout_marginTop="@dimen/dp_6"
         android:layout_toLeftOf="@+id/item_price"
         android:layout_toRightOf="@id/item_img"
@@ -42,35 +45,49 @@
         android:textSize="@dimen/sp_12"/>
 
     <TextView
-        android:id="@+id/item_goods_tag"
+        android:id="@+id/item_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/item_goods_spec"
+        android:layout_below="@id/item_spec"
         android:layout_marginTop="@dimen/dp_6"
         android:layout_toLeftOf="@+id/item_price"
         android:layout_toRightOf="@id/item_img"
         android:text="商品标签"
         android:textColor="@color/main_light_blue"
         android:textSize="@dimen/sp_12"
+        android:visibility="gone"
+        />
+
+    <cn.czyugang.tcg.client.widget.LabelLayout
+        android:id="@+id/item_labels"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_spec"
+        android:layout_marginTop="@dimen/dp_6"
+        android:layout_toLeftOf="@+id/item_price"
+        android:layout_toRightOf="@id/item_img"
+        app:horizontal_spacing="@dimen/dp_10"
+        app:vertical_spacing="@dimen/dp_4"
         />
 
     <TextView
         android:id="@+id/item_price_origin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/item_goods_spec"
+        android:layout_alignBaseline="@+id/item_spec"
         android:layout_alignParentRight="true"
-        android:text="￥199.99"
+        android:text=""
         android:textColor="@color/text_light_gray"
         android:textSize="@dimen/sp_12"/>
 
     <TextView
-        android:id="@+id/item_one_nums"
+        android:id="@+id/item_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/item_goods_tag"
+        android:layout_below="@id/item_spec"
+        android:layout_marginTop="@dimen/dp_6"
         android:layout_alignParentRight="true"
-        android:text="￥199.99"
+        android:text="x2"
         android:textColor="@color/text_light_gray"
         android:textSize="@dimen/sp_12"/>
 

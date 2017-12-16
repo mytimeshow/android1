@@ -73,6 +73,7 @@ public class ImgView extends ImageView {
             }
             paint.setColor(0x7F000000);
             canvas.drawRect(0, getHeight() * 0.75f, getWidth(), getHeight(), paint);
+            canvas.drawRect(0, 0, getWidth(), getHeight()*0.25f, paint);
             paint.setColor(Color.WHITE);
             canvas.drawText(disCount, getWidth() / 2, getHeight() * 0.94f, paint);
         }

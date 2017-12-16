@@ -179,11 +179,11 @@ public class OrderListFragment extends BaseFragment {
             RecyclerView list;
             @BindView(R.id.item_list_one)
             View listOne;
-            @BindView(R.id.item_goods_name)
+            @BindView(R.id.item_name)
             TextView goodsName;
-            @BindView(R.id.item_goods_spec)
+            @BindView(R.id.item_spec)
             TextView spec;
-            @BindView(R.id.item_goods_tag)
+            @BindView(R.id.item_tag)
             TextView tags;
             @BindView(R.id.item_price)
             TextView price;

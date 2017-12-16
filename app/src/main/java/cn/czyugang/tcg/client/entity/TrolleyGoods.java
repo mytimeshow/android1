@@ -26,18 +26,20 @@ public class TrolleyGoods {
     @SerializedName("productType")
     public String productType;
     @SerializedName("realPrice")
-    public int realPrice;
+    public double realPrice;
 
 
     @SerializedName("productStoreId")
     public String goodId = "";
 
     public String name = "";
+    public String pic="";       //下单时
     public String spec = "";
     @SerializedName("tagList")
     public String specId = "";
     @SerializedName("storeInventoryId")
     public String storeInventoryId = "";
+    transient public List<String> label=null;
 
     @SerializedName("price")
     public double price = 0;
@@ -73,6 +75,10 @@ public class TrolleyGoods {
         price = good.showPrice;
         packagePrice = good.packagePrice;
         storeInventoryId = good.inventoryId;
+    }
+
+    public String getRealPriceStr(){
+        return String.format("￥%.2f", realPrice);
     }
 
     public String getPriceStr() {

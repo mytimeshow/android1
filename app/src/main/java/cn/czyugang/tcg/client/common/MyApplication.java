@@ -29,6 +29,8 @@ public class MyApplication extends Application {
     private static Application application;
     private static MyApplication myApplication;
     public Object activityTransferData = null;//用于activity跳转时中转大数据
+    public Object activityTransferDataTwo = null;//用于activity跳转时中转大数据
+    public Object activityTransferDataThree = null;//用于activity跳转时中转大数据
 
     public static Application getContext() {
         return application;

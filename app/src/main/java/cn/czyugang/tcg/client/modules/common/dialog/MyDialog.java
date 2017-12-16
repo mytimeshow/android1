@@ -67,6 +67,8 @@ public class MyDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (builder.layoutId > 0) {
             initCustom(inflater, container);
+        } else if (builder.oneButtonClick != null) {
+            initMsgWithOneButton(inflater, container);
         } else if (builder.title == null) {
             initMsg(inflater, container);
         } else {
@@ -79,6 +81,16 @@ public class MyDialog extends DialogFragment {
     public MyDialog show() {
         super.show(builder.activity.getSupportFragmentManager(), builder.createTime);
         return this;
+    }
+
+    private void initMsgWithOneButton(LayoutInflater inflater, @Nullable ViewGroup container) {
+        rootView = inflater.inflate(R.layout.dialog_message_one_button, container);
+        text(R.id.tv_title, builder.title);
+        text(R.id.tv_message, builder.contentStr);
+        text(R.id.tv_confirm, builder.oneButton);
+        onClick(R.id.tv_confirm, v -> {
+            builder.oneButtonClick.onClick(this);
+        });
     }
 
     private void initMsg(LayoutInflater inflater, @Nullable ViewGroup container) {
@@ -270,21 +282,21 @@ public class MyDialog extends DialogFragment {
     }
 
     //底部  回复+点赞+举报+取消 按钮
-    public static void informCommentOperationDialog(Activity activity,String content) {
+    public static void informCommentOperationDialog(Activity activity, String content) {
         MyDialog.Builder.newBuilder(activity)
                 .custom(R.layout.dialog_inform_comment_operation)
                 .width(-1)
                 .gravity(Gravity.BOTTOM)
                 .bindView(myDialog -> {
-                    TextView commentCotent=myDialog.rootView.findViewById(R.id.dialog_inform_commment_content);
+                    TextView commentCotent = myDialog.rootView.findViewById(R.id.dialog_inform_commment_content);
                     commentCotent.setText(content);
-                    CommonUtil.setTextViewLinesWithEllipsis(commentCotent,2);
+                    CommonUtil.setTextViewLinesWithEllipsis(commentCotent, 2);
                     myDialog.onClick(R.id.dialog_inform_commment_reply, v -> {
                         informCommentSendContentDialog(activity);
                         myDialog.dismiss();
                     })
                             .onClick(R.id.dialog_inform_commment_report, v -> {
-                                informCommentReportDialog(activity,content);
+                                informCommentReportDialog(activity, content);
                                 myDialog.dismiss();
                             })
                             .onClick(R.id.dialog_cancel);
@@ -302,15 +314,15 @@ public class MyDialog extends DialogFragment {
                 .width(-1)
                 .gravity(Gravity.BOTTOM)
                 .bindView(myDialog -> {
-                    TextView commentCotent=myDialog.rootView.findViewById(R.id.dialog_inform_commment_content);
+                    TextView commentCotent = myDialog.rootView.findViewById(R.id.dialog_inform_commment_content);
                     commentCotent.setText(content);
-                    CommonUtil.setTextViewLinesWithEllipsis(commentCotent,2);
+                    CommonUtil.setTextViewLinesWithEllipsis(commentCotent, 2);
                     myDialog.onClick(R.id.dialog_inform_commment_content_reply, v -> {
                         informCommentSendContentDialog(activity);
                         myDialog.dismiss();
                     })
                             .onClick(R.id.dialog_inform_commment_content_report, v -> {
-                                informCommentReportDialog(activity,content);
+                                informCommentReportDialog(activity, content);
                                 myDialog.dismiss();
                             })
                             .onClick(R.id.dialog_cancel);
@@ -321,35 +333,36 @@ public class MyDialog extends DialogFragment {
     }
 
     //底部  举报详情+取消 按钮
-    public static void informCommentReportDialog(Activity activity,String content) {
+    public static void informCommentReportDialog(Activity activity, String content) {
         MyDialog.Builder.newBuilder(activity)
                 .custom(R.layout.dialog_inform_comment_report)
                 .width(-1)
                 .gravity(Gravity.BOTTOM)
-                .bindView(myDialog -> {;
+                .bindView(myDialog -> {
+                    ;
                     myDialog.onClick(R.id.dialog_cancel)
                             .onClick(R.id.dialog_inform_commment_content_report_list1, v -> {
-                                TextView commentCotent=myDialog.rootView.findViewById(R.id.dialog_inform_commment_content);
+                                TextView commentCotent = myDialog.rootView.findViewById(R.id.dialog_inform_commment_content);
                                 commentCotent.setText(content);
-                                CommonUtil.setTextViewLinesWithEllipsis(commentCotent,2);
-                                Toast.makeText(activity,"垃圾营销",Toast.LENGTH_SHORT).show();
+                                CommonUtil.setTextViewLinesWithEllipsis(commentCotent, 2);
+                                Toast.makeText(activity, "垃圾营销", Toast.LENGTH_SHORT).show();
                                 myDialog.dismiss();
                             })
                             .onClick(R.id.dialog_inform_commment_content_report_list2, v -> {
-                                Toast.makeText(activity,"违法信息",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(activity, "违法信息", Toast.LENGTH_SHORT).show();
                                 myDialog.dismiss();
                             })
                             .onClick(R.id.dialog_inform_commment_content_report_list3, v -> {
-                                Toast.makeText(activity,"有害信息",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(activity, "有害信息", Toast.LENGTH_SHORT).show();
                                 myDialog.dismiss();
                             })
                             .onClick(R.id.dialog_inform_commment_content_report_list4, v -> {
-                                Toast.makeText(activity,"不实信息",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(activity, "不实信息", Toast.LENGTH_SHORT).show();
                                 myDialog.dismiss();
 
                             })
                             .onClick(R.id.dialog_inform_commment_content_report_list5, v -> {
-                                Toast.makeText(activity,"内容抄袭",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(activity, "内容抄袭", Toast.LENGTH_SHORT).show();
                                 myDialog.dismiss();
                             });
                 })
@@ -379,13 +392,13 @@ public class MyDialog extends DialogFragment {
                 .widthPercent(0.8f)
                 .gravity(Gravity.CENTER)
                 .bindView(myDialog -> {
-                    EditText source=myDialog.rootView.findViewById(R.id.edit_article_source);
-                    TextView btnOK=myDialog.rootView.findViewById(R.id.btnOK);
-                    btnOK.setBackgroundResource(source.getText().toString().equals("")||source.getText()==null?R.drawable.bg_rect_dark_grey:R.drawable.bg_rect_black);
-                    myDialog.onClick(R.id.btnOK,v -> {
-                        if (source.getText().equals("")){
+                    EditText source = myDialog.rootView.findViewById(R.id.edit_article_source);
+                    TextView btnOK = myDialog.rootView.findViewById(R.id.btnOK);
+                    btnOK.setBackgroundResource(source.getText().toString().equals("") || source.getText() == null ? R.drawable.bg_rect_dark_grey : R.drawable.bg_rect_black);
+                    myDialog.onClick(R.id.btnOK, v -> {
+                        if (source.getText().equals("")) {
 
-                        }else {
+                        } else {
                             myDialog.dismiss();
                         }
                     });

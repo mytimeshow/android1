@@ -55,6 +55,8 @@ public class FlowLayout extends ViewGroup {
         verticalSpacing = pixelSize;
     }
 
+
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int myWidth = resolveSize(0, widthMeasureSpec);

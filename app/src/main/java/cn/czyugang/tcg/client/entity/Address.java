@@ -11,20 +11,33 @@ import java.util.List;
  */
 
 public class Address implements Parcelable {
-    private String address;
-    private String area;
-    private String building;
-    private String city;
-    private String coordinates;
-    private String defaultAddress;
-    private String id;
-    private String linkman;
-    private String phone;
-    private String province;
-    private String sex;
-    private String street;
-    private String tag;
-    private String type;//收货地址RECEIVED、跑腿取货地址/买货地址-OBTAIN
+    public String address;
+    public String area;
+    public String building;
+    public String city;
+    public String coordinates;
+    public String defaultAddress;
+    public String id;
+    public String linkman;
+    public String phone;
+    public String province;
+    public String sex;
+    public String street;
+    public String tag;
+    public String type;//收货地址RECEIVED、跑腿取货地址/买货地址-OBTAIN
+
+    public boolean isDefaultAddress(){
+        return defaultAddress.equals("YES");
+    }
+
+    public boolean isReceivedAddress(){
+        return "RECEIVED".equals(type);
+    }
+
+    public String getLinkmanAndPhone(){
+        return linkman+"   "+phone;
+    }
+
 
     protected Address(Parcel in) {
         address = in.readString();
@@ -53,14 +66,6 @@ public class Address implements Parcelable {
             return new Address[size];
         }
     };
-
-    public boolean isDefaultAddress(){
-        return defaultAddress.equals("YES");
-    }
-
-    public boolean isReceivedAddress(){
-        return "RECEIVED".equals(type);
-    }
 
     public String getAddress() {
         return address;

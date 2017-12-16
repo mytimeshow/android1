@@ -10,7 +10,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
-import cn.czyugang.tcg.client.common.MyApplication;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 
 /**
@@ -23,17 +22,17 @@ import cn.czyugang.tcg.client.utils.img.ImgView;
 public class AftersaleServiceActivity extends BaseActivity {
     @BindView(R.id.item_img)
     ImgView godsImg;
-    @BindView(R.id.item_goods_name)
+    @BindView(R.id.item_name)
     TextView goodsName;
     @BindView(R.id.item_price)
     TextView goodsPrice;
-    @BindView(R.id.item_goods_spec)
+    @BindView(R.id.item_spec)
     TextView goodsSpec;
-    @BindView(R.id.item_goods_tag)
+    @BindView(R.id.item_tag)
     TextView goodsTag;
     @BindView(R.id.item_price_origin)
     TextView goodsPriceOrigin;
-    @BindView(R.id.item_one_nums)
+    @BindView(R.id.item_num)
     TextView goodsNum;
 
     public static void startAftersaleServiceActivity() {

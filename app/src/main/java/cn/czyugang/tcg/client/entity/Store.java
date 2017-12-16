@@ -63,24 +63,14 @@ public class Store {
     public String createTime;
     @SerializedName("deleteFlag")
     public String deleteFlag;       //是否删除(DELETED：删除,NORMAL:正常)
-    @SerializedName("deliverysEnable")
-    public String deliverysEnable;
     @SerializedName("id")
     public String id;
     @SerializedName("isAdvanceBooking")
     public String isAdvanceBooking;
     @SerializedName("isCatering")
     private String isCatering;       //接口错误，是否是餐饮业（YES-是，NO-否）
-    @SerializedName("isExpress")
-    public String isExpress;
     @SerializedName("isNonBusinessHours")
     public String isNonBusinessHours;
-    @SerializedName("isPlatformLogistics")
-    public String isPlatformLogistics;      //是否支持配送（平台配送）（YES-是，NO-否）
-    @SerializedName("isSince")
-    public String isSince;
-    @SerializedName("isStoreLogistics")
-    public String isStoreLogistics;
     @SerializedName("name")
     public String name;
     @SerializedName("nonBusinessHoursRange")
@@ -93,6 +83,21 @@ public class Store {
     public String status;       //状态（NORMAL-正常，FORBIDDEN-禁用）
     @SerializedName("updateTime")
     public String updateTime;
+
+    /*
+    *   配送
+    * */
+    @SerializedName("deliverysEnable")
+    public String deliverysEnable;      //已开启的配送方式（自提-S；快递-E；平台配送-PL；商家配送-SL）用“,”隔开
+    @SerializedName("isExpress")
+    public String isExpress;            //是否支持快递（YES-是，NO-否）
+    @SerializedName("isSince")
+    public String isSince;              //是否支持自提（YES-是，NO-否）
+    @SerializedName("isPlatformLogistics")
+    public String isPlatformLogistics;  //是否支持配送（平台配送）（YES-是，NO-否）
+    @SerializedName("isStoreLogistics")
+    public String isStoreLogistics;     //是否支持配送（商家配送）（YES-是，NO-否）
+
 
     public boolean isFoodStore = false;
     public boolean collected = false;

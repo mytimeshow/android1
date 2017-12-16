@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import cn.czyugang.tcg.client.R;
+import io.reactivex.annotations.Nullable;
 
 /**
  * Created by ruiaa on 2016/10/30.
@@ -36,6 +37,11 @@ public class LabelLayout extends FlowLayout {
         }
     }
 
+    public LabelLayout setLabelId(int labelId) {
+        this.labelId = labelId;
+        return this;
+    }
+
     public void clear(){
         removeAllViews();
     }
@@ -45,7 +51,7 @@ public class LabelLayout extends FlowLayout {
         setTexts(Arrays.asList(strings));
     }
 
-    public void setTexts(List<String> list){
+    public void setTexts(@Nullable List<String> list){
         if (list==null) return;
         if (haveAdd){
             removeAllViews();

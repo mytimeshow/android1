@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
     <!--店名-->
     <LinearLayout
@@ -58,6 +59,7 @@
             android:id="@+id/confirm_order_goods"
             android:layout_width="@dimen/dp_280"
             android:layout_height="@dimen/dp_80"
+            android:padding="@dimen/dp_10"
             />
 
         <TextView
@@ -73,6 +75,56 @@
             android:textColor="@color/text_dark_gray"
             android:textSize="@dimen/sp_14"
             />
+    </LinearLayout>
+    <!--配送方式-->
+    <LinearLayout
+        android:id="@+id/confirm_order_deliveryL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <include layout="@layout/view_split_bar_light_margin"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/dp_15"
+                android:layout_height="@dimen/dp_15"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_5"
+                android:src="@drawable/icon_delivery"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="配送方式"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/sp_14"
+                />
+
+            <include layout="@layout/space_h"/>
+
+            <TextView
+                android:id="@+id/confirm_order_delivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="平台配送"
+                android:textColor="@color/text_dark_gray"
+                android:textSize="@dimen/sp_14"
+                />
+
+            <ImageView
+                android:layout_width="@dimen/dp_15"
+                android:layout_height="@dimen/dp_15"
+                android:layout_marginLeft="@dimen/dp_6"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@drawable/ic_goto_arrow"/>
+        </LinearLayout>
+
     </LinearLayout>
 
     <View
