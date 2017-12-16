@@ -92,6 +92,8 @@ public class Inform {
     public String commentNum;
     public String thumbNum;
     public boolean isThumbs;
+    public boolean isFollow;
+    public String followNum;
     public String userName;
     String bannerImg;
 
