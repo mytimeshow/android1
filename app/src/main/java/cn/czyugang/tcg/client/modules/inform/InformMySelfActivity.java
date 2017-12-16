@@ -47,6 +47,20 @@ public class InformMySelfActivity extends BaseActivity {
 
     @BindView(R.id.myself_title_bg)
     FrameLayout frameTitle;
+    @BindView(R.id.myself_name)
+    TextView mySelfName;
+    @BindView(R.id.myself_description)
+    TextView mySelfDescription;
+    @BindView(R.id.myself_follow_num)
+    TextView mySelfFollowNum;
+    @BindView(R.id.myself_fans_num)
+    TextView mySelfFansNum;
+    @BindView(R.id.myself_article_num)
+    TextView mySelfArticleNum;
+
+    @BindView(R.id.myself_head)
+    ImgView mySelfHead;
+
 
     List<MyInform> myInforms=new ArrayList<MyInform>();
     MyInformAdapter myInformAdapter;
@@ -60,28 +74,10 @@ public class InformMySelfActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inform_myself);
         ButterKnife.bind(this);
-
-
-//
-//        MyInform myInform=new MyInform();
-//        myInform.setCommitNum("46121");
-//        myInform.setType("发表了文章");
-//        myInform.setContent("哈哈哈哈或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或");
-//        MyInform myInform2=new MyInform();
-//        myInform2.setCommitNum("7685446");
-//        myInform2.setType("赞同了评论");
-//        myInform2.setContent("内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容");
-//
-//        myInforms.add(myInform);
-//        myInforms.add(myInform2);
-//        myInforms.add(myInform);
-//        myInforms.add(myInform);
-//        myInforms.add(myInform);
-//        myInforms.add(myInform2);
-//        myInforms.add(myInform2);
-//        myInforms.add(myInform);
-//        myInforms.add(myInform);
-
+        MyInformResponse myInformResponsel=new MyInformResponse();
+        mySelfFollowNum.setText(String.valueOf(myInformResponsel.followCount));
+        mySelfFansNum.setText(String.valueOf(myInformResponsel.fansCount));
+        mySelfArticleNum.setText(String.valueOf(myInformResponsel.articleCount));
         refreshInform(true);
 
 
@@ -134,7 +130,6 @@ public class InformMySelfActivity extends BaseActivity {
             CommonUtil.setTextViewLinesWithEllipsis(holder.commitContent,1);
             holder.informContent.setText(data.getContent());
             holder.informCommitNum.setText(data.getCommitNum());
-            holder.commitContent.setText(data.getCommitContent());
 
             if(data.getType().equals("INFO")){
                 holder.informType.setText("发表了文章");
@@ -143,18 +138,24 @@ public class InformMySelfActivity extends BaseActivity {
             else if(data.getType().equals("COMMENT")){
                 holder.informType.setText("评论了文章");
                 holder.commit.setVisibility(View.VISIBLE);
+                holder.commitContent.setText(data.commitName+"："+data.getCommitContent());
             }
             else if(data.getType().equals("REPLY")){
                 holder.informType.setText("回复了评论");
+                holder.commitHead.setVisibility(View.GONE);
                 holder.commit.setVisibility(View.VISIBLE);
+                holder.commitContent.setText(data.commitName+" 回复了 "+data.replyName+"："+data.commitContent);
             }
             else if(data.getType().equals("LIKE_COMMENT")){
                 holder.informType.setText("点赞并且评论了资讯");
                 holder.commit.setVisibility(View.VISIBLE);
+                holder.commitContent.setText(data.commitName+"："+data.commitContent);
             }
             else if(data.getType().equals("LIKE_REPLY")){
                 holder.informType.setText("点赞并且回复了评论");
+                holder.commitHead.setVisibility(View.GONE);
                 holder.commit.setVisibility(View.VISIBLE);
+                holder.commitContent.setText(data.commitName+" 回复了 "+data.replyName+"："+data.getCommitContent());
             }
             else if(data.getType().equals("LIKE_INFO")){
                 holder.informType.setText("点赞了资讯");
@@ -191,7 +192,6 @@ public class InformMySelfActivity extends BaseActivity {
             TextView informContent;
             TextView informCommitNum;
             LinearLayout typeLinearLayout;
-
 
             //评论详情部分
             RelativeLayout commit;

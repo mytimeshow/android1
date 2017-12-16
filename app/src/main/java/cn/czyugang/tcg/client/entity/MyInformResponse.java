@@ -1,5 +1,7 @@
 package cn.czyugang.tcg.client.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -7,7 +9,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.czyugang.tcg.client.utils.JsonParse;
 import cn.czyugang.tcg.client.utils.LogRui;
 
 /**
@@ -17,7 +18,39 @@ import cn.czyugang.tcg.client.utils.LogRui;
 public class MyInformResponse extends  Response<List<MyInform>> {
 
 
+
     public List<String> myInformCotentList=new ArrayList<>();
+    /**
+     * articleCount : 0
+     * createTime : 2017-12-16T01:50:37.828Z
+     * deleteFlag : string
+     * fansCount : 0
+     * followCount : 0
+     * id : string
+     * updateTime : 2017-12-16T01:50:37.828Z
+     * userId : string
+     * wordCount : 0
+     */
+
+    @SerializedName("articleCount")
+    public int articleCount;
+    @SerializedName("createTime")
+    public String createTime;
+    @SerializedName("deleteFlag")
+    public String deleteFlag;
+    @SerializedName("fansCount")
+    public int fansCount;
+    @SerializedName("followCount")
+    public int followCount;
+    @SerializedName("id")
+    public String id;
+    @SerializedName("updateTime")
+    public String updateTime;
+    @SerializedName("userId")
+    public String userId;
+    @SerializedName("wordCount")
+    public int wordCount;
+
 
     public void parse(){
 
@@ -114,14 +147,14 @@ public class MyInformResponse extends  Response<List<MyInform>> {
                     String id=jsonObject.getString("id");
                     for (MyInform myInform:data){
                         if (myInform.objectId.equals(id)){
-                            myInform.commitContent=jsonObject.getString("name");
+                            myInform.replyContent=jsonObject.getString("name");
                         }
                     }
                 }
 
             }
 
-            //资讯评论者id/回复者id
+           //资讯评论者id/回复者id
             JSONArray infoIdToUserIdArray=values.optJSONArray("objectIdToUserIdDict");
             if (infoIdToUserIdArray!=null&&infoIdToUserIdArray.length()!=0) {
                 for (int i=0,size=infoIdToUserIdArray.length();i<size;i++){
@@ -129,7 +162,21 @@ public class MyInformResponse extends  Response<List<MyInform>> {
                     String id=jsonObject.getString("id");
                     for (MyInform myInform:data){
                         if (myInform.objectId.equals(id)){
-                            myInform.commitContent=jsonObject.getString("name");
+                           //myInform.commitContent=jsonObject.getString("name");
+                        }
+                    }
+                }
+
+            }
+            //资讯评论者/回复者
+            JSONArray infoIdToUserNameArray=values.optJSONArray("objectIdToUserNameDict");
+            if (infoIdToUserNameArray!=null&&infoIdToUserNameArray.length()!=0) {
+                for (int i=0,size=infoIdToUserNameArray.length();i<size;i++){
+                    JSONObject jsonObject=infoIdToUserNameArray.getJSONObject(i);
+                    String id=jsonObject.getString("id");
+                    for (MyInform myInform:data){
+                        if (myInform.objectId.equals(id)){
+                           myInform.commitName=jsonObject.getString("name");
                         }
                     }
                 }
@@ -144,7 +191,7 @@ public class MyInformResponse extends  Response<List<MyInform>> {
                     String id=jsonObject.getString("id");
                     for (MyInform myInform:data){
                         if (myInform.objectId.equals(id)){
-                            myInform.commitContent=jsonObject.getString("name");
+                            myInform.commitHead=jsonObject.getString("name");
                         }
                     }
                 }
@@ -159,7 +206,7 @@ public class MyInformResponse extends  Response<List<MyInform>> {
                     String id=jsonObject.getString("id");
                     for (MyInform myInform:data){
                         if (myInform.objectId.equals(id)){
-                            myInform.commitContent=jsonObject.getString("name");
+                            //myInform.commitContent=jsonObject.getString("name");
                         }
                     }
                 }
@@ -174,16 +221,25 @@ public class MyInformResponse extends  Response<List<MyInform>> {
                     String id=jsonObject.getString("id");
                     for (MyInform myInform:data){
                         if (myInform.objectId.equals(id)){
-                            myInform.commitContent=jsonObject.getString("name");
+                            myInform.replyName=jsonObject.getString("name");
                         }
                     }
                 }
 
             }
 
+
             //用户资讯统计信息
+            //粉丝数量
             JSONObject userDetail=values.getJSONObject("userInfoCount");
-            userDetail.getString("fansCount");
+            MyInform myInform=new MyInform();
+            fansCount=userDetail.getInt("fansCount");
+            wordCount=userDetail.getInt("wordCount");
+            createTime=userDetail.getString("createTime");
+            deleteFlag=userDetail.getString("deleteFlag");
+            articleCount=userDetail.getInt("articleCount");
+            followCount=userDetail.getInt("followCount");
+
 
         }catch (JSONException e){
 

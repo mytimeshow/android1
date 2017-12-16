@@ -72,6 +72,7 @@
                 android:layout_marginRight="@dimen/dp_10"
                 android:layout_toLeftOf="@+id/inform_for_myself_img"
                 android:lineSpacingExtra="@dimen/dp_5"
+                android:gravity="left"
                 android:lines="2"
                 android:text="内容内容内容内容内容内容内容内容内容内容" />
 

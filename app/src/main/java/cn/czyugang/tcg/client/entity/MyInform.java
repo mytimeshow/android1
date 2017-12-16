@@ -20,7 +20,7 @@ public class MyInform {
     @SerializedName("type")
     public String type;
     @SerializedName("createTime")
-    public String time;
+    public String createTime;
     @SerializedName("name")
     public String name;
     @SerializedName("id")
@@ -43,6 +43,10 @@ public class MyInform {
     public String commitContent;
     public String commitHead;
     public String title="";
+    public String replyName; // 回复者名
+    public String commitName; // 评论者名
+    public String replyContent; // 回复内容
+
 
 
     public void MyInform(){
@@ -57,11 +61,11 @@ public class MyInform {
     }
 
     public String getTime() {
-        return time;
+        return createTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setTime(String createTime) {
+        this.createTime = createTime;
     }
 
     public String getCommitNum() {

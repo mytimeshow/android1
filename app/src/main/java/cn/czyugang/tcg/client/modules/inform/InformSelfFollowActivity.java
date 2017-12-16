@@ -49,14 +49,14 @@ public class InformSelfFollowActivity extends BaseActivity {
         tvTitleName.setText(titleName);
         List<Inform> informColumns=new ArrayList<Inform>();
         Inform informColumn=new Inform();
-        informColumn.setName("宇宙无敌大帅比");
-        informColumn.setFollow(false);
-        informColumn.setFollowNum("442455");
+        informColumn.name=("宇宙无敌大帅比");
+        informColumn.isFollow=(false);
+        informColumn.followNum=("442455");
         informColumns.add(informColumn);
         Inform informColumn2=new Inform();
-        informColumn2.setName("Amshine");
-        informColumn2.setFollow(true);
-        informColumn2.setFollowNum("6746341");
+        informColumn2.name=("Amshine");
+        informColumn2.isFollow=(true);
+        informColumn2.followNum=("6746341");
         informColumns.add(informColumn2);
         informColumns.add(informColumn2);
         informColumns.add(informColumn);
@@ -83,9 +83,9 @@ public class InformSelfFollowActivity extends BaseActivity {
         @Override
         public void onBindViewHolder(Holder holder, int position) {
             Inform data=list.get(position);
-            holder.follwFansName.setText(data.getName());
-            holder.follwFansFollwNum.setText(data.getFollowNum());
-            if(data.isFollow()){
+            holder.follwFansName.setText(data.name);
+            holder.follwFansFollwNum.setText(data.followNum);
+            if(data.isFollow){
                 holder.isFollow.setText("已关注");
                 holder.isFollow.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
             }else{

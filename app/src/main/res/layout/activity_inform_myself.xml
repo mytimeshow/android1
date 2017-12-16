@@ -74,6 +74,7 @@
                     android:text="翻滚的泡芙" />
 
                 <TextView
+                    android:id="@+id/myself_description"
                     style="@style/text_12_dark_gray"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -112,6 +113,7 @@
                             android:textSize="@dimen/sp_11" />
 
                         <TextView
+                            android:id="@+id/myself_follow_num"
                             style="@style/text_14_dark_gray"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -138,6 +140,7 @@
                             android:textSize="@dimen/sp_11" />
 
                         <TextView
+                            android:id="@+id/myself_fans_num"
                             style="@style/text_14_dark_gray"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -165,6 +168,7 @@
                             android:textSize="@dimen/sp_11" />
 
                         <TextView
+                            android:id="@+id/myself_article_num"
                             style="@style/text_14_dark_gray"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

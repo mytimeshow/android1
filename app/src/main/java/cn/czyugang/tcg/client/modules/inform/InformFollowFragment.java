@@ -1,7 +1,6 @@
 package cn.czyugang.tcg.client.modules.inform;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +17,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.api.InformApi;
 import cn.czyugang.tcg.client.base.BaseFragment;
-import cn.czyugang.tcg.client.base.BaseRecyclerAdapter;
-import cn.czyugang.tcg.client.entity.FollowCotent;
+import cn.czyugang.tcg.client.entity.FollowInform;
+import cn.czyugang.tcg.client.entity.FollowInformResponse;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.widget.LabelLayout;
 
@@ -52,6 +51,8 @@ public class InformFollowFragment extends BaseFragment {
 
     private int CLICK_TYPE;
 
+    FollowContentAdapter followContentAdapter;
+
 
     public static InformFollowFragment newInstance() {
         InformFollowFragment fragment = new InformFollowFragment();
@@ -69,7 +70,7 @@ public class InformFollowFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, rootView);
 
         onAllFollow();
-
+        refreshInform(true,"ALL");
         List<String> list = new ArrayList<>();
         list.add("全部栏目");
         list.add("电影扒客");
@@ -149,28 +150,42 @@ public class InformFollowFragment extends BaseFragment {
     }
 
     private void init() {
-        List<FollowCotent> followCotentsList = new ArrayList<FollowCotent>();
-        FollowCotent followCotent = new FollowCotent();
-        followCotent.setName("博主名称");
+
+
+  /*      followCotent.setName("博主名称");
         followCotent.setContent("内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容");
         followCotent.setCommentNum("1234567");
         followCotent.setThumbNum("777777777");
         followCotentsList.add(followCotent);
         followCotentsList.add(followCotent);
         followCotentsList.add(followCotent);
-        followCotentsList.add(followCotent);
-        FollowContentAdapter followContentAdapter = new FollowContentAdapter(followCotentsList,getActivity());
-        lvInformFollow.setLayoutManager(new LinearLayoutManager(getActivity()));
-        lvInformFollow.setAdapter(followContentAdapter);
+        followCotentsList.add(followCotent);*/
 
+       /* lvInformFollow.setLayoutManager(new LinearLayoutManager(getActivity()));
+        lvInformFollow.setAdapter(followContentAdapter);
+*/
     }
 
-
+    private void refreshInform(boolean firstLoad,String type) {
+        InformApi.getFollowInform(type).subscribe(new NetObserver<FollowInformResponse>() {
+            @Override
+            public void onNext(FollowInformResponse response) {
+                super.onNext(response);
+                //Toast.makeText(InformMySelfActivity.this,response.data.toString(),Toast.LENGTH_SHORT).show();
+                response.parse();
+                List<FollowInform> followCotentsList = new ArrayList<FollowInform>();
+                //followCotentsList.addAll(response.data);
+                followContentAdapter = new FollowContentAdapter(followCotentsList,getActivity());
+                lvInformFollow.setLayoutManager(new LinearLayoutManager(getActivity()));
+                lvInformFollow.setAdapter(followContentAdapter);
+            }
+        });
+    }
      public static class FollowContentAdapter extends RecyclerView.Adapter<FollowContentAdapter.Holder> {
-        private List<FollowCotent> list;
+        private List<FollowInform> list;
         private Activity activity;
 
-        public FollowContentAdapter(List<FollowCotent> list, Activity activity) {
+        public FollowContentAdapter(List<FollowInform> list, Activity activity) {
             this.list = list;
             this.activity = activity;
         }
@@ -181,11 +196,11 @@ public class InformFollowFragment extends BaseFragment {
         }
         @Override
         public void onBindViewHolder(Holder holder, int position) {
-            FollowCotent data=list.get(position);
-            holder.followCommitNum.setText(data.getCommentNum());
-            holder.followThumbNum.setText(data.getThumbNum());
-            holder.followName.setText(data.getName());
-            holder.followContent.setText(data.getContent());
+            FollowInform data=list.get(position);
+            holder.followCommitNum.setText(data.commentNum);
+            holder.followThumbNum.setText(data.thumbNum);
+            holder.followName.setText(data.userName);
+            holder.followContent.setText(data.content);
             holder.itemView.setOnClickListener(v -> {
                 InformOrderSelfActivity.startInformOrderSelfActivity();
             });

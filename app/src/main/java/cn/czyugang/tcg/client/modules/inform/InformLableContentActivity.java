@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
-import cn.czyugang.tcg.client.entity.FollowCotent;
+import cn.czyugang.tcg.client.entity.FollowInform;
 
 /**
  * Created by Administrator on 2017/12/11.
@@ -45,12 +44,12 @@ public class InformLableContentActivity extends BaseActivity {
 
         tvTitleName.setText(titleName);
 
-        List<FollowCotent> followCotentsList = new ArrayList<FollowCotent>();
-        FollowCotent followCotent = new FollowCotent();
-        followCotent.setName("博主名称");
-        followCotent.setContent("内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容");
-        followCotent.setCommentNum("1234567");
-        followCotent.setThumbNum("777777777");
+        List<FollowInform> followCotentsList = new ArrayList<FollowInform>();
+        FollowInform followCotent = new FollowInform();
+        followCotent.name=("博主名称");
+        followCotent.content=("内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容");
+        followCotent.commentNum=("1234567");
+        followCotent.thumbNum=("777777777");
         followCotentsList.add(followCotent);
         followCotentsList.add(followCotent);
         followCotentsList.add(followCotent);

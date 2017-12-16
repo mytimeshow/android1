@@ -3,12 +3,11 @@ package cn.czyugang.tcg.client.entity;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by Administrator on 2017/12/6.
+ * Created by Administrator on 2017/12/5.
  */
 
-public class Inform {
-
-
+public class FollowInform {
+    //资讯-->关注列表-->内容
 
     /**
      * city : string  //应用城市
@@ -93,11 +92,10 @@ public class Inform {
     public String thumbNum;
     public boolean isThumbs;
     public String userName;
-    String bannerImg;
 
-    public void InformColumn(){
+    public void FollowCotent(){
+
 
     }
-
 
 }

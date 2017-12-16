@@ -10,10 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +25,6 @@ import cn.czyugang.tcg.client.entity.Inform;
 import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.img.ImgView;
-import cn.czyugang.tcg.client.utils.storage.AppKeyStorage;
 
 /**
  * Created by Administrator on 2017/12/9.
@@ -71,8 +68,8 @@ public class InformColumnMsgActivity extends BaseActivity {
         List<Inform> list = new ArrayList<Inform>();
         Inform informColumn = new Inform();
         Inform informColumn2 = new Inform();
-        informColumn.setContent("行走的鸡腿");
-        informColumn2.setContent("天天吃吃吃");
+        informColumn.content=("行走的鸡腿");
+        informColumn2.content=("天天吃吃吃");
         list.add(informColumn);
         list.add(informColumn2);
         list.add(informColumn2);
@@ -133,7 +130,7 @@ public class InformColumnMsgActivity extends BaseActivity {
         @Override
         public void onBindViewHolder(SmallInformAdapter.Holder holder, int position) {
             Inform informSmallColumnData = list.get(position);
-            holder.informSmallContent.setText(informSmallColumnData.getContent());
+            holder.informSmallContent.setText(informSmallColumnData.content);
         }
 
         @Override

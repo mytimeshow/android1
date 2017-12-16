@@ -49,8 +49,8 @@ public class InformNewsFragment extends BaseFragment {
         List<Inform> list=new ArrayList<Inform>();
         Inform informColumn=new Inform();
         Inform informColumn2=new Inform();
-        informColumn.setName("行走的鸡腿");
-        informColumn2.setName("天天吃吃吃");
+        informColumn.name=("行走的鸡腿");
+        informColumn2.name=("天天吃吃吃");
         //1234
         list.add(informColumn);
         list.add(informColumn2);
@@ -166,12 +166,12 @@ public class InformNewsFragment extends BaseFragment {
 
                 case R.layout.item_inform_news_large:
 
-                    holder.newsLargePersonName.setText(newsSmallColumnData.getName());
+                    holder.newsLargePersonName.setText(newsSmallColumnData.name);
                     break;
 
                 case R.layout.item_inform_news_small:
 
-                    holder.newsSmallName.setText(newsSmallColumnData.getName());
+                    holder.newsSmallName.setText(newsSmallColumnData.name);
                     break;
             }
 

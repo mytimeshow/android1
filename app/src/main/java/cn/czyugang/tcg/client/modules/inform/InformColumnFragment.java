@@ -49,16 +49,16 @@ public class InformColumnFragment extends BaseFragment {
 
         List<Inform> informColumns=new ArrayList<Inform>();
         Inform informColumn=new Inform();
-        informColumn.setName("宇宙无敌大帅比");
-        informColumn.setContent("啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦");
-        informColumn.setFollow(false);
-        informColumn.setFollowNum("442455");
+        informColumn.name=("宇宙无敌大帅比");
+        informColumn.content=("啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦");
+        informColumn.isFollow=(false);
+        informColumn.followNum=("442455");
         informColumns.add(informColumn);
         Inform informColumn2=new Inform();
-        informColumn2.setName("Amshine");
-        informColumn2.setContent("哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈 ");
-        informColumn2.setFollow(true);
-        informColumn2.setFollowNum("6746341");
+        informColumn2.name=("Amshine");
+        informColumn2.content=("哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈 ");
+        informColumn2.isFollow=(true);
+        informColumn2.followNum=("6746341");
         informColumns.add(informColumn2);
         informColumns.add(informColumn2);
         informColumns.add(informColumn);
@@ -95,10 +95,10 @@ public class InformColumnFragment extends BaseFragment {
         @Override
         public void onBindViewHolder(Holder holder, int position) {
             Inform data=list.get(position);
-            holder.columnName.setText(data.getName());
-            holder.columnContent.setText(data.getContent());
-            holder.columnFollowNum.setText(data.getFollowNum());
-            if(data.isFollow()){
+            holder.columnName.setText(data.name);
+            holder.columnContent.setText(data.content);
+            holder.columnFollowNum.setText(data.followNum);
+            if(data.isFollow){
                 holder.columnIsFollow.setText("已关注");
                 holder.columnIsFollow.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
             }else{
@@ -110,9 +110,9 @@ public class InformColumnFragment extends BaseFragment {
                 InformColumnMsgActivity.startInformOrderMsgActivity();
             });
             holder.columnIsFollow.setOnClickListener(v -> {
-                holder.columnIsFollow.setText(data.isFollow()?"+关注":"已关注");
-                holder.columnIsFollow.setBackgroundResource(data.isFollow()?R.drawable.bg_rect_cir_red:R.drawable.bg_rect_cir_grey_ccc);
-                data.setFollow(data.isFollow()?false:true);
+                holder.columnIsFollow.setText(data.isFollow?"+关注":"已关注");
+                holder.columnIsFollow.setBackgroundResource(data.isFollow?R.drawable.bg_rect_cir_red:R.drawable.bg_rect_cir_grey_ccc);
+                data.isFollow=(data.isFollow?false:true);
                 MyDialog.informEditLinkDialog(activity);
                 MyDialog.informEditSourceDialog(activity);
             });
