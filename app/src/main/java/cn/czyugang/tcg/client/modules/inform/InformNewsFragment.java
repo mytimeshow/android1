@@ -17,8 +17,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.api.InformApi;
+import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.entity.Inform;
+import cn.czyugang.tcg.client.entity.NewsInformResponse;
+import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 
 /**
@@ -30,6 +34,8 @@ public class InformNewsFragment extends BaseFragment {
 
     @BindView(R.id.inform_news_list)
     RecyclerView informNewsList;
+
+    InformNewsAdapter informNewsAdapter;
 
     public static InformNewsFragment newInstance() {
         InformNewsFragment fragment = new InformNewsFragment();
@@ -46,89 +52,29 @@ public class InformNewsFragment extends BaseFragment {
         rootView = inflater.inflate(R.layout.fragment_inform_news, container, false);
         ButterKnife.bind(this, rootView);
 
-        List<Inform> list=new ArrayList<Inform>();
+      /*  List<Inform> list=new ArrayList<Inform>();
         Inform informColumn=new Inform();
         Inform informColumn2=new Inform();
         informColumn.name=("行走的鸡腿");
         informColumn2.name=("天天吃吃吃");
         //1234
-        list.add(informColumn);
-        list.add(informColumn2);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn2);
-        list.add(informColumn2);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn);
+        list.add(informColumn);*/
 
-        list.add(informColumn2);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn);
+        InformApi.getNewsInform().subscribe(new BaseActivity.NetObserver<NewsInformResponse>() {
+            @Override
+            public void onNext(NewsInformResponse response) {
+                super.onNext(response);
+                //Toast.makeText(InformMySelfActivity.this,response.data.toString(),Toast.LENGTH_SHORT).show();
+                response.parse();
+                List<Inform> informs = new ArrayList<Inform>();
+                informs.addAll(response.data);
+                informNewsAdapter=new InformNewsAdapter(informs,getActivity());
+                informNewsList.setLayoutManager(new LinearLayoutManager(getActivity()));
+                informNewsList.setAdapter(informNewsAdapter);
+            }
+        });
 
-        list.add(informColumn2);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn);
 
-        //1234
-        list.add(informColumn);
-        list.add(informColumn2);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn2);
-        list.add(informColumn2);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn);
-
-        list.add(informColumn2);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn);
-
-        list.add(informColumn2);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn);
-
-        //34
-        list.add(informColumn2);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn);
-
-        list.add(informColumn2);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn);
-        //34
-        list.add(informColumn2);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn);
-
-        list.add(informColumn2);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn);
-        list.add(informColumn);
-
-        InformNewsAdapter informNewsAdapter=new InformNewsAdapter(list,getActivity());
-        informNewsList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        informNewsList.setAdapter(informNewsAdapter);
 
 
 
@@ -158,7 +104,7 @@ public class InformNewsFragment extends BaseFragment {
 
         @Override
         public void onBindViewHolder(InformNewsAdapter.Holder holder, int position) {
-            Inform newsSmallColumnData =  list.get(position);
+            Inform data =  list.get(position);
             switch (getItemViewType(position)){
 
                 case R.layout.item_inform_news_banner:
@@ -166,12 +112,17 @@ public class InformNewsFragment extends BaseFragment {
 
                 case R.layout.item_inform_news_large:
 
-                    holder.newsLargePersonName.setText(newsSmallColumnData.name);
+                    holder.newsLargePersonName.setText(data.userName);
+                    holder.newsLargeContent.setText(data.title);
+                    holder.newsLargeContentName.setText("—— "+data.sortName+" ——");
+                    holder.newsLargeCommitNum.setText(String.valueOf(data.commentNum));
                     break;
 
                 case R.layout.item_inform_news_small:
 
-                    holder.newsSmallName.setText(newsSmallColumnData.name);
+                    holder.newsSmallName.setText(data.userName);
+                    holder.newsSmallContent.setText(data.title);
+                    holder.newsSmallCommitNum.setText(String.valueOf(data.commentNum));
                     break;
             }
 

@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
+import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 
 /**
  * Created by Administrator on 2017/12/11.
@@ -58,7 +59,13 @@ public class InformEditArticleActivity extends BaseActivity {
     void selectReprint(){
         type.setText("转载");
         typeContent.setVisibility(View.GONE);
+        MyDialog.informEditSourceDialog(this);
     }
 
+    @OnClick(R.id.edit_article_to_link)
+    void onToLink(){
+        MyDialog.informEditLinkDialog(this);
+
+    }
 
 }

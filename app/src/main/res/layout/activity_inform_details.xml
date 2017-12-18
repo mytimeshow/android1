@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <FrameLayout style="@style/title_title">
@@ -58,137 +58,260 @@
 
     </RelativeLayout>
 
-    <WebView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </WebView>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_85"
-        android:background="@color/white"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/fenxiangzhi"
-            android:layout_marginLeft="@dimen/dp_10"
-            style="@style/text_12_gray"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="分享至：" />
-
-        <ImageView
-            android:id="@+id/inform_details_shareto_wechat"
-            android:layout_width="@dimen/dp_35"
-            android:layout_height="@dimen/dp_35"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_15"
-            android:layout_toRightOf="@+id/fenxiangzhi"
-            android:src="@drawable/ic_wechat" />
-
-        <ImageView
-            android:id="@+id/inform_details_shareto_wechatcir"
-            android:layout_width="@dimen/dp_35"
-            android:layout_height="@dimen/dp_35"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_15"
-            android:layout_toRightOf="@+id/inform_details_shareto_wechat"
-            android:src="@drawable/ic_wechat_circle" />
-
-        <ImageView
-            android:id="@+id/inform_details_shareto_qq"
-            android:layout_width="@dimen/dp_35"
-            android:layout_height="@dimen/dp_35"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_15"
-            android:layout_toRightOf="@+id/inform_details_shareto_wechatcir"
-            android:src="@drawable/ic_qq" />
-
-        <ImageView
-            android:id="@+id/inform_details_shareto_more"
-            android:layout_width="@dimen/dp_35"
-            android:layout_height="@dimen/dp_35"
-            android:layout_toRightOf="@+id/inform_details_shareto_qq"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_15"
-            android:src="@drawable/icon_more2" />
-
-        <ImageView
-            android:id="@+id/inform_details_shareto_report"
-            android:layout_width="@dimen/dp_35"
-            android:layout_height="@dimen/dp_35"
-            android:layout_marginRight="@dimen/dp_10"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/icon_jubao" />
-        <View
-            android:layout_width="@dimen/dp_0.5"
-            android:layout_height="@dimen/dp_40"
-            android:layout_marginRight="@dimen/dp_15"
-            android:layout_toLeftOf="@+id/inform_details_shareto_report"
-            android:layout_centerVertical="true"
-            android:background="@color/grey_350" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_2"
-            android:layout_below="@+id/inform_details_shareto_report"
-            android:layout_alignLeft="@+id/inform_details_shareto_report"
-            android:layout_alignRight="@+id/inform_details_shareto_report"
-            android:gravity="center"
-            style="@style/text_12_gray"
-            android:textSize="@dimen/sp_10"
-            android:text="举报"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
 
-    </RelativeLayout>
-
-    <cn.czyugang.tcg.client.widget.LabelLayout
-        android:id="@+id/inform_detail_label"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_0.5"
-        android:padding="@dimen/dp_10"
-        app:child_layout="@layout/view_search_label"
-        app:horizontal_spacing="@dimen/dp_10"
-        app:vertical_spacing="@dimen/dp_10"
-        android:background="@color/white"
-        />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@color/white">
-        <TextView
+        <WebView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_45"
-            android:background="@null"
-            android:gravity="center|left"
-            android:text="热门评论"
-            style="@style/text_14_dark_gray"
-            android:paddingLeft="@dimen/dp_20"
-            android:paddingRight="@dimen/dp_10"
-             />
-        <View
-            android:layout_width="@dimen/dp_4"
-            android:layout_height="@dimen/dp_19"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_13"
-            android:background="@color/main_red" />
-    </RelativeLayout>
-    <android.support.v7.widget.RecyclerView
+            android:layout_height="wrap_content">
+
+        </WebView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_85"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/fenxiangzhi"
+                style="@style/text_12_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:text="分享至：" />
+
+            <ImageView
+                android:id="@+id/inform_details_shareto_wechat"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="@dimen/dp_35"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_toRightOf="@+id/fenxiangzhi"
+                android:src="@drawable/ic_wechat" />
+
+            <ImageView
+                android:id="@+id/inform_details_shareto_wechatcir"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="@dimen/dp_35"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_toRightOf="@+id/inform_details_shareto_wechat"
+                android:src="@drawable/ic_wechat_circle" />
+
+            <ImageView
+                android:id="@+id/inform_details_shareto_qq"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="@dimen/dp_35"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_toRightOf="@+id/inform_details_shareto_wechatcir"
+                android:src="@drawable/ic_qq" />
+
+            <ImageView
+                android:id="@+id/inform_details_shareto_more"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="@dimen/dp_35"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_toRightOf="@+id/inform_details_shareto_qq"
+                android:src="@drawable/icon_more2" />
+
+            <ImageView
+                android:id="@+id/inform_details_shareto_report"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="@dimen/dp_35"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@drawable/icon_jubao" />
+
+            <View
+                android:layout_width="@dimen/dp_0.5"
+                android:layout_height="@dimen/dp_40"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_15"
+                android:layout_toLeftOf="@+id/inform_details_shareto_report"
+                android:background="@color/grey_350" />
+
+            <TextView
+                style="@style/text_12_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/inform_details_shareto_report"
+                android:layout_alignRight="@+id/inform_details_shareto_report"
+                android:layout_below="@+id/inform_details_shareto_report"
+                android:layout_marginTop="@dimen/dp_2"
+                android:gravity="center"
+                android:text="举报"
+                android:textSize="@dimen/sp_10" />
+
+
+        </RelativeLayout>
+
+        <cn.czyugang.tcg.client.widget.LabelLayout
+            android:id="@+id/inform_detail_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_0.5"
+            android:background="@color/white"
+            android:padding="@dimen/dp_10"
+            app:child_layout="@layout/view_search_label"
+            app:horizontal_spacing="@dimen/dp_10"
+            app:vertical_spacing="@dimen/dp_10" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/white">
+
+            <TextView
+                style="@style/text_14_dark_gray"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_45"
+                android:background="@null"
+                android:gravity="center|left"
+                android:paddingLeft="@dimen/dp_20"
+                android:paddingRight="@dimen/dp_10"
+                android:text="热门评论" />
+
+            <View
+                android:layout_width="@dimen/dp_4"
+                android:layout_height="@dimen/dp_19"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_13"
+                android:background="@color/main_red" />
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+    </LinearLayout>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_50"
         android:background="@color/white">
 
-    </android.support.v7.widget.RecyclerView>
+        <LinearLayout
+            android:id="@+id/inform_detail_share"
+            android:layout_width="@dimen/dp_45"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/icon_share_inform"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="分享"
+                android:textSize="@dimen/sp_10"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/inform_detail_shoucang"
+            android:layout_width="@dimen/dp_45"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/inform_detail_share"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/icon_shoucang"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="收藏"
+                android:textSize="@dimen/sp_10"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/inform_detail_thumbs"
+            android:layout_width="@dimen/dp_45"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/inform_detail_shoucang"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_thumb_up"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:paddingRight="@dimen/dp_2"
+                android:paddingLeft="@dimen/dp_2"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="99999+"
+                android:textSize="@dimen/sp_10"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/inform_detail_comment"
+            android:layout_width="@dimen/dp_45"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/inform_detail_thumbs"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_comment"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:paddingRight="@dimen/dp_2"
+                android:paddingLeft="@dimen/dp_2"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="99999+"
+                android:textSize="@dimen/sp_10"/>
+        </LinearLayout>
 
-
-
+        <EditText
+            android:id="@+id/inform_detail_comment_content"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_28"
+            android:layout_toLeftOf="@+id/inform_detail_comment"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_10"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_rect_dark_f5"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/text_black"
+            android:hint="好想说点什么？"
+            android:textColorHint="@color/text_gray"/>
+    </RelativeLayout>
 
 </LinearLayout>

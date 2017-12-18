@@ -67,6 +67,7 @@ public class InformFragment extends BaseFragment {
         fragments.add(InformColumnFragment.newInstance());
 
         viewPager.setAdapter(new BaseFragmentAdapter(getActivity().getSupportFragmentManager(),fragments));
+        viewPager.setOffscreenPageLimit(3);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         tabLayout.postDelayed(new Runnable() {

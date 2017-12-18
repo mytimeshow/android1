@@ -46,7 +46,7 @@ public class NewsInformResponse extends Response<List<Inform>> {
                     String id=jsonObject.getString("id");
                     for (Inform inform:data){
                         if (inform.id.equals(id)){
-                            inform.name=jsonObject.getString("name");
+                            inform.userName=jsonObject.getString("name");
 
                         }
                     }
@@ -126,7 +126,7 @@ public class NewsInformResponse extends Response<List<Inform>> {
                     String id=jsonObject.getString("id");
                     for (Inform inform:data){
                         if (inform.sortId.equals(id)){
-                            inform.isThumbs=jsonObject.getBoolean("name");
+                            inform.sortName=jsonObject.getString("name");
 
                         }
                     }

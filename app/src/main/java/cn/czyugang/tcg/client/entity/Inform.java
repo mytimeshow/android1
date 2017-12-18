@@ -95,6 +95,7 @@ public class Inform {
     public boolean isFollow;
     public String followNum;
     public String userName;
+    public String sortName;
     String bannerImg;
 
     public void InformColumn(){

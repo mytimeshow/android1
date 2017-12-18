@@ -1,14 +1,17 @@
 package cn.czyugang.tcg.client.api;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import cn.czyugang.tcg.client.common.UserOAuth;
 
-import cn.czyugang.tcg.client.entity.FollowInformResponse;
+import cn.czyugang.tcg.client.entity.InformColumn;
+import cn.czyugang.tcg.client.entity.InformColumnResponse;
+import cn.czyugang.tcg.client.entity.InformFollowResponse;
 import cn.czyugang.tcg.client.entity.MyInformResponse;
 import cn.czyugang.tcg.client.entity.NewsInformResponse;
+import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.utils.JsonParse;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -34,7 +37,7 @@ public class InformApi {
                 .observeOn(AndroidSchedulers.mainThread());
     }
     //我的关注
-    public static Observable<FollowInformResponse> getFollowInform(String type) {
+    public static Observable<InformFollowResponse> getFollowInform(String type) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("accessTime", "");
         map.put("page", 1);
@@ -42,12 +45,12 @@ public class InformApi {
         map.put("type", type);
         return UserOAuth.getInstance()
                 .get("api/auth/v1/info/follow/list", map)
-                .map(s -> (FollowInformResponse) JsonParse.fromJson(s, FollowInformResponse.class))
+                .map(s -> (InformFollowResponse) JsonParse.fromJson(s, InformFollowResponse.class))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
     //最新资讯
-    public static Observable<NewsInformResponse> getNewsInform(String type) {
+    public static Observable<NewsInformResponse> getNewsInform() {
         HashMap<String, Object> map = new HashMap<>();
         map.put("accessTime", "");
         map.put("page", 1);
@@ -58,4 +61,43 @@ public class InformApi {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    // 资讯栏目
+    public static Observable<InformColumnResponse> getInformColumn(int page){
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("accessTime", "");
+        map.put("page", page);
+        map.put("size", 20);
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/info/sort/list", map)
+                .map(s -> (InformColumnResponse) JsonParse.fromJson(s, InformColumnResponse.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
+
+    //关注栏目
+    public static Observable<Response> toFollowColumn(String id) {
+        Map<String, Object> params = new HashMap<>();
+        //栏目id
+        params.put("id", id);
+        return UserOAuth.getInstance()
+                .post("api/auth/v1/info/sort/keep", params)
+                .map(s -> (Response) JsonParse.fromJson(s, Response.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    //取关栏目
+    public static Observable<Response> toUnFollowColumn(String id) {
+        Map<String, Object> params = new HashMap<>();
+        //栏目id
+        params.put("id", id);
+        return UserOAuth.getInstance()
+                .post("api/auth/v1/info/sort/cancel/keep", params)
+                .map(s -> (Response) JsonParse.fromJson(s, Response.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 }
