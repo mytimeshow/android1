@@ -67,17 +67,30 @@
 
 
     </RelativeLayout>
-    
-    <TextView
-        android:id="@+id/inform_column_isfollow"
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </FrameLayout>
+    <FrameLayout
+        android:id="@+id/inform_column_isfollow_frame"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="@dimen/dp_30"
         android:layout_weight="1"
-        android:layout_width="@dimen/dp_60"
-        android:layout_height="@dimen/dp_20"
-        android:background="@drawable/bg_rect_cir_red"
-        android:text="+关注"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center">
+        <TextView
+            android:id="@+id/inform_column_isfollow"
+            android:layout_weight="1"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_20"
+            android:background="@drawable/bg_rect_cir_red"
+            android:text="+关注"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+
 
 
 </LinearLayout>

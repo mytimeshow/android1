@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Administrator on 2017/12/5.
  */
 
-public class FollowInform {
+public class InformFollow {
     //资讯-->关注列表-->内容
 
     /**
