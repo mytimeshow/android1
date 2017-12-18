@@ -8,10 +8,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
-        android:paddingLeft="@dimen/dp_10"
-        android:paddingRight="@dimen/dp_10"
         android:background="@color/white"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10">
 
         <cn.czyugang.tcg.client.widget.SelectButton
             android:id="@+id/item_select"
@@ -49,8 +49,8 @@
         android:id="@+id/item_list"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_80"
-        android:visibility="gone"
         android:background="@color/white"
+        android:padding="@dimen/dp_10"
         />
 
     <!--单种商品-->
@@ -77,48 +77,55 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_56"
+        android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:background="@color/white"
         android:paddingRight="@dimen/dp_5">
 
         <include layout="@layout/space_h"/>
 
         <TextView
-            android:id="@+id/item_button_one"
-            android:layout_width="@dimen/dp_68"
-            android:layout_height="@dimen/dp_22"
-            android:layout_marginRight="@dimen/dp_5"
-            android:background="@drawable/border_rect_black"
-            android:gravity="center"
-            android:text="删除订单"
-            android:textColor="@color/text_black"
-            android:textSize="@dimen/sp_12"
+            android:id="@+id/item_order_cancel"
+            style="@style/button_order_small"
+            android:text="取消订单"
             />
 
         <TextView
-            android:id="@+id/item_button_two"
-            android:layout_width="@dimen/dp_68"
-            android:layout_height="@dimen/dp_22"
-            android:layout_marginRight="@dimen/dp_5"
-            android:background="@drawable/border_rect_black"
-            android:gravity="center"
+            android:id="@+id/item_order_delete"
+            style="@style/button_order_small"
             android:text="删除订单"
-            android:textColor="@color/text_black"
-            android:textSize="@dimen/sp_12"
             />
 
         <TextView
-            android:id="@+id/item_button_three"
-            android:layout_width="@dimen/dp_68"
-            android:layout_height="@dimen/dp_22"
-            android:layout_marginRight="@dimen/dp_5"
-            android:background="@drawable/border_rect_black"
-            android:gravity="center"
-            android:text="删除订单"
-            android:textColor="@color/text_black"
-            android:textSize="@dimen/sp_12"
+            android:id="@+id/item_order_more_comment"
+            style="@style/button_order_small"
+            android:text="追加评价"
             />
+
+        <TextView
+            android:id="@+id/item_order_comment"
+            style="@style/button_order_small"
+            android:text="评价"
+            />
+
+        <TextView
+            android:id="@+id/item_order_receipt"
+            style="@style/button_order_small"
+            android:text="确认收货"
+            />
+
+        <TextView
+            android:id="@+id/item_order_buy_again"
+            style="@style/button_order_small"
+            android:text="再次购买"
+            />
+
+        <TextView
+            android:id="@+id/item_order_pay"
+            style="@style/button_order_small"
+            android:text="去付款"
+            />
+
     </LinearLayout>
 
 </LinearLayout>

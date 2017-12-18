@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.modules.common.dialog.LoadingDialog;
 import cn.czyugang.tcg.client.modules.entry.activity.MainActivity;
+import cn.czyugang.tcg.client.utils.LogRui;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
@@ -50,16 +53,18 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
             mLoadingDialog.show(getSupportFragmentManager(), "LoadingDialog");
         }
         requestLoadingDialogTimes++;
+        LogRui.i("showLoadingDialog####",requestLoadingDialogTimes);
     }
 
     @Override
     public void dismissLoadingDialog() {
         requestLoadingDialogTimes--;
-        if (requestLoadingDialogTimes >= 0 && mLoadingDialog != null) {
+        if (requestLoadingDialogTimes <= 0 && mLoadingDialog != null) {
             requestLoadingDialogTimes = 0;
-            mLoadingDialog.dismissAllowingStateLoss();
+            mLoadingDialog.dismiss();
             mLoadingDialog = null;
         }
+        LogRui.i("dismissLoadingDialog####",requestLoadingDialogTimes);
     }
 
     @Override
@@ -108,7 +113,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
 
     public static MainActivity clearAllActivityExceptMainAndTop() {
         MainActivity mainActivity = null;
-        for (int i = 0, size = activityList.size()-1; i < size; i++) {
+        for (int i = 0, size = activityList.size() - 1; i < size; i++) {
             BaseActivity baseActivity = activityList.get(i);
             if (baseActivity instanceof MainActivity) {
                 if (mainActivity != null) mainActivity.finish();
@@ -135,22 +140,36 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
 
         @Override
         public void onNext(T response) {
-
+            LogRui.i("onNext####");
         }
 
         @Override
         public void onError(@NonNull Throwable e) {
             getTopActivity().showError(e);
             if (showLoading()) getTopActivity().dismissLoadingDialog();
+            LogRui.i("onError####");
+            if (getSwipeToLoadLayout()!=null){
+                getSwipeToLoadLayout().setLoadingMore(false);
+                getSwipeToLoadLayout().setRefreshing(false);
+            }
         }
 
         @Override
         public void onComplete() {
             if (showLoading()) getTopActivity().dismissLoadingDialog();
+            LogRui.i("onComplete####");
+            if (getSwipeToLoadLayout()!=null){
+                getSwipeToLoadLayout().setLoadingMore(false);
+                getSwipeToLoadLayout().setRefreshing(false);
+            }
         }
 
         public boolean showLoading() {
             return true;
+        }
+
+        public SwipeToLoadLayout getSwipeToLoadLayout(){
+            return null;
         }
     }
 }

@@ -185,7 +185,7 @@ public class RichText {
     public static final int STYLE_ITALIC = 2;
     public static final int STYLE_BOLD_ITALIC = 3;
     public final static int STYLE_UNDERLINE = 12;
-    public final static int STYLE_STRIKETHROUGH = 13;
+    public final static int STYLE_STRIKETHROUGH = 13; //删除线
 
     public RichText setStyle(int style) {
         String source = builder.toString();
@@ -258,6 +258,12 @@ public class RichText {
         return builder.subSequence(0, builder.length());
     }
 
+
+    public static CharSequence setStrikethrough(CharSequence text){
+        SpannableString spannableString = new SpannableString(text);
+        spannableString.setSpan(new StrikethroughSpan(), 0, text.length(), 0);
+        return spannableString.subSequence(0, spannableString.length());
+    }
 
     public static CharSequence setFormatSizeSp(CharSequence text, float sizeSp) {
         return setFormatSizePx(text, ResUtil.sp2px(sizeSp));

@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.JsonParse;
 import cn.czyugang.tcg.client.utils.LogRui;
 
@@ -78,7 +79,7 @@ public class GoodsResponse extends Response<List<Good>> {
             goodCategoryList= JsonParse.fromJson(values.getString("firstInfoList"),new JsonParse.Type(List.class,GoodCategory.class));
             for(GoodCategory category:goodCategoryList){
                 String second=values.optString("secondClassifyOf"+category.id,"");
-                if (!second.equals("")) category.secondCategoryList=JsonParse
+                if (!CommonUtil.responseIsNull(second)) category.secondCategoryList=JsonParse
                         .fromJson(second,new JsonParse.Type(List.class,GoodCategory.class));
             }
 

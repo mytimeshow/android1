@@ -1,8 +1,16 @@
 package cn.czyugang.tcg.client.entity;
 
+import android.app.Activity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.modules.common.ImgAdapter;
 
 /**
  * @author ruiaa
@@ -18,7 +26,7 @@ public class Order {
     @SerializedName("bookFlag")
     public String bookFlag;         //预订单标志(UNBOOK-非预订,BOOK-预订)
     @SerializedName("businessDeliveryCost")
-    public int businessDeliveryCost;        //平台配送时配送费中商家承担部分
+    public double businessDeliveryCost;        //平台配送时配送费中商家承担部分
     @SerializedName("businessNote")
     public String businessNote;         //商家备注
     @SerializedName("checked")
@@ -30,7 +38,7 @@ public class Order {
     @SerializedName("deleteFlag")
     public String deleteFlag;       //删除标志量(NORMAL-未删除,DELETED-已删除)
     @SerializedName("deliveryCost")
-    public int deliveryCost;            //配送费
+    public double deliveryCost;            //配送费
     @SerializedName("deliveryWay")
     public String deliveryWay;          //配送方式(PLATFORM-平台、STORE-商家、FETCH-自提)
     @SerializedName("expectDeliveryTime")
@@ -48,10 +56,10 @@ public class Order {
     @SerializedName("payTime")
     public String payTime;          //支付时间
     @SerializedName("platformFee")
-    public int platformFee;         //平台服务费
+    public double platformFee;         //平台服务费
     @SerializedName("status")
-    public String status;           //订单状态（WAIT_PAY:待付款。PAY:已付款。ORDERS已接单。DELIVERY:已发货。REACH:已送达。FINISH:已完成。
-                                        // REFUND:退款中。CLOSE:已关闭）
+    public String status="";           //订单状态（WAIT_PAY:待付款。PAY:已付款。ORDERS已接单。DELIVERY:已发货。REACH:已送达。FINISH:已完成。status=CLOSE
+    // REFUND:退款中。CLOSE:已关闭）
     @SerializedName("storeId")
     public String storeId;
     @SerializedName("totalReminder")
@@ -61,9 +69,37 @@ public class Order {
     @SerializedName("updateTime")
     public String updateTime;
 
-    public double totalPayment=0;
-    public String storeName="";
+    public double totalPayment = 0;
+    public String storeName = "";
 
     transient public boolean selected = false;
     transient public List<OrderGoods> goodsList = null;
+    transient private ImgAdapter imgAdapter = null;
+
+    public void bindImgAdapter(RecyclerView recyclerView, Activity activity) {
+        if (imgAdapter == null) {
+            List<String> imgs = new ArrayList<>();
+            for (OrderGoods orderGoods : goodsList) {
+                imgs.add(orderGoods.picId);
+            }
+            imgAdapter = new ImgAdapter(imgs, activity).setSizeRes(R.dimen.dp_60);
+        }
+        if (recyclerView.getLayoutManager() == null)
+            recyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setAdapter(imgAdapter);
+    }
+
+    //共2件商品   实付款：￥102.99 (含配送费 ￥3.00)
+    public String getTotalCal(){
+        int num=0;
+        for(OrderGoods orderGoods:goodsList){
+            num +=orderGoods.number;
+        }
+        return String.format("共%d件商品   实付款：￥%.2f (含配送费 ￥%.2f)",num,totalPayment,deliveryCost);
+    }
+
+    //（WAIT_PAY:待付款。PAY:已付款。ORDERS已接单。DELIVERY:已发货。REACH:已送达。FINISH:已完成。status=CLOSE
+    public boolean hadCancel(){
+        return status.equals("CLOSE");
+    }
 }

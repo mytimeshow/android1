@@ -8,7 +8,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
-import cn.czyugang.tcg.client.common.MyApplication;
 import cn.czyugang.tcg.client.entity.Order;
 import cn.czyugang.tcg.client.modules.order.OrderDetailActivity;
 
@@ -44,7 +43,7 @@ public class RefundApplyFinishActivity extends BaseActivity {
 
     @OnClick(R.id.refund_finish_order)
     public void onOpenOrder(){
-        OrderDetailActivity.startOrderDetailActivity(new Order());
+        OrderDetailActivity.startOrderDetailActivity(new Order().id);
     }
 
 }

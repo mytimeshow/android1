@@ -21,6 +21,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.api.StoreApi;
+import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.entity.Good;
 import cn.czyugang.tcg.client.entity.GoodCategory;
@@ -102,7 +103,7 @@ public class GoodsListFragment extends BaseFragment {
 
     private void refreshGoods(boolean firstLoad) {
         pagerIndex = 0;
-        StoreApi.getGoods(storeActivity.store.id, currentClassifyId, currentOrder).subscribe(new NetObserver<GoodsResponse>() {
+        StoreApi.getGoods(storeActivity.store.id, currentClassifyId, currentOrder).subscribe(new BaseActivity.NetObserver<GoodsResponse>() {
             @Override
             public void onNext(GoodsResponse response) {
                 super.onNext(response);

@@ -25,11 +25,14 @@ public class ImgAdapter extends RecyclerView.Adapter<ImgAdapter.Holder> {
     private Activity activity;
     private int width = 100;
     private int height = 100;
+    private int rightMargin = 20;
     private int srcType = 1;//1:后台图片id，2:本地文件
 
     public ImgAdapter(List<String> list, Activity activity) {
         this.list = list;
         this.activity = activity;
+        setSizeRes(R.dimen.dp_60);
+        setRightMargin(R.dimen.dp_10);
     }
 
     @Override
@@ -74,9 +77,14 @@ public class ImgAdapter extends RecyclerView.Adapter<ImgAdapter.Holder> {
         return this;
     }
 
-    public static void bind(Context context,RecyclerView recyclerView, ImgAdapter adapter,int spanCount){
-        if (recyclerView.getLayoutManager()==null){
-            recyclerView.setLayoutManager(new GridLayoutManager(context,spanCount));
+    public ImgAdapter setRightMargin(@DimenRes int rightMargin) {
+        this.rightMargin = ResUtil.getDimenInPx(rightMargin);
+        return this;
+    }
+
+    public static void bind(Context context, RecyclerView recyclerView, ImgAdapter adapter, int spanCount) {
+        if (recyclerView.getLayoutManager() == null) {
+            recyclerView.setLayoutManager(new GridLayoutManager(context, spanCount));
         }
         recyclerView.setAdapter(adapter);
     }
@@ -87,9 +95,10 @@ public class ImgAdapter extends RecyclerView.Adapter<ImgAdapter.Holder> {
         public Holder(View itemView) {
             super(itemView);
             imgView = itemView.findViewById(R.id.view_img);
-            ViewGroup.LayoutParams lp = itemView.getLayoutParams();
+            ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) itemView.getLayoutParams();
             lp.width = width;
             lp.height = height;
+            lp.rightMargin = rightMargin;
             imgView.setLayoutParams(lp);
         }
     }

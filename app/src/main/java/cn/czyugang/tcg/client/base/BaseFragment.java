@@ -11,10 +11,7 @@ import java.net.UnknownHostException;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.modules.common.dialog.LoadingDialog;
-import io.reactivex.Observer;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 
 /**
  * Created by wuzihong on 2017/8/30.
@@ -84,29 +81,5 @@ public class BaseFragment extends Fragment implements BaseView {
 
     public String getLabel(){
         return getClass().getName();
-    }
-
-    protected abstract class NetObserver<T> implements Observer<T> {
-        @Override
-        public void onSubscribe(@NonNull Disposable d) {
-            mCompositeDisposable.add(d);
-            showLoadingDialog();
-        }
-
-        @Override
-        public void onNext(T response) {
-
-        }
-
-        @Override
-        public void onError(@NonNull Throwable e) {
-            showError(e);
-            dismissLoadingDialog();
-        }
-
-        @Override
-        public void onComplete() {
-            dismissLoadingDialog();
-        }
     }
 }
