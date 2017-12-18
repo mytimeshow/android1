@@ -179,7 +179,30 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="button_order_small">
+        <item name="android:layout_width">@dimen/dp_68</item>
+        <item name="android:layout_height">@dimen/dp_22</item>
+        <item name="android:layout_marginRight">@dimen/dp_5</item>
+        <item name="android:background">@drawable/border_rect_black</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">删除订单</item>
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+    </style>
 
+    <style name="button_order">
+        <item name="android:layout_width">@dimen/dp_100</item>
+        <item name="android:layout_height">@dimen/dp_36</item>
+        <item name="android:layout_marginRight">@dimen/dp_10</item>
+        <item name="android:background">@drawable/border_rect_black</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">删除订单</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:textColor">@color/text_dark_gray</item>
+    </style>
+
+
+    <!--输入-->
     <style name="item_edit">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -229,7 +252,6 @@
         <item name="android:background">@drawable/dot_dark_gray</item>
         <item name="android:padding">@dimen/dp_8</item>
     </style>
-
 
 
     <!--文字-->
@@ -316,12 +338,14 @@
         <item name="android:textColor">@color/text_black</item>
         <item name="android:textSize">@dimen/sp_16</item>
     </style>
+
     <style name="text_16_grey">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/text_dark_gray</item>
         <item name="android:textSize">@dimen/sp_16</item>
     </style>
+
     <style name="text_16_white">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -335,6 +359,7 @@
         <item name="android:textColor">@color/text_black</item>
         <item name="android:textSize">@dimen/sp_18</item>
     </style>
+
     <style name="text_18_white">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

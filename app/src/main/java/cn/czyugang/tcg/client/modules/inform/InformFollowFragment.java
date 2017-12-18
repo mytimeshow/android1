@@ -28,7 +28,6 @@ import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.widget.LabelLayout;
 
 import static cn.czyugang.tcg.client.utils.app.ResUtil.getColor;
-import static cn.czyugang.tcg.client.utils.app.ResUtil.getDrawable;
 
 /**
  * @author ruiaa
@@ -185,8 +184,8 @@ public class InformFollowFragment extends BaseFragment {
     }
 
 
-    private void refreshInform(boolean firstLoad, String type) {
-        InformApi.getFollowInform(type).subscribe(new BaseActivity.NetObserver<InformFollowResponse>() {
+    private void refreshInform(boolean firstLoad,String type) {
+        InformApi.getFollowInform(type).subscribe(new BaseActivity.NetObserver<FollowInformResponse>() {
             @Override
             public void onNext(InformFollowResponse response) {
                 super.onNext(response);

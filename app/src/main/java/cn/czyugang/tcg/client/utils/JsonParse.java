@@ -10,10 +10,12 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.HashMap;
 
 /**
  * Created by wuzihong on 2016/9/11.
@@ -26,6 +28,38 @@ public class JsonParse {
 //            .registerTypeAdapter(Date.class, new DateTypeAdapter())
             .registerTypeAdapter(JSONObject.class, new JSONObjectDeserializer())
             .create();
+
+    //常量字典解析
+    public static HashMap<String,String> parseMap(JSONObject values, String key){
+        HashMap<String,String> map=new HashMap<>();
+        JSONArray jsonArray = values.optJSONArray("statusDict");
+        if (jsonArray != null && jsonArray.length() > 0) {
+            for (int i = 0, size = jsonArray.length(); i < size; i++) {
+                JSONObject jsonObject = jsonArray.optJSONObject(i);
+                map.put(jsonObject.optString("id"), jsonObject.optString("name"));
+            }
+        }
+        return map;
+    }
+
+
+    public static <T> T fromJsonInValue(JSONObject values,String key, java.lang.reflect.Type typeOfT) {
+        if (values==null) return null;
+        String json = values.optString(key);
+        if (!CommonUtil.responseIsNull(json)) {
+            return JsonParse.fromJson(json, typeOfT);
+        }
+        return null;
+    }
+
+    public static <T> T fromJsonInValue(JSONObject values,String key, java.lang.reflect.Type typeOfT,T defaultValue) {
+        if (values==null) return null;
+        String json = values.optString(key);
+        if (!CommonUtil.responseIsNull(json)) {
+            return JsonParse.fromJson(json, typeOfT);
+        }
+        return defaultValue;
+    }
 
     public static <T> T fromJson(String json, java.lang.reflect.Type typeOfT) {
         return mGson.fromJson(json, typeOfT);

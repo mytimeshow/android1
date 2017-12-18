@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.api.StoreApi;
+import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.entity.Good;
 import cn.czyugang.tcg.client.entity.GoodCategory;
@@ -59,7 +60,7 @@ public class FoodListFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         storeActivity = (StoreActivity) getActivity();
 
-        StoreApi.getFoods(storeActivity.store.id).subscribe(new NetObserver<Response<List<GoodCategory>>>() {
+        StoreApi.getFoods(storeActivity.store.id).subscribe(new BaseActivity.NetObserver<Response<List<GoodCategory>>>() {
             @Override
             public void onNext(Response<List<GoodCategory>> response) {
                 super.onNext(response);

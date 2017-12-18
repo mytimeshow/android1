@@ -15,6 +15,7 @@ import java.util.Map;
 
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.modules.common.ImgAdapter;
+import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.JsonParse;
 import cn.czyugang.tcg.client.utils.LogRui;
 
@@ -43,7 +44,7 @@ public class OrderPreSettleResponse extends Response<List<Store>> {
 
             //地址
             String addressStr = values.optString("userAddress");
-            if (!addressStr.equals("")) address = JsonParse.fromJson(addressStr, Address.class);
+            if (!CommonUtil.responseIsNull(addressStr)) address = JsonParse.fromJson(addressStr, Address.class);
 
             //总价
             totalPrice = values.getDouble("totalPrice");
@@ -54,7 +55,7 @@ public class OrderPreSettleResponse extends Response<List<Store>> {
             //购物车
             for (Store store : data) {
                 String goodsStr = values.optString("cartOf" + store.id);
-                if (!goodsStr.equals("")) {
+                if (!CommonUtil.responseIsNull(goodsStr)) {
                     List<TrolleyGoods> trolleyGoodsList = JsonParse.fromJson(goodsStr, new JsonParse.Type(List.class, TrolleyGoods.class));
                     getMoreInfo(store).trolleyGoodsList = trolleyGoodsList;
                     for (TrolleyGoods t : trolleyGoodsList) {
@@ -115,7 +116,7 @@ public class OrderPreSettleResponse extends Response<List<Store>> {
         //values.deliveryTimeOf{data.id} 可配送时间列表
         for (Store store : data) {
             String deliveryTimeStr = values.optString("deliveryTimeOf" + store.id);
-            if (!deliveryTimeStr.equals("")) {
+            if (!CommonUtil.responseIsNull(deliveryTimeStr)) {
                 StoreMoreInfo moreInfo = getMoreInfo(store);
                 moreInfo.deliveryTimeList = JsonParse.fromJson(deliveryTimeStr, new JsonParse.Type(List.class, DeliveryTime.class));
                 moreInfo.selectedDeliveryTime = moreInfo.deliveryTimeList.get(0).date;

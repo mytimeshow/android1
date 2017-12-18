@@ -18,8 +18,13 @@ import cn.czyugang.tcg.client.utils.app.ResUtil;
  */
 
 public class CommonUtil {
-    public static String formatPrice(double price){
-        return String.format("￥%.2f",price);
+
+    public static boolean responseIsNull(String response) {
+        return response == null || response.equals("") || response.equals("null");
+    }
+
+    public static String formatPrice(double price) {
+        return String.format("￥%.2f", price);
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
@@ -29,39 +34,38 @@ public class CommonUtil {
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public static String toString(List<?> list){
+    public static String toString(List<?> list) {
         final List l = list;
-        StringBuilder stringBuilder=new StringBuilder();
-        for(Object o:l){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Object o : l) {
             stringBuilder.append(o.toString());
         }
         return stringBuilder.toString();
     }
 
-    public static void addMarginTop(View view,@DimenRes int m){
-        ViewGroup.MarginLayoutParams lp=(ViewGroup.MarginLayoutParams)view.getLayoutParams();
-        lp.topMargin=lp.topMargin+ ResUtil.getDimenInPx(m);
+    public static void addMarginTop(View view, @DimenRes int m) {
+        ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+        lp.topMargin = lp.topMargin + ResUtil.getDimenInPx(m);
         view.setLayoutParams(lp);
     }
 
-    public static void addMarginBottom(View view,@DimenRes int m){
-        ViewGroup.MarginLayoutParams lp=(ViewGroup.MarginLayoutParams)view.getLayoutParams();
-        lp.bottomMargin=lp.bottomMargin+ ResUtil.getDimenInPx(m);
+    public static void addMarginBottom(View view, @DimenRes int m) {
+        ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+        lp.bottomMargin = lp.bottomMargin + ResUtil.getDimenInPx(m);
         view.setLayoutParams(lp);
     }
 
-    public static void setMarginTop(View view,@DimenRes int m){
-        ViewGroup.MarginLayoutParams lp=(ViewGroup.MarginLayoutParams)view.getLayoutParams();
-        lp.topMargin= ResUtil.getDimenInPx(m);
+    public static void setMarginTop(View view, @DimenRes int m) {
+        ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+        lp.topMargin = ResUtil.getDimenInPx(m);
         view.setLayoutParams(lp);
     }
 
-    public static void setMarginBottom(View view,@DimenRes int m){
-        ViewGroup.MarginLayoutParams lp=(ViewGroup.MarginLayoutParams)view.getLayoutParams();
-        lp.bottomMargin= ResUtil.getDimenInPx(m);
+    public static void setMarginBottom(View view, @DimenRes int m) {
+        ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+        lp.bottomMargin = ResUtil.getDimenInPx(m);
         view.setLayoutParams(lp);
     }
-
 
 
     public static void setTabLayoutIndicator(TabLayout tabs, int leftMargin, int rightMargin) {
@@ -72,7 +76,7 @@ public class CommonUtil {
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         }
-        if (tabStrip==null) return;
+        if (tabStrip == null) return;
 
         tabStrip.setAccessible(true);
         LinearLayout llTab = null;
@@ -82,7 +86,7 @@ public class CommonUtil {
             e.printStackTrace();
         }
 
-        if (llTab==null) return;
+        if (llTab == null) return;
 
         for (int i = 0; i < llTab.getChildCount(); i++) {
             View child = llTab.getChildAt(i);
@@ -95,14 +99,14 @@ public class CommonUtil {
         }
     }
 
-    public static void setTextViewSingleLine(TextView textView){
-        if (textView==null) return;
+    public static void setTextViewSingleLine(TextView textView) {
+        if (textView == null) return;
         textView.setSingleLine(true);
         textView.setEllipsize(TextUtils.TruncateAt.END);
     }
 
-    public static void setTextViewLinesWithEllipsis(TextView textView,int lines){
-        if (textView==null) return;
+    public static void setTextViewLinesWithEllipsis(TextView textView, int lines) {
+        if (textView == null) return;
         textView.setLines(lines);
         textView.setEllipsize(TextUtils.TruncateAt.END);
     }

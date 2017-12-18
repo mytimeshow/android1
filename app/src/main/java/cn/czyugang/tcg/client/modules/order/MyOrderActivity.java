@@ -51,7 +51,7 @@ public class MyOrderActivity extends BaseActivity {
         fragments.add(OrderListFragment.newInstance(OrderListFragment.MYORDER_TYPE_NO_COMMENT));
 
         viewPager.setAdapter(new BaseFragmentAdapter(getSupportFragmentManager(), fragments));
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(5);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
     }
