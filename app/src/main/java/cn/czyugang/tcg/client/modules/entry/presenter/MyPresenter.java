@@ -87,6 +87,7 @@ public class MyPresenter implements MyContract.Presenter {
                                 userInfo.setIsBindWEIBO(DictUtil.getObject(response.getValues(), "isBindWEIBO"));
                                 userInfo.setSexDict(DictUtil.getStaticDict(response.getValues(), "sexDict"));
                                 mUserOAuth.writeUserInfo(userInfo);
+                                UserInfo.setInstance(userInfo);
                                 break;
                             default:
                                 mView.showToast(response.getMessage());

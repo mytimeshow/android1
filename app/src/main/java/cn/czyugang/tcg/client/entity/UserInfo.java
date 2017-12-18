@@ -18,6 +18,26 @@ public class UserInfo {
     private String isBindWEIBO;
     private List<StaticDict> sexDict;
 
+
+    /*
+    *       内存保存
+    * */
+    private static UserInfo instance=null;
+
+    public static void setInstance(UserInfo instance) {
+        UserInfo.instance = instance;
+    }
+
+    public static String getUserPhotoId(){
+       if (instance==null) return "";
+       return instance.userBase.getNickname();
+    }
+
+    public static String getUserNickName(){
+        if (instance==null) return "";
+        return instance.userDetail.getFileId();
+    }
+
     public UserBase getUserBase() {
         return userBase;
     }
