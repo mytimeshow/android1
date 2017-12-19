@@ -11,6 +11,8 @@ import java.util.Map;
 import cn.czyugang.tcg.client.api.OAuthApi;
 import cn.czyugang.tcg.client.entity.Progress;
 import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.entity.UserBase;
+import cn.czyugang.tcg.client.entity.UserDetail;
 import cn.czyugang.tcg.client.entity.UserInfo;
 import cn.czyugang.tcg.client.entity.UserToken;
 import cn.czyugang.tcg.client.modules.login.activity.LoginActivity;
@@ -252,6 +254,22 @@ public class UserOAuth {
      */
     public UserInfo getUserInfo() {
         return mUserInfo;
+    }
+
+    public static String getUserNickname(){
+        UserInfo userInfo=getInstance().getUserInfo();
+        if (userInfo==null) return "";
+        UserBase userBase=userInfo.getUserBase();
+        if (userBase==null) return "";
+        return userBase.getNickname();
+    }
+
+    public static String getUserPhotoId(){
+        UserInfo userInfo=getInstance().getUserInfo();
+        if (userInfo==null) return "";
+        UserDetail userDetail=userInfo.getUserDetail();
+        if (userDetail==null) return "";
+        return userDetail.getFileId();
     }
 
     /**

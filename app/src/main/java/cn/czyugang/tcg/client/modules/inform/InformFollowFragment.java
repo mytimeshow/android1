@@ -185,7 +185,7 @@ public class InformFollowFragment extends BaseFragment {
 
 
     private void refreshInform(boolean firstLoad,String type) {
-        InformApi.getFollowInform(type).subscribe(new BaseActivity.NetObserver<FollowInformResponse>() {
+        InformApi.getFollowInform(type).subscribe(new BaseActivity.NetObserver<InformFollowResponse>() {
             @Override
             public void onNext(InformFollowResponse response) {
                 super.onNext(response);
@@ -195,7 +195,6 @@ public class InformFollowFragment extends BaseFragment {
                 followCotentsList.addAll(response.data);
                 followContentAdapter.notifyDataSetChanged();
                 if (firstLoad) {
-                    //followCotentsList.addAll(response.data);
                     lvInformFollow.setLayoutManager(new LinearLayoutManager(getActivity()));
                     lvInformFollow.setAdapter(followContentAdapter);
                 }
@@ -227,7 +226,7 @@ public class InformFollowFragment extends BaseFragment {
             holder.followName.setText(data.userName);
             holder.followContent.setText(data.title);
             holder.itemView.setOnClickListener(v -> {
-                InformOrderSelfActivity.startInformOrderSelfActivity();
+                InformOrderSelfActivity.startInformOrderSelfActivity(data.id);
             });
         }
 

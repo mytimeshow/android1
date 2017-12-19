@@ -25,6 +25,8 @@ import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.api.InformApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
+import cn.czyugang.tcg.client.common.UserOAuth;
+import cn.czyugang.tcg.client.entity.Inform;
 import cn.czyugang.tcg.client.entity.MyInform;
 import cn.czyugang.tcg.client.entity.MyInformResponse;
 import cn.czyugang.tcg.client.entity.Response;
@@ -78,6 +80,8 @@ public class InformMySelfActivity extends BaseActivity {
         mySelfFollowNum.setText(String.valueOf(myInformResponsel.followCount));
         mySelfFansNum.setText(String.valueOf(myInformResponsel.fansCount));
         mySelfArticleNum.setText(String.valueOf(myInformResponsel.articleCount));
+        mySelfHead.id(UserOAuth.getUserPhotoId());
+        mySelfName.setText(UserOAuth.getUserNickname());
         refreshInform(true);
 
 

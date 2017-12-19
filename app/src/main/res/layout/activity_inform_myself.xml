@@ -60,7 +60,9 @@
                     android:layout_height="@dimen/dp_65"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/dp_50"
-                    android:src="@drawable/ic_logout_avatar" />
+                    android:src="@drawable/ic_logout_avatar"
+                    app:round="true"
+                    app:round_border_color="@color/white"/>
 
 
                 <TextView

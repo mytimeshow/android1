@@ -44,12 +44,12 @@ public class InformSelfFansActivity extends BaseActivity {
         tvTitleName.setText(titleName);
         List<Inform> informColumns=new ArrayList<Inform>();
         Inform informColumn=new Inform();
-        informColumn.name=("宇宙无敌大帅比");
+        informColumn.userName=("宇宙无敌大帅比");
         informColumn.isFollow=(false);
         informColumn.followNum=("442455");
         informColumns.add(informColumn);
         Inform informColumn2=new Inform();
-        informColumn2.name="Amshine";
+        informColumn2.userName="Amshine";
         informColumn2.isFollow=true;
         informColumn2.followNum="6746341";
         informColumns.add(informColumn2);
