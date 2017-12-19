@@ -43,6 +43,9 @@ public class InformColumnFragment extends BaseFragment {
     @BindView(R.id.inform_column_list)
     RecyclerView informColumnList;
 
+    InformColumnAdapter informColumnAdapter;
+    List<InformColumn> informColumns = new ArrayList<InformColumn>();
+
     public static InformColumnFragment newInstance() {
         InformColumnFragment fragment = new InformColumnFragment();
         return fragment;
@@ -58,22 +61,29 @@ public class InformColumnFragment extends BaseFragment {
         rootView = inflater.inflate(R.layout.fragment_inform_column, container, false);
         ButterKnife.bind(this, rootView);
 
+        informColumnAdapter = new InformColumnAdapter(informColumns, getActivity());
 
-        InformApi.getInformColumn(1).subscribe(new BaseActivity.NetObserver<InformColumnResponse>() {
+        refreshInform(true,1);
+
+        return rootView;
+    }
+
+    public void refreshInform(boolean firstLoad,int page){
+        InformApi.getInformColumn(page).subscribe(new BaseActivity.NetObserver<InformColumnResponse>() {
             @Override
             public void onNext(InformColumnResponse response) {
                 super.onNext(response);
                 response.parse();
-                List<InformColumn> informColumns = new ArrayList<InformColumn>();
+                informColumns.clear();
                 informColumns.addAll(response.data);
-                InformColumnAdapter informColumnAdapter = new InformColumnAdapter(informColumns, getActivity());
-                informColumnList.setLayoutManager(new LinearLayoutManager(getActivity()));
-                informColumnList.setAdapter(informColumnAdapter);
+                informColumnAdapter.notifyDataSetChanged();
+                if (firstLoad){
+                    informColumnList.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    informColumnList.setAdapter(informColumnAdapter);
+                }
+
             }
         });
-
-
-        return rootView;
     }
 
     @Override

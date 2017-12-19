@@ -36,6 +36,7 @@ public class InformNewsFragment extends BaseFragment {
     RecyclerView informNewsList;
 
     InformNewsAdapter informNewsAdapter;
+    List<Inform> informs = new ArrayList<Inform>();
 
     public static InformNewsFragment newInstance() {
         InformNewsFragment fragment = new InformNewsFragment();
@@ -59,26 +60,30 @@ public class InformNewsFragment extends BaseFragment {
         informColumn2.name=("天天吃吃吃");
         //1234
         list.add(informColumn);*/
-
-        InformApi.getNewsInform().subscribe(new BaseActivity.NetObserver<NewsInformResponse>() {
-            @Override
-            public void onNext(NewsInformResponse response) {
-                super.onNext(response);
-                //Toast.makeText(InformMySelfActivity.this,response.data.toString(),Toast.LENGTH_SHORT).show();
-                response.parse();
-                List<Inform> informs = new ArrayList<Inform>();
-                informs.addAll(response.data);
-                informNewsAdapter=new InformNewsAdapter(informs,getActivity());
-                informNewsList.setLayoutManager(new LinearLayoutManager(getActivity()));
-                informNewsList.setAdapter(informNewsAdapter);
-            }
-        });
-
-
+        informNewsAdapter=new InformNewsAdapter(informs,getActivity());
+        refreshInform(true);
 
 
 
         return rootView;
+    }
+
+    public void refreshInform(boolean firstLoad){
+        InformApi.getNewsInform().subscribe(new BaseActivity.NetObserver<NewsInformResponse>() {
+            @Override
+            public void onNext(NewsInformResponse response) {
+                super.onNext(response);
+                response.parse();
+                informs.clear();
+                informs.addAll(response.data);
+                informNewsAdapter.notifyDataSetChanged();
+                if (firstLoad){
+                    informNewsList.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    informNewsList.setAdapter(informNewsAdapter);
+                }
+
+            }
+        });
     }
 
     @Override
@@ -126,7 +131,9 @@ public class InformNewsFragment extends BaseFragment {
                     break;
             }
 
-
+            holder.itemView.setOnClickListener(v -> {
+                InformOrderSelfActivity.startInformOrderSelfActivity(data.userId);
+            });
         }
 
         @Override

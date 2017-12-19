@@ -193,7 +193,6 @@ public class InformFollowFragment extends BaseFragment {
                 followCotentsList.addAll(response.data);
                 followContentAdapter.notifyDataSetChanged();
                 if (firstLoad) {
-                    //followCotentsList.addAll(response.data);
                     lvInformFollow.setLayoutManager(new LinearLayoutManager(getActivity()));
                     lvInformFollow.setAdapter(followContentAdapter);
                 }
@@ -225,7 +224,7 @@ public class InformFollowFragment extends BaseFragment {
             holder.followName.setText(data.userName);
             holder.followContent.setText(data.title);
             holder.itemView.setOnClickListener(v -> {
-                InformOrderSelfActivity.startInformOrderSelfActivity();
+                InformOrderSelfActivity.startInformOrderSelfActivity(data.id);
             });
         }
 

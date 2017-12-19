@@ -9,6 +9,7 @@ import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.entity.InformColumn;
 import cn.czyugang.tcg.client.entity.InformColumnResponse;
 import cn.czyugang.tcg.client.entity.InformFollowResponse;
+import cn.czyugang.tcg.client.entity.InformResponse;
 import cn.czyugang.tcg.client.entity.MyInformResponse;
 import cn.czyugang.tcg.client.entity.NewsInformResponse;
 import cn.czyugang.tcg.client.entity.Response;
@@ -96,6 +97,24 @@ public class InformApi {
         return UserOAuth.getInstance()
                 .post("api/auth/v1/info/sort/cancel/keep", params)
                 .map(s -> (Response) JsonParse.fromJson(s, Response.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    // 根据条件查询资讯
+    public static Observable<InformResponse> getInformByCondition(int page,String sortId,String labelId,String publisherId,String keywordType,String keyword) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("accessTime", "");
+        map.put("page", page);
+        map.put("size", 20);
+        map.put("sortId", sortId);
+        map.put("labelId", labelId);
+        map.put("publisherId", publisherId);
+        map.put("keywordType", keywordType);
+        map.put("keyword", keyword);
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/info/list", map)
+                .map(s -> (InformResponse) JsonParse.fromJson(s, InformResponse.class))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

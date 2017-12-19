@@ -9,34 +9,37 @@ import com.google.gson.annotations.SerializedName;
 public class Inform {
 
 
-
     /**
-     * city : string  //应用城市
+     * city : string
+     * content : string
      * coverImageFileId : string
      * coverThumbImageFileId : string
      * coverViewFileId : string
-     * createTime : 2017-12-16T06:59:43.895Z
+     * createTime : 2017-12-19T03:07:31.128Z
      * deleteFlag : string
      * failReason : string
+     * id : string
      * labelIds : string
      * labelNames : string
      * mediaId : string
      * needCheck : string
      * orderNumber : 0
-     * orderTime : 2017-12-16T06:59:43.895Z
+     * orderTime : 2017-12-19T03:07:31.128Z
      * province : string
-     * publishTime : 2017-12-16T06:59:43.895Z
+     * publishTime : 2017-12-19T03:07:31.128Z
      * sortId : string
      * sourceType : string
      * sourceUrl : string
      * status : string
      * title : string
-     * updateTime : 2017-12-16T06:59:43.895Z
+     * updateTime : 2017-12-19T03:07:31.128Z
      * userId : string
      */
 
     @SerializedName("city")
     public String city;
+    @SerializedName("content")
+    public String content;
     @SerializedName("coverImageFileId")
     public String coverImageFileId;
     @SerializedName("coverThumbImageFileId")
@@ -49,6 +52,8 @@ public class Inform {
     public String deleteFlag;
     @SerializedName("failReason")
     public String failReason;
+    @SerializedName("id")
+    public String id;
     @SerializedName("labelIds")
     public String labelIds;
     @SerializedName("labelNames")
@@ -80,14 +85,10 @@ public class Inform {
     @SerializedName("userId")
     public String userId;
 
-    @SerializedName("id")
-    public String id;
-    @SerializedName("name")
-    public String name;
+
+
 
     public String headUrl;
-
-    public String content;
     public String imgUrl;
     public String commentNum;
     public String thumbNum;
@@ -96,6 +97,7 @@ public class Inform {
     public String followNum;
     public String userName;
     public String sortName;
+
     String bannerImg;
 
     public void InformColumn(){
