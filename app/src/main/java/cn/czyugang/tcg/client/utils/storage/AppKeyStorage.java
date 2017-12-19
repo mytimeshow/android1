@@ -7,6 +7,7 @@ import java.util.Map;
 
 import cn.czyugang.tcg.client.entity.TrolleyGoods;
 import cn.czyugang.tcg.client.entity.TrolleyStore;
+import cn.czyugang.tcg.client.modules.store.SearchActivity;
 import cn.czyugang.tcg.client.utils.LogRui;
 
 /**
@@ -17,21 +18,27 @@ public class AppKeyStorage {
     /*
     *   搜索历史
     * */
-    public static List<String> getSearchHistory() {
-        return KeyStorage.get("SearchHistory", new ArrayList<String>());
+    public static List<String> getSearchHistory(int type) {
+        return KeyStorage.get(getSearchHistoryKey(type), new ArrayList<String>());
     }
 
-    public static void saveSearchHistory(String searchWord) {
+    public static void saveSearchHistory(String searchWord,int type) {
         if (searchWord==null||searchWord.equals("")) return;
         if (searchWord.length()>10) searchWord=searchWord.substring(0,10);
-        List<String> history = KeyStorage.get("SearchHistory", new ArrayList<String>());
+        List<String> history = KeyStorage.get(getSearchHistoryKey(type), new ArrayList<String>());
         if (history.size()>10) history.remove(10);
         history.add(0,searchWord);
-        KeyStorage.put("SearchHistory",history);
+        KeyStorage.put(getSearchHistoryKey(type),history);
     }
 
-    public static void clearSearchHistory(){
-        KeyStorage.delete("SearchHistory");
+    public static void clearSearchHistory(int type){
+        KeyStorage.delete(getSearchHistoryKey(type));
+    }
+
+    public static String getSearchHistoryKey(int type){
+        if (type== SearchActivity.SEARCH_STORE) return "SearchStoreHistory";
+        if (type== SearchActivity.SEARCH_INFORM) return "SearchInformHistory";
+        return "SearchHistory";
     }
 
     /*

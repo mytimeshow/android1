@@ -32,7 +32,7 @@ public class UploadImgAdapter extends RecyclerView.Adapter<UploadImgAdapter.Hold
     private List<Item> list = new ArrayList<>();
     private Activity activity;
     private Item addImg = new Item();
-    private String uploadType ="COMMENT";
+    private String uploadType = "COMMENT";
     //ATTRIBUTE（属性图片）、LABEL（标签图片）、PRODUCT_TYPE（产品类型图片）、STORE_TYPE（店铺类型图片）、
     //PROTOCOL（协议文件）、COMMENT（评论图片）、FACE（头像图片）、CONTRACT（合同）、STORE_PHOTO（店铺图片）、
     //GOODS_PHOTO（商品图片）、CERTIFICATE_PHOTO（证件图片）、INFO_VIDEO(资讯视频)、INFO_PIC(资讯图片)
@@ -96,7 +96,7 @@ public class UploadImgAdapter extends RecyclerView.Adapter<UploadImgAdapter.Hold
             // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
             // 如果裁剪并压缩了，已取压缩路径为准，因为是先裁剪后压缩的
             if (selectList.size() > 0) {
-                Item item=new Item(selectList.get(0).getCompressPath());
+                Item item = new Item(selectList.get(0).getCompressPath());
                 item.upload();
                 list.add(list.indexOf(addImg), item);
                 notifyDataSetChanged();
@@ -105,13 +105,13 @@ public class UploadImgAdapter extends RecyclerView.Adapter<UploadImgAdapter.Hold
         return true;
     }
 
-    public String getUploadImgIds(){
-        StringBuilder builder=new StringBuilder();
-        for(Item item:list){
+    public String getUploadImgIds() {
+        StringBuilder builder = new StringBuilder();
+        for (Item item : list) {
             builder.append(item.uploadId);
             builder.append(",");
         }
-        if (builder.length()>0) builder.deleteCharAt(builder.length()-1);
+        if (builder.length() > 0) builder.deleteCharAt(builder.length() - 1);
         return builder.toString();
     }
 
@@ -140,14 +140,22 @@ public class UploadImgAdapter extends RecyclerView.Adapter<UploadImgAdapter.Hold
 
         private void upload() {
             HashMap<String, Object> filesMap = new HashMap<>();
-            filesMap.put("file", new File(path));
-
-
-            UserOAuth.getInstance().upload("api/auth/v1/file/uploadFile?"+uploadType, filesMap).subscribe(new BaseActivity.NetObserver<Progress>() {
+            File file = new File(path);
+            filesMap.put("file", file);
+            UserOAuth.getInstance().upload("api/auth/v1/file/uploadFile?type=" + uploadType, filesMap).subscribe(new BaseActivity.NetObserver<Progress>() {
                 @Override
                 public void onNext(Progress response) {
                     super.onNext(response);
+                    //LogRui.i("onNext####", response.getProgress());
+                    if (response.getBodyStr() != null) {
+                        //LogRui.i("onNext####", response.getFileId());
+                        uploadId=response.getFileId();
+                    }
+                }
 
+                @Override
+                public boolean showLoading() {
+                    return false;
                 }
             });
         }

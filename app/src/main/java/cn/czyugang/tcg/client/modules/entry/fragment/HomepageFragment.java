@@ -66,7 +66,7 @@ public class HomepageFragment extends BaseFragment {
 
     @OnClick(R.id.homepage_search)
     public void onSearch() {
-        SearchActivity.startSearchActivity();
+        SearchActivity.startSearchActivity(SearchActivity.SEARCH_STORE);
     }
 
     @OnClick(R.id.homepage_scan)

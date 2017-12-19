@@ -60,6 +60,34 @@
             android:textColor="@color/text_dark_gray"
             />
         <include layout="@layout/view_split_bar_light"/>
+        <TextView
+            android:id="@+id/search_type_article"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_12"
+            android:paddingBottom="@dimen/dp_12"
+            android:drawableLeft="@drawable/icon_search_type_article"
+            android:drawablePadding="@dimen/dp_8"
+            android:text="在文章中搜索“”"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/text_dark_gray"
+            />
+        <include layout="@layout/view_split_bar_light"/>
+        <TextView
+            android:id="@+id/search_type_article_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_12"
+            android:paddingBottom="@dimen/dp_12"
+            android:drawableLeft="@drawable/icon_search_type_label"
+            android:drawablePadding="@dimen/dp_8"
+            android:text="在文章标签中搜索“”"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/text_dark_gray"
+            />
+        <include layout="@layout/view_split_bar_light"/>
 
     </LinearLayout>
 

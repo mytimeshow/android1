@@ -14,7 +14,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +26,9 @@ import cn.czyugang.tcg.client.api.InformApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.entity.MyInform;
 import cn.czyugang.tcg.client.entity.MyInformResponse;
-import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.modules.store.SearchActivity;
 import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.LogRui;
-import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 
 /**
@@ -107,7 +104,7 @@ public class InformMySelfActivity extends BaseActivity {
 
     @OnClick(R.id.title_search_bg)
     public void onSearch(){
-        SearchActivity.startSearchActivity();
+        SearchActivity.startSearchActivity(SearchActivity.SEARCH_INFORM);
     }
 
     public static class MyInformAdapter extends RecyclerView.Adapter<MyInformAdapter.Holder> {

@@ -14,7 +14,6 @@ import java.util.concurrent.TimeUnit;
 import cn.czyugang.tcg.client.entity.Progress;
 import cn.czyugang.tcg.client.utils.CLog;
 import cn.czyugang.tcg.client.utils.JsonParse;
-import cn.czyugang.tcg.client.utils.LogRui;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
@@ -272,8 +271,7 @@ public class Network {
                         for (Map.Entry<String, Object> entry : params.entrySet()) {
                             Object param = entry.getValue();
                             if (param instanceof File) {
-                                //body.put(entry.getKey() + "\";filename=\"" + ((File) param).getName(), createUploadRequestBody((File) param, subject, progress));
-                                body.put(entry.getKey(), createUploadRequestBody((File) param, subject, progress));
+                                body.put(entry.getKey() + "\";filename=\"" + ((File) param).getName(), createUploadRequestBody((File) param, subject, progress));
                             } else if (param instanceof String) {
                                 body.put(entry.getKey(), RequestBody.create(MediaType.parse("multipart/form-data"), (String) param));
                             }

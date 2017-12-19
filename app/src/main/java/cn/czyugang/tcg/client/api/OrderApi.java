@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import cn.czyugang.tcg.client.common.UserOAuth;
+import cn.czyugang.tcg.client.entity.AftersaleRespose;
 import cn.czyugang.tcg.client.entity.OrderDetailResponse;
 import cn.czyugang.tcg.client.entity.OrderResponse;
 import cn.czyugang.tcg.client.entity.Response;
@@ -186,7 +187,7 @@ public class OrderApi {
     }
 
     //api/auth/v2/order/after/sale/user/page    [可接入-v2]获取售后订单 status  售后订单状态(空-查询全部,FINISH-已完结,PROCESSING-处理中)
-    public static Observable<Response<Object>> aftersaleOrders(String status,String accessTime,int page) {
+    public static Observable<AftersaleRespose> aftersaleOrders(String status, String accessTime, int page) {
         HashMap<String, Object> map = new HashMap<>();
         if (status != null) map.put("status", status);
         if (accessTime==null) {
@@ -198,7 +199,7 @@ public class OrderApi {
         map.put("size",10);
         return UserOAuth.getInstance()
                 .get("api/auth/v2/order/after/sale/user/page", map)
-                .map(s -> (Response<Object>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, Object.class)))
+                .map(s -> (AftersaleRespose) JsonParse.fromJson(s, AftersaleRespose.class))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
 
