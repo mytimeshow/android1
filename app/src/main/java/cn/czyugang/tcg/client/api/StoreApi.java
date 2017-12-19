@@ -11,6 +11,7 @@ import cn.czyugang.tcg.client.entity.GoodsSpecResponse;
 import cn.czyugang.tcg.client.entity.OrderPreSettleResponse;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.entity.Store;
+import cn.czyugang.tcg.client.entity.StoreApplyInfo;
 import cn.czyugang.tcg.client.entity.StoreImg;
 import cn.czyugang.tcg.client.entity.TrolleyCheckResponse;
 import cn.czyugang.tcg.client.entity.TrolleyGoods;
@@ -184,5 +185,29 @@ public class StoreApi {
                 .map(s -> (Response<List<String>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class,new JsonParse.Type(List.class,String.class))))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+
+    /*
+    *   商家入驻
+    * */
+    //api/auth/v1/store/apply/submit    [可接入]商家入驻（申请新商家和店铺）
+    public static Observable<Response<Object>> storeApply(HashMap<String, Object> map) {
+        return UserOAuth.getInstance()
+                .post("api/auth/v1/store/apply/submit", map)
+                .map(s -> (Response<Object>) JsonParse.fromJson(s, new JsonParse.Type(Response.class,Object.class)))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
+
+    //api/auth/v1/store/apply/status    [可接入]根据用户id查看审核结果/信息
+    public static Observable<Response<StoreApplyInfo>> storeApplyStatus() {
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/store/apply/status",null)
+                .map(s -> (Response<StoreApplyInfo>) JsonParse.fromJson(s, new JsonParse.Type(Response.class,StoreApplyInfo.class)))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
     }
 }

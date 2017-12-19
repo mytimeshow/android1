@@ -12,10 +12,15 @@ import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.base.BaseActivity;
+import cn.czyugang.tcg.client.common.UserOAuth;
+import cn.czyugang.tcg.client.entity.Progress;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 
 /**
@@ -27,7 +32,10 @@ public class UploadImgAdapter extends RecyclerView.Adapter<UploadImgAdapter.Hold
     private List<Item> list = new ArrayList<>();
     private Activity activity;
     private Item addImg = new Item();
-
+    private String uploadType ="COMMENT";
+    //ATTRIBUTE（属性图片）、LABEL（标签图片）、PRODUCT_TYPE（产品类型图片）、STORE_TYPE（店铺类型图片）、
+    //PROTOCOL（协议文件）、COMMENT（评论图片）、FACE（头像图片）、CONTRACT（合同）、STORE_PHOTO（店铺图片）、
+    //GOODS_PHOTO（商品图片）、CERTIFICATE_PHOTO（证件图片）、INFO_VIDEO(资讯视频)、INFO_PIC(资讯图片)
 
     public UploadImgAdapter(Activity activity) {
         this.activity = activity;
@@ -48,7 +56,7 @@ public class UploadImgAdapter extends RecyclerView.Adapter<UploadImgAdapter.Hold
             holder.delete.setVisibility(View.GONE);
             holder.imgView.drawableId(data.addImgId);
             holder.imgView.setOnClickListener(v -> {
-               openSelector();
+                openSelector();
             });
         } else {
             holder.delete.setVisibility(View.VISIBLE);
@@ -67,7 +75,7 @@ public class UploadImgAdapter extends RecyclerView.Adapter<UploadImgAdapter.Hold
         return list.size() > 5 ? 5 : list.size();
     }
 
-    private void openSelector(){
+    private void openSelector() {
         PictureSelector.create(activity)
                 .openGallery(PictureMimeType.ofImage())
                 .theme(R.style.picture_white_style)
@@ -78,8 +86,8 @@ public class UploadImgAdapter extends RecyclerView.Adapter<UploadImgAdapter.Hold
                 .forResult(PictureConfig.CHOOSE_REQUEST);
     }
 
-    public boolean parseResult(int requestCode, int resultCode, Intent data){
-        if (requestCode!=PictureConfig.CHOOSE_REQUEST) return false;
+    public boolean parseResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode != PictureConfig.CHOOSE_REQUEST) return false;
         if (resultCode == Activity.RESULT_OK) {
             List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
             // 例如 LocalMedia 里面返回三种path
@@ -87,12 +95,24 @@ public class UploadImgAdapter extends RecyclerView.Adapter<UploadImgAdapter.Hold
             // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
             // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
             // 如果裁剪并压缩了，已取压缩路径为准，因为是先裁剪后压缩的
-            if (selectList.size()>0) {
-                list.add(list.indexOf(addImg),new Item(selectList.get(0).getCompressPath()));
+            if (selectList.size() > 0) {
+                Item item=new Item(selectList.get(0).getCompressPath());
+                item.upload();
+                list.add(list.indexOf(addImg), item);
                 notifyDataSetChanged();
             }
         }
         return true;
+    }
+
+    public String getUploadImgIds(){
+        StringBuilder builder=new StringBuilder();
+        for(Item item:list){
+            builder.append(item.uploadId);
+            builder.append(",");
+        }
+        if (builder.length()>0) builder.deleteCharAt(builder.length()-1);
+        return builder.toString();
     }
 
     class Holder extends RecyclerView.ViewHolder {
@@ -106,15 +126,30 @@ public class UploadImgAdapter extends RecyclerView.Adapter<UploadImgAdapter.Hold
         }
     }
 
-    static class Item {
+    class Item {
         public int addImgId = R.drawable.upload_img_select;
         public String path = "";
+        public String uploadId = "";
 
         public Item() {
         }
 
         public Item(String path) {
             this.path = path;
+        }
+
+        private void upload() {
+            HashMap<String, Object> filesMap = new HashMap<>();
+            filesMap.put("file", new File(path));
+
+
+            UserOAuth.getInstance().upload("api/auth/v1/file/uploadFile?"+uploadType, filesMap).subscribe(new BaseActivity.NetObserver<Progress>() {
+                @Override
+                public void onNext(Progress response) {
+                    super.onNext(response);
+
+                }
+            });
         }
     }
 }

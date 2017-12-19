@@ -52,18 +52,19 @@ public class OrderGoods {
     public String updateTime;
 
     @SerializedName("realPrice")
-    public int realPrice;               //折购后商品价格
+    public double realPrice;               //折购后商品价格
     @SerializedName("unitPrice")
-    public int unitPrice;           //商品原价
+    public double unitPrice;           //商品原价
     @SerializedName("discountPrice")
-    public int discountPrice;           //优惠金额
+    public double discountPrice;           //优惠金额
     @SerializedName("orderPrice")
-    public int orderPrice;              //订单金额
+    public double orderPrice;              //订单金额
     @SerializedName("packagePrice")
-    public int packagePrice;
+    public double packagePrice;
     @SerializedName("payPrice")
-    public int payPrice;
+    public double payPrice;
 
+    public String orderId="";
 
     public String getSpec(){
         return specifications;

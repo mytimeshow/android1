@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,7 +18,7 @@
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/medium"
             android:paddingRight="@dimen/small"
-            android:src="@drawable/ic_back_arrow" />
+            android:src="@drawable/ic_back_arrow"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -25,135 +26,211 @@
             android:layout_centerInParent="true"
             android:text="关于我们"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_large" />
+            android:textSize="@dimen/text_large"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider"
             android:layout_alignParentBottom="true"
-            android:background="@color/div_dark" />
+            android:background="@color/div_dark"/>
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_version"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="40dp"
-        android:layout_marginTop="40dp"
-        android:drawablePadding="@dimen/medium"
-        android:drawableTop="@drawable/logo"
-        android:gravity="center_horizontal"
-        android:textColor="@color/text_gray"
-        android:textSize="@dimen/text_small"
-        tools:text="V 3.0.1" />
-
-    <TextView
-        android:id="@+id/tv_share"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/main_white"
-        android:drawableRight="@drawable/ic_goto_arrow"
-        android:paddingBottom="@dimen/medium"
-        android:paddingLeft="@dimen/small"
-        android:paddingRight="@dimen/small"
-        android:paddingTop="@dimen/medium"
-        android:text="告诉朋友"
-        android:textColor="@color/text_black"
-        android:textSize="@dimen/text_small" />
+        android:layout_height="match_parent">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider"
-        android:background="@color/div_light" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!--版本号-->
+            <TextView
+                android:id="@+id/tv_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="40dp"
+                android:layout_marginTop="40dp"
+                android:drawablePadding="@dimen/medium"
+                android:drawableTop="@drawable/logo"
+                android:gravity="center_horizontal"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/text_small"
+                tools:text="V 3.0.1"/>
 
-    <TextView
-        android:id="@+id/tv_help"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/main_white"
-        android:drawableRight="@drawable/ic_goto_arrow"
-        android:paddingBottom="@dimen/medium"
-        android:paddingLeft="@dimen/small"
-        android:paddingRight="@dimen/small"
-        android:paddingTop="@dimen/medium"
-        android:text="帮助中心"
-        android:textColor="@color/text_black"
-        android:textSize="@dimen/text_small" />
+            <!--版本介绍-->
+            <TextView
+                android:id="@+id/tv_version_intro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_white"
+                android:drawableRight="@drawable/ic_goto_arrow"
+                android:paddingBottom="@dimen/medium"
+                android:paddingLeft="@dimen/small"
+                android:paddingRight="@dimen/small"
+                android:paddingTop="@dimen/medium"
+                android:text="版本介绍"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_small"
+                />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider"
-        android:background="@color/div_light" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/div_light"/>
 
-    <TextView
-        android:id="@+id/tv_clause"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/main_white"
-        android:drawableRight="@drawable/ic_goto_arrow"
-        android:paddingBottom="@dimen/medium"
-        android:paddingLeft="@dimen/small"
-        android:paddingRight="@dimen/small"
-        android:paddingTop="@dimen/medium"
-        android:text="使用条款"
-        android:textColor="@color/text_black"
-        android:textSize="@dimen/text_small" />
+            <!--意见反馈-->
+            <TextView
+                android:id="@+id/tv_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_white"
+                android:drawableRight="@drawable/ic_goto_arrow"
+                android:paddingBottom="@dimen/medium"
+                android:paddingLeft="@dimen/small"
+                android:paddingRight="@dimen/small"
+                android:paddingTop="@dimen/medium"
+                android:text="意见反馈"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_small"
+                />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider"
-        android:background="@color/div_light" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/div_light"/>
 
-    <TextView
-        android:id="@+id/tv_feedback"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/main_white"
-        android:drawableRight="@drawable/ic_goto_arrow"
-        android:paddingBottom="@dimen/medium"
-        android:paddingLeft="@dimen/small"
-        android:paddingRight="@dimen/small"
-        android:paddingTop="@dimen/medium"
-        android:text="投诉建议"
-        android:textColor="@color/text_black"
-        android:textSize="@dimen/text_small" />
+            <!--告诉朋友-->
+            <TextView
+                android:id="@+id/tv_share"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_white"
+                android:drawableRight="@drawable/ic_goto_arrow"
+                android:paddingBottom="@dimen/medium"
+                android:paddingLeft="@dimen/small"
+                android:paddingRight="@dimen/small"
+                android:paddingTop="@dimen/medium"
+                android:text="告诉朋友"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_small"
+                android:visibility="gone"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider"
-        android:background="@color/div_light" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/div_light"/>
 
-    <TextView
-        android:id="@+id/tv_cooperation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/main_white"
-        android:drawableRight="@drawable/ic_goto_arrow"
-        android:paddingBottom="@dimen/medium"
-        android:paddingLeft="@dimen/small"
-        android:paddingRight="@dimen/small"
-        android:paddingTop="@dimen/medium"
-        android:text="商户合作"
-        android:textColor="@color/text_black"
-        android:textSize="@dimen/text_small" />
+            <!--帮助中心-->
+            <TextView
+                android:id="@+id/tv_help"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_white"
+                android:drawableRight="@drawable/ic_goto_arrow"
+                android:paddingBottom="@dimen/medium"
+                android:paddingLeft="@dimen/small"
+                android:paddingRight="@dimen/small"
+                android:paddingTop="@dimen/medium"
+                android:text="帮助中心"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_small"
+                android:visibility="gone"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider"
-        android:background="@color/div_light" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/div_light"/>
 
-    <TextView
-        android:id="@+id/tv_update"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/main_white"
-        android:drawableRight="@drawable/ic_goto_arrow"
-        android:paddingBottom="@dimen/medium"
-        android:paddingLeft="@dimen/small"
-        android:paddingRight="@dimen/small"
-        android:paddingTop="@dimen/medium"
-        android:text="检测更新"
-        android:textColor="@color/text_black"
-        android:textSize="@dimen/text_small" />
+            <!--商户合作-->
+            <TextView
+                android:id="@+id/tv_cooperation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_white"
+                android:drawableRight="@drawable/ic_goto_arrow"
+                android:paddingBottom="@dimen/medium"
+                android:paddingLeft="@dimen/small"
+                android:paddingRight="@dimen/small"
+                android:paddingTop="@dimen/medium"
+                android:text="商户合作"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_small"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/div_light"/>
+
+            <!--使用条款-->
+            <TextView
+                android:id="@+id/tv_clause"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_white"
+                android:drawableRight="@drawable/ic_goto_arrow"
+                android:paddingBottom="@dimen/medium"
+                android:paddingLeft="@dimen/small"
+                android:paddingRight="@dimen/small"
+                android:paddingTop="@dimen/medium"
+                android:text="使用条款"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_small"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/div_light"/>
+
+            <LinearLayout
+                android:id="@+id/tv_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/main_white"
+                    android:paddingBottom="@dimen/medium"
+                    android:paddingLeft="@dimen/small"
+                    android:paddingRight="@dimen/small"
+                    android:paddingTop="@dimen/medium"
+                    android:text="检测更新"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_small"/>
+
+                <!--已是最新版本  有新版本可更新-->
+                <TextView
+                    android:id="@+id/tv_update_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/main_white"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:drawableRight="@drawable/ic_goto_arrow"
+                    android:paddingBottom="@dimen/medium"
+                    android:paddingLeft="@dimen/small"
+                    android:paddingRight="@dimen/small"
+                    android:paddingTop="@dimen/medium"
+                    android:text="未检查"
+                    android:textColor="@color/main_red"
+                    android:textSize="@dimen/text_small"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_120"
+                android:layout_marginBottom="@dimen/dp_20"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/sp_10"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.4"
+                android:text="宇罡科技 版权所有\ncopyring @XXXX-XXXX YuGang.All Rights Reserved"/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
 </LinearLayout>

@@ -91,4 +91,14 @@
         android:textColor="@color/text_light_gray"
         android:textSize="@dimen/sp_12"/>
 
+    <TextView
+        android:id="@+id/apply_aftersale"
+        style="@style/button_order_small"
+        android:text="申请售后"
+        android:layout_below="@id/item_num"
+        android:layout_alignRight="@id/item_num"
+        android:layout_marginTop="@dimen/dp_8"
+        android:visibility="gone"
+        />
+
 </RelativeLayout>

@@ -22,8 +22,6 @@ import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.entity.InformFollow;
 import cn.czyugang.tcg.client.entity.InformFollowResponse;
-import cn.czyugang.tcg.client.entity.Response;
-import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.widget.LabelLayout;
 
@@ -185,7 +183,7 @@ public class InformFollowFragment extends BaseFragment {
 
 
     private void refreshInform(boolean firstLoad,String type) {
-        InformApi.getFollowInform(type).subscribe(new BaseActivity.NetObserver<FollowInformResponse>() {
+        InformApi.getFollowInform(type).subscribe(new BaseActivity.NetObserver<InformFollowResponse>() {
             @Override
             public void onNext(InformFollowResponse response) {
                 super.onNext(response);

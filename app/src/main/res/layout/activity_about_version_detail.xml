@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        style="@style/title_title">
+
+        <ImageView
+            style="@style/title_back"/>
+
+        <TextView
+            style="@style/title_text"
+            android:text="功能介绍"/>
+    </FrameLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="@dimen/dp_10"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/version_detail_title"
+                style="@style/text_14_black"
+                tool:text="同城鸽3.0.1更新"/>
+
+            <TextView
+                android:id="@+id/version_detail_time"
+                style="@style/text_12_gray"
+                android:layout_marginTop="@dimen/dp_2"
+                tool:text="10月14日"/>
+
+            <TextView
+                android:id="@+id/version_detail_tcontent"
+                style="@style/text_12_black"
+                android:layout_marginTop="@dimen/dp_8"
+                android:lineSpacingMultiplier="1.3"
+                tool:text="1. 帮买订单购买物品展示优化，简化送单流程；\n2. 订单详情页新增订单类型、顾客期望送达时间；\n3. 其他细节优化；"/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

@@ -268,12 +268,16 @@ public class MyDialog extends DialogFragment {
 
     //底部  电话号码+取消 按钮
     public static void phoneDialog(Activity activity, String phone) {
+        phoneDialog(activity,phone,phone);
+    }
+
+    public static void phoneDialog(Activity activity, String phone,String phoneText) {
         MyDialog.Builder.newBuilder(activity)
                 .custom(R.layout.dialog_call)
                 .width(-1)
                 .gravity(Gravity.BOTTOM)
                 .bindView(myDialog -> {
-                    myDialog.text(R.id.dialog_call, "13138705415")
+                    myDialog.text(R.id.dialog_call, phoneText)
                             .onClick(R.id.dialog_call, v -> AppUtil.call(activity, phone))
                             .onClick(R.id.dialog_cancel);
                 })

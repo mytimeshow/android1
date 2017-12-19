@@ -6,16 +6,23 @@ import android.support.annotation.Nullable;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amap.api.services.core.PoiItem;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.api.StoreApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
+import cn.czyugang.tcg.client.common.ErrorHandler;
+import cn.czyugang.tcg.client.common.UserOAuth;
+import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.entity.StoreApplyInfo;
 import cn.czyugang.tcg.client.modules.address.activity.SelectLocationActivity;
+import cn.czyugang.tcg.client.utils.app.AppUtil;
 
 /**
  * @author ruiaa
@@ -47,8 +54,13 @@ public class ApplyStoreActivity extends BaseActivity {
 
     private PoiItem poiItem = null;
 
-    public static void startApplyStoreActivity( ){
-        Intent intent=new Intent(getTopActivity(),ApplyStoreActivity.class);
+    public static void startApplyStoreActivity() {
+        if (UserOAuth.getUserId().equals("")) {
+            AppUtil.toast("您未登录，请先登录");
+            UserOAuth.judgeOrLogin();
+            return;
+        }
+        Intent intent = new Intent(getTopActivity(), ApplyStoreActivity.class);
         getTopActivity().startActivity(intent);
     }
 
@@ -57,6 +69,26 @@ public class ApplyStoreActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apply_store);
         ButterKnife.bind(this);
+
+        getStatus();
+    }
+
+    private void getStatus() {
+        StoreApi.storeApplyStatus().subscribe(new NetObserver<Response<StoreApplyInfo>>() {
+            @Override
+            public void onNext(Response<StoreApplyInfo> response) {
+                super.onNext(response);
+                if (response != null && response.code == 200) {
+                    if (response.data.status.equals("SUCCESS")) {
+                        AppUtil.toast("您已是商户，无法进行申请");
+                    } else {
+                        response.data.parse(response.values);
+                        ApplyStoreStatusActivity.startApplyStoreStatusActivity(response.data);
+                    }
+                    finish();
+                }
+            }
+        });
     }
 
     @OnClick(R.id.title_back)
@@ -91,36 +123,36 @@ public class ApplyStoreActivity extends BaseActivity {
     }
 
 
-    private boolean checkInput(){
-        if (merchantName.getText().length()==0){
+    private boolean checkInput() {
+        if (merchantName.getText().length() == 0) {
             showToast("请输入商户名称");
             return false;
         }
-        if(!typeEnterprise.isChecked()&&!typePersonal.isChecked()){
+        if (!typeEnterprise.isChecked() && !typePersonal.isChecked()) {
             showToast("请选择商户类型");
             return false;
         }
-        if (userName.getText().length()==0){
+        if (userName.getText().length() == 0) {
             showToast("请输入联系人");
             return false;
         }
-        if (userPhone.getText().length()==0){
+        if (userPhone.getText().length() == 0) {
             showToast("请输入联系电话");
             return false;
         }
-        if (storeName.getText().length()==0){
+        if (storeName.getText().length() == 0) {
             showToast("请输入店铺名称");
             return false;
         }
-        if (poiItem==null){
+        if (poiItem == null) {
             showToast("请选择店铺地址");
             return false;
         }
-        if (detailLocation.getText().length()==0){
+        if (detailLocation.getText().length() == 0) {
             showToast("请输入店铺详细地址");
             return false;
         }
-        if (storeManagement.getText().length()==0){
+        if (storeManagement.getText().length() == 0) {
             showToast("简单描述店铺经营内容");
             return false;
         }
@@ -129,11 +161,46 @@ public class ApplyStoreActivity extends BaseActivity {
 
     @OnClick(R.id.apply_store_commit)
     public void onCommit() {
-        //if (!checkInput()) return;
-        Toast.makeText(context, "提交成功", Toast.LENGTH_LONG).show();
-        storeManagement.postDelayed(() -> {
-            ApplyStoreStatusActivity.startApplyStoreStatusActivity();
-            finish();
-        }, 3000L);
+        if (!checkInput()) return;
+        HashMap<String, Object> map = new HashMap<>();
+        /*
+        * businessCityId*商户所在城市
+        * businessContact*联系人
+        * businessName*商户名字
+        * businessPhone*	联系电话
+        * businessProvinceId*	商户所在省份
+        * businessType*	商户类型（SINGLE-个人，COMPANY-企业）
+        * guidepost	标志建筑物
+        * majorBusiness	店铺主营业务(手动输入)
+        * storeAddress*	店铺详细地址(文本输入)
+        * storeLocation*	店铺位置（经纬度，用’,’隔开）
+        * storeName*	店铺名称
+        * userId*	用户id
+        * */
+        map.put("businessCityId", poiItem.getCityCode());
+        map.put("businessContact", userName.getText().toString());
+        map.put("businessName", merchantName.getText().toString());
+        map.put("businessPhone", userPhone.getText().toString());
+        map.put("businessProvinceId", poiItem.getProvinceCode());
+        map.put("businessType", typeEnterprise.isChecked() ? "COMPANY" : "SINGLE");
+        //map.put("guidepost", );
+        map.put("majorBusiness", storeManagement.getText().toString());
+        map.put("storeAddress", detailLocation.getText().toString());
+        map.put("storeLocation", "" + poiItem.getLatLonPoint().getLongitude() + "," + poiItem.getLatLonPoint().getLatitude());
+        map.put("storeName", storeName.getText().toString());
+        map.put("userId", UserOAuth.getUserId());
+        StoreApi.storeApply(map).subscribe(new NetObserver<Response<Object>>() {
+            @Override
+            public void onNext(Response<Object> response) {
+                super.onNext(response);
+                if (ErrorHandler.judge200(response)) {
+                    showToast("提交成功");
+                    String phone = "";
+                    if (response.values != null) response.values.optString("platform_phone");
+                    ApplyStoreStatusActivity.startApplyStoreStatusActivity(phone);
+                    finish();
+                }
+            }
+        });
     }
 }

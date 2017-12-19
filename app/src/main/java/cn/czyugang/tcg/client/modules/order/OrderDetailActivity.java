@@ -28,8 +28,12 @@ import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.api.OrderApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
+import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.OrderDetailResponse;
 import cn.czyugang.tcg.client.entity.OrderGoods;
+import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.modules.aftersale.AftersaleServiceActivity;
+import cn.czyugang.tcg.client.modules.aftersale.RefundActivity;
 import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.modules.store.StoreActivity;
 import cn.czyugang.tcg.client.utils.CommonUtil;
@@ -61,13 +65,13 @@ public class OrderDetailActivity extends BaseActivity {
     MapView mapView;
 
     @BindView(R.id.order_detail_delivery_nameL)
-    TextView deliveryNameL;
+    View deliveryNameL;
     @BindView(R.id.order_detail_delivery_name)
     TextView deliveryName;
     @BindView(R.id.order_detail_delivery_phone)
     TextView deliveryPhone;
     @BindView(R.id.order_detail_coupon_codeL)
-    TextView couponCodeL;
+    View couponCodeL;
     @BindView(R.id.order_detail_coupon_code)
     TextView couponCode;
     @BindView(R.id.order_detail_coupon_status)
@@ -111,7 +115,7 @@ public class OrderDetailActivity extends BaseActivity {
     @BindView(R.id.order_detail_pay_type)
     TextView payType;
     @BindView(R.id.order_detail_pay_typeL)
-    TextView payTypeL;
+    View payTypeL;
     @BindView(R.id.order_detail_time_book)
     TextView timeBook;
     @BindView(R.id.order_detail_time_bookL)
@@ -149,6 +153,7 @@ public class OrderDetailActivity extends BaseActivity {
     private String orderId = "";
     private boolean showMapView = true;
     private OrderDetailResponse response = null;
+    private Bundle savedInstanceState;
 
     public static void startOrderDetailActivity(String orderId) {
         Intent intent = new Intent(getTopActivity(), OrderDetailActivity.class);
@@ -159,6 +164,7 @@ public class OrderDetailActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.savedInstanceState=savedInstanceState;
         orderId = getIntent().getStringExtra("id");
         setContentView(R.layout.activity_order_detail);
         ButterKnife.bind(this);
@@ -173,7 +179,11 @@ public class OrderDetailActivity extends BaseActivity {
                 .addItem("代", "平台优惠券名称", " -￥10.00")
                 .build();*/
 
+        getOrderInfo();
+    }
 
+    private void getOrderInfo(){
+        OrderDetailActivity.this.response=null;
         OrderApi.getOrderDetail(orderId).subscribe(new NetObserver<OrderDetailResponse>() {
             @Override
             public void onNext(OrderDetailResponse response) {
@@ -181,7 +191,7 @@ public class OrderDetailActivity extends BaseActivity {
                 response.parse();
                 OrderDetailActivity.this.response = response;
                 initTopStatus();
-                initMapView(savedInstanceState);
+                initMapView();
                 initDeliveryMan();
                 initStoreGoods();
                 initDeliveryWayNote();
@@ -262,7 +272,7 @@ public class OrderDetailActivity extends BaseActivity {
     /*
     *   小地图
     * */
-    private void initMapView(@Nullable Bundle savedInstanceState) {
+    private void initMapView() {
         showMapView = false;
 
         if (!showMapView) return;
@@ -465,11 +475,29 @@ public class OrderDetailActivity extends BaseActivity {
     }
 
     private void onCancel() {
-
+        OrderApi.cancelOrder(orderId).subscribe(new NetObserver<Response<Object>>() {
+            @Override
+            public void onNext(Response<Object> response) {
+                super.onNext(response);
+                if (ErrorHandler.judge200(response)) {
+                    AppUtil.toast("成功取消订单");
+                    getOrderInfo();
+                }
+            }
+        });
     }
 
     private void onDelete() {
-
+        OrderApi.deleteOrder(orderId).subscribe(new NetObserver<Response<Object>>() {
+            @Override
+            public void onNext(Response<Object> response) {
+                super.onNext(response);
+                if (ErrorHandler.judge200(response)) {
+                    AppUtil.toast("成功删除订单");
+                    finish();
+                }
+            }
+        });
     }
 
     private void onComment() {
@@ -492,7 +520,89 @@ public class OrderDetailActivity extends BaseActivity {
 
     }
 
-    static class OrderGoodsAdapter extends RecyclerView.Adapter<OrderGoodsAdapter.Holder> {
+    /*
+    *   售后
+    * */
+    private boolean showRefund() {
+        switch (response.data.status) {
+            case "CLOSE": {
+                //已关闭
+                break;
+            }
+            case "WAIT_PAY": {
+                //待付款
+                break;
+            }
+            case "PAY": {
+                //已付款
+                return true;
+            }
+            case "ORDERS": {
+                //待发货
+                return true;
+            }
+            case "DELIVERY": {
+                //已发货
+                break;
+            }
+            case "REACH": {
+                //已送达
+                break;
+            }
+            case "FINISH": {
+                //待评价
+                break;
+            }
+        }
+        return false;
+    }
+
+    private boolean showAftersale() {
+        return  true;
+        /*switch (response.data.status) {
+            case "CLOSE": {
+                //已关闭
+                break;
+            }
+            case "WAIT_PAY": {
+                //待付款
+                break;
+            }
+            case "PAY": {
+                //已付款
+                break;
+            }
+            case "ORDERS": {
+                //待发货
+                break;
+            }
+            case "DELIVERY": {
+                //已发货
+                return true;
+            }
+            case "REACH": {
+                //已送达
+                return true;
+            }
+            case "FINISH": {
+                //待评价
+                return true;
+            }
+        }
+        return false;*/
+    }
+
+    private void applyRefund(OrderGoods orderGoods) {
+        orderGoods.orderId=response.data.orderId;
+        RefundActivity.startRefundActivity(true,orderGoods);
+    }
+
+    private void applyAftersale(OrderGoods orderGoods) {
+        orderGoods.orderId=response.data.orderId;
+        AftersaleServiceActivity.startAftersaleServiceActivity(orderGoods);
+    }
+
+    private class OrderGoodsAdapter extends RecyclerView.Adapter<OrderGoodsAdapter.Holder> {
         private List<OrderGoods> list;
         private Activity activity;
 
@@ -518,6 +628,17 @@ public class OrderDetailActivity extends BaseActivity {
             if (data.unitPrice > data.realPrice)
                 holder.priceOrigin.setText(RichText.setStrikethrough(CommonUtil.formatPrice(data.unitPrice)));
             holder.num.setText("x" + data.number);
+            if (showAftersale()) {
+                holder.aftersale.setVisibility(View.VISIBLE);
+                holder.aftersale.setText("申请售后");
+                holder.aftersale.setOnClickListener(v -> applyAftersale(data));
+            } else if (showRefund()) {
+                holder.aftersale.setVisibility(View.VISIBLE);
+                holder.aftersale.setText("申请退款");
+                holder.aftersale.setOnClickListener(v -> applyRefund(data));
+            } else {
+                holder.aftersale.setVisibility(View.GONE);
+            }
         }
 
         @Override
@@ -533,6 +654,7 @@ public class OrderDetailActivity extends BaseActivity {
             TextView price;
             TextView priceOrigin;
             TextView num;
+            TextView aftersale;
 
             public Holder(View itemView) {
                 super(itemView);
@@ -544,6 +666,7 @@ public class OrderDetailActivity extends BaseActivity {
                 price = itemView.findViewById(R.id.item_price);
                 priceOrigin = itemView.findViewById(R.id.item_price_origin);
                 num = itemView.findViewById(R.id.item_num);
+                aftersale = itemView.findViewById(R.id.apply_aftersale);
             }
         }
     }

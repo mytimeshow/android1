@@ -16,7 +16,6 @@ import butterknife.Unbinder;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.modules.aftersale.AftersaleListActivity;
-import cn.czyugang.tcg.client.modules.aftersale.AftersaleServiceActivity;
 import cn.czyugang.tcg.client.modules.groupon.GrouponGoodsActivity;
 import cn.czyugang.tcg.client.modules.order.ConfirmOrderActivity;
 import cn.czyugang.tcg.client.modules.scan.ScanActivity;
@@ -60,7 +59,6 @@ public class HomepageFragment extends BaseFragment {
         rootView.findViewById(R.id.homepage_store3).setOnClickListener(v -> StoreActivity.startStoreActivity(getActivity(), "918003175762620416"));
         rootView.findViewById(R.id.homepage_order).setOnClickListener(v -> ConfirmOrderActivity.startConfirmOrderActivity());
         rootView.findViewById(R.id.homepage_aftersale_list).setOnClickListener(v -> AftersaleListActivity.startAftersaleListActivity());
-        rootView.findViewById(R.id.homepage_aftersale_service).setOnClickListener(v -> AftersaleServiceActivity.startAftersaleServiceActivity());
         rootView.findViewById(R.id.homepage_groupon).setOnClickListener(v -> GrouponGoodsActivity.startGrouponGoodsActivity());
 
         return rootView;

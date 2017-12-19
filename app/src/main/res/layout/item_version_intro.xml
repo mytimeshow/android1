@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="@dimen/dp_50"
+             android:background="@color/white"
+    >
+
+    <TextView
+        android:id="@+id/item_name"
+        style="@style/text_14_black"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="同城鸽3.0.1更新"/>
+
+    <TextView
+        android:id="@+id/item_time"
+        style="@style/text_12_gray"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_28"
+        android:text="10月14日"/>
+
+    <ImageView
+        style="@style/arrow_right"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="@dimen/dp_10"
+        />
+
+    <include layout="@layout/view_split_bar_light"/>
+</FrameLayout>

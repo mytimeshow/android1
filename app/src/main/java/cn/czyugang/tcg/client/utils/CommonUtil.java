@@ -12,6 +12,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import cn.czyugang.tcg.client.utils.app.ResUtil;
+import cn.czyugang.tcg.client.utils.string.RichText;
 
 /**
  * Created by ruiaa on 2017/11/10.
@@ -25,6 +26,10 @@ public class CommonUtil {
 
     public static String formatPrice(double price) {
         return String.format("￥%.2f", price);
+    }
+
+    public static CharSequence formatOriginPrice(double price) {
+        return RichText.setStrikethrough(String.format("￥%.2f", price));
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})

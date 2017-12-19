@@ -53,7 +53,6 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
             mLoadingDialog.show(getSupportFragmentManager(), "LoadingDialog");
         }
         requestLoadingDialogTimes++;
-        LogRui.i("showLoadingDialog####",requestLoadingDialogTimes);
     }
 
     @Override
@@ -64,7 +63,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
             mLoadingDialog.dismiss();
             mLoadingDialog = null;
         }
-        LogRui.i("dismissLoadingDialog####",requestLoadingDialogTimes);
+
     }
 
     @Override
@@ -134,21 +133,22 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     public static abstract class NetObserver<T> implements Observer<T> {
         @Override
         public void onSubscribe(@NonNull Disposable d) {
+            LogRui.d("****onSubscribe####");
             getTopActivity().mCompositeDisposable.add(d);
             if (showLoading()) getTopActivity().showLoadingDialog();
         }
 
         @Override
         public void onNext(T response) {
-            LogRui.i("onNext####");
+            LogRui.d("****onNext####");
         }
 
         @Override
         public void onError(@NonNull Throwable e) {
+            LogRui.d("****onError####");
             getTopActivity().showError(e);
             if (showLoading()) getTopActivity().dismissLoadingDialog();
-            LogRui.i("onError####");
-            if (getSwipeToLoadLayout()!=null){
+            if (getSwipeToLoadLayout() != null) {
                 getSwipeToLoadLayout().setLoadingMore(false);
                 getSwipeToLoadLayout().setRefreshing(false);
             }
@@ -156,9 +156,9 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
 
         @Override
         public void onComplete() {
+            LogRui.d("****onComplete####");
             if (showLoading()) getTopActivity().dismissLoadingDialog();
-            LogRui.i("onComplete####");
-            if (getSwipeToLoadLayout()!=null){
+            if (getSwipeToLoadLayout() != null) {
                 getSwipeToLoadLayout().setLoadingMore(false);
                 getSwipeToLoadLayout().setRefreshing(false);
             }
@@ -168,7 +168,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
             return true;
         }
 
-        public SwipeToLoadLayout getSwipeToLoadLayout(){
+        public SwipeToLoadLayout getSwipeToLoadLayout() {
             return null;
         }
     }

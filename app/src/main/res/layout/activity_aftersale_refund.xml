@@ -119,7 +119,7 @@
                 android:background="@color/bg"
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingTop="@dimen/dp_8"
-                android:text="最多退￥199.98，含配送费￥3.00"
+                android:text="最多退￥，含配送费￥"
                 />
 
             <LinearLayout

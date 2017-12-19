@@ -35,6 +35,7 @@ import cn.czyugang.tcg.client.modules.address.activity.AddressManageActivity;
 import cn.czyugang.tcg.client.modules.balance.activity.BalanceActivity;
 import cn.czyugang.tcg.client.modules.entry.contract.MyContract;
 import cn.czyugang.tcg.client.modules.entry.presenter.MyPresenter;
+import cn.czyugang.tcg.client.modules.errand.ErrandListActivity;
 import cn.czyugang.tcg.client.modules.login.activity.LoginActivity;
 import cn.czyugang.tcg.client.modules.order.MyOrderActivity;
 import cn.czyugang.tcg.client.modules.person.CollectionActivity;
@@ -286,7 +287,9 @@ public class MyFragment extends BaseFragment implements MyContract.View {
                 AddressManageActivity.startAddressManageActivity();
             }));
             list.add(new Item("客服"));
-            list.add(new Item("跑腿"));
+            list.add(new Item("跑腿",()->{
+                ErrandListActivity.startErrandListActivity();
+            }));
 
             list.add(new Item("商家入驻",()->{
                 ApplyStoreActivity.startApplyStoreActivity();

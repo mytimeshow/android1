@@ -460,5 +460,13 @@
         <activity android:name=".modules.im.ImListActivity"/>
         <activity android:name=".modules.im.ImChatActivity"/>
 
+        <!--版本更新-->
+        <activity android:name=".modules.set.activity.AboutVersionIntroActivity"/>
+        <activity android:name=".modules.set.activity.AboutVersionDetailActivity"/>
+
+        <!--跑腿-->
+        <activity android:name=".modules.errand.ErrandListActivity"/>
+        <activity android:name=".modules.errand.ErrandDetailActivity"/>
+        <activity android:name=".modules.errand.ErrandOrderActivity"/>
     </application>
 </manifest>
