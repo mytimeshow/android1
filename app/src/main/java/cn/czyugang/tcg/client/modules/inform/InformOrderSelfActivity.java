@@ -50,7 +50,7 @@ public class InformOrderSelfActivity extends BaseActivity {
     ImgView userHead;
     @BindView(R.id.myself_description)
     TextView userSummary;
-    @BindView(R.id.)
+
 
 
     List<Inform> informs=new ArrayList<Inform>();

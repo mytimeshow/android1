@@ -25,6 +25,7 @@ import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
+import cn.czyugang.tcg.client.modules.inform.InformSearchAcitivity;
 import cn.czyugang.tcg.client.utils.storage.AppKeyStorage;
 import cn.czyugang.tcg.client.widget.LabelLayout;
 
@@ -147,13 +148,14 @@ public class SearchActivity extends BaseActivity {
     public void onSearchArticle() {
         String text = input.getText().toString().trim();
         AppKeyStorage.saveSearchHistory(text, searchType);//搜索文章
-
+        InformSearchAcitivity.startInformSearchAcitivity(text,InformSearchAcitivity.SEARCH_TYPE_ARTICLE);
     }
 
     @OnClick(R.id.search_type_article_label)
     public void onSearchArticleLabel() {
         String text = input.getText().toString().trim();
         AppKeyStorage.saveSearchHistory(text, searchType);//搜索文章标签
+        InformSearchAcitivity.startInformSearchAcitivity(text,InformSearchAcitivity.SEARCH_TYPE_LABLE);
 
     }
 
