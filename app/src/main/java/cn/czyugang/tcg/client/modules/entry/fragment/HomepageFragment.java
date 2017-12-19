@@ -9,18 +9,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseFragment;
+import cn.czyugang.tcg.client.base.BaseFragmentAdapter;
 import cn.czyugang.tcg.client.modules.aftersale.AftersaleListActivity;
+import cn.czyugang.tcg.client.modules.errand.HomeErrandFragment;
 import cn.czyugang.tcg.client.modules.groupon.GrouponGoodsActivity;
-import cn.czyugang.tcg.client.modules.order.ConfirmOrderActivity;
 import cn.czyugang.tcg.client.modules.scan.ScanActivity;
+import cn.czyugang.tcg.client.modules.store.HomeFoodFragment;
+import cn.czyugang.tcg.client.modules.store.HomeGoodsFragment;
 import cn.czyugang.tcg.client.modules.store.SearchActivity;
 import cn.czyugang.tcg.client.modules.store.StoreActivity;
+import cn.czyugang.tcg.client.utils.CommonUtil;
+import cn.czyugang.tcg.client.utils.app.ResUtil;
 
 /**
  * @author ruiaa
@@ -57,9 +65,18 @@ public class HomepageFragment extends BaseFragment {
         rootView.findViewById(R.id.homepage_store1).setOnClickListener(v -> StoreActivity.startStoreActivity(getActivity(), "919122791461220353"));
         rootView.findViewById(R.id.homepage_store2).setOnClickListener(v -> StoreActivity.startStoreActivity(getActivity(), "930278266785427456"));
         rootView.findViewById(R.id.homepage_store3).setOnClickListener(v -> StoreActivity.startStoreActivity(getActivity(), "918003175762620416"));
-        rootView.findViewById(R.id.homepage_order).setOnClickListener(v -> ConfirmOrderActivity.startConfirmOrderActivity());
         rootView.findViewById(R.id.homepage_aftersale_list).setOnClickListener(v -> AftersaleListActivity.startAftersaleListActivity());
         rootView.findViewById(R.id.homepage_groupon).setOnClickListener(v -> GrouponGoodsActivity.startGrouponGoodsActivity());
+
+        List<BaseFragment> fragments=new ArrayList<>();
+        fragments.add(HomeGoodsFragment.newInstance());
+        fragments.add(HomeFoodFragment.newInstance());
+        fragments.add(HomeErrandFragment.newInstance());
+        viewPager.setAdapter(new BaseFragmentAdapter(getChildFragmentManager(),fragments));
+        viewPager.setOffscreenPageLimit(3);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        CommonUtil.setTabLayoutIndicator(tabLayout, ResUtil.getDimenInPx(R.dimen.dp_30),ResUtil.getDimenInPx(R.dimen.dp_30));
 
         return rootView;
     }
