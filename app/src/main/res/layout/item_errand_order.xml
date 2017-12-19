@@ -122,7 +122,8 @@
         android:paddingRight="@dimen/dp_10"
         android:text="实付款：￥64.00 (含打赏费 ￥3.00)"
         />
-    <include layout="@layout/view_split_bar_light_margin"/>
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_52"
@@ -136,46 +137,58 @@
         <TextView
             android:id="@+id/item_order_cancel"
             style="@style/button_order_small"
+            android:visibility="gone"
             android:text="取消订单"
             />
 
         <TextView
             android:id="@+id/item_order_delete"
             style="@style/button_order_small"
+            android:visibility="gone"
             android:text="删除订单"
-            android:visibility="visible"
             />
 
         <TextView
             android:id="@+id/item_order_more_comment"
             style="@style/button_order_small"
+            android:visibility="gone"
             android:text="追加评价"
             />
 
         <TextView
             android:id="@+id/item_order_comment"
             style="@style/button_order_small"
+            android:visibility="gone"
             android:text="评价"
             />
 
         <TextView
             android:id="@+id/item_order_receipt"
             style="@style/button_order_small"
+            android:visibility="gone"
             android:text="确认收货"
             />
 
         <TextView
             android:id="@+id/item_order_buy_again"
             style="@style/button_order_small"
+            android:visibility="gone"
             android:text="再次购买"
             />
 
         <TextView
             android:id="@+id/item_order_pay"
             style="@style/button_order_small"
+            android:visibility="gone"
             android:text="去付款"
             />
 
+        <TextView
+            android:id="@+id/item_order_reminder"
+            style="@style/button_order_small"
+            android:visibility="gone"
+            android:text="我要催单"
+            />
     </LinearLayout>
 
     <include layout="@layout/view_split_bar_light_big"/>

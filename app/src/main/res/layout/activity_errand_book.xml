@@ -13,16 +13,7 @@
 
         <TextView
             style="@style/title_text"
-            android:text="我的跑腿"/>
+            android:text="帮我买"/>
     </FrameLayout>
-
-    <include layout="@layout/view_split_bar_light"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/errand_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-
 
 </LinearLayout>

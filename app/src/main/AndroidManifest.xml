@@ -468,5 +468,6 @@
         <activity android:name=".modules.errand.ErrandListActivity"/>
         <activity android:name=".modules.errand.ErrandDetailActivity"/>
         <activity android:name=".modules.errand.ErrandOrderActivity"/>
+        <activity android:name=".modules.errand.ErrandBookActivity"/>
     </application>
 </manifest>
