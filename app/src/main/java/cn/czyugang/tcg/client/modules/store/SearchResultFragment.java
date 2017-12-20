@@ -22,8 +22,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.api.StoreApi;
+import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.entity.Good;
+import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.entity.Store;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
@@ -160,6 +163,8 @@ public class SearchResultFragment extends BaseFragment {
         resultsR.setAdapter(adapter);
 
 
+        preSearch();
+
         return rootView;
     }
 
@@ -177,6 +182,30 @@ public class SearchResultFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    /*
+    *   数据获取
+    * */
+    private void preSearch(){
+        StoreApi.searchPre().subscribe(new BaseActivity.NetObserver<Response<Object>>() {
+            @Override
+            public void onNext(Response<Object> response) {
+                super.onNext(response);
+            }
+        });
+    }
+
+    private void searchResult(){
+
+    }
+
+    private void searchGoods(){
+
+    }
+
+    private void searchStore(){
+
     }
 
     /*

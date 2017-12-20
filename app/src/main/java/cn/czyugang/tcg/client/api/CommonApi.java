@@ -22,4 +22,7 @@ public class CommonApi {
                 .observeOn(AndroidSchedulers.mainThread());
 
     }
+
+    //api/auth/v1/common/qr/scan [Doc]扫描店铺/商品/活动二维码
+    
 }

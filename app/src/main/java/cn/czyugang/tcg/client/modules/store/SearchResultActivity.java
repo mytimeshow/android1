@@ -11,11 +11,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.base.BaseFragmentAdapter;
-import cn.czyugang.tcg.client.common.MyApplication;
+import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.widget.NoScrollViewPager;
@@ -79,5 +80,19 @@ public class SearchResultActivity extends BaseActivity {
     }
 
 
+    @OnClick(R.id.title_more)
+    public void onMore(){
+        MyDialog.moreDialog(this,new MyDialog.MoreDialogListener(){
+            @Override
+            public boolean showFootprint() {
+                return true;
+            }
+
+            @Override
+            public boolean showShare() {
+                return false;
+            }
+        });
+    }
 
 }

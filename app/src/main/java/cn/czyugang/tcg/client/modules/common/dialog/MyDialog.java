@@ -166,7 +166,7 @@ public class MyDialog extends DialogFragment {
         return this;
     }
 
-    //右上角 更多    消息，分享，购物车，首页，收藏
+    //右上角 更多    消息,分享，购物车，首页，收藏
     public static void moreDialog(Activity activity, final View.OnClickListener onEachShare, boolean showCollect) {
         MyDialog.Builder.newBuilder(activity)
                 .custom(R.layout.view_more)
@@ -193,20 +193,33 @@ public class MyDialog extends DialogFragment {
         moreDialog(activity, onClickListener, false);
     }
 
-    //右上角 更多    消息，分享，购物车，首页，收藏
+    //右上角 更多    消息，足迹，分享，购物车，首页，收藏
     public static void moreDialog(Activity activity, final MoreDialogListener moreDialogListener) {
         MyDialog.Builder.newBuilder(activity)
                 .custom(R.layout.view_more)
                 .width(-2)
                 .gravity(Gravity.TOP | Gravity.RIGHT)
                 .bindView(myDialog -> {
-                    if (!moreDialogListener.showCollect())
-                        myDialog.rootView.findViewById(R.id.more_collect).setVisibility(View.GONE);
+                    myDialog.rootView.findViewById(R.id.more_msg).setVisibility(moreDialogListener.showMsg() ? View.VISIBLE : View.GONE);
+                    myDialog.rootView.findViewById(R.id.more_footprint).setVisibility(moreDialogListener.showFootprint() ? View.VISIBLE : View.GONE);
+                    myDialog.rootView.findViewById(R.id.more_share).setVisibility(moreDialogListener.showShare() ? View.VISIBLE : View.GONE);
+                    myDialog.rootView.findViewById(R.id.more_trolley).setVisibility(moreDialogListener.showTrolley() ? View.VISIBLE : View.GONE);
+                    myDialog.rootView.findViewById(R.id.more_homepage).setVisibility(moreDialogListener.showHomepage() ? View.VISIBLE : View.GONE);
+                    myDialog.rootView.findViewById(R.id.more_collect).setVisibility(moreDialogListener.showCollect() ? View.VISIBLE : View.GONE);
+                    if (moreDialogListener.newMsgNum() != 0) {
+                        TextView newMsg = myDialog.rootView.findViewById(R.id.more_msg_new);
+                        newMsg.setVisibility(View.VISIBLE);
+                        newMsg.setText("" + moreDialogListener.newMsgNum());
+                    }
                     View.OnClickListener onClickListener = v -> {
                         myDialog.dismiss();
                         switch (v.getId()) {
                             case R.id.more_msg: {
                                 moreDialogListener.onMsg();
+                                break;
+                            }
+                            case R.id.more_footprint: {
+                                moreDialogListener.onFootprint();
                                 break;
                             }
                             case R.id.more_share: {
@@ -261,17 +274,49 @@ public class MyDialog extends DialogFragment {
 
         }
 
+        public void onFootprint() {
+
+        }
+
+        public int newMsgNum() {
+            return 0;
+        }
+
+        //消息，分享，购物车，首页
+        //消息，足迹，分享，购物车，首页，收藏
+
+        public boolean showMsg() {
+            return true;
+        }
+
+        public boolean showFootprint() {
+            return false;
+        }
+
+        public boolean showShare() {
+            return true;
+        }
+
+        public boolean showTrolley() {
+            return true;
+        }
+
+        public boolean showHomepage() {
+            return true;
+        }
+
         public boolean showCollect() {
             return false;
         }
+
     }
 
     //底部  电话号码+取消 按钮
     public static void phoneDialog(Activity activity, String phone) {
-        phoneDialog(activity,phone,phone);
+        phoneDialog(activity, phone, phone);
     }
 
-    public static void phoneDialog(Activity activity, String phone,String phoneText) {
+    public static void phoneDialog(Activity activity, String phone, String phoneText) {
         MyDialog.Builder.newBuilder(activity)
                 .custom(R.layout.dialog_call)
                 .width(-1)

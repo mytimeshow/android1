@@ -210,4 +210,67 @@ public class StoreApi {
                 .observeOn(AndroidSchedulers.mainThread());
 
     }
+
+    /*
+    *   搜索
+    * */
+    //api/auth/v1/product/shopping/pre/search/product［DOC-v2］搜索商品预加载
+    public static Observable<Response<Object>> searchPre() {
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/product/shopping/pre/search/product", null)
+                .map(s -> (Response<Object>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, Object.class)))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
+    //api/auth/v1/product/shopping/search/product［DOC-v2］搜索商品
+    public static Observable<Response<Object>> searchGoods(HashMap<String, Object> map) {
+        //HashMap<String, Object> map = new HashMap<>();
+        /*
+        *   attributeIds	[string]   description:规格属性ids
+        *   brandIds	[string]   description:品类id列表
+        *   classifyId	string   商品类目id
+        *   endPrice	number($float)  价格区间-结束价格
+        *   lat*	number($double)   地理位置维度
+        *   lon*	number($double)   地理位置经度
+        *   orderType	string   排序类型(LOCATION-距离最近   GOOD_RATE-好评   PRICE_DESC-价格从低到高   PRICE_ASC-价格从高到低
+        *                                   SALE- 销量  不传按发布时间
+        *   page*	integer($int32)   分页页码
+        *   pageSize*	integer($int32)   每页条数
+        *   searchType	string   商品类型( TAKEOUT-外卖; MARKET-商超;不传为全部 )
+        *   serviceTagIds	[string]   description:服务标签ids
+        *   startPrice	number($float)   价格区间-开始价格
+        *   tagIds	[string]    description:标签ids
+        *   title*	string    标题
+        * */
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/product/shopping/search/product", map)
+                .map(s -> (Response<Object>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, Object.class)))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
+
+    //api/auth/v1/product/shopping/search/store［DOC-v2］搜索店铺
+    public static Observable<Response<Object>> searchStore(HashMap<String, Object> map) {
+        /*
+        *   classifyId*	string 商品类目id
+        *   lat*	number($double) 地理位置维度
+        *   lon*	number($double) 地理位置经度
+        *   orderType*	string  排序类型(LOCATION-距离最近  GOOD_RATE-好评  SALE-好评
+        *   page*	integer($int32)  分页页码
+        *   pageSize*	integer($int32)  每页条数
+        *   searchType*	string  商品类型( TAKEOUT-外卖; MARKET-商超 )
+        *   serviceTagIds*	[string]  description:服务标签ids
+        *   tagIds*	[string]  description:标签ids
+        *   title*	string  标题
+        * */
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/product/shopping/search/store", map)
+                .map(s -> (Response<Object>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, Object.class)))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
+
 }
