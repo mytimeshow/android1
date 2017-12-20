@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/dp_110"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
@@ -14,17 +14,57 @@
         <ImageView
             android:layout_width="@dimen/dp_16"
             android:layout_height="@dimen/dp_16"
-            android:layout_marginLeft="@dimen/dp_16"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_16"
             android:src="@drawable/ic_message"/>
-        
+
 
         <TextView
             style="@style/text_18_black"
-            android:layout_marginLeft="@dimen/dp_42"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_42"
             android:text="消息"/>
-        
+
+        <TextView
+            android:id="@+id/more_msg_new"
+            android:layout_width="@dimen/dp_14"
+            android:layout_height="@dimen/dp_14"
+            android:layout_gravity="right"
+            android:layout_marginRight="@dimen/dp_18"
+            android:layout_marginTop="@dimen/dp_8"
+            android:background="@drawable/dot_red"
+            android:gravity="center"
+            android:text="9"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_10"
+            android:visibility="gone"
+            />
+
+    </FrameLayout>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <FrameLayout
+        android:id="@+id/more_footprint"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:src="@drawable/icon_footprint"/>
+
+
+        <TextView
+            style="@style/text_18_black"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_42"
+            android:text="足迹"/>
+
     </FrameLayout>
 
     <include layout="@layout/view_split_bar_light"/>
@@ -38,15 +78,15 @@
         <ImageView
             android:layout_width="@dimen/dp_16"
             android:layout_height="@dimen/dp_16"
-            android:layout_marginLeft="@dimen/dp_16"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_16"
             android:src="@drawable/icon_share"/>
 
 
         <TextView
             style="@style/text_18_black"
-            android:layout_marginLeft="@dimen/dp_42"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_42"
             android:text="分享"/>
 
     </FrameLayout>
@@ -62,15 +102,15 @@
         <ImageView
             android:layout_width="@dimen/dp_16"
             android:layout_height="@dimen/dp_16"
-            android:layout_marginLeft="@dimen/dp_16"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_16"
             android:src="@drawable/trolley_black"/>
 
 
         <TextView
             style="@style/text_18_black"
-            android:layout_marginLeft="@dimen/dp_42"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_42"
             android:text="购物车"/>
 
     </FrameLayout>
@@ -86,15 +126,15 @@
         <ImageView
             android:layout_width="@dimen/dp_16"
             android:layout_height="@dimen/dp_16"
-            android:layout_marginLeft="@dimen/dp_16"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_16"
             android:src="@drawable/icon_shop"/>
 
 
         <TextView
             style="@style/text_18_black"
-            android:layout_marginLeft="@dimen/dp_42"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_42"
             android:text="首页"/>
 
     </FrameLayout>
@@ -110,15 +150,15 @@
         <ImageView
             android:layout_width="@dimen/dp_16"
             android:layout_height="@dimen/dp_16"
-            android:layout_marginLeft="@dimen/dp_16"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_16"
             android:src="@drawable/icon_collect_gray"/>
 
 
         <TextView
             style="@style/text_18_black"
-            android:layout_marginLeft="@dimen/dp_42"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_42"
             android:text="收藏"/>
 
     </FrameLayout>

@@ -54,9 +54,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_14"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_8"
-                android:layout_marginBottom="@dimen/dp_14"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 >
@@ -81,29 +81,10 @@
 
                 <include layout="@layout/space_h"/>
 
-                <ImageView
-                    android:id="@+id/good_buy_minus"
-                    android:layout_width="@dimen/dp_22"
-                    android:layout_height="@dimen/dp_22"
-                    android:layout_marginRight="@dimen/dp_10"
-                    android:src="@drawable/ic_minus_grey_black"
-                    />
-
-                <TextView
-                    android:id="@+id/good_buy_num"
+                <cn.czyugang.tcg.client.widget.GoodsPlusMinusView
+                    android:id="@+id/good_plus_minus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dp_10"
-                    android:text="1"
-                    android:textColor="@color/text_black"
-                    android:textSize="@dimen/sp_16"/>
-
-                <ImageView
-                    android:id="@+id/good_buy_plus"
-                    android:layout_width="@dimen/dp_22"
-                    android:layout_height="@dimen/dp_22"
-                    android:layout_marginRight="@dimen/dp_10"
-                    android:src="@drawable/ic_plus_red"
                     />
             </LinearLayout>
 
@@ -260,57 +241,10 @@
 
     </ScrollView>
     <!--底部购物-->
-    <LinearLayout
-        android:id="@+id/store_bottomL"
+    <cn.czyugang.tcg.client.widget.BottomBalanceView
+        android:id="@+id/good_bottom_balance"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        >
-
-        <TextView
-            android:id="@+id/store_rest"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/main_black"
-            android:gravity="center"
-            android:text="商户休息中  不接受订单喔"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_16"
-            android:visibility="gone"
-            />
-
-        <ImageView
-            android:id="@+id/store_trolley_img"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_16"
-            android:src="@drawable/trolley"/>
-
-        <TextView
-            android:id="@+id/store_good_nums"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="未选购商品哦"
-            android:textColor="@color/text_gray"
-            android:textSize="@dimen/sp_14"
-            />
-
-        <include layout="@layout/space_h"/>
-
-        <TextView
-            android:id="@+id/store_buy_commit"
-            android:layout_width="@dimen/dp_120"
-            android:layout_height="match_parent"
-            android:background="@color/grey_350"
-            android:gravity="center"
-            android:text="20元起送"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_18"
-            />
-
-    </LinearLayout>
+        />
 </FrameLayout>

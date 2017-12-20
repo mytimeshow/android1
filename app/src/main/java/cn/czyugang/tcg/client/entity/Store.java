@@ -1,9 +1,5 @@
 package cn.czyugang.tcg.client.entity;
 
-import android.app.Activity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-
 import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONArray;
@@ -12,8 +8,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.czyugang.tcg.client.R;
-import cn.czyugang.tcg.client.modules.common.ImgAdapter;
 import cn.czyugang.tcg.client.utils.JsonParse;
 import cn.czyugang.tcg.client.utils.LogRui;
 
@@ -106,11 +100,6 @@ public class Store {
     public double aveDeliveryTime = 0;
     public DeliveryInfo logisticsDelivery = new DeliveryInfo();
 
-    /*
-    *   搜索
-    * */
-    transient private ImgAdapter imgAdapter = null;
-    private List<String> searchResultGoodsImg=null;
 
     public void init(JSONObject jsonObject) {
         if (jsonObject == null) return;
@@ -150,21 +139,6 @@ public class Store {
 
     public boolean isOpening() {
         return businessStatus.endsWith("YES");
-    }
-
-    public void bindSearchResultGoodsImg(Activity activity,RecyclerView recyclerView){
-        if (recyclerView.getLayoutManager()==null){
-            recyclerView.setLayoutManager(new GridLayoutManager(activity,3));
-        }
-        if (imgAdapter==null){
-            searchResultGoodsImg=new ArrayList<>();
-            searchResultGoodsImg.add("");
-            searchResultGoodsImg.add("");
-            searchResultGoodsImg.add("");
-            imgAdapter=new ImgAdapter(searchResultGoodsImg,activity);
-            imgAdapter.setSizeRes(R.dimen.dp_86);
-        }
-        recyclerView.setAdapter(imgAdapter);
     }
 
 

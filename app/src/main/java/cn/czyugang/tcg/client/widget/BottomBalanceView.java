@@ -90,7 +90,7 @@ public class BottomBalanceView extends LinearLayout {
         }
         if (builder.length() == 0) return;
         builder.deleteCharAt(builder.length() - 1);
-        String shoppingCartIds=builder.toString();
+        String shoppingCartIds = builder.toString();
         StoreApi.checkTrolley(shoppingCartIds).subscribe(new BaseActivity.NetObserver<TrolleyCheckResponse>() {
             @Override
             public void onNext(TrolleyCheckResponse response) {
@@ -120,12 +120,12 @@ public class BottomBalanceView extends LinearLayout {
             num.setText(String.valueOf(buyNum));
             price.setText(trolleyStore.getAllPriceStr());
         }
-        if (trolleyStore.getAllPrice() >= 10) {
+        if (trolleyStore.getAllPrice() > 0) {
             commit.setText("结算");
             commit.setBackgroundResource(R.color.main_red);
             commit.setClickable(true);
         } else {
-            commit.setText("" + 10 + "元起送");
+            commit.setText("" + 0.01 + "元起送");
             commit.setBackgroundResource(R.color.grey_350);
             commit.setClickable(false);
         }

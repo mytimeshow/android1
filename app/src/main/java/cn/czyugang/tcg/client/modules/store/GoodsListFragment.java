@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,11 +31,13 @@ import cn.czyugang.tcg.client.entity.GoodsResponse;
 import cn.czyugang.tcg.client.modules.common.dialog.GoodsSpecDialog;
 import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.utils.CommonUtil;
+import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.widget.GoodsPlusMinusView;
 import cn.czyugang.tcg.client.widget.LabelLayout;
 import cn.czyugang.tcg.client.widget.RecyclerViewMaxH;
+import cn.czyugang.tcg.client.widget.RefreshLoadHelper;
 
 /**
  * @author ruiaa
@@ -66,13 +70,14 @@ public class GoodsListFragment extends BaseFragment {
     private StoreActivity storeActivity;
     private List<Good> goodList = new ArrayList<>();
     private GoodsAdapter adapter;
-    private int pagerIndex = 0;
     private String currentClassifyId = null;
     private String currentOrder = null;
     private int orderByPriceType = 0;
 
     private CategoryAdapter categoryAdapter;
     private List<GoodCategory> categoryList = new ArrayList<>();
+    private GoodsResponse goodsResponse;
+    private RefreshLoadHelper refreshLoadHelper;
 
     public static GoodsListFragment newInstance() {
         GoodsListFragment fragment = new GoodsListFragment();
@@ -95,23 +100,37 @@ public class GoodsListFragment extends BaseFragment {
         adapter = new GoodsAdapter(goodList, getActivity());
         goodsR.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         goodsR.setAdapter(adapter);
+        refreshLoadHelper = new RefreshLoadHelper(getActivity()).build(goodsR);
+        refreshLoadHelper.swipeToLoadLayout.setOnRefreshListener(() -> refreshGoods(false));
+        refreshLoadHelper.swipeToLoadLayout.setOnLoadMoreListener(() -> refreshGoods(true));
 
-        refreshGoods(true);
+        refreshGoods(false);
 
         return rootView;
     }
 
-    private void refreshGoods(boolean firstLoad) {
-        pagerIndex = 0;
-        StoreApi.getGoods(storeActivity.store.id, currentClassifyId, currentOrder).subscribe(new BaseActivity.NetObserver<GoodsResponse>() {
+    private void refreshGoods(boolean loadmore) {
+        int pagerIndex = 1;
+        String accessTime = null;
+        if (loadmore && goodsResponse != null) {
+            accessTime = goodsResponse.accessTime;
+            pagerIndex = goodsResponse.currentPage + 1;
+        }
+        StoreApi.getGoods(storeActivity.store.id, currentClassifyId, currentOrder, pagerIndex, accessTime).subscribe(new BaseActivity.NetObserver<GoodsResponse>() {
             @Override
             public void onNext(GoodsResponse response) {
                 super.onNext(response);
+                if (response.data.isEmpty()) {
+                    if (loadmore) AppUtil.toast("没有更多了");
+                    return;
+                }
                 response.parse();
-                goodList.clear();
+                if (!loadmore) {
+                    goodList.clear();
+                }
                 goodList.addAll(response.data);
                 adapter.notifyDataSetChanged();
-                if (firstLoad) {
+                if (goodsResponse == null) {
                     categoryList.add(null);
                     categoryList.addAll(response.goodCategoryList);
                     categoryAdapter = new CategoryAdapter(categoryList, getActivity());
@@ -119,6 +138,12 @@ public class GoodsListFragment extends BaseFragment {
                     categoryR.setAdapter(categoryAdapter);
                     categoryR.setMaxHeightRes(R.dimen.dp_280);
                 }
+                goodsResponse = response;
+            }
+
+            @Override
+            public SwipeToLoadLayout getSwipeToLoadLayout() {
+                return refreshLoadHelper.swipeToLoadLayout;
             }
         });
     }
@@ -244,7 +269,7 @@ public class GoodsListFragment extends BaseFragment {
             holder.price.setText(data.getShowPriceStr());
             holder.tag.setText(data.getTag());
 
-            holder.itemView.setOnClickListener(v -> GoodDetailActivity.startGoodDetailActivity());
+            holder.itemView.setOnClickListener(v -> GoodDetailActivity.startGoodDetailActivity(data.productId,storeActivity.id));
             holder.itemView.setOnLongClickListener(v -> {
                 MyDialog.collectionBg(activity, v, false, myDialog -> {
                     myDialog.dismiss();
@@ -254,8 +279,8 @@ public class GoodsListFragment extends BaseFragment {
 
             holder.plusMinusView.setIsMultiSpec(data.isMultiSpec())
                     .setOnOpenSpecListener(() -> {
-                        GoodsSpecDialog.showSpecDialog(storeActivity,data,(trolleyGoods, num) -> {
-                            storeActivity.trolleyStore.addGood(trolleyGoods,num);
+                        GoodsSpecDialog.showSpecDialog(storeActivity, data, (trolleyGoods, num) -> {
+                            storeActivity.trolleyStore.addGood(trolleyGoods, num);
                             storeActivity.refreshBottomTrolley();
                             refreshBuyNums();
                         });
@@ -340,7 +365,7 @@ public class GoodsListFragment extends BaseFragment {
                     currentClassifyId = data.id;
                     refreshGoods();
                 }
-                categoryL.setVisibility( View.GONE);
+                categoryL.setVisibility(View.GONE);
             });
             holder.labelLayout.setOnClickItemListener((text, textView) -> {
                 currentSelectCategory.setTextColor(ResUtil.getColor(R.color.text_black));
@@ -348,7 +373,7 @@ public class GoodsListFragment extends BaseFragment {
                 currentSelectCategory.setTextColor(ResUtil.getColor(R.color.main_red));
                 currentClassifyId = data.getSecondCategoryId(text);
                 refreshGoods();
-                categoryL.setVisibility( View.GONE);
+                categoryL.setVisibility(View.GONE);
             });
         }
 
