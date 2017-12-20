@@ -15,11 +15,12 @@ import cn.czyugang.tcg.client.utils.rxbus.RxBus;
  */
 
 public class AmapLocationUtil {
-    public static AMapLocation aMapLocation=null;
+    public static AMapLocation aMapLocation = null;
 
-    public static String getXY(){
-        //LogRui.i("getXY####"+aMapLocation.getLongitude()+","+aMapLocation.getLatitude());
-        return aMapLocation.getLongitude()+","+aMapLocation.getLatitude();
+    public static String getXY() {
+        //23.657626, 116.621468
+        //return aMapLocation.getLongitude()+","+aMapLocation.getLatitude();
+        return 116.621468 + "," + 23.657626;
     }
 
     public static void startOnceLocation() {
@@ -48,7 +49,7 @@ public class AmapLocationUtil {
                         //amapLocation.getAoiName();//获取当前定位点的AOI信息
                         //amapLocation.getBuildingId();//获取当前室内定位的建筑物Id
                         //amapLocation.getFloor();//获取当前室内定位的楼层
-                        aMapLocation=amapLocation;
+                        aMapLocation = amapLocation;
 
                     } else {
                         //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
@@ -66,7 +67,7 @@ public class AmapLocationUtil {
         mLocationClient.setLocationListener(mLocationListener);
 
         //声明AMapLocationClientOption对象
-        AMapLocationClientOption mLocationOption  = new AMapLocationClientOption();
+        AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
 
         //设置定位模式为AMapLocationMode.Battery_Saving，低功耗模式。
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
@@ -79,5 +80,17 @@ public class AmapLocationUtil {
         mLocationClient.setLocationOption(mLocationOption);
         //启动定位
         mLocationClient.startLocation();
+    }
+
+    public static double getLatitude() {
+/*        if (aMapLocation==null) return 23.657626;
+        return aMapLocation.getLatitude();*/
+        return 23.657626;
+    }
+
+    public static double getLongitude() {
+/*        if (aMapLocation==null) return 116.621468;
+        return aMapLocation.getLongitude();*/
+        return 116.621468;
     }
 }

@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +15,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseFragment;
@@ -40,8 +44,8 @@ public class SearchResultActivity extends BaseActivity {
     NoScrollViewPager viewPager;
 
     private List<BaseFragment> fragments=new ArrayList<>();
-    private SearchResultFragment searchResultFragment;
-    private SearchResultFragment searchStoreFragment;
+    private SearchResultGoodsFragment searchGoodsFragment;
+    private SearchResultStoreFragment searchStoreFragment;
 
     public static void startSearchResultActivity(String key) {
         startSearchResultActivity(key, SEARCH_TYPE_ALL);
@@ -57,14 +61,20 @@ public class SearchResultActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int type=getIntent().getIntExtra("type",SEARCH_TYPE_ALL);
+        String key=getIntent().getStringExtra("key");
 
         setContentView(R.layout.activity_search_result);
         ButterKnife.bind(this);
 
-        searchResultFragment = SearchResultFragment.newInstance(SearchResultFragment.SEARCH_TYPE_GOODS);
-        searchStoreFragment=SearchResultFragment.newInstance(SearchResultFragment.SEARCH_TYPE_STORE);
-        fragments.add(searchResultFragment);
+        input.setText(key);
+
+        searchGoodsFragment = SearchResultGoodsFragment.newInstance();
+        searchStoreFragment=SearchResultStoreFragment.newInstance();
+        fragments.add(searchGoodsFragment);
         fragments.add(searchStoreFragment);
+        searchGoodsFragment.setSearchKey(key,type);
+        searchStoreFragment.setSearchKey(key,type);
 
         viewPager.setAdapter(new BaseFragmentAdapter(getSupportFragmentManager(),fragments));
         viewPager.setOffscreenPageLimit(2);
@@ -79,6 +89,17 @@ public class SearchResultActivity extends BaseActivity {
         },50);
     }
 
+    @OnEditorAction(R.id.title_input)
+    public boolean onEditAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
+            String text = input.getText().toString().trim();
+            if (text.isEmpty()) return false;
+            searchStoreFragment.setSearchKey(text);
+            searchGoodsFragment.setSearchKey(text);
+            return true;
+        }
+        return false;
+    }
 
     @OnClick(R.id.title_more)
     public void onMore(){

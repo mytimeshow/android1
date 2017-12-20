@@ -49,6 +49,8 @@ public class MultiImgView extends FrameLayout {
         init(context);
     }
 
+    private View.OnClickListener onClickListener=null;
+    private boolean showBigImg = false;
     private ViewPager viewPager;
     private TextView nums;
     private int position = 0;
@@ -69,7 +71,8 @@ public class MultiImgView extends FrameLayout {
             }
 
             @Override
-            public void onPageSelected(int position) {
+            public void onPageSelected(int p) {
+                position = p;
                 nums.setText((position + 1) + "/" + imgIds.size());
             }
 
@@ -80,11 +83,26 @@ public class MultiImgView extends FrameLayout {
         });
     }
 
-    public int getImgNums(){
+    public  MultiImgView  setShowBigImg(boolean showBig){
+        showBigImg=showBig;
+        return this;
+    }
+
+    public MultiImgView setOnClickImg(View.OnClickListener onClickImg){
+        onClickListener=onClickImg;
+        return  this;
+    }
+
+    public int getPosition(){
+        return  position;
+    }
+
+    public int getImgNums() {
         return imgIds.size();
     }
 
-    public void setImgIds(List<String> ids) {
+    public void setImgIds(@Nullable List<String> ids) {
+        if (ids == null) return;
         imgIds.clear();
         imgIds.addAll(ids);
         imgAdapter.notifyDataSetChanged();
@@ -92,6 +110,7 @@ public class MultiImgView extends FrameLayout {
     }
 
     public void setImgIds(List<String> ids, int p) {
+        if (ids == null) return;
         imgIds.clear();
         imgIds.addAll(ids);
         imgAdapter.notifyDataSetChanged();
@@ -105,10 +124,11 @@ public class MultiImgView extends FrameLayout {
         HashMap<Integer, View> viewHashMap = new HashMap<>();
 
         private void createView(int position) {
-            View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_img, null);
+            View view = LayoutInflater.from(getContext()).inflate(
+                    showBigImg ? R.layout.fragment_img_photo : R.layout.fragment_img, null);
             View imgLoading = view.findViewById(R.id.img_loading);
             ImageView imgImg = view.findViewById(R.id.img_img);
-            if (getWidth()!=0&&getHeight()!=0){
+            if (getWidth() != 0 && getHeight() != 0) {
                 GlideApp.with(getContext())
                         .load(ImageLoader.getImageUrl(imgIds.get(position), getWidth(), getHeight()))
                         .listener(new RequestListener<Drawable>() {
@@ -121,11 +141,12 @@ public class MultiImgView extends FrameLayout {
                             @Override
                             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                                 imgLoading.setVisibility(View.GONE);
+                                if (onClickListener!=null)imgImg.setOnClickListener(onClickListener);
                                 return false;
                             }
                         })
                         .into(imgImg);
-            }else {
+            } else {
                 getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
                     public void onGlobalLayout() {
@@ -142,6 +163,7 @@ public class MultiImgView extends FrameLayout {
                                     @Override
                                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                                         imgLoading.setVisibility(View.GONE);
+                                        if (onClickListener!=null)imgImg.setOnClickListener(onClickListener);
                                         return false;
                                     }
                                 })
@@ -174,5 +196,6 @@ public class MultiImgView extends FrameLayout {
         public boolean isViewFromObject(View view, Object object) {
             return view == object;
         }
+
     }
 }

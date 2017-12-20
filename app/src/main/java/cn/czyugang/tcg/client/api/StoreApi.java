@@ -5,11 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import cn.czyugang.tcg.client.common.UserOAuth;
+import cn.czyugang.tcg.client.entity.Good;
 import cn.czyugang.tcg.client.entity.GoodCategory;
 import cn.czyugang.tcg.client.entity.GoodsResponse;
 import cn.czyugang.tcg.client.entity.GoodsSpecResponse;
 import cn.czyugang.tcg.client.entity.OrderPreSettleResponse;
 import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.entity.SearchGoodsResponse;
+import cn.czyugang.tcg.client.entity.SearchStoreResponse;
 import cn.czyugang.tcg.client.entity.Store;
 import cn.czyugang.tcg.client.entity.StoreApplyInfo;
 import cn.czyugang.tcg.client.entity.StoreImg;
@@ -64,11 +67,12 @@ public class StoreApi {
     }
 
     //店铺商品  商超
-    public static Observable<GoodsResponse> getGoods(String id, String classifyId, String order) {
+    public static Observable<GoodsResponse> getGoods(String id, String classifyId, String order,int page,String accessTime) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("storeId", id);
-        map.put("page", 1);
+        map.put("page", page);
         map.put("size", 20);
+        if (accessTime!=null) map.put("accessTime",accessTime);
         if (classifyId != null) map.put("classifyId", classifyId);
         if (order != null) {
             switch (order) {
@@ -188,6 +192,18 @@ public class StoreApi {
     }
 
 
+    //api/auth/v1/product/business/get  ［可接入］根据id查看商品详情
+    public static Observable<Response<Good>> getGoodDetail(String id) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("id",id );
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/product/business/get", map)
+                .map(s -> (Response<Good>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, Good.class)))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
+
     /*
     *   商家入驻
     * */
@@ -224,50 +240,63 @@ public class StoreApi {
 
     }
     //api/auth/v1/product/shopping/search/product［DOC-v2］搜索商品
-    public static Observable<Response<Object>> searchGoods(HashMap<String, Object> map) {
+    public static Observable<SearchGoodsResponse> searchGoods(HashMap<String, Object> map) {
         //HashMap<String, Object> map = new HashMap<>();
         /*
+        *
+        *
+        *   lat*	number($double)   地理位置维度
+        *   lon*	number($double)   地理位置经度
+        *
+        *   page*	integer($int32)   分页页码
+        *   pageSize*	integer($int32)   每页条数
+        *   accessToken
+        *
+        *   title*	string    标题
+        *   orderType	string   排序类型(LOCATION-距离最近   GOOD_RATE-好评   PRICE_DESC-价格从低到高   PRICE_ASC-价格从高到低
+        *                                   SALE- 销量  不传按发布时间
+        *   searchType	string   商品类型( TAKEOUT-外卖; MARKET-商超;不传为全部 )
+        *
+        *   startPrice	number($float)   价格区间-开始价格
+        *   endPrice	number($float)  价格区间-结束价格
+        *
+        *   serviceTagIds	[string]   description:服务标签ids
+        *   tagIds	[string]    description:标签ids
         *   attributeIds	[string]   description:规格属性ids
         *   brandIds	[string]   description:品类id列表
         *   classifyId	string   商品类目id
-        *   endPrice	number($float)  价格区间-结束价格
-        *   lat*	number($double)   地理位置维度
-        *   lon*	number($double)   地理位置经度
-        *   orderType	string   排序类型(LOCATION-距离最近   GOOD_RATE-好评   PRICE_DESC-价格从低到高   PRICE_ASC-价格从高到低
-        *                                   SALE- 销量  不传按发布时间
-        *   page*	integer($int32)   分页页码
-        *   pageSize*	integer($int32)   每页条数
-        *   searchType	string   商品类型( TAKEOUT-外卖; MARKET-商超;不传为全部 )
-        *   serviceTagIds	[string]   description:服务标签ids
-        *   startPrice	number($float)   价格区间-开始价格
-        *   tagIds	[string]    description:标签ids
-        *   title*	string    标题
+        *
+        *
         * */
         return UserOAuth.getInstance()
-                .get("api/auth/v1/product/shopping/search/product", map)
-                .map(s -> (Response<Object>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, Object.class)))
+                .post("api/auth/v1/product/shopping/search/product", map)
+                .map(s -> (SearchGoodsResponse) JsonParse.fromJson(s, SearchGoodsResponse.class))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
 
     }
 
     //api/auth/v1/product/shopping/search/store［DOC-v2］搜索店铺
-    public static Observable<Response<Object>> searchStore(HashMap<String, Object> map) {
+    public static Observable<SearchStoreResponse> searchStore(HashMap<String, Object> map) {
         /*
-        *   classifyId*	string 商品类目id
         *   lat*	number($double) 地理位置维度
         *   lon*	number($double) 地理位置经度
-        *   orderType*	string  排序类型(LOCATION-距离最近  GOOD_RATE-好评  SALE-好评
+        *
         *   page*	integer($int32)  分页页码
         *   pageSize*	integer($int32)  每页条数
+        *
+        *   title*	string  标题
         *   searchType*	string  商品类型( TAKEOUT-外卖; MARKET-商超 )
+        *   orderType*	string  排序类型(LOCATION-距离最近  GOOD_RATE-好评  SALE-好评
+        *
+        *   classifyId*	string 商品类目id
         *   serviceTagIds*	[string]  description:服务标签ids
         *   tagIds*	[string]  description:标签ids
-        *   title*	string  标题
+        *
         * */
         return UserOAuth.getInstance()
-                .get("api/auth/v1/product/shopping/search/store", map)
-                .map(s -> (Response<Object>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, Object.class)))
+                .post("api/auth/v1/product/shopping/search/store", map)
+                .map(s -> (SearchStoreResponse) JsonParse.fromJson(s, SearchStoreResponse.class))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
 

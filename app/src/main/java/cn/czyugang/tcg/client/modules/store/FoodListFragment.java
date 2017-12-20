@@ -183,7 +183,7 @@ public class FoodListFragment extends BaseFragment {
             holder.price.setText(String.format("￥%.2f",Math.random()*10));
             holder.imgView.id("919910512769269760");
 
-            holder.itemView.setOnClickListener(v -> GoodDetailActivity.startGoodDetailActivity());
+            holder.itemView.setOnClickListener(v -> GoodDetailActivity.startGoodDetailActivity(data.id,storeActivity.id));
 
 
             holder.plusMinusView.setIsMultiSpec(data.isMultiSpec())

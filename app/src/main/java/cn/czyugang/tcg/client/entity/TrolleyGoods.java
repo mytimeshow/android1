@@ -114,6 +114,7 @@ public class TrolleyGoods {
     public void setInfoFromSyncToLocal(TrolleyStore trolleyStore){
         List<Long> ids=new ArrayList<>();
         for (String id : specId.split(",")) {
+            if (id.equals("")) continue;
             ids.add(Long.valueOf(id));
         }
         Collections.sort(ids,(o1, o2) -> {

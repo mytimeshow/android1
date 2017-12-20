@@ -170,8 +170,10 @@ public class MyDialog extends DialogFragment {
     public static void moreDialog(Activity activity, final View.OnClickListener onEachShare, boolean showCollect) {
         MyDialog.Builder.newBuilder(activity)
                 .custom(R.layout.view_more)
-                .width(-2)
+                .width(ResUtil.getDimenInPx(R.dimen.dp_120))
                 .gravity(Gravity.TOP | Gravity.RIGHT)
+                .offsetX(ResUtil.getDimenInPx(R.dimen.dp_6))
+                .offsetY(ResUtil.getDimenInPx(R.dimen.dp_6))
                 .bindView(myDialog -> {
                     if (!showCollect)
                         myDialog.rootView.findViewById(R.id.more_collect).setVisibility(View.GONE);
@@ -197,8 +199,11 @@ public class MyDialog extends DialogFragment {
     public static void moreDialog(Activity activity, final MoreDialogListener moreDialogListener) {
         MyDialog.Builder.newBuilder(activity)
                 .custom(R.layout.view_more)
-                .width(-2)
+                .canceledOnTouchOutside(true)
+                .width(ResUtil.getDimenInPx(R.dimen.dp_120))
                 .gravity(Gravity.TOP | Gravity.RIGHT)
+                .offsetX(ResUtil.getDimenInPx(R.dimen.dp_6))
+                .offsetY(AppUtil.getStatusBarHeight()+ResUtil.getDimenInPx(R.dimen.dp_50))
                 .bindView(myDialog -> {
                     myDialog.rootView.findViewById(R.id.more_msg).setVisibility(moreDialogListener.showMsg() ? View.VISIBLE : View.GONE);
                     myDialog.rootView.findViewById(R.id.more_footprint).setVisibility(moreDialogListener.showFootprint() ? View.VISIBLE : View.GONE);

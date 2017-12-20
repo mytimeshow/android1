@@ -32,11 +32,35 @@ public class JsonParse {
     //常量字典解析
     public static HashMap<String,String> parseMap(JSONObject values, String key){
         HashMap<String,String> map=new HashMap<>();
-        JSONArray jsonArray = values.optJSONArray("statusDict");
+        JSONArray jsonArray = values.optJSONArray(key);
         if (jsonArray != null && jsonArray.length() > 0) {
             for (int i = 0, size = jsonArray.length(); i < size; i++) {
                 JSONObject jsonObject = jsonArray.optJSONObject(i);
                 map.put(jsonObject.optString("id"), jsonObject.optString("name"));
+            }
+        }
+        return map;
+    }
+
+    public static HashMap<String,Double> parseMapDouble(JSONObject values, String key){
+        HashMap<String,Double> map=new HashMap<>();
+        JSONArray jsonArray = values.optJSONArray(key);
+        if (jsonArray != null && jsonArray.length() > 0) {
+            for (int i = 0, size = jsonArray.length(); i < size; i++) {
+                JSONObject jsonObject = jsonArray.optJSONObject(i);
+                map.put(jsonObject.optString("id"), jsonObject.optDouble("name"));
+            }
+        }
+        return map;
+    }
+
+    public static HashMap<String,Integer> parseMapInt(JSONObject values, String key){
+        HashMap<String,Integer> map=new HashMap<>();
+        JSONArray jsonArray = values.optJSONArray(key);
+        if (jsonArray != null && jsonArray.length() > 0) {
+            for (int i = 0, size = jsonArray.length(); i < size; i++) {
+                JSONObject jsonObject = jsonArray.optJSONObject(i);
+                map.put(jsonObject.optString("id"), jsonObject.optInt("name"));
             }
         }
         return map;
