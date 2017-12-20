@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_160"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="@dimen/dp_10"
-    android:layout_marginBottom="@dimen/dp_5"
-    >
+    android:layout_marginBottom="@dimen/dp_5">
     <RelativeLayout
         android:id="@+id/inform_news_large_ralative"
         android:layout_width="match_parent"
@@ -83,6 +83,8 @@
         android:src="@drawable/ic_logout_avatar"
         android:layout_marginTop="@dimen/dp_120"
         android:layout_marginLeft="@dimen/dp_10"
+        app:round="true"
+        app:round_border_color="@color/white"
         />
 
 

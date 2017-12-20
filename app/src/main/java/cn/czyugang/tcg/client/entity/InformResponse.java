@@ -51,14 +51,16 @@ public class InformResponse extends Response<List<Inform>> {
     public String updateTime;
 
     public int columnFollowNum;
-    public boolean isFollow;
+    public boolean columnIsFollow;
     public String userName;
     public String userHead;
     public String userSummary;
     public String userIdentity;
     public String userIdentityDes;// 发布者身份（中文）
     public String userFollowNum;
+    public String userFansNum;
     public String userCover;
+    public boolean userIsFollow;
 
 
     public void parse(){
@@ -73,11 +75,11 @@ public class InformResponse extends Response<List<Inform>> {
             JSONArray headArray=values.optJSONArray("idToPublisherFileIdDict");
             if (headArray!=null&&headArray.length()!=0) {
                 for (int i=0,size=headArray.length();i<size;i++){
-                    JSONObject jsonObject=headArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=headArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (Inform inform:data){
                         if (inform.id.equals(id)){
-                            inform.headUrl=jsonObject.getString("name");
+                            inform.headUrl=jsonObject.optString("name");
 
                         }
                     }
@@ -89,24 +91,24 @@ public class InformResponse extends Response<List<Inform>> {
             JSONArray nameArray=values.optJSONArray("idToPublisherNameDict");
             if (nameArray!=null&&nameArray.length()!=0) {
                 for (int i=0,size=nameArray.length();i<size;i++){
-                    JSONObject jsonObject=nameArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=nameArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (Inform inform:data){
                         if (inform.id.equals(id)){
-                            inform.userName=jsonObject.getString("name");
+                            inform.userName=jsonObject.optString("name");
 
                         }
                     }
                 }
 
             }
-
+/*
             // 发布人身份
             JSONArray identityArray=values.optJSONArray("mediaIdToMediaTypeDict");
             if (identityArray!=null&&identityArray.length()!=0) {
                 for (int i=0,size=identityArray.length();i<size;i++){
-                    JSONObject jsonObject=identityArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=identityArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (Inform inform:data){
                         if (inform.mediaId.equals(id)){
                             //inform.name=jsonObject.getString("name");
@@ -115,17 +117,17 @@ public class InformResponse extends Response<List<Inform>> {
                     }
                 }
 
-            }
+            }*/
 
             // 评论数
             JSONArray commitNumArray=values.optJSONArray("idToCommentCountDict");
             if (commitNumArray!=null&&commitNumArray.length()!=0) {
                 for (int i=0,size=commitNumArray.length();i<size;i++){
                     JSONObject jsonObject=commitNumArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    String id=jsonObject.optString("id");
                     for (Inform inform:data){
                         if (inform.id.equals(id)){
-                            inform.commentNum=jsonObject.getString("name");
+                            inform.commentNum=jsonObject.optString("name");
 
                         }
                     }
@@ -137,11 +139,11 @@ public class InformResponse extends Response<List<Inform>> {
             JSONArray thumbsNumArray=values.optJSONArray("idToLikeCountDict");
             if (thumbsNumArray!=null&&thumbsNumArray.length()!=0) {
                 for (int i=0,size=thumbsNumArray.length();i<size;i++){
-                    JSONObject jsonObject=thumbsNumArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=thumbsNumArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (Inform inform:data){
                         if (inform.id.equals(id)){
-                            inform.thumbNum=jsonObject.getString("name");
+                            inform.thumbNum=jsonObject.optString("name");
 
                         }
                     }
@@ -153,8 +155,8 @@ public class InformResponse extends Response<List<Inform>> {
             JSONArray isThumbsArray=values.optJSONArray("idToIsLikeDict");
             if (isThumbsArray!=null&&isThumbsArray.length()!=0) {
                 for (int i=0,size=isThumbsArray.length();i<size;i++){
-                    JSONObject jsonObject=isThumbsArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=isThumbsArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (Inform inform:data){
                         if (inform.id.equals(id)){
                             inform.isThumbs=jsonObject.optString("name").equals("YES");
@@ -169,11 +171,11 @@ public class InformResponse extends Response<List<Inform>> {
             JSONArray toSortNameArray=values.optJSONArray("sortIdToSortNameDict");
             if (toSortNameArray!=null&&toSortNameArray.length()!=0) {
                 for (int i=0,size=toSortNameArray.length();i<size;i++){
-                    JSONObject jsonObject=toSortNameArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=toSortNameArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (Inform inform:data){
                         if (inform.sortId.equals(id)){
-                            inform.sortName=jsonObject.getString("name");
+                            inform.sortName=jsonObject.optString("name");
 
                         }
                     }
@@ -182,39 +184,39 @@ public class InformResponse extends Response<List<Inform>> {
             }
 
             // 资讯来源字典
-            JSONArray sourceTypeArray=values.optJSONArray("sourceTypeDict ");
+            JSONArray sourceTypeArray=values.optJSONArray("sourceTypeDict");
             if (sourceTypeArray!=null&&sourceTypeArray.length()!=0) {
                 for (int i=0,size=sourceTypeArray.length();i<size;i++){
-                    JSONObject jsonObject=sourceTypeArray.getJSONObject(i);
+                    JSONObject jsonObject=sourceTypeArray.optJSONObject(i);
 
                 }
 
             }
 
             // 栏目信息
-            //JSONObject columnMsg=values.getJSONObject("infoSort");
+            JSONObject columnMsg=values.optJSONObject("infoSort");
             // 栏目关注人数
-            //columnFollowNum=values.getInt("infoSortKeepCount");
+            columnFollowNum=values.optInt("infoSortKeepCount");
             // 是否已关注栏目
-            //isFollow=values.getString("isKeepInfoSort").equals("YES");
+            columnIsFollow=values.optString("isKeepInfoSort").equals("YES");
             // 发布者
-            userName=values.getString("publisherName");
+            userName=values.optString("publisherName");
             // 发布者头像
             userHead=values.optString("publisherFileId");
             // 发布者简介
-            userSummary=values.getString("publisherSummary");
+            userSummary=values.optString("publisherSummary");
             // 发布者身份
-            userIdentity=values.getString("publisherType");
+            userIdentity=values.optString("publisherType");
             // 发布者身份（中文）
-            userIdentityDes=values.getString("publisherTypeDes");
+            userIdentityDes=values.optString("publisherTypeDes");
             // 发布者关注数
-            userFollowNum=values.getString("followCountNumber");
+            userFollowNum=values.optString("followCountNumber");
             // 发布者粉丝数
-            userFollowNum=values.getString("fansCountNumber");
+            userFansNum=values.optString("fansCountNumber");
+            //是否关注作者
+            userIsFollow=values.optString("").equals("YES");
             // 个人主页封面
-            userCover=values.getString("coverFileId");
-
-            LogRui.e("parse####"+values.getString("publisherName"));
+            userCover=values.optString("coverFileId");
 
         }catch (JSONException e){
             LogRui.e("parse####",e);

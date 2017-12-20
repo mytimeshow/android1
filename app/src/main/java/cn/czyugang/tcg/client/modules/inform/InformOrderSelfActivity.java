@@ -23,8 +23,11 @@ import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.entity.Inform;
 import cn.czyugang.tcg.client.entity.InformResponse;
 import cn.czyugang.tcg.client.entity.MyInform;
+import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.img.ImgView;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Administrator on 2017/12/11.
@@ -50,13 +53,17 @@ public class InformOrderSelfActivity extends BaseActivity {
     ImgView userHead;
     @BindView(R.id.myself_description)
     TextView userSummary;
+    @BindView(R.id.myself_follow_num)
+    TextView userFollowNum;
+    @BindView(R.id.myself_fans_num)
+    TextView userFansNum;
+    @BindView(R.id.inform_order_isfollow)
+    TextView userIsFollow;
 
-
+    private boolean isFollow;
 
     List<Inform> informs=new ArrayList<Inform>();
     InformColumnMsgActivity.SmallInformAdapter informAdapter;
-
-    public static InformOrderSelfActivity instance;
     public static String userId;
     public static void startInformOrderSelfActivity(String id){
         Intent intent=new Intent(getTopActivity(),InformOrderSelfActivity.class);
@@ -71,7 +78,6 @@ public class InformOrderSelfActivity extends BaseActivity {
         ButterKnife.bind(this);
         followButton.setVisibility(View.VISIBLE);
         articleNum.setVisibility(View.GONE);
-        instance=this;
 
 
         informAdapter=new InformColumnMsgActivity.SmallInformAdapter(informs,this);
@@ -93,12 +99,21 @@ public class InformOrderSelfActivity extends BaseActivity {
                 response.parse();
                 informs.clear();
                 informs.addAll(response.data);
-                userName.setText(response.userName);
-                userHead.id(response.userHead);
                 informAdapter.notifyDataSetChanged();
                 if (firstLoad) {
                     informForMyselfList.setLayoutManager(new LinearLayoutManager(InformOrderSelfActivity.this));
                     informForMyselfList.setAdapter(informAdapter);
+                }
+                userName.setText(response.userName);
+                userHead.id(response.userHead);
+                userFollowNum.setText(response.userFollowNum);
+                userFansNum.setText(response.userFansNum);
+                isFollow=response.userIsFollow;
+
+                if(response.userIdentity.equals("NORMAL")){
+                    userSummary.setText("");
+                }else {
+                    userSummary.setText(response.userSummary);
                 }
 
             }
@@ -113,5 +128,68 @@ public class InformOrderSelfActivity extends BaseActivity {
     @OnClick(R.id.inform_for_myself_fans)
     void toMyFans(){
         InformSelfFansActivity.startInformSelfFansActivity("TA的粉丝");
+    }
+
+    @OnClick(R.id.inform_order_isfollow)
+    void onFollow(){
+        /*if (!isFollow) {
+            InformApi.toFollowColumn(data.id).subscribe(
+                    new Observer<Response>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(Response response) {
+                            switch (response.getCode()) {
+                                case 200:
+                                    holder.columnIsFollow.setText("已关注");
+                                    holder.columnIsFollow.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
+
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    }
+            );
+        } else {
+            InformApi.toUnFollowColumn(data.id).subscribe(
+                    new Observer<Response>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(Response response) {
+                            switch (response.getCode()) {
+                                case 200:
+                                    holder.columnIsFollow.setText("+关注");
+                                    holder.columnIsFollow.setBackgroundResource(R.drawable.bg_rect_cir_red);
+
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    }
+            );
+        }*/
     }
 }

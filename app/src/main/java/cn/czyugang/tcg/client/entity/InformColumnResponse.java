@@ -26,11 +26,11 @@ public class InformColumnResponse extends Response<List<InformColumn>> {
             JSONArray followCountArray=values.optJSONArray("idToKeepCountDict");
             if (followCountArray!=null&&followCountArray.length()!=0) {
                 for (int i=0,size=followCountArray.length();i<size;i++){
-                    JSONObject jsonObject=followCountArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=followCountArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (InformColumn inform:data){
                         if (inform.id.equals(id)){
-                            inform.followNum=jsonObject.getInt("name");
+                            inform.followNum=jsonObject.optInt("name");
 
                         }
                     }
@@ -41,19 +41,19 @@ public class InformColumnResponse extends Response<List<InformColumn>> {
             JSONArray isFollowArray=values.optJSONArray("idToIsKeepDict");
             if (isFollowArray!=null&&isFollowArray.length()!=0) {
                 for (int i=0,size=isFollowArray.length();i<size;i++){
-                    JSONObject jsonObject=isFollowArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=isFollowArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (InformColumn inform:data){
                         if (inform.id.equals(id)){
-                            inform.isFollow=jsonObject.getString("name").equals("YES")?true:false;
+                            inform.isFollow=jsonObject.optString("name").equals("YES")?true:false;
                         }
                     }
                 }
 
             }
 
-        }catch (JSONException e){
-
+        }catch (Exception e){
+            LogRui.e("parse####",e);
         }
     }
 }

@@ -81,12 +81,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/myself_name"
+                    android:gravity="center"
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="@dimen/dp_15"
                     android:layout_marginRight="@dimen/dp_15"
                     android:layout_marginTop="@dimen/dp_5"
                     android:lines="1"
-                    android:text="反反复复付付付付付付付付付付付付付付付付反反复复..."
+                    android:text="反反复复付付付付付付复复..."
                     android:textColor="@color/white" />
 
                 <LinearLayout

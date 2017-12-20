@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.modules.entry.activity.MainActivity;
 import cn.czyugang.tcg.client.modules.im.ImChatActivity;
 import cn.czyugang.tcg.client.utils.CommonUtil;
+import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.QRCode;
@@ -415,12 +417,19 @@ public class MyDialog extends DialogFragment {
 
     //居中 编辑链接
     public static void informEditLinkDialog(Activity activity) {
-        MyDialog.Builder.newBuilder(activity)
+        Builder.newBuilder(activity)
                 .custom(R.layout.dialog_inform_edit_article_link)
                 .widthPercent(0.8f)
                 .gravity(Gravity.CENTER)
                 .bindView(myDialog -> {
-
+                    EditText source=myDialog.rootView.findViewById(R.id.edit_article_link_content);
+                    source.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                        @Override
+                        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                            LogRui.e("onEditorAction####"+v.getText());
+                            return false;
+                        }
+                    });
                 })
                 .canceledOnTouchOutside(true)
                 .build()

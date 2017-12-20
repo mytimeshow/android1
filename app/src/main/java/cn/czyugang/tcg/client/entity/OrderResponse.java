@@ -48,6 +48,8 @@ public class OrderResponse extends Response<List<Order>> {
                 } else {
                     order.goodsList = new ArrayList<>();
                 }
+
+                //order.goodsList = JsonParse.fromJsonInValue(values, "subOrderListOf" + order.id, new JsonParse.Type(List.class, OrderGoods.class), new ArrayList<OrderGoods>());
             }
 
 

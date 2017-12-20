@@ -73,12 +73,9 @@ public class InformMySelfActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inform_myself);
         ButterKnife.bind(this);
-        MyInformResponse myInformResponsel=new MyInformResponse();
-        mySelfFollowNum.setText(String.valueOf(myInformResponsel.followCount));
-        mySelfFansNum.setText(String.valueOf(myInformResponsel.fansCount));
-        mySelfArticleNum.setText(String.valueOf(myInformResponsel.articleCount));
+
         mySelfHead.id(UserOAuth.getUserPhotoId());
-        mySelfName.setText(UserOAuth.getUserNickname());
+
         refreshInform(true);
 
 
@@ -101,6 +98,16 @@ public class InformMySelfActivity extends BaseActivity {
                 myInformAdapter=new MyInformAdapter(myInforms,InformMySelfActivity.this);
                 informForMyselfList.setLayoutManager(new LinearLayoutManager(InformMySelfActivity.this));
                 informForMyselfList.setAdapter(myInformAdapter);
+                mySelfName.setText(response.myName);
+                mySelfFollowNum.setText(String.valueOf(response.followCount));
+                mySelfFansNum.setText(String.valueOf(response.fansCount));
+                mySelfArticleNum.setText(String.valueOf(response.articleCount));
+                mySelfDescription.setText(response.myIdentity?response.mySummary:"");
+               /* if(response..equals("NORMAL")){
+                    userSummary.setText("");
+                }else {
+                    userSummary.setText(response.userSummary);
+                }*/
             }
         });
     }
@@ -168,12 +175,12 @@ public class InformMySelfActivity extends BaseActivity {
             }else{
                 holder.commit.setVisibility(View.GONE);
             }
-            if (activity==InformOrderSelfActivity.instance){
+            /*if (activity==InformOrderSelfActivity.instance){
                 holder.typeLinearLayout.setVisibility(View.GONE);
                 holder.commit.setVisibility(View.GONE);
             }else{
                 holder.typeLinearLayout.setVisibility(View.VISIBLE);
-            }
+            }*/
 
         }
         @Override
@@ -192,7 +199,7 @@ public class InformMySelfActivity extends BaseActivity {
             TextView informTime;
             TextView informContent;
             TextView informCommitNum;
-            LinearLayout typeLinearLayout;
+            //LinearLayout typeLinearLayout;
 
             //评论详情部分
             RelativeLayout commit;
@@ -211,7 +218,7 @@ public class InformMySelfActivity extends BaseActivity {
                 commitHead=itemView.findViewById(R.id.inform_for_myself_commit_head);
                 commitContent=itemView.findViewById(R.id.inform_for_myself_commit_contentmsg);
                 //顶部文章状态和时间显示部分
-                typeLinearLayout=itemView.findViewById(R.id.inform_for_myself_type_linear);
+                //typeLinearLayout=itemView.findViewById(R.id.inform_for_myself_type_linear);
 
 
 

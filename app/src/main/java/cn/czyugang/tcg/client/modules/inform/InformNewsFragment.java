@@ -20,6 +20,7 @@ import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.api.InformApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseFragment;
+import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.Inform;
 import cn.czyugang.tcg.client.entity.NewsInformResponse;
 import cn.czyugang.tcg.client.entity.Response;
@@ -73,14 +74,17 @@ public class InformNewsFragment extends BaseFragment {
             @Override
             public void onNext(NewsInformResponse response) {
                 super.onNext(response);
-                response.parse();
-                informs.clear();
-                informs.addAll(response.data);
-                informNewsAdapter.notifyDataSetChanged();
-                if (firstLoad){
-                    informNewsList.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    informNewsList.setAdapter(informNewsAdapter);
+                if (ErrorHandler.judge200(response)){
+                    response.parse();
+                    informs.clear();
+                    informs.addAll(response.data);
+                    informNewsAdapter.notifyDataSetChanged();
+                    if (firstLoad){
+                        informNewsList.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        informNewsList.setAdapter(informNewsAdapter);
+                    }
                 }
+
 
             }
         });
@@ -116,18 +120,20 @@ public class InformNewsFragment extends BaseFragment {
                     break;
 
                 case R.layout.item_inform_news_large:
-
+                    holder.newsLargeHead.id(data.headUrl);
                     holder.newsLargePersonName.setText(data.userName);
                     holder.newsLargeContent.setText(data.title);
                     holder.newsLargeContentName.setText("—— "+data.sortName+" ——");
                     holder.newsLargeCommitNum.setText(String.valueOf(data.commentNum));
+                    holder.newsLargeImg.id(data.imgUrl);
                     break;
 
                 case R.layout.item_inform_news_small:
-
+                    holder.newsSmallHead.id(data.headUrl);
                     holder.newsSmallName.setText(data.userName);
                     holder.newsSmallContent.setText(data.title);
                     holder.newsSmallCommitNum.setText(String.valueOf(data.commentNum));
+                    holder.newsSmallImg.id(data.imgUrl);
                     break;
             }
 
@@ -205,7 +211,7 @@ public class InformNewsFragment extends BaseFragment {
                 newsLargePersonName = itemView.findViewById(R.id.inform_news_large_name);
                 newsLargeCommitNum = itemView.findViewById(R.id.inform_news_large_commitNum);
                 //资讯小图item
-                newsSmallImg = itemView.findViewById(R.id.inform_news_large_img);
+                newsSmallImg = itemView.findViewById(R.id.inform_news_small_img);
                 newsSmallHead = itemView.findViewById(R.id.inform_news_small_head);
                 newsSmallContent = itemView.findViewById(R.id.inform_news_small_content);
                 newsSmallName = itemView.findViewById(R.id.inform_news_small_name);

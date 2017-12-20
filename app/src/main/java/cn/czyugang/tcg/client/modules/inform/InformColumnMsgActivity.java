@@ -131,6 +131,10 @@ public class InformColumnMsgActivity extends BaseActivity {
         public void onBindViewHolder(SmallInformAdapter.Holder holder, int position) {
             Inform data = list.get(position);
             holder.informSmallContent.setText(data.title);
+            holder.informSmallCommitNum.setText(String.valueOf(data.commentNum));
+            holder.informSmallHead.id(data.headUrl);
+//            holder.informSmallImg.id(data.imgUrl);
+            holder.informSmallName.setText(data.userName);
         }
 
         @Override

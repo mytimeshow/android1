@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        style="@style/title_title">
+
+        <EditText
+            android:id="@+id/title_input"
+            style="@style/search_edit"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
+            />
+
+        <TextView
+            style="@style/title_right"
+            android:text="取消"
+            android:textColor="@color/text_black"/>
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

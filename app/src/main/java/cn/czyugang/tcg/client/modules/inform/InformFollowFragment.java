@@ -20,6 +20,7 @@ import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.api.InformApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseFragment;
+import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.InformFollow;
 import cn.czyugang.tcg.client.entity.InformFollowResponse;
 import cn.czyugang.tcg.client.utils.img.ImgView;
@@ -182,19 +183,21 @@ public class InformFollowFragment extends BaseFragment {
     }
 
 
-    private void refreshInform(boolean firstLoad,String type) {
+    private void refreshInform(boolean firstLoad, String type) {
         InformApi.getFollowInform(type).subscribe(new BaseActivity.NetObserver<InformFollowResponse>() {
             @Override
             public void onNext(InformFollowResponse response) {
                 super.onNext(response);
                 //Toast.makeText(InformMySelfActivity.this,response.data.toString(),Toast.LENGTH_SHORT).show();
-                response.parse();
-                followCotentsList.clear();
-                followCotentsList.addAll(response.data);
-                followContentAdapter.notifyDataSetChanged();
-                if (firstLoad) {
-                    lvInformFollow.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    lvInformFollow.setAdapter(followContentAdapter);
+                if (ErrorHandler.judge200(response)) {
+                    response.parse();
+                    followCotentsList.clear();
+                    followCotentsList.addAll(response.data);
+                    followContentAdapter.notifyDataSetChanged();
+                    if (firstLoad) {
+                        lvInformFollow.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        lvInformFollow.setAdapter(followContentAdapter);
+                    }
                 }
 
             }

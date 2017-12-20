@@ -22,6 +22,7 @@ import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.api.InformApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseFragment;
+import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.Inform;
 import cn.czyugang.tcg.client.entity.InformColumn;
 import cn.czyugang.tcg.client.entity.InformColumnResponse;
@@ -73,14 +74,17 @@ public class InformColumnFragment extends BaseFragment {
             @Override
             public void onNext(InformColumnResponse response) {
                 super.onNext(response);
-                response.parse();
-                informColumns.clear();
-                informColumns.addAll(response.data);
-                informColumnAdapter.notifyDataSetChanged();
-                if (firstLoad){
-                    informColumnList.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    informColumnList.setAdapter(informColumnAdapter);
+                if (ErrorHandler.judge200(response)){
+                    response.parse();
+                    informColumns.clear();
+                    informColumns.addAll(response.data);
+                    informColumnAdapter.notifyDataSetChanged();
+                    if (firstLoad){
+                        informColumnList.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        informColumnList.setAdapter(informColumnAdapter);
+                    }
                 }
+
 
             }
         });

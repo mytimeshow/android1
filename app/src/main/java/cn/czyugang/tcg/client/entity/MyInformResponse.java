@@ -9,6 +9,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.czyugang.tcg.client.common.UserOAuth;
+import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.LogRui;
 
 /**
@@ -51,6 +53,13 @@ public class MyInformResponse extends  Response<List<MyInform>> {
     @SerializedName("wordCount")
     public int wordCount;
 
+    public String mySummary;
+    public String myName;
+    public String myType;
+    public int myPublishLimit;
+    public String myStatus;
+    public boolean myIdentity=false;
+
 
     public void parse(){
 
@@ -64,12 +73,12 @@ public class MyInformResponse extends  Response<List<MyInform>> {
             JSONArray titleArray=values.optJSONArray("infoIdToTitleDict");
             if (titleArray!=null&&titleArray.length()!=0) {
                 for (int i=0,size=titleArray.length();i<size;i++){
-                    JSONObject jsonObject=titleArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=titleArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                    for (MyInform myInform:data){
                        if (myInform.infoId.equals(id)){
                            //myInform.setCommitContent(jsonObject.getString("name"));
-                           myInform.content=jsonObject.getString("name");
+                           myInform.content=jsonObject.optString("name");
 
                        }
                    }
@@ -81,11 +90,11 @@ public class MyInformResponse extends  Response<List<MyInform>> {
             JSONArray infoCoverArray=values.optJSONArray("infoIdToCoverImageDict");
             if (infoCoverArray!=null&&infoCoverArray.length()!=0) {
                 for (int i=0,size=infoCoverArray.length();i<size;i++){
-                    JSONObject jsonObject=infoCoverArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=infoCoverArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (MyInform myInform:data){
                         if (myInform.infoId.equals(id)){
-                            myInform.imgUrl=jsonObject.getString("name");
+                            myInform.imgUrl=jsonObject.optString("name");
 
                         }
                     }
@@ -97,11 +106,11 @@ public class MyInformResponse extends  Response<List<MyInform>> {
             JSONArray infoCoverViewArray=values.optJSONArray("infoIdToCoverViewDict");
             if (infoCoverViewArray!=null&&infoCoverViewArray.length()!=0) {
                 for (int i=0,size=infoCoverViewArray.length();i<size;i++){
-                    JSONObject jsonObject=infoCoverViewArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=infoCoverViewArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (MyInform myInform:data){
                         if (myInform.infoId.equals(id)){
-                            myInform.imgUrl=jsonObject.getString("name");
+                            myInform.imgUrl=jsonObject.optString("name");
 
                         }
                     }
@@ -113,11 +122,11 @@ public class MyInformResponse extends  Response<List<MyInform>> {
             JSONArray infoCommitNumArray=values.optJSONArray("infoIdToCommentCountDict");
             if (infoCommitNumArray!=null&&infoCommitNumArray.length()!=0) {
                 for (int i=0,size=infoCommitNumArray.length();i<size;i++){
-                    JSONObject jsonObject=infoCommitNumArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=infoCommitNumArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (MyInform myInform:data){
                         if (myInform.infoId.equals(id)){
-                            myInform.commitNum=jsonObject.getString("name");
+                            myInform.commitNum=jsonObject.optString("name");
                         }
                     }
                 }
@@ -128,11 +137,11 @@ public class MyInformResponse extends  Response<List<MyInform>> {
             JSONArray infoCommitContentArray=values.optJSONArray("objectIdToCommentContentDict");
             if (infoCommitContentArray!=null&&infoCommitContentArray.length()!=0) {
                 for (int i=0,size=infoCommitContentArray.length();i<size;i++){
-                    JSONObject jsonObject=infoCommitContentArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=infoCommitContentArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (MyInform myInform:data){
                         if (myInform.objectId.equals(id)){
-                            myInform.commitContent=jsonObject.getString("name");
+                            myInform.commitContent=jsonObject.optString("name");
                         }
                     }
                 }
@@ -143,11 +152,11 @@ public class MyInformResponse extends  Response<List<MyInform>> {
             JSONArray infoReplyCommitArray=values.optJSONArray("objectIdToReplyContentDict");
             if (infoReplyCommitArray!=null&&infoReplyCommitArray.length()!=0) {
                 for (int i=0,size=infoReplyCommitArray.length();i<size;i++){
-                    JSONObject jsonObject=infoReplyCommitArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=infoReplyCommitArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (MyInform myInform:data){
                         if (myInform.objectId.equals(id)){
-                            myInform.replyContent=jsonObject.getString("name");
+                            myInform.replyContent=jsonObject.optString("name");
                         }
                     }
                 }
@@ -158,8 +167,8 @@ public class MyInformResponse extends  Response<List<MyInform>> {
             JSONArray infoIdToUserIdArray=values.optJSONArray("objectIdToUserIdDict");
             if (infoIdToUserIdArray!=null&&infoIdToUserIdArray.length()!=0) {
                 for (int i=0,size=infoIdToUserIdArray.length();i<size;i++){
-                    JSONObject jsonObject=infoIdToUserIdArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=infoIdToUserIdArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (MyInform myInform:data){
                         if (myInform.objectId.equals(id)){
                            //myInform.commitContent=jsonObject.getString("name");
@@ -172,11 +181,11 @@ public class MyInformResponse extends  Response<List<MyInform>> {
             JSONArray infoIdToUserNameArray=values.optJSONArray("objectIdToUserNameDict");
             if (infoIdToUserNameArray!=null&&infoIdToUserNameArray.length()!=0) {
                 for (int i=0,size=infoIdToUserNameArray.length();i<size;i++){
-                    JSONObject jsonObject=infoIdToUserNameArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=infoIdToUserNameArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (MyInform myInform:data){
                         if (myInform.objectId.equals(id)){
-                           myInform.commitName=jsonObject.getString("name");
+                           myInform.commitName=jsonObject.optString("name");
                         }
                     }
                 }
@@ -187,11 +196,11 @@ public class MyInformResponse extends  Response<List<MyInform>> {
             JSONArray infoToUserHeadArray=values.optJSONArray("objectIdToUserFileIdDict");
             if (infoToUserHeadArray!=null&&infoToUserHeadArray.length()!=0) {
                 for (int i=0,size=infoToUserHeadArray.length();i<size;i++){
-                    JSONObject jsonObject=infoToUserHeadArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=infoToUserHeadArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (MyInform myInform:data){
                         if (myInform.objectId.equals(id)){
-                            myInform.commitHead=jsonObject.getString("name");
+                            myInform.commitHead=jsonObject.optString("name");
                         }
                     }
                 }
@@ -202,8 +211,8 @@ public class MyInformResponse extends  Response<List<MyInform>> {
             JSONArray infoToTargetUserIdArray=values.optJSONArray("objectIdToTargetUserIdDict");
             if (infoToTargetUserIdArray!=null&&infoToTargetUserIdArray.length()!=0) {
                 for (int i=0,size=infoToTargetUserIdArray.length();i<size;i++){
-                    JSONObject jsonObject=infoToTargetUserIdArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=infoToTargetUserIdArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (MyInform myInform:data){
                         if (myInform.objectId.equals(id)){
                             //myInform.commitContent=jsonObject.getString("name");
@@ -217,11 +226,11 @@ public class MyInformResponse extends  Response<List<MyInform>> {
             JSONArray infoToTargetUserNameArray=values.optJSONArray("objectIdToTargetUserNameDict");
             if (infoToTargetUserNameArray!=null&&infoToTargetUserNameArray.length()!=0) {
                 for (int i=0,size=infoToTargetUserNameArray.length();i<size;i++){
-                    JSONObject jsonObject=infoToTargetUserNameArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=infoToTargetUserNameArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (MyInform myInform:data){
                         if (myInform.objectId.equals(id)){
-                            myInform.replyName=jsonObject.getString("name");
+                            myInform.replyName=jsonObject.optString("name");
                         }
                     }
                 }
@@ -231,18 +240,29 @@ public class MyInformResponse extends  Response<List<MyInform>> {
 
             //用户资讯统计信息
             //粉丝数量
-            JSONObject userDetail=values.getJSONObject("userInfoCount");
+            JSONObject userDetail=values.optJSONObject("userInfoCount");
             MyInform myInform=new MyInform();
-            fansCount=userDetail.getInt("fansCount");
-            wordCount=userDetail.getInt("wordCount");
-            createTime=userDetail.getString("createTime");
-            deleteFlag=userDetail.getString("deleteFlag");
-            articleCount=userDetail.getInt("articleCount");
-            followCount=userDetail.getInt("followCount");
+            fansCount=userDetail.optInt("fansCount");
+            wordCount=userDetail.optInt("wordCount");
+            createTime=userDetail.optString("createTime");
+            deleteFlag=userDetail.optString("deleteFlag");
+            articleCount=userDetail.optInt("articleCount");
+            followCount=userDetail.optInt("followCount");
+            myName=UserOAuth.getUserNickname();
+            JSONObject userIdentity=values.optJSONObject("mediaBase");
+            if(userIdentity!=null){
+                myIdentity=true;
+                mySummary = userIdentity.optString("summary");
+                myName=userIdentity.optString("mediaName");
+                myType=userIdentity.optString("type");
+                myPublishLimit=userIdentity.optInt("publishLimit");
+                myStatus=userIdentity.optString("status");
+
+            }
 
 
-        }catch (JSONException e){
-
+        }catch (Exception e){
+            LogRui.e("parse####",e);
         }
     }
 

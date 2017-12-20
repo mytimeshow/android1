@@ -26,11 +26,11 @@ public class InformFollowResponse extends Response<List<InformFollow>> {
             JSONArray headArray=values.optJSONArray("idToPublisherFileIdDict");
             if (headArray!=null&&headArray.length()!=0) {
                 for (int i=0,size=headArray.length();i<size;i++){
-                    JSONObject jsonObject=headArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=headArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (InformFollow inform:data){
                         if (inform.id.equals(id)){
-                            inform.headUrl=jsonObject.getString("name");
+                            inform.headUrl=jsonObject.optString("name");
 
                         }
                     }
@@ -42,11 +42,11 @@ public class InformFollowResponse extends Response<List<InformFollow>> {
             JSONArray nameArray=values.optJSONArray("idToPublisherNameDict");
             if (nameArray!=null&&nameArray.length()!=0) {
                 for (int i=0,size=nameArray.length();i<size;i++){
-                    JSONObject jsonObject=nameArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=nameArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (InformFollow inform:data){
                         if (inform.id.equals(id)){
-                            inform.name=jsonObject.getString("name");
+                            inform.name=jsonObject.optString("name");
 
                         }
                     }
@@ -58,8 +58,8 @@ public class InformFollowResponse extends Response<List<InformFollow>> {
             JSONArray identityArray=values.optJSONArray("mediaIdToMediaTypeDict");
             if (identityArray!=null&&identityArray.length()!=0) {
                 for (int i=0,size=identityArray.length();i<size;i++){
-                    JSONObject jsonObject=identityArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=identityArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (InformFollow inform:data){
                         if (inform.mediaId.equals(id)){
                             //inform.name=jsonObject.getString("name");
@@ -74,11 +74,11 @@ public class InformFollowResponse extends Response<List<InformFollow>> {
             JSONArray commitNumArray=values.optJSONArray("idToCommentCountDict");
             if (commitNumArray!=null&&commitNumArray.length()!=0) {
                 for (int i=0,size=commitNumArray.length();i<size;i++){
-                    JSONObject jsonObject=commitNumArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=commitNumArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (InformFollow inform:data){
                         if (inform.id.equals(id)){
-                            inform.commentNum=jsonObject.getString("name");
+                            inform.commentNum=jsonObject.optString("name");
 
                         }
                     }
@@ -90,11 +90,11 @@ public class InformFollowResponse extends Response<List<InformFollow>> {
             JSONArray thumbsNumArray=values.optJSONArray("idToLikeCountDict");
             if (thumbsNumArray!=null&&thumbsNumArray.length()!=0) {
                 for (int i=0,size=thumbsNumArray.length();i<size;i++){
-                    JSONObject jsonObject=thumbsNumArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=thumbsNumArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (InformFollow inform:data){
                         if (inform.id.equals(id)){
-                            inform.thumbNum=jsonObject.getString("name");
+                            inform.thumbNum=jsonObject.optString("name");
 
                         }
                     }
@@ -106,11 +106,11 @@ public class InformFollowResponse extends Response<List<InformFollow>> {
             JSONArray isThumbsArray=values.optJSONArray("idToIsLikeDict");
             if (isThumbsArray!=null&&isThumbsArray.length()!=0) {
                 for (int i=0,size=isThumbsArray.length();i<size;i++){
-                    JSONObject jsonObject=isThumbsArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=isThumbsArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (InformFollow inform:data){
                         if (inform.id.equals(id)){
-                            inform.isThumbs=jsonObject.getBoolean("name");
+                            inform.isThumbs=jsonObject.optBoolean("name");
 
                         }
                     }
@@ -122,11 +122,11 @@ public class InformFollowResponse extends Response<List<InformFollow>> {
             JSONArray toSortNameArray=values.optJSONArray("sortIdToSortNameDict");
             if (toSortNameArray!=null&&toSortNameArray.length()!=0) {
                 for (int i=0,size=toSortNameArray.length();i<size;i++){
-                    JSONObject jsonObject=toSortNameArray.getJSONObject(i);
-                    String id=jsonObject.getString("id");
+                    JSONObject jsonObject=toSortNameArray.optJSONObject(i);
+                    String id=jsonObject.optString("id");
                     for (InformFollow inform:data){
                         if (inform.sortId.equals(id)){
-                            inform.isThumbs=jsonObject.getBoolean("name");
+                            inform.isThumbs=jsonObject.optBoolean("name");
 
                         }
                     }
@@ -135,12 +135,12 @@ public class InformFollowResponse extends Response<List<InformFollow>> {
             }
 
             // 资讯来源字典
-            JSONObject sourceTypeObject=values.getJSONObject("sourceTypeDict ");
+            JSONObject sourceTypeObject=values.optJSONObject("sourceTypeDict ");
 
 
 
-        }catch (JSONException e){
-
+        }catch (Exception e){
+            LogRui.e("parse####",e);
         }
     }
 }

@@ -17,12 +17,14 @@ import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.base.BaseFragmentAdapter;
+import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.modules.inform.InformColumnFragment;
 import cn.czyugang.tcg.client.modules.inform.InformFollowFragment;
 import cn.czyugang.tcg.client.modules.inform.InformMySelfActivity;
 import cn.czyugang.tcg.client.modules.inform.InformNewsFragment;
 import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
+import cn.czyugang.tcg.client.utils.img.ImgView;
 
 /**
  * @author ruiaa
@@ -40,7 +42,8 @@ public class InformFragment extends BaseFragment {
     @BindView(R.id.inform_detail_pager)
     ViewPager viewPager;
 
-
+    @BindView(R.id.img_head)
+    ImgView myHead;
     private List<BaseFragment> fragments=new ArrayList<>();
 
 
@@ -76,6 +79,8 @@ public class InformFragment extends BaseFragment {
                 CommonUtil.setTabLayoutIndicator(tabLayout, ResUtil.getDimenInPx(R.dimen.dp_12),ResUtil.getDimenInPx(R.dimen.dp_12));
             }
         },50);
+
+        myHead.id(UserOAuth.getUserPhotoId());
         return rootView;
     }
 
