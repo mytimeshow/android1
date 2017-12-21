@@ -60,4 +60,8 @@ public class Score {
     public String updateTime;
     @SerializedName("way")
     public String way;
+
+
+
+
 }
