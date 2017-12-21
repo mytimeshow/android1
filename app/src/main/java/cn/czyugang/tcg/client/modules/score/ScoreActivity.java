@@ -6,6 +6,11 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -32,6 +37,8 @@ public class ScoreActivity extends BaseActivity {
     TextView signAction;
     @BindView(R.id.score_continue_sign_tip)
     TextView continueSignTip;
+    @BindView(R.id.score_continue_sign)
+    TextView continueSignDay;
     @BindView(R.id.score_continue_sign_action)
     TextView continueSignAction;
     @BindView(R.id.score_order_comment_tip)
@@ -48,6 +55,17 @@ public class ScoreActivity extends BaseActivity {
     TextView buyGiveAction;
 
     private Score mscore = null;
+    private Response<Score> mResponse=null;
+    public String myUserBonus;
+    public String signedDay;
+    public String currentOrderBonus;
+    public String limitOrderBonus;
+    public String currentInfoBonus;
+    public String limitInfoBonus;
+    public boolean isGotToday;
+    public boolean isSignToday;
+    public String signedDayBonusDict;
+    public String signedDayDict;
 
 
     public static void startScoreActivity() {
@@ -61,7 +79,8 @@ public class ScoreActivity extends BaseActivity {
         setContentView(R.layout.activity_score);
         ButterKnife.bind(this);
 
-      getScoreInfo(UserOAuth.getUserId());
+  // getScoreInfo(UserOAuth.getUserId());
+        getScoreDetail(UserOAuth.getUserId());
 
     }
 
@@ -72,16 +91,37 @@ public class ScoreActivity extends BaseActivity {
 
     @OnClick(R.id.score_sign_action)
     public void onSign() {
-        signAction.setText("+XX");
+        signAction.setText("+"+signedDayDict);
         signAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
         signAction.setClickable(false);
+       // isSignToday=true;
+        asynSignDays();
+
+
+    }
+    //用户签到后，同步数据到服务器
+    private void asynSignDays() {
+        if(!isSignToday){
+            postData("SIGN");
+
+
+        }else {
+            showToast("你已经签到过了");
+        }
+
     }
 
     @OnClick(R.id.score_continue_sign_action)
     public void onContinueSign() {
-        continueSignAction.setText("+XX");
+        continueSignAction.setText("+"+signedDayBonusDict);
         continueSignAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
         continueSignAction.setClickable(false);
+     if(!isGotToday){
+         postData("SIGN_CONTINUOUSLY");
+
+     }
+
+
     }
 
     @OnClick(R.id.score_order_comment_action)
@@ -116,14 +156,38 @@ public class ScoreActivity extends BaseActivity {
     }
 
     //获取用户积分信息
-    private void getScoreInfo(String userId){
-        ScoreApi.getScore(userId).subscribe(new NetObserver<Response<Score>>() {
+    private void getScoreDetail(String userId){
+        ScoreApi.getBaseScore(userId).subscribe(new NetObserver<Response<Score>>() {
             @Override
             public void onNext(Response<Score> response) {
                 super.onNext(response);
+                if (ErrorHandler.judge200(response)) {
+                   initData(response.getValues());
+                    //今日任务数据的加载
+                    score.setText(myUserBonus);
+                    continueSignDay.setText("连续签到" +signedDay + "日");
+                    signTip.setText("连续签到" +signedDay + "天");
+                    continueSignTip.setText(myUserBonus);
+                    orderCommentTip.setText("每日上限：" +currentOrderBonus
+                            + "/" +limitOrderBonus);
+                    informCommentTip.setText("每日上限：" +currentInfoBonus
+                            + "/" +limitInfoBonus);
+
+                }
+            }
+        });
+    }
+
+
+    private void getScoreInfo(String userId){
+        ScoreApi.getScoreDetail(userId).subscribe(new NetObserver<Response<List<Score>>>() {
+
+            @Override
+            public void onNext(Response<List<Score>> response) {
+                super.onNext(response);
                 if(ErrorHandler.judge200(response)) {
-                    mscore =response.getData();
-                    score.setText(String.valueOf(mscore.score));
+                    mscore =response.getData().get(0);
+
                     Log.e(TAG, "onNext: run" + mscore.score);
 
 
@@ -132,5 +196,45 @@ public class ScoreActivity extends BaseActivity {
         });
 
     }
+    public void  postData(String way){
+        HashMap<String,Object> map=new HashMap<>();
+        map.put("myUserBonus",myUserBonus);
+        map.put("signedDay",signedDay);
+        map.put("currentOrderBonus",currentOrderBonus);
+        map.put("limitOrderBonus",limitOrderBonus);
+        map.put("currentInfoBonus",currentInfoBonus);
+        map.put("limitInfoBonus",limitInfoBonus);
+        map.put("way",way);
+        map.put("isGotToday",isGotToday);
+        map.put("isSignToday",isSignToday);
+        map.put("signedDayBonusDict",signedDayBonusDict);
+        map.put("signedDayDict",signedDayDict);
+        ScoreApi.PostUpdataScore(map).subscribe(new NetObserver<Response<Object>>() {
+            @Override
+            public void onNext(Response<Object> response) {
+                super.onNext(response);
+                if(ErrorHandler.judge200(response)){
+                    showToast("领取成功");
+                }
+            }
+        });
+    }
+    public void initData(JSONObject values){
+
+        myUserBonus= String.valueOf(values.opt("myUserBonus"));
+        signedDay= String.valueOf(values.opt("signedDay"));
+        currentOrderBonus= String.valueOf(values.opt("currentOrderBonus"));
+        limitOrderBonus= String.valueOf(values.opt("limitOrderBonus"));
+        currentInfoBonus= String.valueOf(values.opt("currentInfoBonus"));
+        limitInfoBonus= String.valueOf(values.opt("limitInfoBonus"));
+        isGotToday= (boolean) values.opt("isGotToday");
+        isSignToday= (boolean) values.opt("isSignToday");
+        signedDayBonusDict= String.valueOf(values.opt("signedDayBonusDict"));
+        signedDayDict= String.valueOf(values.opt("signedDayDict"));
+
+
+    }
+
+
 
 }
