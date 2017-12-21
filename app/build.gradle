@@ -19,6 +19,7 @@ android {
         }
     }
     defaultConfig {
+        multiDexEnabled true
         applicationId "cn.czyugang.tcg.client"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion

@@ -3,13 +3,19 @@ package cn.czyugang.tcg.client.modules.score;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.api.ScoreApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
+import cn.czyugang.tcg.client.common.ErrorHandler;
+import cn.czyugang.tcg.client.common.UserOAuth;
+import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.entity.Score;
 
 /**
  * @author ruiaa
@@ -17,6 +23,7 @@ import cn.czyugang.tcg.client.base.BaseActivity;
  */
 
 public class ScoreActivity extends BaseActivity {
+    private static final String TAG = "ScoreActivity";
     @BindView(R.id.score_score)
     TextView score;
     @BindView(R.id.score_sign_tip)
@@ -40,6 +47,9 @@ public class ScoreActivity extends BaseActivity {
     @BindView(R.id.score_buy_give_action)
     TextView buyGiveAction;
 
+    private Score mscore = null;
+
+
     public static void startScoreActivity() {
         Intent intent = new Intent(getTopActivity(), ScoreActivity.class);
         getTopActivity().startActivity(intent);
@@ -50,6 +60,9 @@ public class ScoreActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
         ButterKnife.bind(this);
+
+      getScoreInfo(UserOAuth.getUserId());
+
     }
 
     @OnClick(R.id.title_back)
@@ -101,4 +114,23 @@ public class ScoreActivity extends BaseActivity {
     public void onToUse(){
         ScoreUseActivity.startScoreUseActivity();
     }
+
+    //获取用户积分信息
+    private void getScoreInfo(String userId){
+        ScoreApi.getScore(userId).subscribe(new NetObserver<Response<Score>>() {
+            @Override
+            public void onNext(Response<Score> response) {
+                super.onNext(response);
+                if(ErrorHandler.judge200(response)) {
+                    mscore =response.getData();
+                    score.setText(String.valueOf(mscore.score));
+                    Log.e(TAG, "onNext: run" + mscore.score);
+
+
+                }
+            }
+        });
+
+    }
+
 }
