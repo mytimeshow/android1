@@ -62,7 +62,7 @@ public class TimeUtils {
      * yyyy-MM-dd'T'HH:mm:ss.SSSZ    2016-08-12T15:44:40.461+0800
      * EEEE 'DATE('yyyy-MM-dd')' 'TIME('HH:mm:ss')' zzzz    星期五 DATE(2016-08-12) TIME(15:44:40) 中国标准时间
      */
-
+//
     public static Long transfer(String time, String format) {
         Date date = null;
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.getDefault());
@@ -407,40 +407,23 @@ public class TimeUtils {
         return new Date().getTime() - recentTime;
     }
 
-    //将时间差值转换为String以供显示
-/*    public static String getTimeString(long recentTime){
-
-        String timeString = "";
-        String extraString =  "";
-
-        Date now = new Date();
-        Date recent = new Date(recentTime);
-
-        SimpleDateFormat sdr;
-        if(recent.getYear()!=now.getYear()){
-            sdr = new SimpleDateFormat("yyyy年MM月dd日 HH:mm", Locale.CHINA);
-        }else if(recent.getMonth()!=now.getMonth()||now.getDay()-recent.getDay()>2){
-            sdr = new SimpleDateFormat("MM月dd日 HH:mm", Locale.CHINA);
+    //获取发布资讯与现状的时间差
+    // yyyy-MM-dd HH:mm:ss
+    public static String getTimeDifferent(String timeStr){
+        long time=System.currentTimeMillis()-transfer(timeStr,"yyyy-MM-dd HH:mm:ss");
+        time=time/1000;
+        if ((time<60)){
+            return time+"秒前";
+        }else if((time=time/60)<60){
+            return time+"分钟前";
+        }else if ((time=time/60)<24){
+            return time+"小时前";
+        }else if ((time=time/24)<30 ){
+            return time+"天前";
+        }else if ((time=time/30)<12 ){
+            return time+"个月前";
         }else{
-            sdr = new SimpleDateFormat("HH:mm",Locale.CHINA);
-            int delta = now.getDay()-recent.getDay();
-            switch (delta){
-                case 2:
-                    extraString = "前天 ";
-                    break;
-                case 1:
-                    extraString = "昨天 ";
-                    break;
-                case 0:
-                    if(getDeltaTime(recentTime)<1000*60)
-                        break;
-            }
+            return time%12+"年前";
         }
-
-        timeString = sdr.format(new Date(recentTime));
-        timeString = extraString + timeString;
-
-        return timeString;
-
-    }*/
+    }
 }

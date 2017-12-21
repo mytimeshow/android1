@@ -20,6 +20,7 @@ import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.api.InformApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
+import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.Inform;
 import cn.czyugang.tcg.client.entity.InformResponse;
 import cn.czyugang.tcg.client.entity.MyInform;
@@ -96,25 +97,28 @@ public class InformOrderSelfActivity extends BaseActivity {
             @Override
             public void onNext(InformResponse response) {
                 super.onNext(response);
-                response.parse();
-                informs.clear();
-                informs.addAll(response.data);
-                informAdapter.notifyDataSetChanged();
-                if (firstLoad) {
-                    informForMyselfList.setLayoutManager(new LinearLayoutManager(InformOrderSelfActivity.this));
-                    informForMyselfList.setAdapter(informAdapter);
-                }
-                userName.setText(response.userName);
-                userHead.id(response.userHead);
-                userFollowNum.setText(response.userFollowNum);
-                userFansNum.setText(response.userFansNum);
-                isFollow=response.userIsFollow;
+                if (ErrorHandler.judge200(response)){
+                    response.parse();
+                    informs.clear();
+                    informs.addAll(response.data);
+                    informAdapter.notifyDataSetChanged();
+                    if (firstLoad) {
+                        informForMyselfList.setLayoutManager(new LinearLayoutManager(InformOrderSelfActivity.this));
+                        informForMyselfList.setAdapter(informAdapter);
+                    }
+                    userName.setText(response.userName);
+                    userHead.id(response.userHead);
+                    userFollowNum.setText(response.userFollowNum);
+                    userFansNum.setText(response.userFansNum);
+                    isFollow=response.userIsFollow;
 
-                if(response.userIdentity.equals("NORMAL")){
-                    userSummary.setText("");
-                }else {
-                    userSummary.setText(response.userSummary);
+                    if(response.userIdentity.equals("NORMAL")){
+                        userSummary.setText("");
+                    }else {
+                        userSummary.setText(response.userSummary);
+                    }
                 }
+
 
             }
         });
@@ -144,8 +148,8 @@ public class InformOrderSelfActivity extends BaseActivity {
                         public void onNext(Response response) {
                             switch (response.getCode()) {
                                 case 200:
-                                    holder.columnIsFollow.setText("已关注");
-                                    holder.columnIsFollow.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
+                                    userIsFollow.setText("已关注");
+                                    userIsFollow.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
 
                             }
                         }
@@ -173,8 +177,8 @@ public class InformOrderSelfActivity extends BaseActivity {
                         public void onNext(Response response) {
                             switch (response.getCode()) {
                                 case 200:
-                                    holder.columnIsFollow.setText("+关注");
-                                    holder.columnIsFollow.setBackgroundResource(R.drawable.bg_rect_cir_red);
+                                    userIsFollow.setText("+关注");
+                                    userIsFollow.setBackgroundResource(R.drawable.bg_rect_cir_red);
 
                             }
                         }

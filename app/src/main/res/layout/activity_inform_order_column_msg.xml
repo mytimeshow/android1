@@ -67,6 +67,7 @@
                     android:layout_alignParentRight="true"
                     android:paddingRight="@dimen/dp_5">
                     <TextView
+                        android:id="@+id/inform_order_follownum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="2584"
