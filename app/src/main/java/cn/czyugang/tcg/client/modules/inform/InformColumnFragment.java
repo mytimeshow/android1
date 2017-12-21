@@ -116,6 +116,7 @@ public class InformColumnFragment extends BaseFragment {
             holder.columnName.setText(data.name);
             holder.columnContent.setText(data.description);
             holder.columnFollowNum.setText(String.valueOf(data.followNum));
+            holder.columnImg.id(data.fileId);
             if (data.isFollow) {
                 holder.columnIsFollow.setText("已关注");
                 holder.columnIsFollow.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
@@ -125,7 +126,7 @@ public class InformColumnFragment extends BaseFragment {
             }
 
             holder.itemView.setOnClickListener(v -> {
-                InformColumnMsgActivity.startInformOrderMsgActivity();
+                InformColumnMsgActivity.startInformOrderMsgActivity(data.id);
             });
             holder.columnIsFollowFrame.setOnClickListener(v -> {
                 if (!data.isFollow) {

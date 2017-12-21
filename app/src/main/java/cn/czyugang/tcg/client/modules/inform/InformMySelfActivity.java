@@ -32,6 +32,7 @@ import cn.czyugang.tcg.client.modules.store.SearchActivity;
 import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.img.ImgView;
+import cn.czyugang.tcg.client.utils.string.TimeUtils;
 
 /**
  * Created by Administrator on 2017/12/8.
@@ -138,6 +139,8 @@ public class InformMySelfActivity extends BaseActivity {
             CommonUtil.setTextViewLinesWithEllipsis(holder.commitContent,1);
             holder.informContent.setText(data.getContent());
             holder.informCommitNum.setText(data.getCommitNum());
+            holder.informImg.id(data.imgUrl);
+            holder.informTime.setText(TimeUtils.getTimeDifferent(data.createTime));
 
             if(data.getType().equals("INFO")){
                 holder.informType.setText("发表了文章");
@@ -147,6 +150,7 @@ public class InformMySelfActivity extends BaseActivity {
                 holder.informType.setText("评论了文章");
                 holder.commit.setVisibility(View.VISIBLE);
                 holder.commitContent.setText(data.commitName+"："+data.getCommitContent());
+                holder.commitHead.id(data.commitHead);
             }
             else if(data.getType().equals("REPLY")){
                 holder.informType.setText("回复了评论");
@@ -157,6 +161,7 @@ public class InformMySelfActivity extends BaseActivity {
             else if(data.getType().equals("LIKE_COMMENT")){
                 holder.informType.setText("点赞并且评论了资讯");
                 holder.commit.setVisibility(View.VISIBLE);
+                holder.commitHead.id(data.commitHead);
                 holder.commitContent.setText(data.commitName+"："+data.commitContent);
             }
             else if(data.getType().equals("LIKE_REPLY")){

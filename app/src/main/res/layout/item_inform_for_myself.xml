@@ -130,6 +130,7 @@
             android:layout_marginTop="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_5"
             android:src="@drawable/ic_logout_avatar"
+            app:round="true"
             />
 
         <TextView

@@ -126,6 +126,12 @@ public class InformNewsFragment extends BaseFragment {
                     holder.newsLargeContentName.setText("—— "+data.sortName+" ——");
                     holder.newsLargeCommitNum.setText(String.valueOf(data.commentNum));
                     holder.newsLargeImg.id(data.imgUrl);
+                    holder.newsLargeHead.setOnClickListener(v -> {
+                        InformOrderSelfActivity.startInformOrderSelfActivity(data.userId);
+                    });
+                    holder.newsLargePersonName.setOnClickListener(v -> {
+                        InformOrderSelfActivity.startInformOrderSelfActivity(data.userId);
+                    });
                     break;
 
                 case R.layout.item_inform_news_small:
@@ -134,12 +140,20 @@ public class InformNewsFragment extends BaseFragment {
                     holder.newsSmallContent.setText(data.title);
                     holder.newsSmallCommitNum.setText(String.valueOf(data.commentNum));
                     holder.newsSmallImg.id(data.imgUrl);
+                    holder.newsSmallName.setOnClickListener(v -> {
+                        InformOrderSelfActivity.startInformOrderSelfActivity(data.userId);
+                    });
+                    holder.newsSmallHead.setOnClickListener(v -> {
+                        InformOrderSelfActivity.startInformOrderSelfActivity(data.userId);
+                    });
                     break;
             }
 
             holder.itemView.setOnClickListener(v -> {
-                InformOrderSelfActivity.startInformOrderSelfActivity(data.userId);
+                InformDetailsActivity.startInformDetailsActivity();
             });
+
+
         }
 
         @Override

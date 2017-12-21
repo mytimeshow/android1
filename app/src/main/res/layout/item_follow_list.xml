@@ -21,18 +21,20 @@
             android:src="@drawable/ic_logout_avatar"
             app:round="true"
             />
+
         <TextView
             android:id="@+id/follow_list_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_5"
-            android:textColor="@color/text_gray"
-            android:textSize="@dimen/sp_12"
+            android:layout_above="@+id/follow_list_content"
+            android:layout_toEndOf="@+id/follow_list_head"
+            android:layout_toRightOf="@+id/follow_list_head"
+            android:layout_alignTop="@+id/follow_list_head"
+            android:layout_alignBottom="@+id/follow_list_head"
             android:gravity="center"
-            android:layout_alignTop="@id/follow_list_head"
-            android:layout_alignBottom="@id/follow_list_head"
-            android:layout_toRightOf="@id/follow_list_head"
-            android:text="博主名称"/>
+            android:text="博主名称"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/sp_12" />
         <LinearLayout
             android:id="@+id/follw_list_commit"
             android:layout_width="match_parent"
