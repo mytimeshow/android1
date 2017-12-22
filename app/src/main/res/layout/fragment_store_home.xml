@@ -1,7 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/store_home_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_80"
+        android:src="@drawable/tag_store_no_homepage"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/store_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/dp_40"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.youth.banner.Banner
+                android:id="@+id/store_home_banner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_150"
+                android:visibility="gone"
+                />
+
+            <cn.czyugang.tcg.client.utils.img.ImgView
+                android:id="@+id/store_home_video"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_200"
+                android:layout_margin="@dimen/dp_10"
+                android:visibility="gone"
+                />
+
+            <!--跑马灯-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_30"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_rect_red"
+                    android:paddingBottom="@dimen/dp_1"
+                    android:paddingLeft="@dimen/dp_3"
+                    android:paddingRight="@dimen/dp_3"
+                    android:paddingTop="@dimen/dp_1"
+                    android:text="前置标签"
+                    android:textColor="@color/main_red"
+                    android:textSize="@dimen/sp_10"
+                    />
+
+                <TextView
+                    android:id="@+id/store_home_marquee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp_4"
+                    android:clickable="true"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:singleLine="true"
+                    android:text="插播一条小广告很黄很暴力很血腥很恐怖很吃鸡的！今晚集体加班！插播一条小广告很黄很暴力很血腥很恐怖很吃鸡的！今晚集体加班！"
+                    android:textColor="@color/text_dark_gray"
+                    android:textSize="@dimen/dp_12"/>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/store_home_list1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_4"
+                />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/store_home_list2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/store_home_list3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_4"
+                />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</FrameLayout>

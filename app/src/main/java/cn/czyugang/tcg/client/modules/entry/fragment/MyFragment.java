@@ -36,6 +36,7 @@ import cn.czyugang.tcg.client.modules.balance.activity.BalanceActivity;
 import cn.czyugang.tcg.client.modules.entry.contract.MyContract;
 import cn.czyugang.tcg.client.modules.entry.presenter.MyPresenter;
 import cn.czyugang.tcg.client.modules.errand.ErrandListActivity;
+import cn.czyugang.tcg.client.modules.im.ImListActivity;
 import cn.czyugang.tcg.client.modules.login.activity.LoginActivity;
 import cn.czyugang.tcg.client.modules.order.MyOrderActivity;
 import cn.czyugang.tcg.client.modules.person.CollectionActivity;
@@ -182,6 +183,7 @@ public class MyFragment extends BaseFragment implements MyContract.View {
             }
             case R.id.iv_message:
                 //TODO 启动消息页面
+                ImListActivity.startImListActivity();
                 break;
             case R.id.ll_balance:
                 Intent intent = new Intent();

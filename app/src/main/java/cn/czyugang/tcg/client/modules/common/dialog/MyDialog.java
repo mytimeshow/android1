@@ -204,8 +204,8 @@ public class MyDialog extends DialogFragment {
                 .canceledOnTouchOutside(true)
                 .width(ResUtil.getDimenInPx(R.dimen.dp_120))
                 .gravity(Gravity.TOP | Gravity.RIGHT)
-                .offsetX(ResUtil.getDimenInPx(R.dimen.dp_6))
-                .offsetY(AppUtil.getStatusBarHeight()+ResUtil.getDimenInPx(R.dimen.dp_50))
+                .offsetX(ResUtil.getDimenInPx(R.dimen.dp_10))
+                .offsetY(AppUtil.getStatusBarHeight() + ResUtil.getDimenInPx(R.dimen.dp_50))
                 .bindView(myDialog -> {
                     myDialog.rootView.findViewById(R.id.more_msg).setVisibility(moreDialogListener.showMsg() ? View.VISIBLE : View.GONE);
                     myDialog.rootView.findViewById(R.id.more_footprint).setVisibility(moreDialogListener.showFootprint() ? View.VISIBLE : View.GONE);
@@ -316,6 +316,18 @@ public class MyDialog extends DialogFragment {
             return false;
         }
 
+    }
+
+
+    // 通知 聊天 ： 一键已读 消息设置
+    public static MyDialog.Builder imSettingDialog(Activity activity) {
+        return MyDialog.Builder.newBuilder(activity)
+                .custom(R.layout.dialog_im_setting)
+                .canceledOnTouchOutside(true)
+                .width(ResUtil.getDimenInPx(R.dimen.dp_120))
+                .gravity(Gravity.TOP | Gravity.RIGHT)
+                .offsetX(ResUtil.getDimenInPx(R.dimen.dp_6))
+                .offsetY( ResUtil.getDimenInPx(R.dimen.dp_50));
     }
 
     //底部  电话号码+取消 按钮
@@ -472,11 +484,11 @@ public class MyDialog extends DialogFragment {
                 .widthPercent(0.8f)
                 .gravity(Gravity.CENTER)
                 .bindView(myDialog -> {
-                    EditText source=myDialog.rootView.findViewById(R.id.edit_article_link_content);
+                    EditText source = myDialog.rootView.findViewById(R.id.edit_article_link_content);
                     source.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                         @Override
                         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                            LogRui.e("onEditorAction####"+v.getText());
+                            LogRui.e("onEditorAction####" + v.getText());
                             return false;
                         }
                     });

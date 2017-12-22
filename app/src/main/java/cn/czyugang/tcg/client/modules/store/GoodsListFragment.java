@@ -269,7 +269,7 @@ public class GoodsListFragment extends BaseFragment {
             holder.price.setText(data.getShowPriceStr());
             holder.tag.setText(data.getTag());
 
-            holder.itemView.setOnClickListener(v -> GoodDetailActivity.startGoodDetailActivity(data.productId,storeActivity.id));
+            holder.itemView.setOnClickListener(v -> GoodDetailActivity.startGoodDetailActivity(data.id,storeActivity.id));
             holder.itemView.setOnLongClickListener(v -> {
                 MyDialog.collectionBg(activity, v, false, myDialog -> {
                     myDialog.dismiss();

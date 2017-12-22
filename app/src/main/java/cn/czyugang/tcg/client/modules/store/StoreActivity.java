@@ -80,6 +80,9 @@ public class StoreActivity extends BaseActivity {
     @BindView(R.id.store_bottom_bar)
     View bottomBar;
 
+    @BindView(R.id.store_bottom_homepage)
+    View bottomHomepage;
+
 
     public String id;
     private List<BaseFragment> fragments = new ArrayList<>();
@@ -155,6 +158,7 @@ public class StoreActivity extends BaseActivity {
             public void onPageSelected(int position) {
                 bottomBalanceView.setVisibility(position == 1 ? View.VISIBLE : View.GONE);
                 bottomBar.setVisibility(position == 1 ? View.VISIBLE : View.GONE);
+                bottomHomepage.setVisibility(position == 0 ? View.VISIBLE : View.GONE);
             }
 
             @Override
