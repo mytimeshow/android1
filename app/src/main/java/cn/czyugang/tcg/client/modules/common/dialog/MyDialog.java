@@ -197,7 +197,7 @@ public class MyDialog extends DialogFragment {
         moreDialog(activity, onClickListener, false);
     }
 
-    //右上角 更多    消息，足迹，分享，购物车，首页，收藏
+    //右上角 更多    消息，x足迹，分享，购物车，首页，x收藏
     public static void moreDialog(Activity activity, final MoreDialogListener moreDialogListener) {
         MyDialog.Builder.newBuilder(activity)
                 .custom(R.layout.view_more)
@@ -205,7 +205,7 @@ public class MyDialog extends DialogFragment {
                 .width(ResUtil.getDimenInPx(R.dimen.dp_120))
                 .gravity(Gravity.TOP | Gravity.RIGHT)
                 .offsetX(ResUtil.getDimenInPx(R.dimen.dp_10))
-                .offsetY(AppUtil.getStatusBarHeight() + ResUtil.getDimenInPx(R.dimen.dp_50))
+                .offsetY( ResUtil.getDimenInPx(R.dimen.dp_50))
                 .bindView(myDialog -> {
                     myDialog.rootView.findViewById(R.id.more_msg).setVisibility(moreDialogListener.showMsg() ? View.VISIBLE : View.GONE);
                     myDialog.rootView.findViewById(R.id.more_footprint).setVisibility(moreDialogListener.showFootprint() ? View.VISIBLE : View.GONE);
@@ -213,6 +213,7 @@ public class MyDialog extends DialogFragment {
                     myDialog.rootView.findViewById(R.id.more_trolley).setVisibility(moreDialogListener.showTrolley() ? View.VISIBLE : View.GONE);
                     myDialog.rootView.findViewById(R.id.more_homepage).setVisibility(moreDialogListener.showHomepage() ? View.VISIBLE : View.GONE);
                     myDialog.rootView.findViewById(R.id.more_collect).setVisibility(moreDialogListener.showCollect() ? View.VISIBLE : View.GONE);
+                    myDialog.text(R.id.more_collect_text,moreDialogListener.hadCollect()?"已收藏":"收藏");
                     if (moreDialogListener.newMsgNum() != 0) {
                         TextView newMsg = myDialog.rootView.findViewById(R.id.more_msg_new);
                         newMsg.setVisibility(View.VISIBLE);
@@ -316,6 +317,7 @@ public class MyDialog extends DialogFragment {
             return false;
         }
 
+        public boolean hadCollect(){return false;}
     }
 
 

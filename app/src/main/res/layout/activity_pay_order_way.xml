@@ -75,6 +75,7 @@
         android:orientation="vertical"
         />
     <LinearLayout
+        android:id="@+id/pay_order_add_card"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
         android:background="@color/white"
@@ -125,7 +126,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/pay_order_confirm"

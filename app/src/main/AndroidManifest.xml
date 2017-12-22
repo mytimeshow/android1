@@ -375,7 +375,9 @@
         <!--通用web activity-->
         <activity android:name=".modules.common.WebActivity"/>
         <!--大图显示-->
-        <activity android:name=".modules.common.ImgActivity"/>
+        <activity android:name=".modules.common.ImgActivity" android:theme="@style/ImgActivity"/>
+        <!--视频-->
+        <activity android:name=".modules.common.VideoActivity" android:theme="@style/ImgActivity"/>
 
         <!--收藏-->
         <activity android:name=".modules.person.CollectionActivity"/>

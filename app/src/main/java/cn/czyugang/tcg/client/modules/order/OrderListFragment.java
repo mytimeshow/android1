@@ -29,6 +29,7 @@ import cn.czyugang.tcg.client.entity.Order;
 import cn.czyugang.tcg.client.entity.OrderGoods;
 import cn.czyugang.tcg.client.entity.OrderResponse;
 import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
@@ -303,7 +304,7 @@ public class OrderListFragment extends BaseFragment {
     *   去付款
     * */
     private void toPay(Order order) {
-
+        PayOrderActivity.startPayOrderActivity(order.id,order.totalPayment);
     }
 
     /*
@@ -375,6 +376,7 @@ public class OrderListFragment extends BaseFragment {
                 holder.goodsName.setText(orderGoods.title);
                 holder.spec.setText(orderGoods.getSpec());
                 holder.num.setText("x" + orderGoods.number);
+                holder.price.setText(CommonUtil.formatPrice(orderGoods.realPrice));
             } else {
                 holder.list.setVisibility(View.VISIBLE);
                 holder.listOne.setVisibility(View.GONE);

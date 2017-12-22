@@ -100,6 +100,25 @@ public class LogRui {
         }
     }
 
+    //打印异常调用栈
+    public static void printExceptionStack(Throwable e){
+        StackTraceElement[] thisMethodStack = e.getStackTrace();
+        for (StackTraceElement element : thisMethodStack) {
+            if (element != null) {
+                String className = element.getClassName();
+                String methodName = element.getMethodName();
+                String lineNumber = String.valueOf(element.getLineNumber());
+                lineNumber = "(" + className + ".java:" + lineNumber + ")";
+                lineNumber = ">" + lineNumber;
+                while (lineNumber.length() < 100) {
+                    lineNumber = "-" + lineNumber;
+                }
+                lineNumber = lineNumber + methodName;
+                Log.e(USER_NAME, lineNumber);
+            }
+        }
+    }
+
     /**
      * @return 当前的类名(simpleName)
      */
