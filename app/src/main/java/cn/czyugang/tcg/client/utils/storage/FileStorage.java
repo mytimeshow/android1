@@ -36,6 +36,10 @@ public class FileStorage {
         context=appContext;
     }
 
+    public static File getExternalFile(String pathUnderSdcard){
+        return new File(Environment.getExternalStorageDirectory()+"/"+pathUnderSdcard);
+    }
+
     /*
      *      缓存/保存 地址
      */

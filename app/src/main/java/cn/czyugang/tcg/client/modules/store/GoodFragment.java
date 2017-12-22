@@ -2,9 +2,11 @@ package cn.czyugang.tcg.client.modules.store;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -16,11 +18,14 @@ import cn.czyugang.tcg.client.entity.Good;
 import cn.czyugang.tcg.client.entity.TrolleyStore;
 import cn.czyugang.tcg.client.modules.common.ImgActivity;
 import cn.czyugang.tcg.client.modules.common.dialog.GoodsSpecDialog;
+import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.modules.common.dialog.StoreTrolleyDialog;
 import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.LogRui;
+import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.utils.storage.AppKeyStorage;
 import cn.czyugang.tcg.client.widget.BottomBalanceView;
+import cn.czyugang.tcg.client.widget.FlowLayout;
 import cn.czyugang.tcg.client.widget.GoodsPlusMinusView;
 import cn.czyugang.tcg.client.widget.MultiImgView;
 
@@ -41,13 +46,13 @@ public class GoodFragment extends BaseFragment {
     @BindView(R.id.good_sale)
     TextView sale;
     @BindView(R.id.good_tag)
-    TextView tag;
+    LinearLayout tagL;
     @BindView(R.id.good_promotion)
     TextView promotion;
     @BindView(R.id.good_coupon)
     TextView coupon;
     @BindView(R.id.good_guarantee)
-    TextView guarantee;
+    LinearLayout guaranteeL;
     @BindView(R.id.good_comment)
     TextView comment;
     @BindView(R.id.good_comment_num)
@@ -65,6 +70,8 @@ public class GoodFragment extends BaseFragment {
     //购物车
     public TrolleyStore trolleyStore = null;
     private StoreTrolleyDialog storeTrolleyDialog = null;
+
+    private Good good;
 
     public static GoodFragment newInstance() {
         GoodFragment fragment = new GoodFragment();
@@ -86,6 +93,8 @@ public class GoodFragment extends BaseFragment {
     }
 
     public void setGoodInfo(Good good) {
+        this.good=good;
+
         multiImg.setShowBigImg(false).setOnClickImg(v -> ImgActivity.startImgActivity(good.picList,multiImg.getPosition()))
                 .setImgIds(good.picList);
         name.setText(good.title);
@@ -93,10 +102,12 @@ public class GoodFragment extends BaseFragment {
         price.setText(CommonUtil.formatPrice(good.showPrice));
         sale.setText("已售" + good.sales);
 
-        initTrolley(good);
+        initTrolley();
+        initProductTags();
+        initServiceTag();
     }
 
-    private void initTrolley(Good good){
+    private void initTrolley(){
         LogRui.i("initTrolley####");
         trolleyStore = AppKeyStorage.getTrolleyStore(good.storeId);
 
@@ -127,6 +138,55 @@ public class GoodFragment extends BaseFragment {
                     return num;
                 })
                 .setNum(trolleyStore.getGoodsBuyNum(good.id));
+    }
+
+    private void initProductTags(){
+        if (good.productTagList==null||good.productTagList.isEmpty()) {
+            tagL.setVisibility(View.GONE);
+            return;
+        }
+
+        for(int i=0,size=good.productTagList.size();i<size&&i<3;i++){
+            Good.Tag tag=good.productTagList.get(i);
+            View view=LayoutInflater.from(getActivity()).inflate(R.layout.item_good_detail_tag,tagL,false);
+            ((ImgView)view.findViewById(R.id.item_img)).id(tag.picId);
+            ((TextView)view.findViewById(R.id.item_name)).setText(tag.name);
+            tagL.addView(view,0);
+        }
+
+        tagL.setOnClickListener(v -> {
+            MyDialog.Builder.newBuilder(getActivity())
+                    .custom(R.layout.dialog_good_detail_tags)
+                    .gravity(Gravity.BOTTOM)
+                    .width(-1)
+                    .heightPercent(0.4f)
+                    .bindView(myDialog -> {
+                        myDialog.onClick(R.id.dialog_close);
+                        FlowLayout flowLayout=myDialog.rootView.findViewById(R.id.dialog_tags);
+                        for(int i=0,size=good.productTagList.size();i<size;i++){
+                            Good.Tag tag=good.productTagList.get(i);
+                            View view=LayoutInflater.from(getActivity()).inflate(R.layout.item_good_detail_tag_dialog,flowLayout,false);
+                            ((ImgView)view.findViewById(R.id.item_img)).id(tag.picId);
+                            ((TextView)view.findViewById(R.id.item_name)).setText(tag.name);
+                            flowLayout.addView(view,0);
+                        }
+                    })
+                    .build()
+                    .show();
+        });
+    }
+
+    private void initServiceTag(){
+        if (good.serviceTagList==null||good.serviceTagList.isEmpty()) {
+            guaranteeL.setVisibility(View.GONE);
+            return;
+        }
+        for(Good.Tag tag:good.serviceTagList){
+            View view=LayoutInflater.from(getActivity()).inflate(R.layout.item_good_detail_tag,guaranteeL,false);
+            ((ImgView)view.findViewById(R.id.item_img)).id(tag.picId);
+            ((TextView)view.findViewById(R.id.item_name)).setText(tag.name);
+            guaranteeL.addView(view,0);
+        }
     }
 
     @Override

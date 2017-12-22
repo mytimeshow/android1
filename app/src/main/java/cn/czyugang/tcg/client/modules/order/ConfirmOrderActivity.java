@@ -201,6 +201,7 @@ public class ConfirmOrderActivity extends BaseActivity {
             public void onNext(Response<List<String>> response) {
                 super.onNext(response);
                 if (ErrorHandler.judge200(response)) {
+                    if (response.data==null||response.data.isEmpty()) return;
                     new Thread(()->{
                         for(TrolleyGoods t:preSettleResponse.trolleyGoodsMap.values()){
                             AppKeyStorage.clearTrolleyAfterSettle(t.storeId,t.trolleyId);
@@ -209,7 +210,7 @@ public class ConfirmOrderActivity extends BaseActivity {
                             AppKeyStorage.clearTrolleyDeleteFlag(store.id);
                         }
                     }).start();
-                    PayOrderActivity.startPayOrderActivity();
+                    PayOrderActivity.startPayOrderActivity(response.data.get(0),preSettleResponse.totalRealPrice);
                     commit.postDelayed(()->clearAllActivityExceptMainAndTop(),300);
                 }
             }

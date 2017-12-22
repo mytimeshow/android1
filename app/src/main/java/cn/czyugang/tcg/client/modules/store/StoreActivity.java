@@ -124,7 +124,6 @@ public class StoreActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         AppKeyStorage.saveTrolleyStore(id, trolleyStore);
-        LogRui.i("onPause####");
     }
 
     @Override

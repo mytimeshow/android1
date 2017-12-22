@@ -24,6 +24,12 @@ public class PayPasswordManageActivity extends BaseActivity {
 
     private String mMobile;
 
+    public static void startPayPasswordManageActivity(String phone){
+        Intent intent=new Intent(getTopActivity(),PayPasswordManageActivity.class);
+        intent.putExtra(KEY_MOBILE,phone);
+        getTopActivity().startActivity(intent);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
