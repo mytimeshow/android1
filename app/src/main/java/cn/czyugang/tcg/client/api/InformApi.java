@@ -6,6 +6,7 @@ import java.util.Map;
 
 import cn.czyugang.tcg.client.common.UserOAuth;
 
+import cn.czyugang.tcg.client.entity.Inform;
 import cn.czyugang.tcg.client.entity.InformColumn;
 import cn.czyugang.tcg.client.entity.InformColumnResponse;
 import cn.czyugang.tcg.client.entity.InformFollowResponse;
@@ -13,6 +14,7 @@ import cn.czyugang.tcg.client.entity.InformResponse;
 import cn.czyugang.tcg.client.entity.MyInformResponse;
 import cn.czyugang.tcg.client.entity.NewsInformResponse;
 import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.entity.UserFansFollow;
 import cn.czyugang.tcg.client.utils.JsonParse;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -55,7 +57,7 @@ public class InformApi {
         HashMap<String, Object> map = new HashMap<>();
         map.put("accessTime", "");
         map.put("page", 1);
-        map.put("size", 20);
+        map.put("size", 50);
         return UserOAuth.getInstance()
                 .get("api/auth/v1/info/new/list", map)
                 .map(s -> (NewsInformResponse) JsonParse.fromJson(s, NewsInformResponse.class))
@@ -119,4 +121,33 @@ public class InformApi {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    //用户粉丝
+    public static Observable<Response<List<UserFansFollow>>> userFansList(String userId, int page) {
+        Map<String, Object> params = new HashMap<>();
+        //用户id
+        params.put("targetUserId", userId);
+        params.put("accessTime", "");
+        params.put("page", page);
+        params.put("size", 20);
+        return UserOAuth.getInstance()
+                .get("/api/auth/v1/user/media/relation/list/fans", params)
+                .map(s -> (Response<List<UserFansFollow>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, new JsonParse.Type(List.class, UserFansFollow.class))))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    //用户关注
+    public static Observable<Response<List<UserFansFollow>>> userFollowList(String userId, int page) {
+        Map<String, Object> params = new HashMap<>();
+        //用户id
+        params.put("followUserId", userId);
+        params.put("accessTime", "");
+        params.put("page", page);
+        params.put("size", 20);
+        return UserOAuth.getInstance()
+                .get("/api/auth/v1/user/media/relation/list/follows", params)
+                .map(s -> (Response<List<UserFansFollow>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, new JsonParse.Type(List.class, UserFansFollow.class))))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

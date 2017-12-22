@@ -21,6 +21,7 @@
             android:textColor="@color/text_black"/>
     </LinearLayout>
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/inform_search_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

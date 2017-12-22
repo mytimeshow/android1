@@ -81,7 +81,13 @@ public class SearchActivity extends BaseActivity {
         }
 
         historyLabel.setTexts(AppKeyStorage.getSearchHistory(searchType));
-        historyLabel.setOnClickItemListener((text, textView) -> SearchResultActivity.startSearchResultActivity(text));
+        historyLabel.setOnClickItemListener((text, textView) -> {
+            if (searchType == SEARCH_STORE) {
+                SearchResultActivity.startSearchResultActivity(text);
+            } else {
+                InformSearchAcitivity.startInformSearchAcitivity(text);
+            }
+        });
 
         CommonApi.getHotSearch().subscribe(new NetObserver<Response<Object>>() {
             @Override
@@ -92,7 +98,13 @@ public class SearchActivity extends BaseActivity {
                     list.addAll(Arrays.asList(response.values.optJSONObject("platformProperties")
                             .optString("value").split(",")));
                     hotLabel.setTexts(list);
-                    hotLabel.setOnClickItemListener((text, textView) -> SearchResultActivity.startSearchResultActivity(text));
+                    hotLabel.setOnClickItemListener((text, textView) -> {
+                        if (searchType == SEARCH_STORE) {
+                            SearchResultActivity.startSearchResultActivity(text);
+                        } else {
+                            InformSearchAcitivity.startInformSearchAcitivity(text);
+                        }
+                    });
                 }
             }
         });
@@ -148,14 +160,14 @@ public class SearchActivity extends BaseActivity {
     public void onSearchArticle() {
         String text = input.getText().toString().trim();
         AppKeyStorage.saveSearchHistory(text, searchType);//搜索文章
-        InformSearchAcitivity.startInformSearchAcitivity(text,InformSearchAcitivity.SEARCH_TYPE_ARTICLE);
+        InformSearchAcitivity.startInformSearchAcitivity(text, InformSearchAcitivity.SEARCH_TYPE_ARTICLE);
     }
 
     @OnClick(R.id.search_type_article_label)
     public void onSearchArticleLabel() {
         String text = input.getText().toString().trim();
         AppKeyStorage.saveSearchHistory(text, searchType);//搜索文章标签
-        InformSearchAcitivity.startInformSearchAcitivity(text,InformSearchAcitivity.SEARCH_TYPE_LABLE);
+        InformSearchAcitivity.startInformSearchAcitivity(text, InformSearchAcitivity.SEARCH_TYPE_LABLE);
 
     }
 

@@ -60,7 +60,8 @@ public class InformMySelfActivity extends BaseActivity {
 
     @BindView(R.id.myself_head)
     ImgView mySelfHead;
-
+    @BindView(R.id.myself_cover)
+    ImgView mySelfCover;
 
     List<MyInform> myInforms=new ArrayList<MyInform>();
     MyInformAdapter myInformAdapter;
@@ -93,7 +94,6 @@ public class InformMySelfActivity extends BaseActivity {
             @Override
             public void onNext(MyInformResponse response) {
                 super.onNext(response);
-                //Toast.makeText(InformMySelfActivity.this,response.data.toString(),Toast.LENGTH_SHORT).show();
                 response.parse();
                 myInforms.addAll(response.data);
                 myInformAdapter=new MyInformAdapter(myInforms,InformMySelfActivity.this);
@@ -104,6 +104,7 @@ public class InformMySelfActivity extends BaseActivity {
                 mySelfFansNum.setText(String.valueOf(response.fansCount));
                 mySelfArticleNum.setText(String.valueOf(response.articleCount));
                 mySelfDescription.setText(response.myIdentity?response.mySummary:"");
+                mySelfCover.id(response.myCover);
                /* if(response..equals("NORMAL")){
                     userSummary.setText("");
                 }else {
@@ -114,10 +115,7 @@ public class InformMySelfActivity extends BaseActivity {
     }
 
 
-    @OnClick(R.id.title_search_bg)
-    public void onSearch(){
-        SearchActivity.startSearchActivity(SearchActivity.SEARCH_INFORM);
-    }
+
 
     public static class MyInformAdapter extends RecyclerView.Adapter<MyInformAdapter.Holder> {
         private List<MyInform> list;
@@ -235,6 +233,10 @@ public class InformMySelfActivity extends BaseActivity {
     public void onBack(){
         finish();
     }
+    @OnClick(R.id.title_search_bg)
+    public void onSearch(){
+        SearchActivity.startSearchActivity(SearchActivity.SEARCH_INFORM);
+    }
 
     @OnClick(R.id.myself_cover)
     public void onCover(){
@@ -243,12 +245,12 @@ public class InformMySelfActivity extends BaseActivity {
 
     @OnClick(R.id.inform_for_myself_follow)
     void toMyFollow(){
-        InformSelfFollowActivity.startInformSelfFollowActivity("我的关注");
+        InformSelfFollowActivity.startInformSelfFollowActivity("我的关注",UserOAuth.getUserId());
     }
 
     @OnClick(R.id.inform_for_myself_fans)
     void toMyFans(){
-        InformSelfFansActivity.startInformSelfFansActivity("我的粉丝");
+        InformSelfFansActivity.startInformSelfFansActivity("我的粉丝",UserOAuth.getUserId());
     }
 
 }

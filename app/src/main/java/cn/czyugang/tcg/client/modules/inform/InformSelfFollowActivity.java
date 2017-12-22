@@ -17,8 +17,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.api.InformApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
+import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.Inform;;
+import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.entity.UserFansFollow;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 
 /**
@@ -32,12 +36,14 @@ public class InformSelfFollowActivity extends BaseActivity {
     @BindView(R.id.inform_self_follow_fans_title_name)
     TextView tvTitleName;
 
-    static String titleName;
 
-    public static void startInformSelfFollowActivity(String title){
+    List<UserFansFollow> informColumns=new ArrayList<UserFansFollow>();
+
+    public static void startInformSelfFollowActivity(String title,String id){
         Intent intent=new Intent(getTopActivity(),InformSelfFollowActivity.class);
+        intent.putExtra("titleName",title);
+        intent.putExtra("userId",id);
         getTopActivity().startActivity(intent);
-        titleName=title;
     }
 
     @Override
@@ -46,32 +52,31 @@ public class InformSelfFollowActivity extends BaseActivity {
         setContentView(R.layout.activity_inform_self_follow_fans);
         ButterKnife.bind(this);
 
-        tvTitleName.setText(titleName);
-        List<Inform> informColumns=new ArrayList<Inform>();
-        Inform informColumn=new Inform();
-        informColumn.userName=("宇宙无敌大帅比");
-        informColumn.isFollow=(false);
-        informColumn.followNum=("442455");
-        informColumns.add(informColumn);
-        Inform informColumn2=new Inform();
-        informColumn2.userName=("Amshine");
-        informColumn2.isFollow=(true);
-        informColumn2.followNum=("6746341");
-        informColumns.add(informColumn2);
-        informColumns.add(informColumn2);
-        informColumns.add(informColumn);
-        informColumns.add(informColumn);
-        informColumns.add(informColumn2);
+        tvTitleName.setText(getIntent().getStringExtra("titleName"));
+
+
         SelfFollowFansListAdapter SelfFollowFansListAdapter=new SelfFollowFansListAdapter(informColumns,this);
         selfFollwList.setLayoutManager(new LinearLayoutManager(this));
         selfFollwList.setAdapter(SelfFollowFansListAdapter);
+
+        InformApi.userFollowList(getIntent().getStringExtra("userId"),1).subscribe(new NetObserver<Response<List<UserFansFollow>>>() {
+            @Override
+            public void onNext(Response<List<UserFansFollow>> response) {
+                super.onNext(response);
+                if (ErrorHandler.judge200(response)){
+                    informColumns.clear();
+                    informColumns.addAll(response.data);
+                    SelfFollowFansListAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     public static class SelfFollowFansListAdapter extends RecyclerView.Adapter<SelfFollowFansListAdapter.Holder> {
-        private List<Inform> list;
+        private List<UserFansFollow> list;
         private Activity activity;
 
-        public SelfFollowFansListAdapter(List<Inform> list, Activity activity) {
+        public SelfFollowFansListAdapter(List<UserFansFollow> list, Activity activity) {
             this.list = list;
             this.activity = activity;
         }
@@ -82,10 +87,11 @@ public class InformSelfFollowActivity extends BaseActivity {
         }
         @Override
         public void onBindViewHolder(Holder holder, int position) {
-            Inform data=list.get(position);
+            UserFansFollow data=list.get(position);
             holder.follwFansName.setText(data.userName);
-            holder.follwFansFollwNum.setText(data.followNum);
-            if(data.isFollow){
+            holder.follwFansFollwNum.setText(String.valueOf(data.fansCount));
+            holder.follwFansHead.id(data.userFileId);
+            if(data.isFollow.equals("YES")){
                 holder.isFollow.setText("已关注");
                 holder.isFollow.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
             }else{

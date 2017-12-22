@@ -22,6 +22,7 @@ import cn.czyugang.tcg.client.modules.inform.InformColumnFragment;
 import cn.czyugang.tcg.client.modules.inform.InformFollowFragment;
 import cn.czyugang.tcg.client.modules.inform.InformMySelfActivity;
 import cn.czyugang.tcg.client.modules.inform.InformNewsFragment;
+import cn.czyugang.tcg.client.modules.store.SearchActivity;
 import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
@@ -87,6 +88,10 @@ public class InformFragment extends BaseFragment {
     @OnClick(R.id.img_head)
     public void onMyHead(){
         InformMySelfActivity.startMySelfActivity();
+    }
+    @OnClick(R.id.img_search)
+    public void onSearch(){
+        SearchActivity.startSearchActivity(SearchActivity.SEARCH_INFORM);
     }
 
 }

@@ -13,8 +13,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.api.InformApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
+import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.Inform;
+import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.entity.UserFansFollow;
 
 /**
  * Created by Administrator on 2017/12/11.
@@ -27,12 +31,14 @@ public class InformSelfFansActivity extends BaseActivity {
     @BindView(R.id.inform_self_follow_fans_title_name)
     TextView tvTitleName;
 
-    static String titleName;
+    InformSelfFollowActivity.SelfFollowFansListAdapter SelfFollowFansListAdapter;
+    List<UserFansFollow> informColumns=new ArrayList<UserFansFollow>();
 
-    public static void startInformSelfFansActivity(String title ){
+    public static void startInformSelfFansActivity(String title,String userId){
         Intent intent=new Intent(getTopActivity(),InformSelfFansActivity.class);
+        intent.putExtra("userId",userId);
+        intent.putExtra("titleName",title);
         getTopActivity().startActivity(intent);
-        titleName=title;
     }
 
     @Override
@@ -41,24 +47,22 @@ public class InformSelfFansActivity extends BaseActivity {
         setContentView(R.layout.activity_inform_self_follow_fans);
         ButterKnife.bind(this);
 
-        tvTitleName.setText(titleName);
-        List<Inform> informColumns=new ArrayList<Inform>();
-        Inform informColumn=new Inform();
-        informColumn.userName=("宇宙无敌大帅比");
-        informColumn.isFollow=(false);
-        informColumn.followNum=("442455");
-        informColumns.add(informColumn);
-        Inform informColumn2=new Inform();
-        informColumn2.userName="Amshine";
-        informColumn2.isFollow=true;
-        informColumn2.followNum="6746341";
-        informColumns.add(informColumn2);
-        informColumns.add(informColumn2);
-        informColumns.add(informColumn);
-        informColumns.add(informColumn);
-        informColumns.add(informColumn2);
-        InformSelfFollowActivity.SelfFollowFansListAdapter SelfFollowFansListAdapter=new InformSelfFollowActivity.SelfFollowFansListAdapter(informColumns,this);
+        tvTitleName.setText(getIntent().getStringExtra("titleName"));
+
+
+        SelfFollowFansListAdapter=new InformSelfFollowActivity.SelfFollowFansListAdapter(informColumns,this);
         selfFasList.setLayoutManager(new LinearLayoutManager(this));
         selfFasList.setAdapter(SelfFollowFansListAdapter);
+        InformApi.userFansList(getIntent().getStringExtra("userId"),1).subscribe(new NetObserver<Response<List<UserFansFollow>>>() {
+            @Override
+            public void onNext(Response<List<UserFansFollow>> response) {
+                super.onNext(response);
+                if (ErrorHandler.judge200(response)){
+                    informColumns.clear();
+                    informColumns.addAll(response.data);
+                    SelfFollowFansListAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 }
