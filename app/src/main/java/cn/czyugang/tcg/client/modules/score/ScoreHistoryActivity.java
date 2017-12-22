@@ -11,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +21,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.api.ScoreApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
+import cn.czyugang.tcg.client.common.ErrorHandler;
+import cn.czyugang.tcg.client.common.UserOAuth;
+import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.entity.Score;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.string.RichText;
 import cn.czyugang.tcg.client.widget.SpinnerSelectView;
@@ -29,6 +37,7 @@ import cn.czyugang.tcg.client.widget.SpinnerSelectView;
  */
 
 public class ScoreHistoryActivity extends BaseActivity {
+    private static final String TAG = "ScoreHistoryActivity";
 
     @BindView(R.id.score_history)
     RecyclerView historyR;
@@ -40,8 +49,12 @@ public class ScoreHistoryActivity extends BaseActivity {
     SpinnerSelectView filterL;
     @BindView(R.id.score_history_timeL)
     SpinnerSelectView timeL;
-    private List<ScoreHistory> historyList = new ArrayList<>();
+    private  List<ScoreHistory> historyList = new ArrayList<>();
     private ScoreHistoryAdapter adapter;
+    private List<Score> mscoreList;
+    private Response<Score> mResponse;
+    private List<String> scoreType=new ArrayList<>();
+
 
     public static void startScoreHistoryActivity() {
         Intent intent = new Intent(getTopActivity(), ScoreHistoryActivity.class);
@@ -54,16 +67,14 @@ public class ScoreHistoryActivity extends BaseActivity {
         setContentView(R.layout.activity_score_history);
         ButterKnife.bind(this);
 
-        for (int i = 0; i < 20; i++) {
-            if (i == 0) historyList.add(new ScoreHistory("本月"));
-            if (i == 6) historyList.add(new ScoreHistory("11月"));
-            if (i == 11) historyList.add(new ScoreHistory("10月"));
-            historyList.add(new ScoreHistory());
-        }
+//        for (int i = 0; i < 20; i++) {
+//            if (i == 0) historyList.add(new ScoreHistory("本月"));
+//            if (i == 6) historyList.add(new ScoreHistory("11月"));
+//            if (i == 11) historyList.add(new ScoreHistory("10月"));
+//            historyList.add(new ScoreHistory());
+//        }
+        getScoreInfo(UserOAuth.getUserId());
 
-        adapter = new ScoreHistoryAdapter(historyList, this);
-        historyR.setLayoutManager(new LinearLayoutManager(this));
-        historyR.setAdapter(adapter);
 
         filterL.add("所有记录", "获取记录", "使用记录")
                 .setOnSelectItemListener(text -> {
@@ -120,7 +131,7 @@ public class ScoreHistoryActivity extends BaseActivity {
                 return;
             }
 
-            holder.time.setText(data.getTime());
+            holder.time.setText(data.getTime);
             holder.name.setText(RichText.newRichText(data.name)
                     .append(data.tip.equals("") ? "" : "\n")
                     .appendSpColorRes(data.tip, R.dimen.sp_12, R.color.text_gray)
@@ -158,31 +169,86 @@ public class ScoreHistoryActivity extends BaseActivity {
             }
         }
     }
+    //获取积分的来源途径信息,积分明细
+    private void getScoreInfo(String userId){
+        ScoreApi.getScoreDetail(userId).subscribe(new NetObserver<Response<List<Score>>>() {
+            @Override
+            public void onNext(Response<List<Score>> response) {
+                super.onNext(response);
+                if(ErrorHandler.judge200(response)) {
+                    mscoreList =response.getData();
+                    for(int i=0,size=mscoreList.size();i<size;i++){
+//                        if(i==0) historyList.add(new ScoreHistory("本月"));
+//                        if(i==2)historyList.add(new ScoreHistory("6月"));
+//                        if(i==5)historyList.add(new ScoreHistory("5月"));
+                       if(mscoreList.get(i).effective.equals("NO")){
+                       }else {
+                           ScoreHistory scoreHistory=new ScoreHistory();
+                           scoreHistory.setGetTime(mscoreList.get(i).createTime);
+                           scoreHistory.setName(mscoreList.get(i).way);
+                           if (response.getValues().optString(mscoreList.get(i).way)!=null) {
+                             //  scoreHistory.setTip(response.getValues());
+                           }
+                           scoreHistory.setNum(mscoreList.get(i).score);
+                           historyList.add(scoreHistory);
+                       }
 
+                        adapter = new ScoreHistoryAdapter(historyList,ScoreHistoryActivity.this);
+                        historyR.setLayoutManager(new LinearLayoutManager(ScoreHistoryActivity.this));
+                        historyR.setAdapter(adapter);
+
+                    }
+
+                }
+            }
+        });
+    }
     private class ScoreHistory {
-        private long getTime = 0;
+        private String getTime;
         public String name = "每日签到";
         public String tip = "订单XXXXXXXXXXXXXXX";
         public int num = 11;
         public boolean isValid = true;
-
         public boolean isTitle = false;
         public String title = "本月";
 
         public ScoreHistory() {
+        }
+        public void setValid(boolean isValid){
+            this.isValid=isValid;
+        }
+        public void setGetTime(String getTime){
+            this.getTime=getTime;
+        }
+        public void setTip(String tip){
+            this.tip=tip;
+        }
+        public void setNum(int num){
+            this.num=num;
+        }
+        public void setName(String name){
+            this.name=name;
         }
 
         public ScoreHistory(String title) {
             isTitle = true;
             this.title = title;
         }
-
         public String getTime() {
             return "今天";
         }
-
         public String getScoreStr() {
             return "+" + num;
         }
     }
+    public String getSignName(JSONObject object){
+        JSONArray list=object.optJSONArray("wayDict");
+        for(int i=0;i<list.length();i++){
+            scoreType.add(list.optJSONObject(i).optString("name"));
+        }
+
+
+        return null;
+    }
+
 }

@@ -52,7 +52,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_24"
-                        android:text="2,333,333"
+                        android:text="0.0"
                         android:textColor="@color/main_red"
                         android:textSize="@dimen/sp_18"
                         android:textStyle="bold"

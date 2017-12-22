@@ -3,13 +3,11 @@ package cn.czyugang.tcg.client.modules.score;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.widget.TextView;
 
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,6 +19,8 @@ import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.entity.Score;
+import cn.czyugang.tcg.client.modules.entry.activity.MainActivity;
+import cn.czyugang.tcg.client.modules.order.MyOrderActivity;
 
 /**
  * @author ruiaa
@@ -96,17 +96,16 @@ public class ScoreActivity extends BaseActivity {
         signAction.setClickable(false);
        // isSignToday=true;
         asynSignDays();
-
-
     }
     //用户签到后，同步数据到服务器
     private void asynSignDays() {
         if(!isSignToday){
-            postData("SIGN");
+            postData("SIGN",true);
 
 
         }else {
             showToast("你已经签到过了");
+
         }
 
     }
@@ -117,32 +116,36 @@ public class ScoreActivity extends BaseActivity {
         continueSignAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
         continueSignAction.setClickable(false);
      if(!isGotToday){
-         postData("SIGN_CONTINUOUSLY");
-
+         postData("SIGN_CONTINUOUSLY",false);
+     }else {
+         showToast("你已经领取过了");
      }
-
-
     }
-
     @OnClick(R.id.score_order_comment_action)
     public void onOrderComment() {
+        MyOrderActivity.startMyOrderActivity(this);
         orderCommentAction.setText("+XX");
         orderCommentAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
         orderCommentAction.setClickable(false);
+
     }
 
     @OnClick(R.id.score_inform_comment_action)
     public void onInformComment() {
+        MainActivity.openAndSelectFragment(1);
         informCommentAction.setText("+XX");
         informCommentAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
         informCommentAction.setClickable(false);
+
     }
 
     @OnClick(R.id.score_buy_give_action)
     public void onBuyGive() {
+        MainActivity.openAndSelectFragment(0);
         buyGiveAction.setText("+XX");
         buyGiveAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
         buyGiveAction.setClickable(false);
+
     }
 
     @OnClick(R.id.score_history)
@@ -168,9 +171,9 @@ public class ScoreActivity extends BaseActivity {
                     continueSignDay.setText("连续签到" +signedDay + "日");
                     signTip.setText("连续签到" +signedDay + "天");
                     continueSignTip.setText(myUserBonus);
-                    orderCommentTip.setText("每日上限：" +currentOrderBonus
+                    orderCommentTip.setText("每日上限：" +"0"
                             + "/" +limitOrderBonus);
-                    informCommentTip.setText("每日上限：" +currentInfoBonus
+                    informCommentTip.setText("每日上限：" +"0"
                             + "/" +limitInfoBonus);
 
                 }
@@ -179,24 +182,8 @@ public class ScoreActivity extends BaseActivity {
     }
 
 
-    private void getScoreInfo(String userId){
-        ScoreApi.getScoreDetail(userId).subscribe(new NetObserver<Response<List<Score>>>() {
 
-            @Override
-            public void onNext(Response<List<Score>> response) {
-                super.onNext(response);
-                if(ErrorHandler.judge200(response)) {
-                    mscore =response.getData().get(0);
-
-                    Log.e(TAG, "onNext: run" + mscore.score);
-
-
-                }
-            }
-        });
-
-    }
-    public void  postData(String way){
+    public void  postData(String way,boolean forSign){
         HashMap<String,Object> map=new HashMap<>();
         map.put("myUserBonus",myUserBonus);
         map.put("signedDay",signedDay);
@@ -214,7 +201,13 @@ public class ScoreActivity extends BaseActivity {
             public void onNext(Response<Object> response) {
                 super.onNext(response);
                 if(ErrorHandler.judge200(response)){
-                    showToast("领取成功");
+                    getScoreDetail(UserOAuth.getUserId());
+                    if(forSign){
+                        showToast("签到成功");
+                    }else {
+                        showToast("领取成功");
+                    }
+
                 }
             }
         });
