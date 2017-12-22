@@ -28,7 +28,7 @@ public class ScoreApi {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
-
+//获取积分明细新信息
     public  static Observable<Response<List<Score>>> getScoreDetail(String id){
         HashMap<String, Object> map = new HashMap<>();
         map.put("scoreId", id);
