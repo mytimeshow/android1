@@ -58,6 +58,7 @@ public class MyInformResponse extends  Response<List<MyInform>> {
     public String myType;
     public int myPublishLimit;
     public String myStatus;
+    public String myCover;
     public boolean myIdentity=false;
 
 
@@ -259,6 +260,8 @@ public class MyInformResponse extends  Response<List<MyInform>> {
                 myStatus=userIdentity.optString("status");
 
             }
+
+            myCover=values.optString("coverFileId");
 
 
         }catch (Exception e){

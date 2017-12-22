@@ -25,6 +25,7 @@ import cn.czyugang.tcg.client.entity.Inform;
 import cn.czyugang.tcg.client.entity.InformResponse;
 import cn.czyugang.tcg.client.entity.MyInform;
 import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.modules.store.SearchActivity;
 import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import io.reactivex.Observer;
@@ -126,12 +127,12 @@ public class InformOrderSelfActivity extends BaseActivity {
 
     @OnClick(R.id.inform_for_myself_follow)
     void toMyFollow(){
-        InformSelfFollowActivity.startInformSelfFollowActivity("TA的关注");
+        InformSelfFollowActivity.startInformSelfFollowActivity("TA的关注",userId);
     }
 
     @OnClick(R.id.inform_for_myself_fans)
     void toMyFans(){
-        InformSelfFansActivity.startInformSelfFansActivity("TA的粉丝");
+        InformSelfFansActivity.startInformSelfFansActivity("TA的粉丝",userId);
     }
 
     @OnClick(R.id.inform_order_isfollow)
@@ -195,5 +196,14 @@ public class InformOrderSelfActivity extends BaseActivity {
                     }
             );
         }*/
+    }
+
+    @OnClick(R.id.title_back)
+    public void onBack(){
+        finish();
+    }
+    @OnClick(R.id.title_search_bg)
+    public void onSearch(){
+        SearchActivity.startSearchActivity(SearchActivity.SEARCH_INFORM);
     }
 }
