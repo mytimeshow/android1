@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/im_notice_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"/>
+
+    <FrameLayout
+        android:id="@+id/im_notice_typesL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_blur"
+        android:visibility="gone"
+        >
+
+        <cn.czyugang.tcg.client.widget.LabelLayout
+            android:id="@+id/im_notice_types"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            />
+
+    </FrameLayout>
+
+</FrameLayout>

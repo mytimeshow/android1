@@ -206,6 +206,55 @@
         android:layout_gravity="bottom"
         />
 
+    <!--首页-->
+    <LinearLayout
+        android:id="@+id/store_bottom_homepage"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:layout_gravity="bottom"
+        android:visibility="gone"
+        android:background="@color/white"
+        >
+
+        <TextView
+            style="@style/text_14_dark_gray"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="全部商品"/>
+
+        <View
+            android:layout_width="@dimen/dp_0.5"
+            android:layout_height="@dimen/dp_20"
+            android:layout_gravity="center_vertical"
+            android:background="@color/grey_700"
+            />
+
+        <TextView
+            style="@style/text_14_dark_gray"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="店铺详情"/>
+
+        <View
+            android:layout_width="@dimen/dp_0.5"
+            android:layout_height="@dimen/dp_20"
+            android:layout_gravity="center_vertical"
+            android:background="@color/grey_700"
+            />
+
+        <TextView
+            style="@style/text_14_dark_gray"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="联系我们"/>
+    </LinearLayout>
+
     <View
         android:id="@+id/store_bottom_bar"
         android:layout_width="match_parent"

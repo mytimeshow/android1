@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <FrameLayout
+        style="@style/title_title">
+
+        <ImageView
+            style="@style/title_text"/>
+
+        <TextView
+            style="@style/title_text"
+            android:text="消息与提醒"/>
+    </FrameLayout>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!--有新消息时进行通知-->
+            <LinearLayout
+                android:id="@+id/im_setting_notice_newL"
+                style="@style/item_50_group"
+                android:layout_marginTop="@dimen/dp_10"
+                >
+
+                <TextView
+                    style="@style/text_16_black"
+                    android:text="有新消息时进行通知"/>
+
+                <include layout="@layout/space_h"/>
+
+                <cn.czyugang.tcg.client.widget.SelectButton
+                    android:id="@+id/im_setting_notice_new"
+                    android:layout_width="@dimen/dp_56"
+                    android:layout_height="@dimen/dp_36"
+                    app:bg_drawable="@drawable/selector_checkbox_switch"
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/view_split_bar_light_margin"/>
+
+            <!--消息免打扰设置-->
+            <LinearLayout
+                android:id="@+id/im_setting_notice_closeL"
+                style="@style/item_50_group"
+                >
+
+                <TextView
+                    style="@style/text_16_black"
+                    android:text="消息免打扰设置"/>
+
+                <include layout="@layout/space_h"/>
+
+                <ImageView
+                    style="@style/arrow_right"/>
+            </LinearLayout>
+
+            <include layout="@layout/view_split_bar_light_margin"/>
+
+            <!--通知提醒-->
+            <LinearLayout
+                style="@style/item_50_group"
+                >
+
+                <TextView
+                    style="@style/text_16_black"
+                    android:text="通知提醒"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/im_setting_receive_allL"
+                style="@style/item_50_group"
+                android:layout_height="@dimen/dp_46"
+                >
+
+                <TextView
+                    style="@style/text_14_black"
+                    android:text="接收所有"/>
+
+                <include layout="@layout/space_h"/>
+
+                <ImageView
+                    android:id="@+id/im_setting_receive_all"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:src="@drawable/icon_select_hook_red"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/im_setting_receive_praiseL"
+                style="@style/item_50_group"
+                android:layout_height="@dimen/dp_46"
+                >
+
+                <TextView
+                    style="@style/text_14_black"
+                    android:text="点赞通知只接收但不提醒"/>
+
+                <include layout="@layout/space_h"/>
+
+                <ImageView
+                    android:id="@+id/im_setting_receive_praise"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:src="@drawable/icon_select_hook_red"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/item_50_group"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_10"
+                >
+
+                <!--接受所有通知并进行提醒-->
+                <TextView
+                    android:id="@+id/im_setting_receive_tip"
+                    style="@style/text_12_gray"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text="资讯类的点赞通知会出现在消息列表中，但你不会收到此类消息的消息提醒，其他通知正常接收和提醒"/>
+            </LinearLayout>
+
+            <include layout="@layout/view_split_bar_light_margin"/>
+
+            <!--消息声音设置-->
+            <LinearLayout
+                style="@style/item_50_group"
+                >
+
+                <TextView
+                    style="@style/text_16_black"
+                    android:text="消息声音设置"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/im_setting_voiceL"
+                style="@style/item_50_group"
+                >
+
+                <TextView
+                    style="@style/text_14_black"
+                    android:text="声音"/>
+
+                <include layout="@layout/space_h"/>
+
+                <cn.czyugang.tcg.client.widget.SelectButton
+                    android:id="@+id/im_setting_voice"
+                    android:layout_width="@dimen/dp_56"
+                    android:layout_height="@dimen/dp_36"
+                    app:bg_drawable="@drawable/selector_checkbox_switch"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/im_setting_vibrateL"
+                style="@style/item_50_group"
+                >
+
+                <TextView
+                    style="@style/text_14_black"
+                    android:text="振动"/>
+
+                <include layout="@layout/space_h"/>
+
+                <cn.czyugang.tcg.client.widget.SelectButton
+                    android:id="@+id/im_setting_vibrate"
+                    android:layout_width="@dimen/dp_56"
+                    android:layout_height="@dimen/dp_36"
+                    app:bg_drawable="@drawable/selector_checkbox_switch"
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/view_split_bar_light_margin"/>
+
+            <!--聊天设置-->
+            <LinearLayout
+                style="@style/item_50_group"
+                >
+
+                <TextView
+                    style="@style/text_16_black"
+                    android:text="聊天设置"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/im_setting_headphoneL"
+                style="@style/item_50_group"
+                >
+
+                <TextView
+                    style="@style/text_14_black"
+                    android:text="听筒播放语音模式"/>
+
+                <include layout="@layout/space_h"/>
+
+                <cn.czyugang.tcg.client.widget.SelectButton
+                    android:id="@+id/im_setting_headphone"
+                    android:layout_width="@dimen/dp_56"
+                    android:layout_height="@dimen/dp_36"
+                    app:bg_drawable="@drawable/selector_checkbox_switch"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/im_setting_enter_sendL"
+                style="@style/item_50_group"
+                >
+
+                <TextView
+                    style="@style/text_14_black"
+                    android:text="回车键发送消息"/>
+
+                <include layout="@layout/space_h"/>
+
+                <cn.czyugang.tcg.client.widget.SelectButton
+                    android:id="@+id/im_setting_enter_send"
+                    android:layout_width="@dimen/dp_56"
+                    android:layout_height="@dimen/dp_36"
+                    app:bg_drawable="@drawable/selector_checkbox_switch"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/im_setting_delete_record"
+                style="@style/text_16_black"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginTop="@dimen/dp_20"
+
+                android:gravity="center"
+                android:text="删除通知与聊天记录"/>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

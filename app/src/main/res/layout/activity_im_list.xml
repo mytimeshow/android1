@@ -1,14 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <FrameLayout
-        style="@style/title_title">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/title_title"
+        android:gravity="center_vertical">
+
         <ImageView
             style="@style/title_back"/>
+
+        <include layout="@layout/space_h"/>
+
         <TextView
-            style="@style/title_text"
-            android:text="通知    聊天"/>
-    </FrameLayout>
+            android:id="@+id/im_list_title_notice"
+            style="@style/text_16_red"
+            android:layout_marginRight="@dimen/dp_30"
+            android:drawablePadding="@dimen/dp_3"
+            android:drawableRight="@drawable/tri_down_red"
+            android:text="通知"/>
+
+        <TextView
+            android:id="@+id/im_list_title_chat"
+            style="@style/text_16_black"
+            android:text="聊天"/>
+
+        <include layout="@layout/space_h"/>
+
+        <ImageView
+            android:id="@+id/title_right"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_10"
+            android:src="@drawable/im_setting"
+            />
+    </LinearLayout>
+
+    <include layout="@layout/view_split_bar_light"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/im_list_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 </LinearLayout>

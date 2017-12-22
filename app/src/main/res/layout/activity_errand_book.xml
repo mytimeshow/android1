@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <FrameLayout
@@ -27,28 +28,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_10">
+            >
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/errand_book_things_type"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_106"
-                />
+                android:layout_height="@dimen/dp_96"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"/>
 
             <cn.czyugang.tcg.client.widget.LabelLayout
                 android:id="@+id/errand_book_things_type_labels"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp_24"
-                />
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"/>
 
-
+            <include layout="@layout/view_split_bar_light_big"/>
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_80"
                 android:layout_marginTop="@dimen/dp_16"
-                >
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10">
 
                 <EditText
                     android:id="@+id/errand_book_input_goods"
@@ -73,6 +77,7 @@
                     android:src="@drawable/icon_take_photo"/>
 
                 <TextView
+                    android:id="@+id/errand_book_upload_img_text"
                     android:layout_width="@dimen/dp_60"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
@@ -84,17 +89,25 @@
             </FrameLayout>
 
             <cn.czyugang.tcg.client.utils.img.ImgView
+                android:id="@+id/errand_book_good_img"
                 android:layout_width="@dimen/dp_100"
                 android:layout_height="@dimen/dp_100"
-                android:layout_marginTop="@dimen/dp_12"/>
+                android:layout_marginTop="@dimen/dp_12"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"/>
 
             <!--预计商品费用-->
             <TextView
+                android:id="@+id/errand_book_good_cost"
                 style="@style/text_16_black"
                 android:layout_marginTop="@dimen/dp_12"
-                android:text="预计商品费用"/>
+                android:text="预计商品费用"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                />
 
             <EditText
+                android:id="@+id/errand_book_good_cost_input"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_38"
                 android:layout_marginTop="@dimen/dp_12"
@@ -105,13 +118,19 @@
                 android:textColorHint="@color/text_gray"
                 android:textColor="@color/main_red"
                 android:textSize="@dimen/sp_14"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
                 />
 
             <!--物品重量(kg)-->
             <LinearLayout
+                android:id="@+id/errand_book_things_weightL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_14">
+                android:layout_marginTop="@dimen/dp_14"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                >
 
                 <TextView
                     style="@style/text_16_grey"
@@ -125,15 +144,20 @@
 
             <!--物品体积-->
             <LinearLayout
+                android:id="@+id/errand_book_things_volumeL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_14">
+                android:layout_marginTop="@dimen/dp_14"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                >
 
                 <TextView
                     style="@style/text_16_grey"
                     android:text="物品体积"/>
 
                 <TextView
+                    android:id="@+id/errand_book_things_volume"
                     style="@style/text_14_dark_gray"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -148,15 +172,20 @@
 
             <!--物品价值-->
             <LinearLayout
+                android:id="@+id/errand_book_things_valueL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_14">
+                android:layout_marginTop="@dimen/dp_14"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                >
 
                 <TextView
                     style="@style/text_16_grey"
                     android:text="物品价值"/>
 
                 <TextView
+                    android:id="@+id/errand_book_things_value"
                     style="@style/text_14_dark_gray"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -169,12 +198,23 @@
                     android:layout_marginRight="1px"/>
             </LinearLayout>
 
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10"
+                android:background="@color/bg"
+                android:layout_marginTop="@dimen/dp_10"
+                />
+
             <!--        地址      -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_40"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                >
 
                 <TextView
                     style="@style/text_16_black"
@@ -194,15 +234,20 @@
 
             <!--购买地址-->
             <LinearLayout
+                android:id="@+id/errand_book_address_buyL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_10">
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                >
 
                 <TextView
                     style="@style/text_16_grey"
                     android:text="购买地址"/>
 
                 <TextView
+                    android:id="@+id/errand_book_address_buy"
                     style="@style/text_14_dark_gray"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -217,6 +262,7 @@
 
             <!--详细地址-->
             <EditText
+                android:id="@+id/errand_book_address_buy_detail"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_38"
                 android:layout_marginTop="@dimen/dp_12"
@@ -226,19 +272,26 @@
                 android:padding="@dimen/dp_8"
                 android:textColor="@color/text_dark_gray"
                 android:textSize="@dimen/sp_14"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
                 />
 
             <!--取货地址-->
             <LinearLayout
+                android:id="@+id/errand_book_address_getL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_14">
+                android:layout_marginTop="@dimen/dp_14"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                >
 
                 <TextView
                     style="@style/text_16_grey"
                     android:text="取货地址"/>
 
                 <TextView
+                    android:id="@+id/errand_book_address_get"
                     style="@style/text_14_dark_gray"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -253,15 +306,20 @@
 
             <!--收货地址-->
             <LinearLayout
+                android:id="@+id/errand_book_address_receiptL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_14">
+                android:layout_marginTop="@dimen/dp_14"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                >
 
                 <TextView
                     style="@style/text_16_grey"
                     android:text="收货地址"/>
 
                 <TextView
+                    android:id="@+id/errand_book_address_receipt"
                     style="@style/text_14_dark_gray"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -276,15 +334,21 @@
 
             <!--送达时间-->
             <LinearLayout
+                android:id="@+id/errand_book_send_timeL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_10">
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                >
 
                 <TextView
                     style="@style/text_16_grey"
                     android:text="送达时间"/>
 
                 <TextView
+                    android:id="@+id/errand_book_send_time"
                     style="@style/text_14_dark_gray"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -296,12 +360,14 @@
                     style="@style/arrow_right"
                     android:layout_marginRight="1px"/>
             </LinearLayout>
-
+<include layout="@layout/view_split_bar_light_big"/>
             <!--特别注意事项-->
             <EditText
+                android:id="@+id/errand_book_notice_input"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_80"
-                android:layout_marginTop="@dimen/dp_38"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
                 android:background="@drawable/border_rect_grey"
                 android:gravity="left|top"
                 android:hint="选填，可输入特别注意事项（50字以内）"
@@ -309,14 +375,19 @@
                 android:padding="@dimen/dp_8"
                 android:textColor="@color/text_dark_gray"
                 android:textSize="@dimen/sp_14"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
                 />
-
+            <include layout="@layout/view_split_bar_light_big"/>
             <!--        费用      -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/dp_40">
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                >
 
                 <TextView
                     style="@style/text_16_black"
@@ -338,13 +409,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_10">
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                >
 
                 <TextView
                     style="@style/text_16_grey"
                     android:text="配送费"/>
 
                 <ImageView
+                    android:id="@+id/errand_book_fee_delivery_ask"
                     android:layout_width="@dimen/dp_16"
                     android:layout_height="@dimen/dp_16"
                     android:src="@drawable/ic_tip_grey_white"
@@ -352,6 +427,7 @@
                     android:layout_gravity="center_vertical"/>
                 <include layout="@layout/space_h"/>
                 <TextView
+                    android:id="@+id/errand_book_fee_delivery"
                     style="@style/text_14_red"
                     android:text="￥0.00"
                     android:layout_marginRight="@dimen/dp_2"
@@ -360,15 +436,20 @@
 
             <!--优惠券-->
             <LinearLayout
+                android:id="@+id/errand_book_couponL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_10">
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                >
 
                 <TextView
                     style="@style/text_16_grey"
                     android:text="优惠券"/>
 
                 <TextView
+                    android:id="@+id/errand_book_coupon"
                     style="@style/text_14_dark_gray"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -383,15 +464,21 @@
 
             <!--打赏费-->
             <LinearLayout
+                android:id="@+id/errand_book_fee_rewardL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_10">
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                >
 
                 <TextView
                     style="@style/text_16_grey"
                     android:text="打赏费"/>
 
                 <TextView
+                    android:id="@+id/errand_book_fee_reward"
                     style="@style/text_14_dark_gray"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -407,14 +494,15 @@
 
             <!--同城鸽跑腿协议-->
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dp_32"
-                android:layout_marginBottom="@dimen/dp_20"
-                android:orientation="horizontal">
-
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_60"
+                android:gravity="center_vertical"
+                android:background="@color/bg"
+                android:orientation="horizontal"
+                >
+<include layout="@layout/space_h"/>
                 <cn.czyugang.tcg.client.widget.SelectButton
+                    android:id="@+id/errand_book_agreement_select"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"/>
@@ -425,9 +513,11 @@
                     android:text="同意并接受"/>
 
                 <TextView
+                    android:id="@+id/errand_book_agreement"
                     style="@style/text_12_white"
                     android:text="《同城鸽跑腿协议》"
                     android:textColor="@color/main_light_blue"/>
+                <include layout="@layout/space_h"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -435,7 +525,10 @@
     </android.support.v4.widget.NestedScrollView>
 
     <LinearLayout
-        style="@style/item_50_group">
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:orientation="horizontal"
+        >
 
         <include layout="@layout/space_h"/>
 
@@ -444,11 +537,13 @@
             android:text="实付款："/>
 
         <TextView
+            android:id="@+id/errand_book_pay_real"
             style="@style/text_14_red"
             android:layout_marginRight="@dimen/dp_10"
             android:text="￥0.00"/>
 
         <TextView
+            android:id="@+id/errand_book_commit"
             style="@style/text_16_white"
             android:layout_width="@dimen/dp_85"
             android:layout_height="match_parent"

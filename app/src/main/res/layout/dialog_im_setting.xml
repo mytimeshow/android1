@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <FrameLayout
+        android:id="@+id/im_all_read"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:src="@drawable/icon_had_read"/>
+
+
+        <TextView
+            style="@style/text_18_black"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_42"
+            android:text="一键已读"/>
+
+    </FrameLayout>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <FrameLayout
+        android:id="@+id/im_setting"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:background="@color/white"
+        >
+
+        <ImageView
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:src="@drawable/icon_setting"/>
+
+
+        <TextView
+            style="@style/text_18_black"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_42"
+            android:text="消息设置"/>
+
+    </FrameLayout>
+
+</LinearLayout>

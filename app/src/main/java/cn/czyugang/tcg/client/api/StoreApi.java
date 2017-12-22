@@ -192,12 +192,12 @@ public class StoreApi {
     }
 
 
-    //api/auth/v1/product/business/get  ［可接入］根据id查看商品详情
+    //api/auth/v1/product/store/get ［可接入］根据id获取店铺商品详情
     public static Observable<Response<Good>> getGoodDetail(String id) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("id",id );
         return UserOAuth.getInstance()
-                .get("api/auth/v1/product/business/get", map)
+                .get("api/auth/v1/product/store/get", map)
                 .map(s -> (Response<Good>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, Good.class)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

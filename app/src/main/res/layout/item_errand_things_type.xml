@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_60"
+    android:layout_height="@dimen/dp_96">
+
+    <cn.czyugang.tcg.client.utils.img.ImgView
+        android:id="@+id/item_img"
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/item_name"
+        style="@style/text_12_black"
+        android:layout_marginTop="@dimen/dp_72"
+        android:layout_gravity="center_horizontal"
+        android:text="类型类型"/>
+
+</FrameLayout>

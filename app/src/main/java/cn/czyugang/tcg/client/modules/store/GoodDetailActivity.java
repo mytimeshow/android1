@@ -6,9 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,9 +86,9 @@ public class GoodDetailActivity extends BaseActivity {
                         list.add("919910512769269760");
                         list.add("919910512769269760");
                         response.data.picList=list;
-                        JSONArray jsonArray=response.values.optJSONArray("inventoryList");
-                        JSONObject jsonObject=jsonArray.optJSONObject(0);
-                        response.data.inventoryId=jsonObject.optString("id");
+                        //JSONArray jsonArray=response.values.optJSONArray("inventoryList");
+                        //JSONObject jsonObject=jsonArray.optJSONObject(0);
+                        //response.data.inventoryId=jsonObject.optString("id");
                     }
                     goodFragment.setGoodInfo(response.data);
                 }

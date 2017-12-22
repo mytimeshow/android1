@@ -1,7 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/title_title"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/category_location"
+            style="@style/text_14_dark_gray"
+            android:layout_gravity="center_vertical"
+            android:drawablePadding="@dimen/dp_2"
+            android:drawableRight="@drawable/icon_arrow_down"
+            android:text="潮州"
+            />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/category_tab"
+            android:layout_width="@dimen/dp_120"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_50"
+            android:layout_marginRight="@dimen/dp_15"
+            />
+
+        <ImageView
+            android:id="@+id/category_search"
+            android:layout_width="@dimen/dp_18"
+            android:layout_height="@dimen/dp_18"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_search"
+            />
+
+        <include layout="@layout/space_h"/>
+
+        <ImageView
+            android:id="@+id/category_msg"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_message"
+            />
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/category_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 </LinearLayout>
