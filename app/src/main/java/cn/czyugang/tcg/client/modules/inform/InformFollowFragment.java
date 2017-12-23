@@ -229,7 +229,7 @@ public class InformFollowFragment extends BaseFragment {
             holder.followImg.id(data.imgUrl);
             holder.followHead.id(data.headUrl);
             holder.itemView.setOnClickListener(v -> {
-                InformDetailsActivity.startInformDetailsActivity();
+                InformDetailsActivity.startInformDetailsActivity(data.id);
             });
             holder.followName.setOnClickListener(v -> {
                 InformOrderSelfActivity.startInformOrderSelfActivity(data.id);

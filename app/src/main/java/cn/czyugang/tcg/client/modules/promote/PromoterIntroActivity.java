@@ -15,11 +15,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.api.PromoterApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
+import cn.czyugang.tcg.client.common.ErrorHandler;
+import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.app.AppUtil;
-import cn.czyugang.tcg.client.utils.img.BannerImgLoader;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.utils.storage.AppKeyStorage;
 
@@ -50,6 +52,8 @@ public class PromoterIntroActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         //banner.setImageLoader(new BannerImgLoader()).setImages(images).start();
+
+        getPromoterInfo();
     }
 
     @Override
@@ -64,6 +68,20 @@ public class PromoterIntroActivity extends BaseActivity {
                 }
             });
         }
+    }
+
+    private void getPromoterInfo(){
+        PromoterApi.promoterInfo().subscribe(new NetObserver<Response<Object>>() {
+            @Override
+            public void onNext(Response<Object> response) {
+                super.onNext(response);
+                if (ErrorHandler.judge200(response)&&response.values!=null){
+                    boolean baseInfoFlag= response.values.optString("baseInfoFlag").equals("YES");
+                    boolean bankCardFlag=response.values.optString("bankCardFlag").equals("YES");
+                    boolean realNameAuthFlag=response.values.optString("realNameAuthFlag").equals("YES");
+                }
+            }
+        });
     }
 
     @OnClick(R.id.promote_invite_register)

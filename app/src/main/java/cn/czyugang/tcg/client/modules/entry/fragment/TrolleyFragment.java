@@ -19,8 +19,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.api.StoreApi;
+import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.entity.TrolleyGoods;
+import cn.czyugang.tcg.client.entity.TrolleyResponse;
 import cn.czyugang.tcg.client.entity.TrolleyStore;
 import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.modules.common.dialog.StoreTrolleyDialog;
@@ -84,7 +87,18 @@ public class TrolleyFragment extends BaseFragment {
         storeR.setAdapter(adapter);
         new RefreshLoadHelper(getActivity()).build(storeR);
 
+        getTrolley(false);
+
         return rootView;
+    }
+
+    private void getTrolley(boolean loadmore){
+        StoreApi.getTrolley(null).subscribe(new BaseActivity.NetObserver<TrolleyResponse>() {
+            @Override
+            public void onNext(TrolleyResponse response) {
+                super.onNext(response);
+            }
+        });
     }
 
     @Override

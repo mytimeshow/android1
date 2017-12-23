@@ -139,7 +139,7 @@ public class GoodDetailActivity extends BaseActivity {
             @Override
             public void onCollect() {
                 if (!good.hadCollect){
-                    RecordApi.collectGoods(good.id).subscribe(new NetObserver<Response>() {
+                    RecordApi.collect("PRODUCT",good.id).subscribe(new NetObserver<Response>() {
                         @Override
                         public void onNext(Response response) {
                             super.onNext(response);

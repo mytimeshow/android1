@@ -23,7 +23,6 @@ import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.Inform;
 import cn.czyugang.tcg.client.entity.NewsInformResponse;
-import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 
 /**
@@ -150,7 +149,7 @@ public class InformNewsFragment extends BaseFragment {
             }
 
             holder.itemView.setOnClickListener(v -> {
-                InformDetailsActivity.startInformDetailsActivity();
+                InformDetailsActivity.startInformDetailsActivity(data.id);
             });
 
 
