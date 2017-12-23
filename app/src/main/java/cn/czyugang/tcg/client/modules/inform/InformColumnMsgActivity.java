@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +59,7 @@ public class InformColumnMsgActivity extends BaseActivity {
 
     @BindView(R.id.myself_cover)
     ImgView userCover;
-    SmallInformAdapter smallInformAdapter;
+    SelfInformAdapter smallInformAdapter;
     List<Inform> informs = new ArrayList<Inform>();
 
     boolean isFollow;
@@ -91,7 +90,7 @@ public class InformColumnMsgActivity extends BaseActivity {
         refreshInform(true, 1, getIntent().getStringExtra("id"), "", "", "", "");
 
 
-        smallInformAdapter = new SmallInformAdapter(informs, this);
+        smallInformAdapter = new SelfInformAdapter(informs, this);
         informOrderList.setLayoutManager(new LinearLayoutManager(this));
         informOrderList.setAdapter(smallInformAdapter);
     }
@@ -132,69 +131,31 @@ public class InformColumnMsgActivity extends BaseActivity {
     @OnClick(R.id.inform_order_isfollow)
     void onIsFollow() {
         if (!isFollow) {
-            InformApi.toFollowColumn(getIntent().getStringExtra("id")).subscribe(
-                    new Observer<Response>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-
-                        }
-
-                        @Override
-                        public void onNext(Response response) {
-                            switch (response.getCode()) {
-                                case 200:
-                                    columnIsFollow.setText("已关注");
-                                    columnIsFollow.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
-                                    isFollow = (isFollow ? false : true);
-
-                            }
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-
-                        @Override
-                        public void onComplete() {
-
-                        }
-                    }
-            );
+            InformApi.toFollowColumn(getIntent().getStringExtra("id")).subscribe(new NetObserver<Response>() {
+                @Override
+                public void onNext(Response response) {
+                    super.onNext(response);
+                    if (!ErrorHandler.judge200(response)) return;
+                    columnIsFollow.setText("已关注");
+                    columnIsFollow.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
+                    isFollow = (isFollow ? false : true);
+                }
+            });
         } else {
             MyDialog.Builder.newBuilder(this)
                     .contentStr("您真的忍心抛弃电影扒客吗？")
                     .onPositiveButton(myDialog -> {
 
-                        InformApi.toUnFollowColumn(getIntent().getStringExtra("id")).subscribe(
-                                new Observer<Response>() {
-                                    @Override
-                                    public void onSubscribe(Disposable d) {
-
-                                    }
-
-                                    @Override
-                                    public void onNext(Response response) {
-                                        switch (response.getCode()) {
-                                            case 200:
-                                                columnIsFollow.setText("+关注");
-                                                columnIsFollow.setBackgroundResource(R.drawable.bg_rect_cir_red);
-                                                isFollow = (isFollow ? false : true);
-
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onError(Throwable e) {
-
-                                    }
-
-                                    @Override
-                                    public void onComplete() {
-
-                                    }
-                                }
-                        );
+                        InformApi.toUnFollowColumn(getIntent().getStringExtra("id")).subscribe(new NetObserver<Response>() {
+                            @Override
+                            public void onNext(Response response) {
+                                super.onNext(response);
+                                if (!ErrorHandler.judge200(response)) return;
+                                columnIsFollow.setText("+关注");
+                                columnIsFollow.setBackgroundResource(R.drawable.bg_rect_cir_red);
+                                isFollow = (isFollow ? false : true);
+                            }
+                        });
 
 
                         myDialog.dismiss();
@@ -221,29 +182,48 @@ public class InformColumnMsgActivity extends BaseActivity {
         InformEditArticleActivity.startInformEditArticleActivity();
     }
 
-    static class SmallInformAdapter extends RecyclerView.Adapter<InformColumnMsgActivity.SmallInformAdapter.Holder> {
+    static class SelfInformAdapter extends RecyclerView.Adapter<SelfInformAdapter.Holder> {
         private List<Inform> list;
         private Activity activity;
 
-        public SmallInformAdapter(List<Inform> list, Activity activity) {
+        public SelfInformAdapter(List<Inform> list, Activity activity) {
             this.list = list;
             this.activity = activity;
         }
 
         @Override
-        public InformColumnMsgActivity.SmallInformAdapter.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new InformColumnMsgActivity.SmallInformAdapter.Holder(LayoutInflater.from(activity).inflate(
-                    R.layout.item_inform_news_small, parent, false));
+        public SelfInformAdapter.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new SelfInformAdapter.Holder(LayoutInflater.from(activity).inflate(
+                    viewType, parent, false));
         }
 
         @Override
-        public void onBindViewHolder(SmallInformAdapter.Holder holder, int position) {
+        public void onBindViewHolder(SelfInformAdapter.Holder holder, int position) {
             Inform data = list.get(position);
-            holder.informSmallContent.setText(data.title);
-            holder.informSmallCommitNum.setText(String.valueOf(data.commentNum));
-            holder.informSmallHead.id(data.headUrl);
-            holder.informSmallImg.id(data.imgUrl);
-            holder.informSmallName.setText(data.userName);
+            switch (getItemViewType(position)) {
+                case R.layout.item_inform_news_large:
+                    holder.newsLargeHead.id(data.headUrl);
+                    holder.newsLargePersonName.setText(data.userName);
+                    holder.newsLargeContent.setText(data.title);
+                    holder.newsLargeContentName.setText("—— "+data.sortName+" ——");
+                    holder.newsLargeCommitNum.setText(String.valueOf(data.commentNum));
+                    holder.newsLargeImg.id(data.imgUrl);
+
+                    ViewGroup.MarginLayoutParams lp=(ViewGroup.MarginLayoutParams)holder.itemView.getLayoutParams();
+                    lp.topMargin=0;
+                    holder.itemView.setLayoutParams(lp);
+                    break;
+                case R.layout.item_inform_news_small:
+                    holder.informSmallContent.setText(data.title);
+                    holder.informSmallCommitNum.setText(String.valueOf(data.commentNum));
+                    holder.informSmallHead.id(data.headUrl);
+                    holder.informSmallImg.id(data.imgUrl);
+                    holder.informSmallName.setText(data.userName);
+                    break;
+                default:
+                    break;
+            }
+
         }
 
         @Override
@@ -251,13 +231,28 @@ public class InformColumnMsgActivity extends BaseActivity {
             return list.size();
         }
 
+        @Override
+        public int getItemViewType(int position) {
+            if (position == 0) {
+                return R.layout.item_inform_news_large;
+            }
+            return R.layout.item_inform_news_small;
+        }
 
         class Holder extends RecyclerView.ViewHolder {
+            //资讯小图item
             ImgView informSmallImg;
             ImgView informSmallHead;
             TextView informSmallContent;
             TextView informSmallName;
             TextView informSmallCommitNum;
+            //资讯大图item
+            ImgView newsLargeImg;
+            ImgView newsLargeHead;
+            TextView newsLargeContent;
+            TextView newsLargeContentName;
+            TextView newsLargePersonName;
+            TextView newsLargeCommitNum;
 
             public Holder(View itemView) {
                 super(itemView);
@@ -267,16 +262,24 @@ public class InformColumnMsgActivity extends BaseActivity {
                 informSmallContent = itemView.findViewById(R.id.inform_news_small_content);
                 informSmallName = itemView.findViewById(R.id.inform_news_small_name);
                 informSmallCommitNum = itemView.findViewById(R.id.inform_news_small_commit_num);
+                //资讯大图item
+                newsLargeImg = itemView.findViewById(R.id.inform_news_large_img);
+                newsLargeHead = itemView.findViewById(R.id.inform_news_large_head);
+                newsLargeContent = itemView.findViewById(R.id.inform_news_large_content);
+                newsLargeContentName = itemView.findViewById(R.id.inform_news_large_cotentname);
+                newsLargePersonName = itemView.findViewById(R.id.inform_news_large_name);
+                newsLargeCommitNum = itemView.findViewById(R.id.inform_news_large_commitNum);
             }
         }
     }
 
     @OnClick(R.id.title_back)
-    public void onBack(){
+    public void onBack() {
         finish();
     }
+
     @OnClick(R.id.title_search_bg)
-    public void onSearch(){
+    public void onSearch() {
         SearchActivity.startSearchActivity(SearchActivity.SEARCH_INFORM);
     }
 

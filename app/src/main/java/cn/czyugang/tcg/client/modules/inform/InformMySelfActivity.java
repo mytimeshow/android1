@@ -24,6 +24,7 @@ import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.api.InformApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
+import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.entity.Inform;
 import cn.czyugang.tcg.client.entity.MyInform;
@@ -63,13 +64,14 @@ public class InformMySelfActivity extends BaseActivity {
     @BindView(R.id.myself_cover)
     ImgView mySelfCover;
 
-    List<MyInform> myInforms=new ArrayList<MyInform>();
+    List<MyInform> myInforms = new ArrayList<MyInform>();
     MyInformAdapter myInformAdapter;
-   
-    public static void startMySelfActivity( ){
-        Intent intent=new Intent(getTopActivity(),InformMySelfActivity.class);
+
+    public static void startMySelfActivity() {
+        Intent intent = new Intent(getTopActivity(), InformMySelfActivity.class);
         getTopActivity().startActivity(intent);
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,11 +83,9 @@ public class InformMySelfActivity extends BaseActivity {
         refreshInform(true);
 
 
-
-
         appBarLayout.addOnOffsetChangedListener((appBarLayout1, verticalOffset) -> {
-            LogRui.i("onCreate####"+verticalOffset+"            "+Math.abs(verticalOffset)/appBarLayout.getHeight());
-            frameTitle.setAlpha((float)(Math.abs(verticalOffset))/((float)(appBarLayout.getHeight())));
+            LogRui.i("onCreate####" + verticalOffset + "            " + Math.abs(verticalOffset) / appBarLayout.getHeight());
+            frameTitle.setAlpha((float) (Math.abs(verticalOffset)) / ((float) (appBarLayout.getHeight())));
         });
     }
 
@@ -94,27 +94,23 @@ public class InformMySelfActivity extends BaseActivity {
             @Override
             public void onNext(MyInformResponse response) {
                 super.onNext(response);
-                response.parse();
-                myInforms.addAll(response.data);
-                myInformAdapter=new MyInformAdapter(myInforms,InformMySelfActivity.this);
-                informForMyselfList.setLayoutManager(new LinearLayoutManager(InformMySelfActivity.this));
-                informForMyselfList.setAdapter(myInformAdapter);
-                mySelfName.setText(response.myName);
-                mySelfFollowNum.setText(String.valueOf(response.followCount));
-                mySelfFansNum.setText(String.valueOf(response.fansCount));
-                mySelfArticleNum.setText(String.valueOf(response.articleCount));
-                mySelfDescription.setText(response.myIdentity?response.mySummary:"");
-                mySelfCover.id(response.myCover);
-               /* if(response..equals("NORMAL")){
-                    userSummary.setText("");
-                }else {
-                    userSummary.setText(response.userSummary);
-                }*/
+                if (ErrorHandler.judge200(response)) {
+                    response.parse();
+                    myInforms.addAll(response.data);
+                    myInformAdapter = new MyInformAdapter(myInforms, InformMySelfActivity.this);
+                    informForMyselfList.setLayoutManager(new LinearLayoutManager(InformMySelfActivity.this));
+                    informForMyselfList.setAdapter(myInformAdapter);
+                    mySelfName.setText(response.myName);
+                    mySelfFollowNum.setText(String.valueOf(response.followCount));
+                    mySelfFansNum.setText(String.valueOf(response.fansCount));
+                    mySelfArticleNum.setText(String.valueOf(response.articleCount));
+                    mySelfDescription.setText(response.myIdentity ? response.mySummary : "");
+                    mySelfCover.id(response.myCover);
+                }
+
             }
         });
     }
-
-
 
 
     public static class MyInformAdapter extends RecyclerView.Adapter<MyInformAdapter.Holder> {
@@ -125,57 +121,53 @@ public class InformMySelfActivity extends BaseActivity {
             this.list = list;
             this.activity = activity;
         }
+
         @Override
         public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
             return new Holder(LayoutInflater.from(activity).inflate(
-                    R.layout.item_inform_for_myself ,parent,false));
+                    R.layout.item_inform_for_myself, parent, false));
         }
+
         @Override
         public void onBindViewHolder(Holder holder, int position) {
-            MyInform data=list.get(position);
-            CommonUtil.setTextViewLinesWithEllipsis(holder.informContent,2);
-            CommonUtil.setTextViewLinesWithEllipsis(holder.commitContent,1);
+            MyInform data = list.get(position);
+            CommonUtil.setTextViewLinesWithEllipsis(holder.informContent, 2);
+            CommonUtil.setTextViewLinesWithEllipsis(holder.commitContent, 1);
             holder.informContent.setText(data.getContent());
             holder.informCommitNum.setText(data.getCommitNum());
             holder.informImg.id(data.imgUrl);
             holder.informTime.setText(TimeUtils.getTimeDifferent(data.createTime));
 
-            if(data.getType().equals("INFO")){
+            if (data.getType().equals("INFO")) {
                 holder.informType.setText("发表了文章");
                 holder.commit.setVisibility(View.GONE);
-            }
-            else if(data.getType().equals("COMMENT")){
+            } else if (data.getType().equals("COMMENT")) {
                 holder.informType.setText("评论了文章");
                 holder.commit.setVisibility(View.VISIBLE);
-                holder.commitContent.setText(data.commitName+"："+data.getCommitContent());
+                holder.commitContent.setText(data.commitName + "：" + data.getCommitContent());
                 holder.commitHead.id(data.commitHead);
-            }
-            else if(data.getType().equals("REPLY")){
+            } else if (data.getType().equals("REPLY")) {
                 holder.informType.setText("回复了评论");
                 holder.commitHead.setVisibility(View.GONE);
                 holder.commit.setVisibility(View.VISIBLE);
-                holder.commitContent.setText(data.commitName+" 回复了 "+data.replyName+"："+data.commitContent);
-            }
-            else if(data.getType().equals("LIKE_COMMENT")){
+                holder.commitContent.setText(data.commitName + " 回复了 " + data.replyName + "：" + data.commitContent);
+            } else if (data.getType().equals("LIKE_COMMENT")) {
                 holder.informType.setText("点赞并且评论了资讯");
                 holder.commit.setVisibility(View.VISIBLE);
                 holder.commitHead.id(data.commitHead);
-                holder.commitContent.setText(data.commitName+"："+data.commitContent);
-            }
-            else if(data.getType().equals("LIKE_REPLY")){
+                holder.commitContent.setText(data.commitName + "：" + data.commitContent);
+            } else if (data.getType().equals("LIKE_REPLY")) {
                 holder.informType.setText("点赞并且回复了评论");
                 holder.commitHead.setVisibility(View.GONE);
                 holder.commit.setVisibility(View.VISIBLE);
-                holder.commitContent.setText(data.commitName+" 回复了 "+data.replyName+"："+data.getCommitContent());
-            }
-            else if(data.getType().equals("LIKE_INFO")){
+                holder.commitContent.setText(data.commitName + " 回复了 " + data.replyName + "：" + data.getCommitContent());
+            } else if (data.getType().equals("LIKE_INFO")) {
                 holder.informType.setText("点赞了资讯");
                 holder.commit.setVisibility(View.GONE);
-            }
-            else if(data.getType().equals("KEEP_INFO")){
+            } else if (data.getType().equals("KEEP_INFO")) {
                 holder.informType.setText("收藏了资讯");
                 holder.commit.setVisibility(View.GONE);
-            }else{
+            } else {
                 holder.commit.setVisibility(View.GONE);
             }
             /*if (activity==InformOrderSelfActivity.instance){
@@ -186,6 +178,7 @@ public class InformMySelfActivity extends BaseActivity {
             }*/
 
         }
+
         @Override
         public int getItemCount() {
             return list.size();
@@ -211,18 +204,17 @@ public class InformMySelfActivity extends BaseActivity {
 
             public Holder(View itemView) {
                 super(itemView);
-                informImg=itemView.findViewById(R.id.inform_for_myself_img);
-                informType=itemView.findViewById(R.id.inform_for_myself_type);
-                informTime=itemView.findViewById(R.id.inform_for_myself_time);
-                informContent=itemView.findViewById(R.id.inform_for_myself_content);
-                informCommitNum=itemView.findViewById(R.id.inform_for_myself_commit_content_num);
+                informImg = itemView.findViewById(R.id.inform_for_myself_img);
+                informType = itemView.findViewById(R.id.inform_for_myself_type);
+                informTime = itemView.findViewById(R.id.inform_for_myself_time);
+                informContent = itemView.findViewById(R.id.inform_for_myself_content);
+                informCommitNum = itemView.findViewById(R.id.inform_for_myself_commit_content_num);
                 //评论详情部分
-                commit=itemView.findViewById(R.id.inform_for_myself_commit_content);
-                commitHead=itemView.findViewById(R.id.inform_for_myself_commit_head);
-                commitContent=itemView.findViewById(R.id.inform_for_myself_commit_contentmsg);
+                commit = itemView.findViewById(R.id.inform_for_myself_commit_content);
+                commitHead = itemView.findViewById(R.id.inform_for_myself_commit_head);
+                commitContent = itemView.findViewById(R.id.inform_for_myself_commit_contentmsg);
                 //顶部文章状态和时间显示部分
                 //typeLinearLayout=itemView.findViewById(R.id.inform_for_myself_type_linear);
-
 
 
             }
@@ -230,27 +222,28 @@ public class InformMySelfActivity extends BaseActivity {
     }
 
     @OnClick(R.id.title_back)
-    public void onBack(){
+    public void onBack() {
         finish();
     }
+
     @OnClick(R.id.title_search_bg)
-    public void onSearch(){
+    public void onSearch() {
         SearchActivity.startSearchActivity(SearchActivity.SEARCH_INFORM);
     }
 
     @OnClick(R.id.myself_cover)
-    public void onCover(){
+    public void onCover() {
         InformChangeCoverActivity.startChangeCoverActivity();
     }
 
     @OnClick(R.id.inform_for_myself_follow)
-    void toMyFollow(){
-        InformSelfFollowActivity.startInformSelfFollowActivity("我的关注",UserOAuth.getUserId());
+    void toMyFollow() {
+        InformSelfFollowActivity.startInformSelfFollowActivity("我的关注", UserOAuth.getUserId());
     }
 
     @OnClick(R.id.inform_for_myself_fans)
-    void toMyFans(){
-        InformSelfFansActivity.startInformSelfFansActivity("我的粉丝",UserOAuth.getUserId());
+    void toMyFans() {
+        InformSelfFansActivity.startInformSelfFansActivity("我的粉丝", UserOAuth.getUserId());
     }
 
 }
