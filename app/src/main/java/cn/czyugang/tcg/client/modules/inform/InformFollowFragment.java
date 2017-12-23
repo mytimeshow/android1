@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +27,10 @@ import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.InformFollow;
 import cn.czyugang.tcg.client.entity.InformFollowResponse;
 import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.widget.LabelLayout;
+import cn.czyugang.tcg.client.widget.RefreshLoadHelper;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -58,6 +62,8 @@ public class InformFollowFragment extends BaseFragment {
 
     FollowContentAdapter followContentAdapter;
     List<InformFollow> followCotentsList = new ArrayList<InformFollow>();
+    private InformFollowResponse informFollowResponse;
+    private RefreshLoadHelper refreshLoadHelper;
 
 
     public static InformFollowFragment newInstance() {
@@ -85,24 +91,23 @@ public class InformFollowFragment extends BaseFragment {
         list.add("感情后花园");
         columnType.setTexts(list);
         followContentAdapter = new FollowContentAdapter(followCotentsList, getActivity());
-        refreshInform(true, "ALL");
-        columnType.setOnClickItemListener(new LabelLayout.OnClickItemListener() {
+        columnType.setOnClickItemListener((text, textView) -> {
+            textView.setTextColor(getColor(R.color.main_red));
+            textView.setBackgroundResource(R.drawable.bg_rect_label_click);
 
-            @Override
-            public void onClick(String text, TextView textView) {
-
-
-                textView.setTextColor(getColor(R.color.main_red));
-                textView.setBackgroundResource(R.drawable.bg_rect_label_click);
-                if (columnType.lastSelectTextView != null) {
-                    columnType.lastSelectTextView.setTextColor(getResources().getColor(R.color.text_dark_gray));
-                    columnType.lastSelectTextView.setBackgroundResource(R.drawable.bg_rect);
-
-                }
-
+            if (columnType.lastSelectTextView != null) {
+                columnType.lastSelectTextView.setTextColor(getResources().getColor(R.color.text_dark_gray));
+                columnType.lastSelectTextView.setBackgroundResource(R.drawable.bg_rect);
 
             }
         });
+
+        lvInformFollow.setLayoutManager(new LinearLayoutManager(getActivity()));
+        lvInformFollow.setAdapter(followContentAdapter);
+        refreshLoadHelper = new RefreshLoadHelper(getActivity()).build(lvInformFollow);
+        refreshLoadHelper.swipeToLoadLayout.setOnRefreshListener(() -> refreshInform(false, "ALL"));
+        refreshLoadHelper.swipeToLoadLayout.setOnLoadMoreListener(() -> refreshInform(true, "ALL"));
+        refreshInform(true, "ALL");
 
         return rootView;
     }
@@ -187,23 +192,33 @@ public class InformFollowFragment extends BaseFragment {
     }
 
 
-    private void refreshInform(boolean firstLoad, String type) {
-        InformApi.getFollowInform(type).subscribe(new BaseActivity.NetObserver<InformFollowResponse>() {
+    private void refreshInform(boolean loadmore, String type) {
+        int pagerIndex = 1;
+        String accessTime = null;
+        if (loadmore && informFollowResponse != null) {
+            accessTime = informFollowResponse.accessTime;
+            pagerIndex = informFollowResponse.currentPage + 1;
+        }
+        InformApi.getFollowInform(type, pagerIndex, accessTime).subscribe(new BaseActivity.NetObserver<InformFollowResponse>() {
             @Override
             public void onNext(InformFollowResponse response) {
                 super.onNext(response);
-                //Toast.makeText(InformMySelfActivity.this,response.data.toString(),Toast.LENGTH_SHORT).show();
-                if (ErrorHandler.judge200(response)) {
-                    response.parse();
+                if (!ErrorHandler.judge200(response)) return;
+                if (ErrorHandler.isRepeat(informFollowResponse,response)) return;
+                response.parse();
+                if (!loadmore) {
                     followCotentsList.clear();
-                    followCotentsList.addAll(response.data);
-                    followContentAdapter.notifyDataSetChanged();
-                    if (firstLoad) {
-                        lvInformFollow.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        lvInformFollow.setAdapter(followContentAdapter);
-                    }
                 }
+                followCotentsList.addAll(response.data);
+                followContentAdapter.notifyDataSetChanged();
 
+                informFollowResponse = response;
+
+            }
+
+            @Override
+            public SwipeToLoadLayout getSwipeToLoadLayout() {
+                return refreshLoadHelper.swipeToLoadLayout;
             }
         });
     }
@@ -254,7 +269,7 @@ public class InformFollowFragment extends BaseFragment {
                             super.onNext(response);
                             if (!ErrorHandler.judge200(response)) return;
                             holder.followThumbPic.setBackgroundResource(R.drawable.icon_dianzan2);
-                            holder.followThumbNum.setText(String.valueOf(Integer.valueOf(data.thumbNum)+1));
+                            holder.followThumbNum.setText(String.valueOf(Integer.valueOf(data.thumbNum) + 1));
                         }
                     });
                 } else {
