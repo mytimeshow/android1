@@ -91,7 +91,7 @@ public class ScoreActivity extends BaseActivity {
 
     @OnClick(R.id.score_sign_action)
     public void onSign() {
-        signAction.setText("+"+signedDayDict);
+        signAction.setText("+"+1);
         signAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
         signAction.setClickable(false);
        // isSignToday=true;
