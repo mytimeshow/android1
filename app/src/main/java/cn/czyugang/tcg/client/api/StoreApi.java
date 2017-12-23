@@ -34,7 +34,9 @@ import io.reactivex.schedulers.Schedulers;
 
 public class StoreApi {
 
+    //店铺  recordFootMarkAuto
     public static Observable<Response<Store>> getStoreById(String id) {
+        RecordApi.recordFootMarkAuto("STORE",id);
         HashMap<String, Object> map = new HashMap<>();
         map.put("storeId", id);
         return UserOAuth.getInstance()
@@ -193,7 +195,9 @@ public class StoreApi {
 
 
     //api/auth/v1/product/store/get ［可接入］根据id获取店铺商品详情
+    //recordFootMarkAuto
     public static Observable<Response<Good>> getGoodDetail(String id) {
+        RecordApi.recordFootMarkAuto("PRODUCT",id);
         HashMap<String, Object> map = new HashMap<>();
         map.put("id",id );
         return UserOAuth.getInstance()
@@ -301,5 +305,11 @@ public class StoreApi {
                 .observeOn(AndroidSchedulers.mainThread());
 
     }
+
+
+    /*
+    *   分类
+    * */
+
 
 }

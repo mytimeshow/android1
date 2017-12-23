@@ -1,6 +1,5 @@
 package cn.czyugang.tcg.client.modules.order;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -33,9 +32,9 @@ public class MyOrderActivity extends BaseActivity {
 
     private List<BaseFragment> fragments = new ArrayList<>();
 
-    public static void startMyOrderActivity(Activity activity) {
-        Intent intent = new Intent(activity, MyOrderActivity.class);
-        activity.startActivity(intent);
+    public static void startMyOrderActivity(){
+        Intent intent=new Intent(getTopActivity(),MyOrderActivity.class);
+        getTopActivity().startActivity(intent);
     }
 
     @Override

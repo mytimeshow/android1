@@ -30,7 +30,6 @@ import cn.czyugang.tcg.client.base.BaseFragmentAdapter;
 import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.entity.Store;
-import cn.czyugang.tcg.client.entity.TrolleyResponse;
 import cn.czyugang.tcg.client.entity.TrolleyStore;
 import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.modules.common.dialog.StoreTrolleyDialog;
@@ -177,12 +176,13 @@ public class StoreActivity extends BaseActivity {
     private void getTrolleyStore(String storeId) {
         if (false) AppKeyStorage.clearTrolleyStore(null);
         trolleyStore = AppKeyStorage.getTrolleyStore(storeId);
-        StoreApi.getTrolley(storeId).subscribe(new NetObserver<TrolleyResponse>() {
+        StoreApi.getTrolley(storeId);
+/*        .subscribe(new NetObserver<TrolleyResponse>() {
             @Override
             public void onNext(TrolleyResponse response) {
                 super.onNext(response);
             }
-        });
+        });*/
 
         initFragment();
         initBottomTrolley();
@@ -294,7 +294,7 @@ public class StoreActivity extends BaseActivity {
     public void onCollect() {
         if (store == null) return;
         if (store.collected) {
-            RecordApi.deleteCollectStore(store.id).subscribe(new NetObserver<Response>() {
+            RecordApi.deleteCollect("STORE",store.id).subscribe(new NetObserver<Response>() {
                 @Override
                 public void onNext(Response response) {
                     super.onNext(response);
@@ -305,7 +305,7 @@ public class StoreActivity extends BaseActivity {
                 }
             });
         } else {
-            RecordApi.collectStore(store.id).subscribe(new NetObserver<Response>() {
+            RecordApi.collect("STORE",store.id).subscribe(new NetObserver<Response>() {
                 @Override
                 public void onNext(Response response) {
                     super.onNext(response);

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/item_time"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_36"
+        android:background="@color/bg"
+        android:visibility="gone"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_90"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_10"
+        >
+
+        <cn.czyugang.tcg.client.widget.SelectButton
+            android:id="@+id/item_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/dp_10"
+            android:visibility="gone"
+            />
+
+        <cn.czyugang.tcg.client.utils.img.ImgView
+            android:id="@+id/item_img"
+            android:layout_width="@dimen/dp_70"
+            android:layout_height="@dimen/dp_70"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_name"
+                style="@style/text_16_black"
+                android:text="资讯标题"
+                android:lineSpacingMultiplier="1.2"/>
+
+
+            <include layout="@layout/space_h"/>
+
+            <TextView
+                android:id="@+id/item_from"
+                style="@style/text_12_gray"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+</LinearLayout>

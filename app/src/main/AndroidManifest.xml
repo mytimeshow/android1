@@ -375,9 +375,9 @@
         <!--通用web activity-->
         <activity android:name=".modules.common.WebActivity"/>
         <!--大图显示-->
-        <activity android:name=".modules.common.ImgActivity" android:theme="@style/ImgActivity"/>
+        <activity android:name=".modules.common.ImgActivity" android:theme="@style/BlackStatusTheme"/>
         <!--视频-->
-        <activity android:name=".modules.common.VideoActivity" android:theme="@style/ImgActivity"/>
+        <activity android:name=".modules.common.VideoActivity" android:theme="@style/BlackStatusTheme"/>
 
         <!--收藏-->
         <activity android:name=".modules.person.CollectionActivity"/>
@@ -426,8 +426,8 @@
         <activity android:name=".modules.score.ScoreUseActivity"/>
 
         <!--扫码-->
-        <activity android:name=".modules.scan.ScanActivity"/>
-        <activity android:name=".modules.scan.ScanInputActivity"/>
+        <activity android:name=".modules.scan.ScanActivity" android:theme="@style/BlackStatusTheme"/>
+        <activity android:name=".modules.scan.ScanInputActivity" android:theme="@style/BlackStatusTheme"/>
         <activity android:name=".modules.scan.ScanResultActivity"/>
         <activity android:name=".modules.scan.ScanHistoryActivity"/>
 

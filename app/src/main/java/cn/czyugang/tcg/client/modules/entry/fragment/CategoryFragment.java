@@ -53,19 +53,25 @@ public class CategoryFragment extends BaseFragment {
         rootView = inflater.inflate(R.layout.fragment_category, container, false);
         unbinder = ButterKnife.bind(this, rootView);
 
-        List<BaseFragment> fragments=new ArrayList<>();
+        List<BaseFragment> fragments = new ArrayList<>();
         fragments.add(HomeCategoryFragment.newInstance(Store.STORE_TYPE_FOOD));
         fragments.add(HomeCategoryFragment.newInstance(Store.STORE_TYPE_GOODS));
-        viewPager.setAdapter(new BaseFragmentAdapter(getChildFragmentManager(),fragments));
+        viewPager.setAdapter(new BaseFragmentAdapter(getChildFragmentManager(), fragments));
         viewPager.setOffscreenPageLimit(2);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         tabLayout.setupWithViewPager(viewPager);
 
+        getCategoryInfo();
+
         return rootView;
     }
 
+    private void getCategoryInfo() {
+
+    }
+
     @OnClick(R.id.category_msg)
-    public void onMsg(){
+    public void onMsg() {
         ImListActivity.startImListActivity();
     }
 
@@ -73,6 +79,5 @@ public class CategoryFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-
     }
 }

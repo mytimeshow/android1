@@ -38,7 +38,7 @@ public class ScanInputActivity extends BaseActivity {
             showToast("请输入二维码/条形码");
             return;
         }
-        ScanResultActivity.startScanResultActivity(input.getText().toString());
+        ScanResultHandler.deal(input.getText().toString(),this);
     }
 
     @OnClick(R.id.scan_check_scan)

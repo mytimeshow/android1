@@ -203,7 +203,7 @@ public class MyFragment extends BaseFragment implements MyContract.View {
                 //TODO 启动抵用券页面
                 break;
             case R.id.fl_order:
-                MyOrderActivity.startMyOrderActivity(getActivity());
+                MyOrderActivity.startMyOrderActivity();
                 break;
         }
     }

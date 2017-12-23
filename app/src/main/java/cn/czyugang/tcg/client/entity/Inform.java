@@ -68,6 +68,14 @@ public class Inform {
     public String orderTime;
     @SerializedName("province")
     public String province;
+    @SerializedName("publisherName")
+    public String publisherName;
+    @SerializedName("publisherType")
+    public String publisherType;
+    @SerializedName("publisherTypeDesc")
+    public String publisherTypeDesc;
+    @SerializedName("publisherUserId")
+    public String publisherUserId;
     @SerializedName("publishTime")
     public String publishTime;
     @SerializedName("sortId")
@@ -86,8 +94,6 @@ public class Inform {
     public String userId;
 
 
-
-
     public String headUrl;
     public String imgUrl;
     public String commentNum;
@@ -100,7 +106,7 @@ public class Inform {
 
     String bannerImg;
 
-    public void InformColumn(){
+    public void InformColumn() {
 
     }
 
