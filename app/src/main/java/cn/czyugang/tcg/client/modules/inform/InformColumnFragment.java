@@ -131,62 +131,27 @@ public class InformColumnFragment extends BaseFragment {
             holder.columnIsFollowFrame.setOnClickListener(v -> {
                 if (!data.isFollow) {
                     InformApi.toFollowColumn(data.id).subscribe(
-                            new Observer<Response>() {
-                                @Override
-                                public void onSubscribe(Disposable d) {
-
-                                }
-
+                            new BaseActivity.NetObserver<Response>() {
                                 @Override
                                 public void onNext(Response response) {
-                                    switch (response.getCode()) {
-                                        case 200:
-                                            holder.columnIsFollow.setText("已关注");
-                                            holder.columnIsFollow.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
-
-                                    }
-                                }
-
-                                @Override
-                                public void onError(Throwable e) {
-
-                                }
-
-                                @Override
-                                public void onComplete() {
+                                    super.onNext(response);
+                                    if (!ErrorHandler.judge200(response)) return;
+                                    holder.columnIsFollow.setText("已关注");
+                                    holder.columnIsFollow.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
 
                                 }
                             }
                     );
                 } else {
-                    InformApi.toUnFollowColumn(data.id).subscribe(
-                            new Observer<Response>() {
-                                @Override
-                                public void onSubscribe(Disposable d) {
-
-                                }
-
-                                @Override
-                                public void onNext(Response response) {
-                                    switch (response.getCode()) {
-                                        case 200:
-                                            holder.columnIsFollow.setText("+关注");
-                                            holder.columnIsFollow.setBackgroundResource(R.drawable.bg_rect_cir_red);
-
-                                    }
-                                }
-
-                                @Override
-                                public void onError(Throwable e) {
-
-                                }
-
-                                @Override
-                                public void onComplete() {
-
-                                }
-                            }
-                    );
+                    InformApi.toUnFollowColumn(data.id).subscribe(new BaseActivity.NetObserver<Response>() {
+                        @Override
+                        public void onNext(Response response) {
+                            super.onNext(response);
+                            if (!ErrorHandler.judge200(response)) return;
+                            holder.columnIsFollow.setText("+关注");
+                            holder.columnIsFollow.setBackgroundResource(R.drawable.bg_rect_cir_red);
+                        }
+                    });
                 }
                 // holder.columnIsFollow.setText(data.isFollow?"+关注":"已关注");
                 //holder.columnIsFollow.setBackgroundResource(data.isFollow ? R.drawable.bg_rect_cir_red : R.drawable.bg_rect_cir_grey_ccc);

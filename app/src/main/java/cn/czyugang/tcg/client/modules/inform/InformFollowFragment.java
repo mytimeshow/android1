@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,8 +24,11 @@ import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.InformFollow;
 import cn.czyugang.tcg.client.entity.InformFollowResponse;
+import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.widget.LabelLayout;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 import static cn.czyugang.tcg.client.utils.app.ResUtil.getColor;
 
@@ -232,10 +236,40 @@ public class InformFollowFragment extends BaseFragment {
                 InformDetailsActivity.startInformDetailsActivity();
             });
             holder.followName.setOnClickListener(v -> {
-                InformOrderSelfActivity.startInformOrderSelfActivity(data.id);
+                InformOrderSelfActivity.startInformOrderSelfActivity(data.userId);
             });
             holder.followHead.setOnClickListener(v -> {
-                InformOrderSelfActivity.startInformOrderSelfActivity(data.id);
+                InformOrderSelfActivity.startInformOrderSelfActivity(data.userId);
+            });
+            if (data.isThumbs) {
+                holder.followThumbPic.setBackgroundResource(R.drawable.icon_dianzan2);
+            } else {
+                holder.followThumbPic.setBackgroundResource(R.drawable.ic_thumb_up);
+            }
+            holder.followThumb.setOnClickListener(v -> {
+                if (!data.isThumbs) {
+                    InformApi.toLikeInform(data.id).subscribe(new BaseActivity.NetObserver<Response>() {
+                        @Override
+                        public void onNext(Response response) {
+                            super.onNext(response);
+                            if (!ErrorHandler.judge200(response)) return;
+                            holder.followThumbPic.setBackgroundResource(R.drawable.icon_dianzan2);
+                            holder.followThumbNum.setText(String.valueOf(Integer.valueOf(data.thumbNum)+1));
+                        }
+                    });
+                } else {
+                    InformApi.toUnLikeInform(data.id).subscribe(new BaseActivity.NetObserver<Response>() {
+                        @Override
+                        public void onNext(Response response) {
+                            super.onNext(response);
+                            if (!ErrorHandler.judge200(response)) return;
+                            holder.followThumbPic.setBackgroundResource(R.drawable.ic_thumb_up);
+                            holder.followThumbNum.setText(data.thumbNum);
+                        }
+                    });
+                }
+                data.isThumbs = (data.isThumbs ? false : true);
+
             });
         }
 
@@ -252,6 +286,9 @@ public class InformFollowFragment extends BaseFragment {
             TextView followThumbNum;
             TextView followContent;
             ImgView followImg;
+            LinearLayout followThumb;
+
+            TextView followThumbPic;
 
             public Holder(View itemView) {
                 super(itemView);
@@ -261,6 +298,8 @@ public class InformFollowFragment extends BaseFragment {
                 followThumbNum = itemView.findViewById(R.id.follw_list_thumb_num);
                 followContent = itemView.findViewById(R.id.follow_list_content);
                 followImg = itemView.findViewById(R.id.follow_list_img);
+                followThumbPic = itemView.findViewById(R.id.follw_list_thumb_pic);
+                followThumb = itemView.findViewById(R.id.follw_list_thumb);
             }
         }
     }

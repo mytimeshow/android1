@@ -97,100 +97,6 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_160"
-
-                >
-
-                <RelativeLayout
-                    android:id="@+id/inform_news_large_ralative"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_130">
-
-                    <cn.czyugang.tcg.client.utils.img.ImgView
-                        android:id="@+id/inform_news_large_img"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/score_bg_red" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/inform_order_news_large_content"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:lineSpacingExtra="@dimen/sp_10"
-                            android:text="教你解锁18种吃烤鱼的新姿势！\n老板请你免费尝鲜！"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/sp_14" />
-
-                        <TextView
-                            android:id="@+id/inform_order_news_large_cotentname"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp_20"
-                            android:gravity="center"
-                            android:text="—— 吃货专区 ——"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/sp_11" />
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/inform_order_news_large_ralative_bottom"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_30"
-                    android:layout_below="@+id/inform_news_large_ralative"
-                    android:background="@color/white">
-
-                    <TextView
-                        android:id="@+id/inform_order_news_large_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/dp_49"
-                        android:text="狂热使者"
-                        android:textColor="@color/text_dark_gray"
-                        android:textSize="@dimen/sp_11" />
-
-                    <TextView
-                        android:id="@+id/inform_order_news_large_commitNum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/dp_10"
-                        android:text="123456"
-                        android:textColor="@color/text_dark_gray"
-                        android:textSize="@dimen/sp_11" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/dp_5"
-                        android:layout_toLeftOf="@+id/inform_order_news_large_commitNum"
-                        android:src="@drawable/ic_comment" />
-
-                </RelativeLayout>
-
-                <cn.czyugang.tcg.client.utils.img.ImgView
-                    android:id="@+id/inform_news_large_head"
-                    android:layout_width="@dimen/dp_34"
-                    android:layout_height="@dimen/dp_34"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:layout_marginTop="@dimen/dp_120"
-                    android:src="@drawable/ic_logout_avatar" />
-
-
-            </RelativeLayout>
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v7.widget.RecyclerView
@@ -198,7 +104,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/inform_appbar_layout"
-            android:layout_marginTop="@dimen/dp_10"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     </android.support.design.widget.CoordinatorLayout>

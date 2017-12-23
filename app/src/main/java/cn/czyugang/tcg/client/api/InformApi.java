@@ -130,7 +130,7 @@ public class InformApi {
         params.put("page", page);
         params.put("size", 20);
         return UserOAuth.getInstance()
-                .get("/api/auth/v1/user/media/relation/list/fans", params)
+                .get("api/auth/v1/user/media/relation/list/fans", params)
                 .map(s -> (Response<List<UserFansFollow>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, new JsonParse.Type(List.class, UserFansFollow.class))))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -145,9 +145,59 @@ public class InformApi {
         params.put("page", page);
         params.put("size", 20);
         return UserOAuth.getInstance()
-                .get("/api/auth/v1/user/media/relation/list/follows", params)
+                .get("api/auth/v1/user/media/relation/list/follows", params)
                 .map(s -> (Response<List<UserFansFollow>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, new JsonParse.Type(List.class, UserFansFollow.class))))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    //关注用户/媒体
+    public static Observable<Response> toFollowUser(String id) {
+        Map<String, Object> params = new HashMap<>();
+        //用户id
+        params.put("id", id);
+        return UserOAuth.getInstance()
+                .post("api/auth/v1/user/media/relation/follow", params)
+                .map(s -> (Response) JsonParse.fromJson(s, Response.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    //取关用户/媒体
+    public static Observable<Response> toUnFollowUser(String id) {
+        Map<String, Object> params = new HashMap<>();
+        //用户id
+        params.put("id", id);
+        return UserOAuth.getInstance()
+                .post("api/auth/v1/user/media/relation/cancel/follow", params)
+                .map(s -> (Response) JsonParse.fromJson(s, Response.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    //点赞资讯
+    public static Observable<Response> toLikeInform(String id) {
+        Map<String, Object> params = new HashMap<>();
+        //资讯id
+        params.put("id", id);
+        return UserOAuth.getInstance()
+                .post("api/auth/v1/info/like", params)
+                .map(s -> (Response) JsonParse.fromJson(s, Response.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    //取消点赞资讯
+    public static Observable<Response> toUnLikeInform(String id) {
+        Map<String, Object> params = new HashMap<>();
+        //资讯id
+        params.put("id", id);
+        return UserOAuth.getInstance()
+                .post("api/auth/v1/info/cancel/like", params)
+                .map(s -> (Response) JsonParse.fromJson(s, Response.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+
 }

@@ -26,4 +26,5 @@ public class UserFansFollow {
     public String userId;
     @SerializedName("userName")
     public String userName;
+
 }
