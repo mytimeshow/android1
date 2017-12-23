@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -30,6 +32,7 @@ import cn.czyugang.tcg.client.entity.InformFollowResponse;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.utils.img.ImgView;
+import cn.czyugang.tcg.client.widget.RefreshLoadHelper;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -46,6 +49,8 @@ public class InformColumnFragment extends BaseFragment {
 
     InformColumnAdapter informColumnAdapter;
     List<InformColumn> informColumns = new ArrayList<InformColumn>();
+    private InformColumnResponse informColumnResponse;
+    private RefreshLoadHelper refreshLoadHelper;
 
     public static InformColumnFragment newInstance() {
         InformColumnFragment fragment = new InformColumnFragment();
@@ -63,29 +68,40 @@ public class InformColumnFragment extends BaseFragment {
         ButterKnife.bind(this, rootView);
 
         informColumnAdapter = new InformColumnAdapter(informColumns, getActivity());
-
-        refreshInform(true,1);
+        informColumnList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        informColumnList.setAdapter(informColumnAdapter);
+        refreshLoadHelper = new RefreshLoadHelper(getActivity()).build(informColumnList);
+        refreshLoadHelper.swipeToLoadLayout.setOnRefreshListener(() -> refreshInform(false));
+        refreshLoadHelper.swipeToLoadLayout.setOnLoadMoreListener(() -> refreshInform(true));
+        refreshInform(true);
 
         return rootView;
     }
 
-    public void refreshInform(boolean firstLoad,int page){
-        InformApi.getInformColumn(page).subscribe(new BaseActivity.NetObserver<InformColumnResponse>() {
+    public void refreshInform(boolean loadmore){
+        int pagerIndex = 1;
+        String accessTime = null;
+        if (loadmore && informColumnResponse != null) {
+            accessTime = informColumnResponse.accessTime;
+            pagerIndex = informColumnResponse.currentPage + 1;
+        }
+        InformApi.getInformColumn(accessTime,pagerIndex).subscribe(new BaseActivity.NetObserver<InformColumnResponse>() {
             @Override
             public void onNext(InformColumnResponse response) {
                 super.onNext(response);
-                if (ErrorHandler.judge200(response)){
-                    response.parse();
+                if (!ErrorHandler.judge200(response)) return;
+                if (ErrorHandler.isRepeat(informColumnResponse,response)) return;
+                response.parse();
+                if (!loadmore) {
                     informColumns.clear();
-                    informColumns.addAll(response.data);
-                    informColumnAdapter.notifyDataSetChanged();
-                    if (firstLoad){
-                        informColumnList.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        informColumnList.setAdapter(informColumnAdapter);
-                    }
                 }
-
-
+                informColumns.addAll(response.data);
+                informColumnAdapter.notifyDataSetChanged();
+                informColumnResponse = response;
+            }
+            @Override
+            public SwipeToLoadLayout getSwipeToLoadLayout() {
+                return refreshLoadHelper.swipeToLoadLayout;
             }
         });
     }

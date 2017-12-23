@@ -33,4 +33,14 @@ public class ErrorHandler {
         return true;
     }
 
+    public static boolean isRepeat(Response old,Response newR){
+        if (old==null) return false;
+        if (newR==null) return true;
+        if (old.currentPage==newR.currentPage) {
+            AppUtil.toast("没有更多了");
+            return true;
+        }
+        return false;
+    }
+
 }

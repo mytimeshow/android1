@@ -25,11 +25,13 @@ public class InformApi {
 
 
     //个人动态
-    public static Observable<MyInformResponse> getInformByMyself() {
+    public static Observable<MyInformResponse> getInformByMyself(String accessTime,int page) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("accessTime", "");
-        map.put("page", 1);
-        map.put("size", 20);
+        if (accessTime!=null){
+            map.put("accessTime", accessTime);
+        }
+        map.put("page", page);
+        map.put("size", 10);
         return UserOAuth.getInstance()
                 .get("api/auth/v1/info/personal/list", map)
                 .map(s -> (MyInformResponse) JsonParse.fromJson(s, MyInformResponse.class))
@@ -37,11 +39,13 @@ public class InformApi {
                 .observeOn(AndroidSchedulers.mainThread());
     }
     //我的关注
-    public static Observable<InformFollowResponse> getFollowInform(String type) {
+    public static Observable<InformFollowResponse> getFollowInform(String type,int page,String accessTime) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("accessTime", "");
-        map.put("page", 1);
-        map.put("size", 20);
+        if (accessTime!=null){
+            map.put("accessTime", accessTime);
+        }
+        map.put("page", page);
+        map.put("size", 10);
         map.put("type", type);
         return UserOAuth.getInstance()
                 .get("api/auth/v1/info/follow/list", map)
@@ -50,11 +54,13 @@ public class InformApi {
                 .observeOn(AndroidSchedulers.mainThread());
     }
     //最新资讯
-    public static Observable<NewsInformResponse> getNewsInform() {
+    public static Observable<NewsInformResponse> getNewsInform(String accessTime,int page) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("accessTime", "");
-        map.put("page", 1);
-        map.put("size", 50);
+        if (accessTime!=null){
+            map.put("accessTime", accessTime);
+        }
+        map.put("page", page);
+        map.put("size", 10);
         return UserOAuth.getInstance()
                 .get("api/auth/v1/info/new/list", map)
                 .map(s -> (NewsInformResponse) JsonParse.fromJson(s, NewsInformResponse.class))
@@ -63,11 +69,13 @@ public class InformApi {
     }
 
     // 资讯栏目
-    public static Observable<InformColumnResponse> getInformColumn(int page){
+    public static Observable<InformColumnResponse> getInformColumn(String accessTime,int page){
         HashMap<String, Object> map = new HashMap<>();
-        map.put("accessTime", "");
+        if (accessTime!=null){
+            map.put("accessTime", accessTime);
+        }
         map.put("page", page);
-        map.put("size", 20);
+        map.put("size", 10);
         return UserOAuth.getInstance()
                 .get("api/auth/v1/info/sort/list", map)
                 .map(s -> (InformColumnResponse) JsonParse.fromJson(s, InformColumnResponse.class))
@@ -105,7 +113,7 @@ public class InformApi {
         HashMap<String, Object> map = new HashMap<>();
         map.put("accessTime", "");
         map.put("page", page);
-        map.put("size", 20);
+        map.put("size", 10);
         map.put("sortId", sortId);
         map.put("labelId", labelId);
         map.put("publisherId", publisherId);
@@ -125,7 +133,7 @@ public class InformApi {
         params.put("targetUserId", userId);
         params.put("accessTime", "");
         params.put("page", page);
-        params.put("size", 20);
+        params.put("size", 10);
         return UserOAuth.getInstance()
                 .get("api/auth/v1/user/media/relation/list/fans", params)
                 .map(s -> (Response<List<UserFansFollow>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, new JsonParse.Type(List.class, UserFansFollow.class))))
@@ -140,7 +148,7 @@ public class InformApi {
         params.put("followUserId", userId);
         params.put("accessTime", "");
         params.put("page", page);
-        params.put("size", 20);
+        params.put("size", 10);
         return UserOAuth.getInstance()
                 .get("api/auth/v1/user/media/relation/list/follows", params)
                 .map(s -> (Response<List<UserFansFollow>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, new JsonParse.Type(List.class, UserFansFollow.class))))
