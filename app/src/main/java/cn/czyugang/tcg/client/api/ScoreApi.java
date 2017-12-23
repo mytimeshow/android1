@@ -33,7 +33,7 @@ public class ScoreApi {
         HashMap<String, Object> map = new HashMap<>();
         map.put("scoreId", id);
         return UserOAuth.getInstance()
-                .get("api/auth/v2/user/bonusPoints/query/record", map)
+                .get("api/auth/v2/user/bonusPoints/query/record/dict", map)
                 .map(s -> (Response<List<Score>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class,new JsonParse.Type(List.class,Score.class))))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -41,6 +41,11 @@ public class ScoreApi {
 
 
     }
+
+
+
+
+
     //对服务器信息进行更新
     public static Observable<Response<Object>> PostUpdataScore(HashMap<String, Object> map){
         return UserOAuth.getInstance()
