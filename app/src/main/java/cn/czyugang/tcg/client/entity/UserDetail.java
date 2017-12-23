@@ -104,6 +104,10 @@ public class UserDetail {
         return setPayPassword;
     }
 
+    public boolean hadSetPayPassword(){
+        return "YES".equals(setPayPassword);
+    }
+
     public void setSetPayPassword(String setPayPassword) {
         this.setPayPassword = setPayPassword;
     }

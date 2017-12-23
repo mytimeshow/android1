@@ -32,6 +32,7 @@ import cn.czyugang.tcg.client.entity.UserBase;
 import cn.czyugang.tcg.client.entity.UserDetail;
 import cn.czyugang.tcg.client.entity.UserInfo;
 import cn.czyugang.tcg.client.modules.address.activity.AddressManageActivity;
+import cn.czyugang.tcg.client.modules.aftersale.AftersaleListActivity;
 import cn.czyugang.tcg.client.modules.balance.activity.BalanceActivity;
 import cn.czyugang.tcg.client.modules.entry.contract.MyContract;
 import cn.czyugang.tcg.client.modules.entry.presenter.MyPresenter;
@@ -301,6 +302,9 @@ public class MyFragment extends BaseFragment implements MyContract.View {
             }));
             list.add(new Item("邀请领红包"));
             list.add(new Item("分享领红包"));
+            list.add(new Item("售后列表",()->{
+                AftersaleListActivity.startAftersaleListActivity();
+            }));
 
             return list;
         }

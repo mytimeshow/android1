@@ -5,12 +5,19 @@
         <item name="android:windowBackground">@color/main_bg</item>
         <!--Switch开时的颜色-->
         <item name="colorAccent">@color/main_red</item>
+        <item name="colorPrimaryDark">@android:color/white</item>
     </style>
 
     <!--启动页样式-->
     <style name="AppTheme.Splash">
         <item name="android:windowBackground">@drawable/def_splash</item>
     </style>
+
+    <!--imgActivity-->
+    <style name="ImgActivity" parent="AppTheme">
+        <item name="colorPrimaryDark">@android:color/black</item>
+    </style>
+
 
     <!--标题样式-->
     <style name="title_title">

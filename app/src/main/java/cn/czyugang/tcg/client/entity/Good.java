@@ -2,7 +2,12 @@ package cn.czyugang.tcg.client.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.List;
+
+import cn.czyugang.tcg.client.utils.JsonParse;
 
 /**
  * @author ruiaa
@@ -85,7 +90,7 @@ public class Good {
     @SerializedName("id")
     public String id = "";
     @SerializedName("order")
-    public int order=0;
+    public int order = 0;
     @SerializedName("praise")
     public int praise = 0;
     @SerializedName("productId")
@@ -114,14 +119,15 @@ public class Good {
     public String webDescribe = "";
 
     public String pic = "";
+    public boolean hadCollect=false;
 
-    public String storeId="";
-    public String inventoryId="";   //库存  inventoryOfId[0].id -->  /api/auth/v1/product/shopping/getAttributes?storeInventoryId -->  GoodsSpecResponse
-    public double packagePrice=0; //包装费  inventoryOfId[0].packagePrice
-    public double showPrice=0;
-    public int showRemain=0;
-    transient public GoodsSpecResponse specResponse=null;    //规格
-    transient public ArrayList<String> picList=null;
+    public String storeId = "";
+    public String inventoryId = "";   //库存  inventoryOfId[0].id -->  /api/auth/v1/product/shopping/getAttributes?storeInventoryId -->  GoodsSpecResponse
+    public double packagePrice = 0; //包装费  inventoryOfId[0].packagePrice
+    public double showPrice = 0;
+    public int showRemain = 0;
+    transient public GoodsSpecResponse specResponse = null;    //规格
+    transient public ArrayList<String> picList = null;
 
     public boolean isMultiSpec() {
         return skuType.equals("MULTI");
@@ -135,7 +141,7 @@ public class Good {
         return showPrice;
     }
 
-    public String getShowPriceStr(){
+    public String getShowPriceStr() {
         return String.format("￥%.2f", showPrice);
     }
 
@@ -143,7 +149,7 @@ public class Good {
         return showRemain;
     }
 
-    public String getPackagePriceStr(){
+    public String getPackagePriceStr() {
         return String.format("￥%.2f", packagePrice);
     }
 
@@ -152,6 +158,54 @@ public class Good {
     }
 
 
+    public void mergeInfoFromProductInfo(JSONObject jsonObject) {
+        if (jsonObject == null) return;
+        appDescribe = jsonObject.optString("appDescribe");
+        brandId = jsonObject.optString("brandId");
+        classifyId = jsonObject.optString("classifyId");
+        enableSale = jsonObject.optString("enableSale");
+        skuType = jsonObject.optString("skuType");
+        subTitle = jsonObject.optString("subTitle");
+        title = jsonObject.optString("title");
+        userId = jsonObject.optString("userId");
+        webDescribe = jsonObject.optString("webDescribe");
+    }
+
+    /*
+    *   详情 标签
+    * */
+
+    transient public List<Tag> productTagList = null;
+    transient public List<Tag> serviceTagList = null;
+
+    public void parseTagList(JSONObject values) {
+        productTagList = JsonParse.fromJsonInValue(values, "productTagList", new JsonParse.Type(List.class, Tag.class),new ArrayList<>());
+        serviceTagList = JsonParse.fromJsonInValue(values, "serviceTagList", new JsonParse.Type(List.class, Tag.class),new ArrayList<>());
+
+        productTagList.add(new Tag("标签1"));
+        productTagList.add(new Tag("标签1"));
+        productTagList.add(new Tag("标签1"));
+        productTagList.add(new Tag("标签1"));
+        productTagList.add(new Tag("标签1"));
+
+        serviceTagList.add(new Tag("标签1"));
+        serviceTagList.add(new Tag("标签1"));
+        serviceTagList.add(new Tag("标签1"));
+    }
+
+    public static class Tag {
+        @SerializedName("name")
+        public String name;
+        @SerializedName("picId")
+        public String picId;
+
+        public Tag() {
+        }
+
+        public Tag(String name) {
+            this.name = name;
+        }
+    }
 
     /*
     *   本地外卖分类信息

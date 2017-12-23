@@ -17,6 +17,8 @@ import org.json.JSONObject;
 import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 
+import io.reactivex.annotations.NonNull;
+
 /**
  * Created by wuzihong on 2016/9/11.
  * Json解析类，采用Gson解析
@@ -66,6 +68,33 @@ public class JsonParse {
         return map;
     }
 
+    @NonNull
+    public static String getStringField(String json,String key){
+        if (json==null||json.equals("")) return "";
+        try{
+            JSONObject jsonObject=new JSONObject(json);
+            return jsonObject.optString(key);
+        }catch (Exception e){
+            LogRui.e("getField####",e);
+        }
+        return "";
+    }
+
+    @NonNull
+    public static String getStringField(String json,String key1,String key2){
+        if (json==null||json.equals("")) return "";
+        try{
+            JSONObject jsonObject=new JSONObject(json);
+            String value=jsonObject.optString(key1);
+            if (value==null||value.equals("")) return "";
+            jsonObject=new JSONObject(value);
+            return jsonObject.optString(key2);
+        }catch (Exception e){
+            LogRui.printExceptionStack(e);
+            LogRui.e("getField####",e);
+        }
+        return "";
+    }
 
     public static <T> T fromJsonInValue(JSONObject values,String key, java.lang.reflect.Type typeOfT) {
         if (values==null) return null;

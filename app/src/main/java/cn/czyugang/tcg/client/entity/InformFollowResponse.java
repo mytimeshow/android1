@@ -46,7 +46,7 @@ public class InformFollowResponse extends Response<List<InformFollow>> {
                     String id=jsonObject.optString("id");
                     for (InformFollow inform:data){
                         if (inform.id.equals(id)){
-                            inform.name=jsonObject.optString("name");
+                            inform.userName=jsonObject.optString("name");
 
                         }
                     }
@@ -110,7 +110,7 @@ public class InformFollowResponse extends Response<List<InformFollow>> {
                     String id=jsonObject.optString("id");
                     for (InformFollow inform:data){
                         if (inform.id.equals(id)){
-                            inform.isThumbs=jsonObject.optBoolean("name");
+                            inform.isThumbs=jsonObject.optString("name").equals("YES");
 
                         }
                     }
@@ -135,7 +135,7 @@ public class InformFollowResponse extends Response<List<InformFollow>> {
             }
 
             // 资讯来源字典
-            JSONObject sourceTypeObject=values.optJSONObject("sourceTypeDict ");
+            JSONObject sourceTypeObject=values.optJSONObject("sourceTypeDict");
 
 
 

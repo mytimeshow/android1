@@ -148,6 +148,7 @@
         android:background="@color/white">
 
         <ImageView
+            android:id="@+id/more_collect_icon"
             android:layout_width="@dimen/dp_16"
             android:layout_height="@dimen/dp_16"
             android:layout_gravity="center_vertical"
@@ -156,6 +157,7 @@
 
 
         <TextView
+            android:id="@+id/more_collect_text"
             style="@style/text_18_black"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/dp_42"

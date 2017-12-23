@@ -155,6 +155,7 @@ public class SelectDeliveryActivity extends BaseActivity {
 
     @OnClick(R.id.select_delivery_confirm)
     public void onConfirm() {
+        if (selectedTime.split(":").length==2) selectedTime=selectedTime+":00";
         storeMoreInfo.selectedDeliveryWay = selectedWay;
         storeMoreInfo.selectedDeliveryTime = selectedTime;
         Intent intent = new Intent();

@@ -25,7 +25,7 @@
             android:id="@+id/inform_news_small_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_5"
+            android:paddingLeft="@dimen/dp_5"
             android:textColor="@color/text_gray"
             android:textSize="@dimen/sp_11"
             android:gravity="center"
@@ -35,7 +35,7 @@
             android:text="博主名称"/>
         <LinearLayout
             android:id="@+id/inform_news_small_commit"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/dp_50"
             android:layout_height="@dimen/dp_20"
             android:orientation="horizontal"
             android:layout_alignParentBottom="true" >

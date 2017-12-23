@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical"
+    >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40">
+
+        <TextView
+            style="@style/text_16_black"
+            android:layout_gravity="center"
+            android:text="商品标签"
+            />
+
+        <ImageView
+            android:id="@+id/dialog_close"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/dp_10"
+            android:padding="@dimen/dp_2"
+            android:src="@drawable/icon_close_gray"/>
+    </FrameLayout>
+
+    <include layout="@layout/view_split_bar_light"/>
+
+    <TextView
+        style="@style/text_14_dark_gray"
+        android:layout_height="@dimen/dp_44"
+        android:text="官方授予店铺的商品标签"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="@dimen/dp_10"/>
+
+    <cn.czyugang.tcg.client.widget.FlowLayout
+        android:id="@+id/dialog_tags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        app:column_count="3"
+        app:vertical_spacing="@dimen/dp_8"
+        />
+
+</LinearLayout>

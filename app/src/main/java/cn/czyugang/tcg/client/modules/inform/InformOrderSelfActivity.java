@@ -23,12 +23,9 @@ import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.Inform;
 import cn.czyugang.tcg.client.entity.InformResponse;
-import cn.czyugang.tcg.client.entity.MyInform;
-import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.modules.store.SearchActivity;
 import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.img.ImgView;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Administrator on 2017/12/11.
@@ -64,7 +61,7 @@ public class InformOrderSelfActivity extends BaseActivity {
     private boolean isFollow;
 
     List<Inform> informs=new ArrayList<Inform>();
-    InformColumnMsgActivity.SmallInformAdapter informAdapter;
+    InformColumnMsgActivity.SelfInformAdapter informAdapter;
     public static String userId;
     public static void startInformOrderSelfActivity(String id){
         Intent intent=new Intent(getTopActivity(),InformOrderSelfActivity.class);
@@ -81,7 +78,7 @@ public class InformOrderSelfActivity extends BaseActivity {
         articleNum.setVisibility(View.GONE);
 
 
-        informAdapter=new InformColumnMsgActivity.SmallInformAdapter(informs,this);
+        informAdapter=new InformColumnMsgActivity.SelfInformAdapter(informs,this);
         refreshInform(true,1,"","",userId,"","");
        // InformMySelfActivity.MyInformAdapter.Holder holder=null;
 
@@ -126,12 +123,12 @@ public class InformOrderSelfActivity extends BaseActivity {
 
     @OnClick(R.id.inform_for_myself_follow)
     void toMyFollow(){
-        InformSelfFollowActivity.startInformSelfFollowActivity("TA的关注");
+        InformSelfFollowActivity.startInformSelfFollowActivity("TA的关注",userId);
     }
 
     @OnClick(R.id.inform_for_myself_fans)
     void toMyFans(){
-        InformSelfFansActivity.startInformSelfFansActivity("TA的粉丝");
+        InformSelfFansActivity.startInformSelfFansActivity("TA的粉丝",userId);
     }
 
     @OnClick(R.id.inform_order_isfollow)
@@ -195,5 +192,14 @@ public class InformOrderSelfActivity extends BaseActivity {
                     }
             );
         }*/
+    }
+
+    @OnClick(R.id.title_back)
+    public void onBack(){
+        finish();
+    }
+    @OnClick(R.id.title_search_bg)
+    public void onSearch(){
+        SearchActivity.startSearchActivity(SearchActivity.SEARCH_INFORM);
     }
 }

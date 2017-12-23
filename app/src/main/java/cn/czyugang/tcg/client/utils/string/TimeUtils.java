@@ -423,7 +423,7 @@ public class TimeUtils {
         }else if ((time=time/30)<12 ){
             return time+"个月前";
         }else{
-            return time%12+"年前";
+            return time/12+"年前";
         }
     }
 }
