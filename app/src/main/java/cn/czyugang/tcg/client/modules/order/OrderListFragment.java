@@ -304,7 +304,7 @@ public class OrderListFragment extends BaseFragment {
     *   去付款
     * */
     private void toPay(Order order) {
-        PayOrderActivity.startPayOrderActivity(order.id,order.totalPayment);
+        PayOrderActivity.startPayOrderActivity(order.id);
     }
 
     /*

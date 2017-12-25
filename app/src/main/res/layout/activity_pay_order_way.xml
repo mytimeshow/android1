@@ -39,7 +39,7 @@
                 style="@style/text_16_black"
                 android:layout_marginLeft="@dimen/dp_18"
                 android:layout_toRightOf="@id/pay_order_need_text"
-                android:text="￥64.00"
+                android:text="￥0.00"
                 android:textColor="@color/main_red"/>
 
             <TextView
@@ -61,7 +61,7 @@
                 android:layout_marginLeft="@dimen/dp_8"
                 android:layout_marginTop="@dimen/dp_8"
                 android:layout_toRightOf="@+id/pay_order_delivery_text"
-                android:text="￥3.00"
+                android:text="￥0.00"
                 android:textColor="@color/text_gray"
                 android:textSize="@dimen/sp_12"/>
 

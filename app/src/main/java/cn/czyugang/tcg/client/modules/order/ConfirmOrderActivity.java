@@ -210,7 +210,7 @@ public class ConfirmOrderActivity extends BaseActivity {
                             AppKeyStorage.clearTrolleyDeleteFlag(store.id);
                         }
                     }).start();
-                    PayOrderActivity.startPayOrderActivity(response.data.get(0),preSettleResponse.totalRealPrice);
+                    PayOrderActivity.startPayOrderActivity(response.data.get(0));
                     commit.postDelayed(()->clearAllActivityExceptMainAndTop(),300);
                 }
             }
