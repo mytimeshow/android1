@@ -8,8 +8,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
-import cn.czyugang.tcg.client.entity.Order;
-import cn.czyugang.tcg.client.modules.order.OrderDetailActivity;
+import cn.czyugang.tcg.client.modules.order.MyOrderActivity;
 
 /**
  * @author ruiaa
@@ -38,12 +37,14 @@ public class RefundApplyFinishActivity extends BaseActivity {
 
     @OnClick(R.id.refund_finish_shop)
     public void onOpenShop(){
+        clearAllActivityExceptMain();
         clearAllActivityExceptMain().selectFragment(0);
     }
 
     @OnClick(R.id.refund_finish_order)
     public void onOpenOrder(){
-        OrderDetailActivity.startOrderDetailActivity(new Order().id);
+        clearAllActivityExceptMain();
+        MyOrderActivity.startMyOrderActivity();
     }
 
 }

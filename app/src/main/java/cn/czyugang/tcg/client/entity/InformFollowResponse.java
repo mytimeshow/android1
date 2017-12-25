@@ -12,7 +12,7 @@ import cn.czyugang.tcg.client.utils.LogRui;
  * Created by Administrator on 2017/12/16.
  */
 
-public class InformFollowResponse extends Response<List<InformFollow>> {
+public class InformFollowResponse extends Response<List<Inform>> {
 
     public void parse(){
 
@@ -28,7 +28,7 @@ public class InformFollowResponse extends Response<List<InformFollow>> {
                 for (int i=0,size=headArray.length();i<size;i++){
                     JSONObject jsonObject=headArray.optJSONObject(i);
                     String id=jsonObject.optString("id");
-                    for (InformFollow inform:data){
+                    for (Inform inform:data){
                         if (inform.id.equals(id)){
                             inform.headUrl=jsonObject.optString("name");
 
@@ -44,7 +44,7 @@ public class InformFollowResponse extends Response<List<InformFollow>> {
                 for (int i=0,size=nameArray.length();i<size;i++){
                     JSONObject jsonObject=nameArray.optJSONObject(i);
                     String id=jsonObject.optString("id");
-                    for (InformFollow inform:data){
+                    for (Inform inform:data){
                         if (inform.id.equals(id)){
                             inform.userName=jsonObject.optString("name");
 
@@ -60,7 +60,7 @@ public class InformFollowResponse extends Response<List<InformFollow>> {
                 for (int i=0,size=identityArray.length();i<size;i++){
                     JSONObject jsonObject=identityArray.optJSONObject(i);
                     String id=jsonObject.optString("id");
-                    for (InformFollow inform:data){
+                    for (Inform inform:data){
                         if (inform.mediaId.equals(id)){
                             //inform.name=jsonObject.getString("name");
 
@@ -76,7 +76,7 @@ public class InformFollowResponse extends Response<List<InformFollow>> {
                 for (int i=0,size=commitNumArray.length();i<size;i++){
                     JSONObject jsonObject=commitNumArray.optJSONObject(i);
                     String id=jsonObject.optString("id");
-                    for (InformFollow inform:data){
+                    for (Inform inform:data){
                         if (inform.id.equals(id)){
                             inform.commentNum=jsonObject.optString("name");
 
@@ -92,7 +92,7 @@ public class InformFollowResponse extends Response<List<InformFollow>> {
                 for (int i=0,size=thumbsNumArray.length();i<size;i++){
                     JSONObject jsonObject=thumbsNumArray.optJSONObject(i);
                     String id=jsonObject.optString("id");
-                    for (InformFollow inform:data){
+                    for (Inform inform:data){
                         if (inform.id.equals(id)){
                             inform.thumbNum=jsonObject.optString("name");
 
@@ -108,9 +108,11 @@ public class InformFollowResponse extends Response<List<InformFollow>> {
                 for (int i=0,size=isThumbsArray.length();i<size;i++){
                     JSONObject jsonObject=isThumbsArray.optJSONObject(i);
                     String id=jsonObject.optString("id");
-                    for (InformFollow inform:data){
+                    for (Inform inform:data){
                         if (inform.id.equals(id)){
                             inform.isThumbs=jsonObject.optString("name").equals("YES");
+                            //LogRui.e("parse####"+jsonObject.optString("name"));
+                            //LogRui.e("parse####"+inform.isThumbs);
 
                         }
                     }
@@ -124,7 +126,7 @@ public class InformFollowResponse extends Response<List<InformFollow>> {
                 for (int i=0,size=toSortNameArray.length();i<size;i++){
                     JSONObject jsonObject=toSortNameArray.optJSONObject(i);
                     String id=jsonObject.optString("id");
-                    for (InformFollow inform:data){
+                    for (Inform inform:data){
                         if (inform.sortId.equals(id)){
                             inform.isThumbs=jsonObject.optBoolean("name");
 

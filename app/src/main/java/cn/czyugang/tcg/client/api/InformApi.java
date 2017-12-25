@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import cn.czyugang.tcg.client.common.UserOAuth;
-
-import cn.czyugang.tcg.client.entity.Inform;
-import cn.czyugang.tcg.client.entity.InformColumn;
 import cn.czyugang.tcg.client.entity.InformColumnResponse;
 import cn.czyugang.tcg.client.entity.InformFollowResponse;
 import cn.czyugang.tcg.client.entity.InformResponse;
@@ -28,11 +25,13 @@ public class InformApi {
 
 
     //个人动态
-    public static Observable<MyInformResponse> getInformByMyself() {
+    public static Observable<MyInformResponse> getInformByMyself(String accessTime,int page) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("accessTime", "");
-        map.put("page", 1);
-        map.put("size", 20);
+        if (accessTime!=null){
+            map.put("accessTime", accessTime);
+        }
+        map.put("page", page);
+        map.put("size", 10);
         return UserOAuth.getInstance()
                 .get("api/auth/v1/info/personal/list", map)
                 .map(s -> (MyInformResponse) JsonParse.fromJson(s, MyInformResponse.class))
@@ -40,11 +39,13 @@ public class InformApi {
                 .observeOn(AndroidSchedulers.mainThread());
     }
     //我的关注
-    public static Observable<InformFollowResponse> getFollowInform(String type) {
+    public static Observable<InformFollowResponse> getFollowInform(String type,int page,String accessTime) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("accessTime", "");
-        map.put("page", 1);
-        map.put("size", 20);
+        if (accessTime!=null){
+            map.put("accessTime", accessTime);
+        }
+        map.put("page", page);
+        map.put("size", 10);
         map.put("type", type);
         return UserOAuth.getInstance()
                 .get("api/auth/v1/info/follow/list", map)
@@ -53,11 +54,13 @@ public class InformApi {
                 .observeOn(AndroidSchedulers.mainThread());
     }
     //最新资讯
-    public static Observable<NewsInformResponse> getNewsInform() {
+    public static Observable<NewsInformResponse> getNewsInform(String accessTime,int page) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("accessTime", "");
-        map.put("page", 1);
-        map.put("size", 50);
+        if (accessTime!=null){
+            map.put("accessTime", accessTime);
+        }
+        map.put("page", page);
+        map.put("size", 10);
         return UserOAuth.getInstance()
                 .get("api/auth/v1/info/new/list", map)
                 .map(s -> (NewsInformResponse) JsonParse.fromJson(s, NewsInformResponse.class))
@@ -66,11 +69,13 @@ public class InformApi {
     }
 
     // 资讯栏目
-    public static Observable<InformColumnResponse> getInformColumn(int page){
+    public static Observable<InformColumnResponse> getInformColumn(String accessTime,int page){
         HashMap<String, Object> map = new HashMap<>();
-        map.put("accessTime", "");
+        if (accessTime!=null){
+            map.put("accessTime", accessTime);
+        }
         map.put("page", page);
-        map.put("size", 20);
+        map.put("size", 10);
         return UserOAuth.getInstance()
                 .get("api/auth/v1/info/sort/list", map)
                 .map(s -> (InformColumnResponse) JsonParse.fromJson(s, InformColumnResponse.class))
@@ -108,7 +113,7 @@ public class InformApi {
         HashMap<String, Object> map = new HashMap<>();
         map.put("accessTime", "");
         map.put("page", page);
-        map.put("size", 20);
+        map.put("size", 10);
         map.put("sortId", sortId);
         map.put("labelId", labelId);
         map.put("publisherId", publisherId);
@@ -128,7 +133,7 @@ public class InformApi {
         params.put("targetUserId", userId);
         params.put("accessTime", "");
         params.put("page", page);
-        params.put("size", 20);
+        params.put("size", 10);
         return UserOAuth.getInstance()
                 .get("api/auth/v1/user/media/relation/list/fans", params)
                 .map(s -> (Response<List<UserFansFollow>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, new JsonParse.Type(List.class, UserFansFollow.class))))
@@ -143,7 +148,7 @@ public class InformApi {
         params.put("followUserId", userId);
         params.put("accessTime", "");
         params.put("page", page);
-        params.put("size", 20);
+        params.put("size", 10);
         return UserOAuth.getInstance()
                 .get("api/auth/v1/user/media/relation/list/follows", params)
                 .map(s -> (Response<List<UserFansFollow>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, new JsonParse.Type(List.class, UserFansFollow.class))))
@@ -199,5 +204,25 @@ public class InformApi {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    //api/auth/v1/info/get [可接入]根据id获取资讯详情
+    public static Observable<Response> getInformDetail(String id){
+        RecordApi.recordFootMarkAuto("INFO",id);
+        HashMap<String,Object> map=new HashMap<>();
+        map.put("id",id);
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/info/get",map)
+                .map(s -> (Response) JsonParse.fromJson(s,Response.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 
+    ///api/auth/v1/info/follow/list/pre[可接入]我的关注预备数据
+    public static Observable<Response> getInformLabel(){
+        HashMap<String,Object> map=new HashMap<>();
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/info/follow/list/pre",map)
+                .map(s -> (Response) JsonParse.fromJson(s,Response.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

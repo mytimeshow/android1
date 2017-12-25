@@ -118,7 +118,7 @@ public class OrderApi {
 
 
     /*
-    *           售后
+    *  售后
     * */
     //api/auth/v2/order/after/sale/user/pre [可接入-v2]预加载
     public static Observable<Response<Object>> aftersaleDict() {
@@ -173,7 +173,6 @@ public class OrderApi {
 
     }
 
-
     //api/auth/v2/order/after/sale/user/return/intervention [可接入-v2]申请平台介入
     public static Observable<Response<Object>> aftersaleIntervention(String id) {
         HashMap<String, Object> map = new HashMap<>();
@@ -191,7 +190,7 @@ public class OrderApi {
         HashMap<String, Object> map = new HashMap<>();
         if (status != null) map.put("status", status);
         if (accessTime==null) {
-            map.put("page",0);
+            map.put("page",1);
         }else {
             map.put("accessTime",accessTime);
             map.put("page",page);

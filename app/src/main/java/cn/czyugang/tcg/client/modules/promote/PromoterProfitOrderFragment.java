@@ -87,10 +87,12 @@ public class PromoterProfitOrderFragment extends BaseFragment {
             return new Holder(LayoutInflater.from(activity).inflate(
                     R.layout.item_promote_profit_order,parent,false));
         }
+
         @Override
         public void onBindViewHolder(Holder holder, int position) {
             PromoteOrder data=list.get(position);
         }
+
         @Override
         public int getItemCount() {
             return list.size();

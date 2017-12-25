@@ -64,6 +64,10 @@ public class FiveStarView extends LinearLayout {
         typedArray.recycle();
     }
 
+    public void setScore(double score){
+        setScore((float) score);
+    }
+
     public void setScore(float score) {
         if (score <= 0) return;
         if (score >= 1) star1.setImageResource(starResId);

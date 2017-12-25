@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +36,7 @@ import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.utils.string.TimeUtils;
+import cn.czyugang.tcg.client.widget.RefreshLoadHelper;
 
 /**
  * Created by Administrator on 2017/12/8.
@@ -66,6 +69,8 @@ public class InformMySelfActivity extends BaseActivity {
 
     List<MyInform> myInforms = new ArrayList<MyInform>();
     MyInformAdapter myInformAdapter;
+    private MyInformResponse myInformResponse;
+    private RefreshLoadHelper refreshLoadHelper;
 
     public static void startMySelfActivity() {
         Intent intent = new Intent(getTopActivity(), InformMySelfActivity.class);
@@ -80,6 +85,13 @@ public class InformMySelfActivity extends BaseActivity {
 
         mySelfHead.id(UserOAuth.getUserPhotoId());
 
+
+        myInformAdapter = new MyInformAdapter(myInforms, InformMySelfActivity.this);
+        informForMyselfList.setLayoutManager(new LinearLayoutManager(InformMySelfActivity.this));
+        informForMyselfList.setAdapter(myInformAdapter);
+        refreshLoadHelper = new RefreshLoadHelper(this).build(informForMyselfList);
+        refreshLoadHelper.swipeToLoadLayout.setOnRefreshListener(() -> refreshInform(false));
+        refreshLoadHelper.swipeToLoadLayout.setOnLoadMoreListener(() -> refreshInform(true));
         refreshInform(true);
 
 
@@ -89,25 +101,40 @@ public class InformMySelfActivity extends BaseActivity {
         });
     }
 
-    private void refreshInform(boolean firstLoad) {
-        InformApi.getInformByMyself().subscribe(new NetObserver<MyInformResponse>() {
+    private void refreshInform(boolean loadmore) {
+        int pagerIndex = 1;
+        String accessTime = null;
+        if (loadmore && myInformResponse != null) {
+            accessTime = myInformResponse.accessTime;
+            pagerIndex = myInformResponse.currentPage + 1;
+        }
+        InformApi.getInformByMyself(accessTime, pagerIndex).subscribe(new NetObserver<MyInformResponse>() {
             @Override
             public void onNext(MyInformResponse response) {
                 super.onNext(response);
-                if (ErrorHandler.judge200(response)) {
-                    response.parse();
-                    myInforms.addAll(response.data);
-                    myInformAdapter = new MyInformAdapter(myInforms, InformMySelfActivity.this);
-                    informForMyselfList.setLayoutManager(new LinearLayoutManager(InformMySelfActivity.this));
-                    informForMyselfList.setAdapter(myInformAdapter);
-                    mySelfName.setText(response.myName);
-                    mySelfFollowNum.setText(String.valueOf(response.followCount));
-                    mySelfFansNum.setText(String.valueOf(response.fansCount));
-                    mySelfArticleNum.setText(String.valueOf(response.articleCount));
-                    mySelfDescription.setText(response.myIdentity ? response.mySummary : "");
-                    mySelfCover.id(response.myCover);
+                if (!ErrorHandler.judge200(response)) return;
+                if (ErrorHandler.isRepeat(myInformResponse, response)) return;
+                response.parse();
+                if (!loadmore) {
+                    myInforms.clear();
                 }
+                myInforms.addAll(response.data);
+                myInformAdapter.notifyDataSetChanged();
+                myInformResponse=response;
 
+
+                mySelfName.setText(response.myName);
+                mySelfFollowNum.setText(String.valueOf(response.followCount));
+                mySelfFansNum.setText(String.valueOf(response.fansCount));
+                mySelfArticleNum.setText(String.valueOf(response.articleCount));
+                mySelfDescription.setText(response.myIdentity ? response.mySummary : "");
+                mySelfCover.id(response.myCover);
+
+
+            }
+            @Override
+            public SwipeToLoadLayout getSwipeToLoadLayout() {
+                return refreshLoadHelper.swipeToLoadLayout;
             }
         });
     }

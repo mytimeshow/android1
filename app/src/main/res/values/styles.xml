@@ -13,8 +13,8 @@
         <item name="android:windowBackground">@drawable/def_splash</item>
     </style>
 
-    <!--imgActivity-->
-    <style name="ImgActivity" parent="AppTheme">
+    <!--黑色状态栏-->
+    <style name="BlackStatusTheme" parent="AppTheme">
         <item name="colorPrimaryDark">@android:color/black</item>
     </style>
 
@@ -378,6 +378,13 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/sp_18</item>
+    </style>
+
+    <style name="text_18_red">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/main_red</item>
         <item name="android:textSize">@dimen/sp_18</item>
     </style>
 

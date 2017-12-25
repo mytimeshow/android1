@@ -10,6 +10,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +27,16 @@ import cn.czyugang.tcg.client.api.InformApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.common.ErrorHandler;
+import cn.czyugang.tcg.client.entity.Inform;
 import cn.czyugang.tcg.client.entity.InformFollow;
 import cn.czyugang.tcg.client.entity.InformFollowResponse;
 import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.utils.LogRui;
+import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
+import cn.czyugang.tcg.client.utils.string.StringUtil;
 import cn.czyugang.tcg.client.widget.LabelLayout;
+import cn.czyugang.tcg.client.widget.RefreshLoadHelper;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -54,10 +64,17 @@ public class InformFollowFragment extends BaseFragment {
 
     Unbinder unbinder;
 
-    private int CLICK_TYPE;
+    private int clickType = 1;
 
     FollowContentAdapter followContentAdapter;
-    List<InformFollow> followCotentsList = new ArrayList<InformFollow>();
+    List<Inform> followCotentsListAll = new ArrayList<Inform>();
+    List<Inform> followCotentsListSort = new ArrayList<Inform>();
+    List<Inform> followCotentsListUser = new ArrayList<Inform>();
+    List<String> labelList = new ArrayList<>();
+    private InformFollowResponse informFollowResponseAll;
+    private InformFollowResponse informFollowResponseSort;
+    private InformFollowResponse informFollowResponseUser;
+    private RefreshLoadHelper refreshLoadHelper;
 
 
     public static InformFollowFragment newInstance() {
@@ -76,38 +93,65 @@ public class InformFollowFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, rootView);
 
         init();
-        List<String> list = new ArrayList<>();
-        list.add("全部栏目");
-        list.add("电影扒客");
-        list.add("吃货专区");
-        list.add("八卦资讯协会");
-        list.add("小城百事通");
-        list.add("感情后花园");
-        columnType.setTexts(list);
-        followContentAdapter = new FollowContentAdapter(followCotentsList, getActivity());
-        refreshInform(true, "ALL");
-        columnType.setOnClickItemListener(new LabelLayout.OnClickItemListener() {
 
-            @Override
-            public void onClick(String text, TextView textView) {
+        followContentAdapter = new FollowContentAdapter(followCotentsListAll, getActivity());
+        columnType.setOnClickItemListener((text, textView) -> {
+            textView.setTextColor(getColor(R.color.main_red));
+            textView.setBackgroundResource(R.drawable.bg_rect_label_click);
 
-
-                textView.setTextColor(getColor(R.color.main_red));
-                textView.setBackgroundResource(R.drawable.bg_rect_label_click);
-                if (columnType.lastSelectTextView != null) {
-                    columnType.lastSelectTextView.setTextColor(getResources().getColor(R.color.text_dark_gray));
-                    columnType.lastSelectTextView.setBackgroundResource(R.drawable.bg_rect);
-
-                }
-
+            if (columnType.lastSelectTextView != null) {
+                columnType.lastSelectTextView.setTextColor(getResources().getColor(R.color.text_dark_gray));
+                columnType.lastSelectTextView.setBackgroundResource(R.drawable.bg_rect);
 
             }
         });
 
+        lvInformFollow.setLayoutManager(new LinearLayoutManager(getActivity()));
+        lvInformFollow.setAdapter(followContentAdapter);
+        refreshLoadHelper = new RefreshLoadHelper(getActivity()).build(lvInformFollow);
+
+
+        refreshLoadHelper.swipeToLoadLayout.setOnRefreshListener(() -> {
+            String nowType;
+            switch (clickType) {
+                case 1:
+                    nowType = "ALL";
+                    break;
+                case 2:
+                    nowType = "SORT";
+                    break;
+                default:
+                    nowType = "USER";
+                    break;
+
+            }
+            refreshInform(false, nowType);
+        });
+        refreshLoadHelper.swipeToLoadLayout.setOnLoadMoreListener(() -> {
+            String nowType;
+            switch (clickType) {
+                case 1:
+                    nowType = "ALL";
+                    break;
+                case 2:
+                    nowType = "SORT";
+                    break;
+                default:
+                    nowType = "USER";
+                    break;
+            }
+            refreshInform(true, nowType);
+        });
+        lvInformFollow.postDelayed(() -> {
+            refreshInform(true, "ALL");
+            refreshInform(true, "SORT");
+            refreshInform(true, "USER");
+        }, 2000);
+
         return rootView;
     }
 
-    @Override
+  /*  @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
@@ -124,9 +168,8 @@ public class InformFollowFragment extends BaseFragment {
                 default:
                     break;
             }
-
         }
-    }
+    }*/
 
     public void init() {
         tvAllFollw.setTextColor(getResources().getColor(R.color.main_red));
@@ -134,6 +177,24 @@ public class InformFollowFragment extends BaseFragment {
         tvFollowPerson.setTextColor(getResources().getColor(R.color.text_dark_gray));
         tvAllColumn.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.ic_pull_down), null);
         columnType.setVisibility(View.GONE);
+        InformApi.getInformLabel().subscribe(new BaseActivity.NetObserver<Response>() {
+            @Override
+            public void onNext(Response response) {
+                super.onNext(response);
+                if (!ErrorHandler.judge200(response)) return;
+
+                JSONArray labelArray = response.values.optJSONArray("sortNameDict");
+                if (labelArray != null && labelArray.length() != 0) {
+                    for (int i = 0, size = labelArray.length(); i < size; i++) {
+                        JSONObject jsonObject = labelArray.optJSONObject(i);
+                        labelList.add(jsonObject.optString("name"));
+
+                    }
+
+                }
+                columnType.setTexts(labelList);
+            }
+        });
     }
 
     @Override
@@ -143,25 +204,35 @@ public class InformFollowFragment extends BaseFragment {
 
     @OnClick(R.id.tv_all_follow)
     public void onAllFollow() {
-        CLICK_TYPE = 1;
+        if (clickType != 1) {
+            followContentAdapter.list = followCotentsListAll;
+            followContentAdapter.notifyDataSetChanged();
+        }
+        clickType = 1;
         tvAllFollw.setTextColor(getResources().getColor(R.color.main_red));
         tvAllColumn.setTextColor(getResources().getColor(R.color.text_dark_gray));
         tvFollowPerson.setTextColor(getResources().getColor(R.color.text_dark_gray));
         tvAllColumn.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.ic_pull_down), null);
         columnType.setVisibility(View.GONE);
-        refreshInform(false, "ALL");
     }
 
     @OnClick(R.id.tv_all_column)
     public void onAllColumn() {
-        if (CLICK_TYPE == 1 || CLICK_TYPE == 3) {
+
+
+        if (clickType != 2) {
+            followContentAdapter.list = followCotentsListSort;
+            followContentAdapter.notifyDataSetChanged();
+            lvInformFollow.scrollToPosition(0);
+        }
+        if (clickType == 1 || clickType == 3) {
             columnType.setVisibility(View.VISIBLE);
         }
-        CLICK_TYPE = 2;
+        clickType = 2;
         tvAllColumn.setTextColor(getResources().getColor(R.color.main_red));
         tvAllFollw.setTextColor(getResources().getColor(R.color.text_dark_gray));
         tvFollowPerson.setTextColor(getResources().getColor(R.color.text_dark_gray));
-        if (CLICK_TYPE == 2) {
+        if (clickType == 2) {
             if (columnType.getVisibility() == View.GONE) {
                 columnType.setVisibility(View.VISIBLE);
                 tvAllColumn.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.ic_pull_up), null);
@@ -171,48 +242,97 @@ public class InformFollowFragment extends BaseFragment {
                 tvAllColumn.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.ic_pull_down_red), null);
             }
         }
-        refreshInform(false, "SORT");
 
     }
 
     @OnClick(R.id.tv_follow_person)
     public void onFollowPerson() {
-        CLICK_TYPE = 3;
+        if (clickType != 3) {
+            followContentAdapter.list = followCotentsListUser;
+            followContentAdapter.notifyDataSetChanged();
+        }
+        clickType = 3;
         tvFollowPerson.setTextColor(getResources().getColor(R.color.main_red));
         tvAllFollw.setTextColor(getResources().getColor(R.color.text_dark_gray));
         tvAllColumn.setTextColor(getResources().getColor(R.color.text_dark_gray));
         tvAllColumn.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.ic_pull_down), null);
         columnType.setVisibility(View.GONE);
-        refreshInform(false, "USER");
     }
 
 
-    private void refreshInform(boolean firstLoad, String type) {
-        InformApi.getFollowInform(type).subscribe(new BaseActivity.NetObserver<InformFollowResponse>() {
+    private void refreshInform(boolean loadmore, String type) {
+        int pagerIndex = 1;
+        String accessTime = null;
+        switch (type) {
+            case "ALL":
+                if (loadmore && informFollowResponseAll != null) {
+                    accessTime = informFollowResponseAll.accessTime;
+                    pagerIndex = informFollowResponseAll.currentPage + 1;
+                }
+                break;
+            case "SORT":
+                if (loadmore && informFollowResponseSort != null) {
+                    accessTime = informFollowResponseSort.accessTime;
+                    pagerIndex = informFollowResponseSort.currentPage + 1;
+                }
+                break;
+            case "USER":
+                if (loadmore && informFollowResponseUser != null) {
+                    accessTime = informFollowResponseUser.accessTime;
+                    pagerIndex = informFollowResponseUser.currentPage + 1;
+                }
+                break;
+        }
+
+        InformApi.getFollowInform(type, pagerIndex, accessTime).subscribe(new BaseActivity.NetObserver<InformFollowResponse>() {
             @Override
             public void onNext(InformFollowResponse response) {
                 super.onNext(response);
-                //Toast.makeText(InformMySelfActivity.this,response.data.toString(),Toast.LENGTH_SHORT).show();
-                if (ErrorHandler.judge200(response)) {
-                    response.parse();
-                    followCotentsList.clear();
-                    followCotentsList.addAll(response.data);
-                    followContentAdapter.notifyDataSetChanged();
-                    if (firstLoad) {
-                        lvInformFollow.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        lvInformFollow.setAdapter(followContentAdapter);
-                    }
+                if (!ErrorHandler.judge200(response)) return;
+                switch (type) {
+                    case "ALL":
+                        if (ErrorHandler.isRepeat(informFollowResponseAll, response)) return;
+                        response.parse();
+                        if (!loadmore) {
+                            followCotentsListAll.clear();
+                        }
+                        followCotentsListAll.addAll(response.data);
+                        informFollowResponseAll = response;
+                        break;
+                    case "SORT":
+                        if (ErrorHandler.isRepeat(informFollowResponseSort, response)) return;
+                        response.parse();
+                        if (!loadmore) {
+                            followCotentsListSort.clear();
+                        }
+                        followCotentsListSort.addAll(response.data);
+                        informFollowResponseSort = response;
+                        break;
+                    case "USER":
+                        if (ErrorHandler.isRepeat(informFollowResponseUser, response)) return;
+                        response.parse();
+                        if (!loadmore) {
+                            followCotentsListUser.clear();
+                        }
+                        followCotentsListUser.addAll(response.data);
+                        informFollowResponseUser = response;
+                        break;
                 }
+                followContentAdapter.notifyDataSetChanged();
+            }
 
+            @Override
+            public SwipeToLoadLayout getSwipeToLoadLayout() {
+                return refreshLoadHelper.swipeToLoadLayout;
             }
         });
     }
 
     public static class FollowContentAdapter extends RecyclerView.Adapter<FollowContentAdapter.Holder> {
-        private List<InformFollow> list;
+        private List<Inform> list;
         private Activity activity;
 
-        public FollowContentAdapter(List<InformFollow> list, Activity activity) {
+        public FollowContentAdapter(List<Inform> list, Activity activity) {
             this.list = list;
             this.activity = activity;
         }
@@ -225,15 +345,15 @@ public class InformFollowFragment extends BaseFragment {
 
         @Override
         public void onBindViewHolder(Holder holder, int position) {
-            InformFollow data = list.get(position);
-            holder.followCommitNum.setText(data.commentNum);
-            holder.followThumbNum.setText(data.thumbNum);
+            Inform data = list.get(position);
+            holder.followCommitNum.setText(StringUtil.returnMoreNum(data.commentNum));
+            holder.followThumbNum.setText(StringUtil.returnMoreNum(data.thumbNum));
             holder.followName.setText(data.userName);
             holder.followContent.setText(data.title);
-            holder.followImg.id(data.imgUrl);
+            holder.followImg.id(data.coverThumbImageFileId == null || data.coverThumbImageFileId.equals("") ? data.coverImageFileId : data.coverThumbImageFileId);
             holder.followHead.id(data.headUrl);
             holder.itemView.setOnClickListener(v -> {
-                InformDetailsActivity.startInformDetailsActivity();
+                InformDetailsActivity.startInformDetailsActivity(data.id);
             });
             holder.followName.setOnClickListener(v -> {
                 InformOrderSelfActivity.startInformOrderSelfActivity(data.userId);
@@ -246,6 +366,7 @@ public class InformFollowFragment extends BaseFragment {
             } else {
                 holder.followThumbPic.setBackgroundResource(R.drawable.ic_thumb_up);
             }
+          //  LogRui.e("onBindViewHolder####" + data.isThumbs);
             holder.followThumb.setOnClickListener(v -> {
                 if (!data.isThumbs) {
                     InformApi.toLikeInform(data.id).subscribe(new BaseActivity.NetObserver<Response>() {
@@ -254,7 +375,7 @@ public class InformFollowFragment extends BaseFragment {
                             super.onNext(response);
                             if (!ErrorHandler.judge200(response)) return;
                             holder.followThumbPic.setBackgroundResource(R.drawable.icon_dianzan2);
-                            holder.followThumbNum.setText(String.valueOf(Integer.valueOf(data.thumbNum)+1));
+                            holder.followThumbNum.setText(StringUtil.returnMoreNum(Integer.valueOf(data.thumbNum) + 1));
                         }
                     });
                 } else {
@@ -264,7 +385,7 @@ public class InformFollowFragment extends BaseFragment {
                             super.onNext(response);
                             if (!ErrorHandler.judge200(response)) return;
                             holder.followThumbPic.setBackgroundResource(R.drawable.ic_thumb_up);
-                            holder.followThumbNum.setText(data.thumbNum);
+                            holder.followThumbNum.setText(StringUtil.returnMoreNum(data.thumbNum));
                         }
                     });
                 }

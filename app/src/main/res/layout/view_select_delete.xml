@@ -18,10 +18,23 @@
         android:text="全选"/>
 
     <TextView
+        android:id="@+id/view_cancel"
+        android:layout_width="@dimen/dp_66"
+        android:layout_height="match_parent"
+        android:background="@color/grey_350"
+        android:layout_gravity="center_vertical|right"
+        android:layout_marginRight="@dimen/dp_66"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="@color/main_white"
+        android:textSize="@dimen/sp_16"
+        />
+
+    <TextView
         android:id="@+id/view_delete"
         android:layout_width="@dimen/dp_66"
         android:layout_height="match_parent"
-        android:background="@drawable/selector_grey300_red"
+        android:background="@color/main_red"
         android:layout_gravity="center_vertical|right"
         android:gravity="center"
         android:text="删除"

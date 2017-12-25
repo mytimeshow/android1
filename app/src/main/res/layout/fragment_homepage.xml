@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
@@ -37,50 +38,6 @@
             android:src="@drawable/scan_code"
             />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/homepage_store1"
-        android:layout_width="@dimen/dp_180"
-        android:layout_height="@dimen/dp_40"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dp_40"
-        android:background="@color/main_white"
-        android:gravity="center"
-        android:text="店铺：919122791461220353"
-        />
-
-    <TextView
-        android:id="@+id/homepage_store2"
-        android:layout_width="@dimen/dp_180"
-        android:layout_height="@dimen/dp_40"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dp_8"
-        android:background="@color/main_white"
-        android:gravity="center"
-        android:text="店铺：930278266785427456"
-        />
-
-    <TextView
-        android:id="@+id/homepage_store3"
-        android:layout_width="@dimen/dp_180"
-        android:layout_height="@dimen/dp_40"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dp_8"
-        android:background="@color/main_white"
-        android:gravity="center"
-        android:text="店铺：918003175762620416"
-        />
-
-    <TextView
-        android:id="@+id/homepage_groupon"
-        android:layout_width="@dimen/dp_180"
-        android:layout_height="@dimen/dp_40"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dp_8"
-        android:background="@color/main_white"
-        android:gravity="center"
-        android:text="降价拍"
-        />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/homepage_tab"

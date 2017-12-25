@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -23,8 +24,10 @@ import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.Inform;
 import cn.czyugang.tcg.client.entity.NewsInformResponse;
-import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
+import cn.czyugang.tcg.client.utils.string.StringUtil;
+import cn.czyugang.tcg.client.widget.RefreshLoadHelper;
 
 /**
  * @author ruiaa
@@ -38,6 +41,8 @@ public class InformNewsFragment extends BaseFragment {
 
     InformNewsAdapter informNewsAdapter;
     List<Inform> informs = new ArrayList<Inform>();
+    private NewsInformResponse newsInformResponse;
+    private RefreshLoadHelper refreshLoadHelper;
 
     public static InformNewsFragment newInstance() {
         InformNewsFragment fragment = new InformNewsFragment();
@@ -53,39 +58,45 @@ public class InformNewsFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_inform_news, container, false);
         ButterKnife.bind(this, rootView);
+        informNewsAdapter = new InformNewsAdapter(informs, getActivity());
+        informNewsList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        informNewsList.setAdapter(informNewsAdapter);
 
-      /*  List<Inform> list=new ArrayList<Inform>();
-        Inform informColumn=new Inform();
-        Inform informColumn2=new Inform();
-        informColumn.name=("行走的鸡腿");
-        informColumn2.name=("天天吃吃吃");
-        //1234
-        list.add(informColumn);*/
-        informNewsAdapter=new InformNewsAdapter(informs,getActivity());
+        refreshLoadHelper = new RefreshLoadHelper(getActivity()).build(informNewsList);
+        refreshLoadHelper.swipeToLoadLayout.setOnRefreshListener(() -> refreshInform(false));
+        refreshLoadHelper.swipeToLoadLayout.setOnLoadMoreListener(() -> refreshInform(true));
         refreshInform(true);
-
 
 
         return rootView;
     }
 
-    public void refreshInform(boolean firstLoad){
-        InformApi.getNewsInform().subscribe(new BaseActivity.NetObserver<NewsInformResponse>() {
+    public void refreshInform(boolean loadmore) {
+        int pagerIndex = 1;
+        String accessTime = null;
+        if (loadmore && newsInformResponse != null) {
+            accessTime = newsInformResponse.accessTime;
+            pagerIndex = newsInformResponse.currentPage + 1;
+        }
+        InformApi.getNewsInform(accessTime,pagerIndex).subscribe(new BaseActivity.NetObserver<NewsInformResponse>() {
             @Override
             public void onNext(NewsInformResponse response) {
                 super.onNext(response);
-                if (ErrorHandler.judge200(response)){
-                    response.parse();
+                if (!ErrorHandler.judge200(response)) return;
+                if (ErrorHandler.isRepeat(newsInformResponse,response)) return;
+                response.parse();
+                if (!loadmore) {
                     informs.clear();
-                    informs.addAll(response.data);
-                    informNewsAdapter.notifyDataSetChanged();
-                    if (firstLoad){
-                        informNewsList.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        informNewsList.setAdapter(informNewsAdapter);
-                    }
                 }
+                informs.addAll(response.data);
+                informNewsAdapter.notifyDataSetChanged();
+                newsInformResponse = response;
 
+            }
 
+            @Override
+            public SwipeToLoadLayout getSwipeToLoadLayout() {
+                return refreshLoadHelper.swipeToLoadLayout;
             }
         });
     }
@@ -113,8 +124,8 @@ public class InformNewsFragment extends BaseFragment {
 
         @Override
         public void onBindViewHolder(InformNewsAdapter.Holder holder, int position) {
-            Inform data =  list.get(position);
-            switch (getItemViewType(position)){
+            Inform data = list.get(position);
+            switch (getItemViewType(position)) {
 
                 case R.layout.item_inform_news_banner:
                     break;
@@ -123,9 +134,9 @@ public class InformNewsFragment extends BaseFragment {
                     holder.newsLargeHead.id(data.headUrl);
                     holder.newsLargePersonName.setText(data.userName);
                     holder.newsLargeContent.setText(data.title);
-                    holder.newsLargeContentName.setText("—— "+data.sortName+" ——");
-                    holder.newsLargeCommitNum.setText(String.valueOf(data.commentNum));
-                    holder.newsLargeImg.id(data.imgUrl);
+                    holder.newsLargeContentName.setText("—— " + data.sortName + " ——");
+                    holder.newsLargeCommitNum.setText(StringUtil.returnMoreNum(data.commentNum));
+                    holder.newsLargeImg.id(data.coverThumbImageFileId==null||data.coverThumbImageFileId.equals("")?data.coverImageFileId:data.coverThumbImageFileId);
                     holder.newsLargeHead.setOnClickListener(v -> {
                         InformOrderSelfActivity.startInformOrderSelfActivity(data.userId);
                     });
@@ -138,8 +149,8 @@ public class InformNewsFragment extends BaseFragment {
                     holder.newsSmallHead.id(data.headUrl);
                     holder.newsSmallName.setText(data.userName);
                     holder.newsSmallContent.setText(data.title);
-                    holder.newsSmallCommitNum.setText(String.valueOf(data.commentNum));
-                    holder.newsSmallImg.id(data.imgUrl);
+                    holder.newsSmallCommitNum.setText(StringUtil.returnMoreNum(data.commentNum));
+                    holder.newsSmallImg.id(data.coverThumbImageFileId==null||data.coverThumbImageFileId.equals("")?data.coverImageFileId:data.coverThumbImageFileId);
                     holder.newsSmallName.setOnClickListener(v -> {
                         InformOrderSelfActivity.startInformOrderSelfActivity(data.userId);
                     });
@@ -150,7 +161,7 @@ public class InformNewsFragment extends BaseFragment {
             }
 
             holder.itemView.setOnClickListener(v -> {
-                InformDetailsActivity.startInformDetailsActivity();
+                InformDetailsActivity.startInformDetailsActivity(data.id);
             });
 
 
@@ -183,7 +194,7 @@ public class InformNewsFragment extends BaseFragment {
 
             } else {
                 position = (position - 44) % 9;
-                switch (position){
+                switch (position) {
                     case 0:
                     case 4:
                         type = R.layout.item_inform_news_large;

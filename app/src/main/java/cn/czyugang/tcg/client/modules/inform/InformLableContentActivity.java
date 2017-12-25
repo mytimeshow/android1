@@ -14,6 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
+import cn.czyugang.tcg.client.entity.Inform;
 import cn.czyugang.tcg.client.entity.InformFollow;
 
 /**
@@ -44,9 +45,9 @@ public class InformLableContentActivity extends BaseActivity {
 
         tvTitleName.setText(titleName);
 
-        List<InformFollow> followCotentsList = new ArrayList<InformFollow>();
-        InformFollow followCotent = new InformFollow();
-        followCotent.name=("博主名称");
+        List<Inform> followCotentsList = new ArrayList<Inform>();
+        Inform followCotent = new Inform();
+        followCotent.userName=("博主名称");
         followCotent.content=("内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容");
         followCotent.commentNum=("1234567");
         followCotent.thumbNum=("777777777");

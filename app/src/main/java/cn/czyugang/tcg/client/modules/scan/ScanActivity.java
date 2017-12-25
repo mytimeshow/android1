@@ -19,8 +19,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
-import cn.czyugang.tcg.client.modules.common.WebActivity;
-import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.utils.LogRui;
 
 /**
@@ -126,35 +124,10 @@ public class ScanActivity extends BaseActivity {
     }
 
     private void onScanSuccess(String result) {
-        LogRui.i("onScanSuccess####",result);
-        //ScanResultActivity.startScanResultActivity(result);
-        //isOutsideUrl("http://www.baidu.com");
-        isScanDiscountGoods(result);
+        ScanResultHandler.deal(result,this);
     }
 
     private void onScanFail() {
 
-    }
-
-    private void isOutsideUrl(final String url) {
-        MyDialog.Builder.newBuilder(this)
-                .contentStr("检测到此链接为外部链接，\n打开外部链接可能存在安全隐患，\n请注意您的个人隐私的保护哦~\n" + url)
-                .onNegativeButton()
-                .positiveButton("打开链接")
-                .onPositiveButton(myDialog -> {
-                    myDialog.dismiss();
-                    WebActivity.startWebActivity(this, url);
-                    finish();
-                })
-                .build()
-                .show();
-    }
-
-    private void isScanDiscountGoods(String result){
-        ScanGoodsDetailActivity.startScanGoodsDetailActivity(result);
-    }
-
-    private void isScanStore(String result){
-        ScanStoreActivity.startScanStoreActivity();
     }
 }
