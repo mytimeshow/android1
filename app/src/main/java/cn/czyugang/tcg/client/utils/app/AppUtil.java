@@ -14,7 +14,6 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.concurrent.TimeUnit;
@@ -100,7 +99,7 @@ public class AppUtil {
         }
     }
 
-    public static void showKeyBoard(final EditText target, long delay) {
+    public static void showKeyBoard(final View target, long delay) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
             if (delay == 0) {
@@ -118,11 +117,8 @@ public class AppUtil {
         }
     }
 
-    public static void showKeyBoardAndSaveHeight(EditText target) {
 
-    }
-
-    public static void showKeyBoard(EditText target) {
+    public static void showKeyBoard(View target) {
         showKeyBoard(target, 200L);
     }
 

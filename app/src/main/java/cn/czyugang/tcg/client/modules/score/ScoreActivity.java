@@ -123,13 +123,8 @@ public class ScoreActivity extends BaseActivity {
     }
     @OnClick(R.id.score_order_comment_action)
     public void onOrderComment() {
-
-        MyOrderActivity.startMyOrderActivity();
-
-
-
+				MyOrderActivity.startMyOrderActivity();
         //orderCommentAction.setText("+XX");
-
         orderCommentAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
         orderCommentAction.setClickable(false);
 

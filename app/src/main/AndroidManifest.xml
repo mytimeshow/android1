@@ -396,6 +396,7 @@
         <activity android:name=".modules.order.SelectDeliveryActivity"/>
         <activity android:name=".modules.order.PayOrderActivity"/>
         <activity android:name=".modules.order.PayOrderWayActivity"/>
+        <activity android:name=".modules.order.PaySuccessActivity"/>
 
         <!--订单 列表/详情-->
         <activity android:name=".modules.order.MyOrderActivity"/>

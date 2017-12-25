@@ -15,6 +15,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
+import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.entity.BankCardInfo;
 import cn.czyugang.tcg.client.entity.RealNameAuth;
 import cn.czyugang.tcg.client.modules.set.contract.MobileVerifyContract;
@@ -58,6 +59,13 @@ public class MobileVerifyActivity extends BaseActivity implements MobileVerifyCo
     private String mBankMobile;
     private BankCardInfo mBankCardInfo;
     private RealNameAuth mRealNameAuth;
+
+    public static void startMobileVerifyActivityForForgetPay( ){
+        Intent intent = new Intent(getTopActivity(), MobileVerifyActivity.class);
+        intent.putExtra(MobileVerifyActivity.KEY_TYPE, MobileVerifyActivity.TYPE_FORGET_PAY_PASSWORD);
+        intent.putExtra(MobileVerifyActivity.KEY_MOBILE, UserOAuth.getInstance().getUserInfo().getUserBase().getPhone());
+        getTopActivity().startActivity(intent);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

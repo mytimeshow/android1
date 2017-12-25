@@ -24,11 +24,13 @@ import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.modules.entry.activity.MainActivity;
 import cn.czyugang.tcg.client.modules.im.ImChatActivity;
+import cn.czyugang.tcg.client.modules.set.activity.MobileVerifyActivity;
 import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.QRCode;
+import cn.czyugang.tcg.client.widget.PayPasswordEditText;
 
 /**
  * @author ruiaa
@@ -205,7 +207,7 @@ public class MyDialog extends DialogFragment {
                 .width(ResUtil.getDimenInPx(R.dimen.dp_120))
                 .gravity(Gravity.TOP | Gravity.RIGHT)
                 .offsetX(ResUtil.getDimenInPx(R.dimen.dp_10))
-                .offsetY( ResUtil.getDimenInPx(R.dimen.dp_50))
+                .offsetY(ResUtil.getDimenInPx(R.dimen.dp_50))
                 .bindView(myDialog -> {
                     myDialog.rootView.findViewById(R.id.more_msg).setVisibility(moreDialogListener.showMsg() ? View.VISIBLE : View.GONE);
                     myDialog.rootView.findViewById(R.id.more_footprint).setVisibility(moreDialogListener.showFootprint() ? View.VISIBLE : View.GONE);
@@ -213,7 +215,7 @@ public class MyDialog extends DialogFragment {
                     myDialog.rootView.findViewById(R.id.more_trolley).setVisibility(moreDialogListener.showTrolley() ? View.VISIBLE : View.GONE);
                     myDialog.rootView.findViewById(R.id.more_homepage).setVisibility(moreDialogListener.showHomepage() ? View.VISIBLE : View.GONE);
                     myDialog.rootView.findViewById(R.id.more_collect).setVisibility(moreDialogListener.showCollect() ? View.VISIBLE : View.GONE);
-                    myDialog.text(R.id.more_collect_text,moreDialogListener.hadCollect()?"已收藏":"收藏");
+                    myDialog.text(R.id.more_collect_text, moreDialogListener.hadCollect() ? "已收藏" : "收藏");
                     if (moreDialogListener.newMsgNum() != 0) {
                         TextView newMsg = myDialog.rootView.findViewById(R.id.more_msg_new);
                         newMsg.setVisibility(View.VISIBLE);
@@ -317,7 +319,9 @@ public class MyDialog extends DialogFragment {
             return false;
         }
 
-        public boolean hadCollect(){return false;}
+        public boolean hadCollect() {
+            return false;
+        }
     }
 
 
@@ -329,7 +333,7 @@ public class MyDialog extends DialogFragment {
                 .width(ResUtil.getDimenInPx(R.dimen.dp_120))
                 .gravity(Gravity.TOP | Gravity.RIGHT)
                 .offsetX(ResUtil.getDimenInPx(R.dimen.dp_6))
-                .offsetY( ResUtil.getDimenInPx(R.dimen.dp_50));
+                .offsetY(ResUtil.getDimenInPx(R.dimen.dp_50));
     }
 
     //底部  电话号码+取消 按钮
@@ -582,6 +586,25 @@ public class MyDialog extends DialogFragment {
                 .bgAlpha(0)
                 .bindView(myDialog -> {
                     myDialog.text(R.id.view_bubble_toast_text, text);
+                })
+                .build()
+                .show();
+    }
+
+    //6位密码
+    public static MyDialog pswDialog(Activity activity, String title, PayPasswordEditText.OnEntryCompleteListener onInputPswLisener) {
+        return MyDialog.Builder.newBuilder(activity)
+                .custom(R.layout.dialog_input_psw)
+                .bindView(myDialog -> {
+                    if (title != null) myDialog.text(R.id.dialog_name, title);
+                    myDialog.onClick(R.id.dialog_close);
+                    myDialog.onClick(R.id.dialog_forget, v -> {
+                        myDialog.dismiss();
+                        MobileVerifyActivity.startMobileVerifyActivityForForgetPay();
+                    });
+                    PayPasswordEditText payPasswordEditText=(PayPasswordEditText) myDialog.rootView.findViewById(R.id.dialog_psw);
+                    payPasswordEditText.setOnEntryCompleteListener(onInputPswLisener);
+                    AppUtil.showKeyBoard(payPasswordEditText);
                 })
                 .build()
                 .show();
