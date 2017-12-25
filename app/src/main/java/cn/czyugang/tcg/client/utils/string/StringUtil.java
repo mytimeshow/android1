@@ -115,4 +115,28 @@ public class StringUtil {
         }
         return flag;
     }
+
+    // 评论数，点赞数，粉丝数，关注数，文章数等超过1万用xx.xx万表示
+    public static String returnMoreNum(int num){
+        float result=0;
+        if ((float)num>10000){
+            result=(float)num/10000;
+            return String.format("%.2f",result)+"万";
+        }else {
+            return String.valueOf(num);
+        }
+
+    }
+
+    // 评论数，点赞数，粉丝数，关注数，文章数等超过1万用xx.xx万表示
+    public static String returnMoreNum(String num){
+        float result=0;
+        if (Float.valueOf(num)>10000){
+            result=Float.valueOf(num)/10000;
+            return String.format("%.2f",result)+"万";
+        }else {
+            return num;
+        }
+
+    }
 }

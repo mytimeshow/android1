@@ -215,4 +215,14 @@ public class InformApi {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    ///api/auth/v1/info/follow/list/pre[可接入]我的关注预备数据
+    public static Observable<Response> getInformLabel(){
+        HashMap<String,Object> map=new HashMap<>();
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/info/follow/list/pre",map)
+                .map(s -> (Response) JsonParse.fromJson(s,Response.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

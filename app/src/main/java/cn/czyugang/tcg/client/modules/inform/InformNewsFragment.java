@@ -26,6 +26,7 @@ import cn.czyugang.tcg.client.entity.Inform;
 import cn.czyugang.tcg.client.entity.NewsInformResponse;
 import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
+import cn.czyugang.tcg.client.utils.string.StringUtil;
 import cn.czyugang.tcg.client.widget.RefreshLoadHelper;
 
 /**
@@ -134,8 +135,8 @@ public class InformNewsFragment extends BaseFragment {
                     holder.newsLargePersonName.setText(data.userName);
                     holder.newsLargeContent.setText(data.title);
                     holder.newsLargeContentName.setText("—— " + data.sortName + " ——");
-                    holder.newsLargeCommitNum.setText(String.valueOf(data.commentNum));
-                    holder.newsLargeImg.id(data.imgUrl);
+                    holder.newsLargeCommitNum.setText(StringUtil.returnMoreNum(data.commentNum));
+                    holder.newsLargeImg.id(data.coverThumbImageFileId==null||data.coverThumbImageFileId.equals("")?data.coverImageFileId:data.coverThumbImageFileId);
                     holder.newsLargeHead.setOnClickListener(v -> {
                         InformOrderSelfActivity.startInformOrderSelfActivity(data.userId);
                     });
@@ -148,8 +149,8 @@ public class InformNewsFragment extends BaseFragment {
                     holder.newsSmallHead.id(data.headUrl);
                     holder.newsSmallName.setText(data.userName);
                     holder.newsSmallContent.setText(data.title);
-                    holder.newsSmallCommitNum.setText(String.valueOf(data.commentNum));
-                    holder.newsSmallImg.id(data.imgUrl);
+                    holder.newsSmallCommitNum.setText(StringUtil.returnMoreNum(data.commentNum));
+                    holder.newsSmallImg.id(data.coverThumbImageFileId==null||data.coverThumbImageFileId.equals("")?data.coverImageFileId:data.coverThumbImageFileId);
                     holder.newsSmallName.setOnClickListener(v -> {
                         InformOrderSelfActivity.startInformOrderSelfActivity(data.userId);
                     });

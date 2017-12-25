@@ -32,6 +32,7 @@ import cn.czyugang.tcg.client.entity.InformFollowResponse;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.utils.img.ImgView;
+import cn.czyugang.tcg.client.utils.string.StringUtil;
 import cn.czyugang.tcg.client.widget.RefreshLoadHelper;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -131,7 +132,7 @@ public class InformColumnFragment extends BaseFragment {
             InformColumn data = list.get(position);
             holder.columnName.setText(data.name);
             holder.columnContent.setText(data.description);
-            holder.columnFollowNum.setText(String.valueOf(data.followNum));
+            holder.columnFollowNum.setText(StringUtil.returnMoreNum(data.followNum));
             holder.columnImg.id(data.fileId);
             if (data.isFollow) {
                 holder.columnIsFollow.setText("已关注");
