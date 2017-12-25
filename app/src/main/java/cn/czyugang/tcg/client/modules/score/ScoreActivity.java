@@ -112,7 +112,7 @@ public class ScoreActivity extends BaseActivity {
 
     @OnClick(R.id.score_continue_sign_action)
     public void onContinueSign() {
-        continueSignAction.setText("+"+signedDayBonusDict);
+       // continueSignAction.setText("+"+signedDayBonusDict);
         continueSignAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
         continueSignAction.setClickable(false);
      if(!isGotToday){
@@ -124,7 +124,7 @@ public class ScoreActivity extends BaseActivity {
     @OnClick(R.id.score_order_comment_action)
     public void onOrderComment() {
         MyOrderActivity.startMyOrderActivity(this);
-        orderCommentAction.setText("+XX");
+        //orderCommentAction.setText("+XX");
         orderCommentAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
         orderCommentAction.setClickable(false);
 
@@ -133,7 +133,7 @@ public class ScoreActivity extends BaseActivity {
     @OnClick(R.id.score_inform_comment_action)
     public void onInformComment() {
         MainActivity.openAndSelectFragment(1);
-        informCommentAction.setText("+XX");
+       // informCommentAction.setText("+XX");
         informCommentAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
         informCommentAction.setClickable(false);
 
@@ -142,7 +142,7 @@ public class ScoreActivity extends BaseActivity {
     @OnClick(R.id.score_buy_give_action)
     public void onBuyGive() {
         MainActivity.openAndSelectFragment(0);
-        buyGiveAction.setText("+XX");
+     //   buyGiveAction.setText("+XX");
         buyGiveAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
         buyGiveAction.setClickable(false);
 
@@ -171,9 +171,9 @@ public class ScoreActivity extends BaseActivity {
                     continueSignDay.setText("连续签到" +signedDay + "日");
                     signTip.setText("连续签到" +signedDay + "天");
                     continueSignTip.setText(myUserBonus);
-                    orderCommentTip.setText("每日上限：" +"0"
+                    orderCommentTip.setText("每日上限：" +currentOrderBonus
                             + "/" +limitOrderBonus);
-                    informCommentTip.setText("每日上限：" +"0"
+                    informCommentTip.setText("每日上限：" +currentInfoBonus
                             + "/" +limitInfoBonus);
 
                 }
@@ -189,7 +189,9 @@ public class ScoreActivity extends BaseActivity {
         map.put("signedDay",signedDay);
         map.put("currentOrderBonus",currentOrderBonus);
         map.put("limitOrderBonus",limitOrderBonus);
-        map.put("currentInfoBonus",currentInfoBonus);
+        if(!forSign){
+            map.put("currentInfoBonus",currentInfoBonus);
+        }
         map.put("limitInfoBonus",limitInfoBonus);
         map.put("way",way);
         map.put("isGotToday",isGotToday);
