@@ -16,6 +16,7 @@ import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.entity.Good;
+import cn.czyugang.tcg.client.entity.PromoterGoods;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 
 /**
@@ -37,7 +38,7 @@ public class PromoteGoodDetailActivity extends BaseActivity {
     @BindView(R.id.promote_goods_detail_similar_list)
     RecyclerView similarR;
 
-    private List<Good> similarGoodList = new ArrayList<>();
+    private List<PromoterGoods> similarGoodList = new ArrayList<>();
     private PromoteGoodListActivity.PromoteGoodsAdapter adapter;
 
     public static void startPromoteGoodDetailActivity() {
@@ -51,7 +52,7 @@ public class PromoteGoodDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_promote_goods_detail);
         ButterKnife.bind(this);
 
-        similarGoodList.add(new Good());
+        similarGoodList.add(new PromoterGoods());
 
         adapter = new PromoteGoodListActivity.PromoteGoodsAdapter(similarGoodList, this);
         similarR.setLayoutManager(new LinearLayoutManager(this));

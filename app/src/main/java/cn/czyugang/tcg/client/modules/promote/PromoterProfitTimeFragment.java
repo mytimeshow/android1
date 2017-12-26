@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +29,9 @@ public class PromoterProfitTimeFragment extends BaseFragment {
     @BindView(R.id.promote_profit_money)
     TextView money;
     @BindView(R.id.promote_profit_click_num)
-    TextView clickNum;
+    TextView tvClickNum;
     @BindView(R.id.promote_profit_register_num)
-    TextView registerNum;
+    TextView tvRegisterNum;
     @BindView(R.id.promote_profit_pay_nums)
     TextView payNums;
     @BindView(R.id.promote_profit_tab)
@@ -41,6 +42,13 @@ public class PromoterProfitTimeFragment extends BaseFragment {
 
     private String type=null;
     private List<BaseFragment> fragments=new ArrayList<>();
+
+    private String monthIncome;
+    private String lastMonthIncome;
+    private String clickNum;
+    private String productNum;
+    private String registerNum;
+    private String totalCommission;
 
     // 今天 昨天 近7日 近30日
     public static PromoterProfitTimeFragment newInstance(String type) {
@@ -68,6 +76,7 @@ public class PromoterProfitTimeFragment extends BaseFragment {
         fragments.add(PromoterProfitOrderFragment.newInstance("推广商品"));
         fragments.add(PromoterProfitOrderFragment.newInstance("失效订单"));
 
+
         viewPager.setAdapter(new BaseFragmentAdapter(getChildFragmentManager(),fragments));
         viewPager.setOffscreenPageLimit(4);
         tabLayout.setupWithViewPager(viewPager);
@@ -86,5 +95,12 @@ public class PromoterProfitTimeFragment extends BaseFragment {
     public String getLabel() {
         if (type==null) type=getArguments().getString("type");
         return type;
+    }
+    public void setData(String clickNum,String productNum,String registerNum,String totalCommission){
+        money.setText("结算预估收入：￥"+totalCommission);
+        tvClickNum.setText("点击数\n"+clickNum);
+        payNums.setText("推广付款单数\n"+productNum);
+        tvRegisterNum.setText("注册首单数\n"+registerNum);
+
     }
 }

@@ -282,6 +282,8 @@ public class InformFollowFragment extends BaseFragment {
                     pagerIndex = informFollowResponseUser.currentPage + 1;
                 }
                 break;
+            default:
+                break;
         }
 
         InformApi.getFollowInform(type, pagerIndex, accessTime).subscribe(new BaseActivity.NetObserver<InformFollowResponse>() {
@@ -366,7 +368,7 @@ public class InformFollowFragment extends BaseFragment {
             } else {
                 holder.followThumbPic.setBackgroundResource(R.drawable.ic_thumb_up);
             }
-          //  LogRui.e("onBindViewHolder####" + data.isThumbs);
+            //  LogRui.e("onBindViewHolder####" + data.isThumbs);
             holder.followThumb.setOnClickListener(v -> {
                 if (!data.isThumbs) {
                     InformApi.toLikeInform(data.id).subscribe(new BaseActivity.NetObserver<Response>() {
