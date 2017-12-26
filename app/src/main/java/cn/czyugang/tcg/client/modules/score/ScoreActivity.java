@@ -127,6 +127,7 @@ public class ScoreActivity extends BaseActivity {
         //orderCommentAction.setText("+XX");
         orderCommentAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
         orderCommentAction.setClickable(false);
+        String a="jjj";
 
     }
 
