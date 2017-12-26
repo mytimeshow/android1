@@ -1,8 +1,11 @@
 package cn.czyugang.tcg.client.api;
 
 import java.util.HashMap;
+import java.util.List;
 
 import cn.czyugang.tcg.client.common.UserOAuth;
+import cn.czyugang.tcg.client.entity.PromoterGoods;
+import cn.czyugang.tcg.client.entity.PromoterReport;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.utils.JsonParse;
 import io.reactivex.Observable;
@@ -87,7 +90,7 @@ public class PromoterApi {
     *   商品
     * */
     //api/auth/v3/marketing/promoter/page/product [可接入-v3]分页查询推广商品
-    public static Observable<Response<Object>> getProductList(String page,String accessTime,String orderType) {
+    public static Observable<Response<List<PromoterGoods>>> getProductList(String page,String accessTime,String orderType) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("page",page);
         map.put("size",15);
@@ -96,7 +99,7 @@ public class PromoterApi {
         //map.put("name",name);     //商品名称
         return UserOAuth.getInstance()
                 .get("api/auth/v3/marketing/promoter/page/product", map)
-                .map(s -> (Response<Object>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, Object.class)))
+                .map(s -> (Response<List<PromoterGoods>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, new JsonParse.Type(List.class, PromoterGoods.class))))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -119,10 +122,10 @@ public class PromoterApi {
     * */
 
     //api/auth/v3/marketing/promoter/get/report [可接入-v3]获取报表
-    public static Observable<Response<Object>> getReport() {
+    public static Observable<Response<PromoterReport>> getReport() {
         return UserOAuth.getInstance()
                 .get("api/auth/v3/marketing/promoter/get/report", null)
-                .map(s -> (Response<Object>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, Object.class)))
+                .map(s -> (Response<PromoterReport>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, PromoterReport.class)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

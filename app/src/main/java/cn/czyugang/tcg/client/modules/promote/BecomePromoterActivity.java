@@ -10,6 +10,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
+import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.modules.balance.activity.AddBankCardActivity;
 import cn.czyugang.tcg.client.modules.set.activity.AccountInfoActivity;
 import cn.czyugang.tcg.client.modules.set.activity.RealNameAuthActivity;
@@ -35,8 +36,11 @@ public class BecomePromoterActivity extends BaseActivity {
     @BindView(R.id.promote_become_commit)
     TextView commit;
 
-    public static void startBecomePromoterActivity() {
+    public static void startBecomePromoterActivity(boolean baseInfoFlag, boolean bankCardFlag, boolean realNameAuthFlag) {
         Intent intent = new Intent(getTopActivity(), BecomePromoterActivity.class);
+        intent.putExtra("baseInfoFlag", baseInfoFlag);
+        intent.putExtra("bankCardFlag", bankCardFlag);
+        intent.putExtra("realNameAuthFlag", realNameAuthFlag);
         getTopActivity().startActivity(intent);
     }
 
@@ -47,7 +51,21 @@ public class BecomePromoterActivity extends BaseActivity {
         setContentView(R.layout.activity_promoter_become);
         ButterKnife.bind(this);
 
-        head.drawableId(R.drawable.icon_filter_label_bg);
+        head.id(UserOAuth.getUserPhotoId());
+        name.setText(UserOAuth.getUserNickname());
+        init();
+    }
+
+    void init() {
+        boolean baseInfoFlag = getIntent().getBooleanExtra("baseInfoFlag", false);
+        boolean bankCardFlag = getIntent().getBooleanExtra("bankCardFlag", false);
+        boolean realNameAuthFlag = getIntent().getBooleanExtra("realNameAuthFlag", false);
+        basedataStatus.setText(baseInfoFlag?"已完成":"未完成");
+        authStatus.setText(realNameAuthFlag?"已完成":"未完成");
+        cardStatus.setText(bankCardFlag?"已完成":"未完成");
+        basedataStatus.setTextColor(baseInfoFlag?getResources().getColor(R.color.main_red):getResources().getColor(R.color.text_gray));
+        authStatus.setTextColor(realNameAuthFlag?getResources().getColor(R.color.main_red):getResources().getColor(R.color.text_gray));
+        cardStatus.setTextColor(bankCardFlag?getResources().getColor(R.color.main_red):getResources().getColor(R.color.text_gray));
     }
 
     @OnClick(R.id.title_back)

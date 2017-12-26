@@ -40,6 +40,10 @@ public class PromoterIntroActivity extends BaseActivity {
     @BindView(R.id.promote_intro)
     ImgView introImg;
 
+    private boolean baseInfoFlag;
+    private boolean bankCardFlag;
+    private boolean realNameAuthFlag;
+
     public static void startPromoterIntroActivity() {
         Intent intent = new Intent(getTopActivity(), PromoterIntroActivity.class);
         getTopActivity().startActivity(intent);
@@ -76,9 +80,9 @@ public class PromoterIntroActivity extends BaseActivity {
             public void onNext(Response<Object> response) {
                 super.onNext(response);
                 if (ErrorHandler.judge200(response)&&response.values!=null){
-                    boolean baseInfoFlag= response.values.optString("baseInfoFlag").equals("YES");
-                    boolean bankCardFlag=response.values.optString("bankCardFlag").equals("YES");
-                    boolean realNameAuthFlag=response.values.optString("realNameAuthFlag").equals("YES");
+                    baseInfoFlag= response.values.optString("baseInfoFlag").equals("YES");
+                    bankCardFlag=response.values.optString("bankCardFlag").equals("YES");
+                    realNameAuthFlag=response.values.optString("realNameAuthFlag").equals("YES");
                 }
             }
         });
@@ -112,7 +116,7 @@ public class PromoterIntroActivity extends BaseActivity {
 
     @OnClick(R.id.promote_become)
     public void onBecome() {
-        BecomePromoterActivity.startBecomePromoterActivity();
+        BecomePromoterActivity.startBecomePromoterActivity(baseInfoFlag,bankCardFlag,realNameAuthFlag);
     }
 
     @OnClick(R.id.promote_goods)
