@@ -118,7 +118,7 @@ public class ScoreActivity extends BaseActivity {
      if(!isGotToday){
          postData("SIGN_CONTINUOUSLY",false);
      }else {
-         showToast("你已经领取过了");
+         //showToast("你已经领取过了");
      }
     }
     @OnClick(R.id.score_order_comment_action)
@@ -132,7 +132,7 @@ public class ScoreActivity extends BaseActivity {
 
         orderCommentAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
         orderCommentAction.setClickable(false);
-        String a="jjj";
+
 
     }
 
