@@ -1,4 +1,4 @@
-package cn.czyugang.tcg.client.modules.groupon;
+package cn.czyugang.tcg.client.entity;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -53,9 +53,9 @@ public class ReduceProduct {
     @SerializedName("score")
     public int score;
     @SerializedName("groupList")
-    public List<cn.czyugang.tcg.client.modules.groupon.GroupListBean> groupList;
+    public List<cn.czyugang.tcg.client.entity.GroupListBean> groupList;
     @SerializedName("labelList")
-    public List<LabelListBean> labelList;
+    public List<cn.czyugang.tcg.client.entity.LabelListBean> labelList;
     @SerializedName("productPicIdList")
     public List<String> productPicIdList;
 

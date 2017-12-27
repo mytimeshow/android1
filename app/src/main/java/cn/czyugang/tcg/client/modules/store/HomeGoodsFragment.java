@@ -34,11 +34,11 @@ public class HomeGoodsFragment extends BaseFragment {
         rootView.findViewById(R.id.homepage_store3).setOnClickListener(v -> StoreActivity.startStoreActivity(getActivity(), "918003175762620416"));
 
         rootView.findViewById(R.id.homepage_groupon).setOnClickListener(v -> GrouponGoodsActivity.startGrouponGoodsActivity());
-<<<<<<< HEAD
+
         // rootView.findViewById(R.id.homepage_groupon).setOnClickListener(v -> VideoActivity.startVideoActivity());
-=======
+
        // rootView.findViewById(R.id.homepage_groupon).setOnClickListener(v -> VideoActivity.startVideoActivity());
->>>>>>> my
+
 
         return rootView;
     }

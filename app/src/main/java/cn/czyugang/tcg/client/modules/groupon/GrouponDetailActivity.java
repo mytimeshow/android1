@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.api.ReduceProductApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
+import cn.czyugang.tcg.client.common.ErrorHandler;
+import cn.czyugang.tcg.client.entity.GroupDetail;
+import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 
 /**
@@ -31,6 +36,7 @@ import cn.czyugang.tcg.client.utils.img.ImgView;
  */
 
 public class GrouponDetailActivity extends BaseActivity {
+    private static final String TAG = "GrouponDetailActivity";
     @BindView(R.id.groupon_detail_img)
     ImgView img;
     @BindView(R.id.groupon_detail_name)
@@ -69,7 +75,7 @@ public class GrouponDetailActivity extends BaseActivity {
     TextView buy;
     @BindView(R.id.groupon_detail_open_group)
     TextView openGroup;
-
+    private GroupDetail mGroupDetail;
     private List<Member> memberList = new ArrayList<>();
     private MemberAdapter adapter;
 
@@ -84,6 +90,7 @@ public class GrouponDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_groupon_detail);
         ButterKnife.bind(this);
 
+        getGroupDetail("940878770309607501");
         for (int i = 0; i < 10; i++) {
             memberList.add(new Member());
         }
@@ -138,6 +145,43 @@ public class GrouponDetailActivity extends BaseActivity {
                 super(itemView);
             }
         }
+    }
+
+    public void getGroupDetail(String id){
+        ReduceProductApi.getGroup(id).subscribe(new NetObserver<Response<GroupDetail>>() {
+            @Override
+            public void onNext(Response<GroupDetail> response) {
+                super.onNext(response);
+                showToast("done");
+                Log.e(TAG, "onNext: " );
+                if(ErrorHandler.judge200(response)){
+                    mGroupDetail=response.getData();
+                    img.id(mGroupDetail.productPicId);
+                    name.setText(mGroupDetail.productTitle);
+                    nameSub.setText(mGroupDetail.productSubTitle);
+                    remain.setText("库存"+String.valueOf(mGroupDetail.inventory)+"件");
+                    sale.setText("已售"+String.valueOf(mGroupDetail.sales)+"件");
+                    price.setText("￥"+String.valueOf(mGroupDetail.productPrice));
+                    priceDown.setText("每多一人参团\n拼团价降￥"+mGroupDetail.reducePrice);
+                    priceMin.setText("拼团冰点价\n最低￥"+mGroupDetail.minPrice);
+                    timeLimit.setText("拼团有效时间\n"+mGroupDetail.groupTime+"小时");
+                    memberNum.setText(String.valueOf(mGroupDetail.memberCount));
+                    timeRemain.setText("邀请更多好友参团，每人还能再省￥"+
+                            mGroupDetail.restDiscount+"\n"+mGroupDetail.restTime/60+
+                            "小时"+mGroupDetail.restTime%60+"分钟"+ "内成团");
+
+
+
+
+
+
+
+
+
+                }
+            }
+        });
+
     }
 
     private static class Member {

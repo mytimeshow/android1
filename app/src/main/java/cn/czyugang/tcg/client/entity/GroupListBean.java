@@ -1,4 +1,4 @@
-package cn.czyugang.tcg.client.modules.groupon;
+package cn.czyugang.tcg.client.entity;
 
 /**
  * Created by Administrator on 2017/12/26 0026.

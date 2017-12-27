@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,10 @@ import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.api.ReduceProductApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.common.ErrorHandler;
+import cn.czyugang.tcg.client.entity.GroupListBean;
 import cn.czyugang.tcg.client.entity.GrouponGroup;
+import cn.czyugang.tcg.client.entity.LabelListBean;
+import cn.czyugang.tcg.client.entity.ReduceProduct;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.modules.store.StoreActivity;
 import cn.czyugang.tcg.client.widget.FiveStarView;
@@ -38,6 +42,7 @@ import cn.czyugang.tcg.client.widget.MultiImgView;
  */
 
 public class GrouponGoodsActivity extends BaseActivity {
+    private static final String TAG = "GrouponGoodsActivity";
     @BindView(R.id.groupon_goods_scroll)
     NestedScrollView scrollView;
     @BindView(R.id.groupon_goods_multi_img)
@@ -77,6 +82,7 @@ public class GrouponGoodsActivity extends BaseActivity {
     private GroupsAdapter adapter;
     private ReduceProduct products;
     private List<String> imgList;
+    private List<LabelListBean> labelListBeans;
     //当前商品的组团数
     private List<GroupListBean> groupListBeans;
 
@@ -90,8 +96,9 @@ public class GrouponGoodsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groupon_goods);
         ButterKnife.bind(this);
+
         getReduceProduct("940506493684461569");
-        initImgs();
+
         groupList.add(new GrouponGroup());
         groupList.add(new GrouponGroup());
         groupList.add(new GrouponGroup());
@@ -156,9 +163,13 @@ public class GrouponGoodsActivity extends BaseActivity {
             public void onNext(Response<ReduceProduct> response) {
                 super.onNext(response);
                 if (ErrorHandler.judge200(response)) {
+                    Log.e(TAG, "onNext: done1" );
                     products=response.getData();
+                    Log.e(TAG, "onNext: done2" );
                     imgList=products.productPicIdList;
                     initData(products);
+                    Log.e(TAG, "onNext: done3" );
+                    getReduceProduct("940878770548682753");
                 }
             }
         });
@@ -178,8 +189,15 @@ public class GrouponGoodsActivity extends BaseActivity {
         commentNum.setText(String.valueOf(products.assessmentCount)+"条评价");
         fiveStar.setText(products.score+"分");
         fiveStar.setStarResId(products.score);
-      
-        //commentLabel.setTexts();
+        buy.setText("￥"+String.valueOf(products.productPrice)+"\n直接购买");
+        //评价标签
+        labelListBeans=products.labelList;
+        List<String> strList=new ArrayList<>();
+        for(int i=0,size=labelListBeans.size();i<size;i++){
+            String str=labelListBeans.get(i).getName()+"("+ labelListBeans.get(i).getCount()+")";
+            strList.add(str);
+        }
+        commentLabel.setTexts(strList);
     }
 
     private void initGroupList(ReduceProduct products) {
