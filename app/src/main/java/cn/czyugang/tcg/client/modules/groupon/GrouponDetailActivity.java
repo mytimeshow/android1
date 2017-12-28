@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,9 +24,12 @@ import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.api.ReduceProductApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
+import cn.czyugang.tcg.client.base.BaseFragment;
+import cn.czyugang.tcg.client.base.BaseFragmentAdapter;
 import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.GroupDetail;
 import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.modules.store.GoodCommentFragment;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 
 /**
@@ -94,6 +96,12 @@ public class GrouponDetailActivity extends BaseActivity {
         getGroupDetail("940878770309607501");
 
 
+/*
+        //FragmentPagerAdapter 使用BaseFragmentAdapter
+        //有问题可以看下其他地方是怎么实现的
+
+        //ViewPager不支持wrap_content  ViewPager.onMeasure()直接使用setMeasuredDimension(getDefaultSize(0, widthMeasureSpec),getDefaultSize(0, heightMeasureSpec));来测量大小了
+        //如果要有用到wrap_content，使用cn.czyugang.tcg.client.widget.ViewPagerWrap
 
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             private String[] titles={"商品描述","商品评价"};
@@ -116,11 +124,15 @@ public class GrouponDetailActivity extends BaseActivity {
             public CharSequence getPageTitle(int position) {
                 return titles[position];
             }
-        });
+        });*/
+
+        List<BaseFragment> fragments=new ArrayList<>();
+        fragments.add(GoodCommentFragment.newInstance());
+        fragments.add(GoodCommentFragment.newInstance());
+        viewPager.setAdapter(new BaseFragmentAdapter(getSupportFragmentManager(),fragments));
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
-
-
+        memberR.setNestedScrollingEnabled(false);
     }
 
     @OnClick(R.id.title_back)

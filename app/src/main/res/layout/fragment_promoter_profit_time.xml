@@ -2,9 +2,10 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/dp_116"
     android:orientation="vertical">
 
+    <!--0.5 + 44 + 62 + 10 = 116-->
 
     <include layout="@layout/view_split_bar_light"/>
 

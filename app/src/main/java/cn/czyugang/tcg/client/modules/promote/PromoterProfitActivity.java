@@ -6,11 +6,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,7 +20,6 @@ import cn.czyugang.tcg.client.base.BaseFragmentAdapter;
 import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.PromoterReport;
 import cn.czyugang.tcg.client.entity.Response;
-import cn.czyugang.tcg.client.utils.LogRui;
 
 /**
  * @author ruiaa
@@ -147,9 +144,11 @@ public class PromoterProfitActivity extends BaseActivity {
 
         viewPagerDown.setAdapter(new BaseFragmentAdapter(getSupportFragmentManager(),fragmentsDown));
         viewPagerDown.setOffscreenPageLimit(4);
-        tabLayout.setupWithViewPager(viewPagerDown);
+        //tabLayout.setupWithViewPager(viewPagerDown);
+        tabLayoutDown.setupWithViewPager(viewPagerDown);
         tabLayoutDown.setTabMode(TabLayout.MODE_FIXED);
 
-
     }
+
+
 }
