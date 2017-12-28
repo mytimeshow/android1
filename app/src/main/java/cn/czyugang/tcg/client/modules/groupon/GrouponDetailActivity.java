@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -76,7 +78,6 @@ public class GrouponDetailActivity extends BaseActivity {
     @BindView(R.id.groupon_detail_open_group)
     TextView openGroup;
     private GroupDetail mGroupDetail;
-
     private List<GroupDetail.HistoryListBean> list;
     private MemberAdapter adapter;
 
@@ -91,6 +92,35 @@ public class GrouponDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_groupon_detail);
         ButterKnife.bind(this);
         getGroupDetail("940878770309607501");
+
+
+
+        viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+            private String[] titles={"商品描述","商品评价"};
+            @Override
+            public Fragment getItem(int position) {
+                if(position==0){
+                    Log.e(TAG, "getItem:position==0 " );
+                    return new PageFragment();
+
+                }
+               return new PageFragment();
+            }
+
+            @Override
+            public int getCount() {
+                return 2;
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return titles[position];
+            }
+        });
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+
+
     }
 
     @OnClick(R.id.title_back)
@@ -122,16 +152,15 @@ public class GrouponDetailActivity extends BaseActivity {
 
         @Override
         public void onBindViewHolder(Holder holder, int position) {
-           GroupDetail.HistoryListBean  data = list.get(position);
+         /*  GroupDetail.HistoryListBean  data = list.get(position);
            holder.textView1.setText(data.name);
-           holder.textView2.setText(data.createTime+" "+data.type);
+           holder.textView2.setText(data.createTime+" "+data.type);*/
             holder.itemView.setBackgroundResource(position == 0 ? R.drawable.bg_rect_red : R.drawable.bg_rect_light_red);
         }
-
         @Override
         public int getItemCount() {
             Log.e(TAG, "getItemCount: "+list.size() );
-            return list.size();
+            return list.size()==0?6:list.size();
 
         }
 
@@ -174,7 +203,6 @@ public class GrouponDetailActivity extends BaseActivity {
                     buy.setText("￥"+String.valueOf(mGroupDetail.productPrice)+"\n直接购买");
 
 
-
                     adapter = new MemberAdapter(list, GrouponDetailActivity.this);
                     memberR.setLayoutManager(new LinearLayoutManager(GrouponDetailActivity.this));
                     memberR.setAdapter(adapter);
@@ -189,6 +217,8 @@ public class GrouponDetailActivity extends BaseActivity {
         });
 
     }
+
+
 
 
 }
