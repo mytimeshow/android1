@@ -90,6 +90,15 @@ public class ConfirmOrderActivity extends BaseActivity {
         getTopActivity().startActivity(intent);
     }
 
+    public static void startConfirmOrderActivity(List<String> shoppingCartIds) {
+        Intent intent = new Intent(getTopActivity(), ConfirmOrderActivity.class);
+        String str = shoppingCartIds.toString();
+        str=str.replaceAll(" ", "");
+        if (str.length() <= 2) return;
+        intent.putExtra("shoppingCartIds", str.substring(1,str.length()-1));
+        getTopActivity().startActivity(intent);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -201,17 +210,17 @@ public class ConfirmOrderActivity extends BaseActivity {
             public void onNext(Response<List<String>> response) {
                 super.onNext(response);
                 if (ErrorHandler.judge200(response)) {
-                    if (response.data==null||response.data.isEmpty()) return;
-                    new Thread(()->{
-                        for(TrolleyGoods t:preSettleResponse.trolleyGoodsMap.values()){
-                            AppKeyStorage.clearTrolleyAfterSettle(t.storeId,t.trolleyId);
+                    if (response.data == null || response.data.isEmpty()) return;
+                    new Thread(() -> {
+                        for (TrolleyGoods t : preSettleResponse.trolleyGoodsMap.values()) {
+                            AppKeyStorage.clearTrolleyAfterSettle(t.storeId, t.trolleyId);
                         }
-                        for(Store store:preSettleResponse.data){
+                        for (Store store : preSettleResponse.data) {
                             AppKeyStorage.clearTrolleyDeleteFlag(store.id);
                         }
                     }).start();
                     PayOrderActivity.startPayOrderActivity(response.data.get(0));
-                    commit.postDelayed(()->clearAllActivityExceptMainAndTop(),300);
+                    commit.postDelayed(() -> clearAllActivityExceptMainAndTop(), 300);
                 }
             }
         });
@@ -279,7 +288,7 @@ public class ConfirmOrderActivity extends BaseActivity {
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    noteToStoreMap.put(storeMoreInfo.storeId,s.toString());
+                    noteToStoreMap.put(storeMoreInfo.storeId, s.toString());
                 }
             });
         }

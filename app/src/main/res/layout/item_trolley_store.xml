@@ -27,6 +27,8 @@
             android:text="店铺名称KKKKKK"/>
     </LinearLayout>
 
+    <include layout="@layout/view_split_bar_light"/>
+
     <!--凑单-->
     <LinearLayout
         android:id="@+id/item_more_activityL"
@@ -36,7 +38,8 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/dp_10"
-        android:paddingRight="@dimen/dp_10">
+        android:paddingRight="@dimen/dp_10"
+        android:visibility="gone">
 
         <cn.czyugang.tcg.client.widget.ActivityTextView
             android:id="@+id/item_more_activity"
@@ -73,7 +76,8 @@
         android:layout_height="@dimen/dp_35"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/dp_38">
+        android:paddingLeft="@dimen/dp_38"
+        android:visibility="gone">
 
         <cn.czyugang.tcg.client.widget.ActivityTextView
             android:id="@+id/item_activity_use"

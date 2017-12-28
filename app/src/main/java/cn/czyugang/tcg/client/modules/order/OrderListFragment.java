@@ -29,6 +29,7 @@ import cn.czyugang.tcg.client.entity.Order;
 import cn.czyugang.tcg.client.entity.OrderGoods;
 import cn.czyugang.tcg.client.entity.OrderResponse;
 import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.modules.store.StoreActivity;
 import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
@@ -102,6 +103,13 @@ public class OrderListFragment extends BaseFragment {
         getOrders(false);
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshLoadHelper.swipeToLoadLayout.setRefreshing(true);
+        getOrders(false);
     }
 
     private void getOrders(boolean loadMore) {
@@ -387,6 +395,10 @@ public class OrderListFragment extends BaseFragment {
             holder.count.setText(data.getTotalCal());
 
             setBottomButton(holder, data);
+
+            holder.store.setOnClickListener(v -> {
+                StoreActivity.startStoreActivity(data.storeId);
+            });
 
             holder.itemView.setOnClickListener(v -> {
                 OrderDetailActivity.startOrderDetailActivity(data.id);

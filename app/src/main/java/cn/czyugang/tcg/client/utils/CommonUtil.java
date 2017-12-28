@@ -20,6 +20,17 @@ import cn.czyugang.tcg.client.utils.string.RichText;
 
 public class CommonUtil {
 
+    public static String listIdsToStr(List<String> list){
+        if (list==null||list.isEmpty()) return "";
+        StringBuilder builder = new StringBuilder();
+        for (String s:list) {
+            builder.append(s);
+            builder.append(",");
+        }
+        builder.deleteCharAt(builder.length() - 1);
+        return builder.toString();
+    }
+
     public static boolean responseIsNull(String response) {
         return response == null || response.equals("") || response.equals("null");
     }

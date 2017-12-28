@@ -13,6 +13,29 @@ import java.util.List;
 
 public class TrolleyGoods {
 
+    /*
+    "code": "string",
+    "createTime": "2017-12-28T05:26:59.632Z",
+    "deleteFlag": "string",
+    "id": "string",
+    "isSettle": "string",
+    "number": 0,
+    "packagePrice": 0,
+    "price": 0,
+    "productId": "string",
+    "productInventoryId": "string",
+    "productStoreId": "string",
+    "productType": "string",
+    "realPrice": 0,
+    "status": "string",
+    "storeId": "string",
+    "storeInventoryId": "string",
+    "tagList": "string",
+    "uniqueKey": "string",
+    "updateTime": "2017-12-28T05:26:59.633Z",
+    "userId": "string"
+    */
+
     @SerializedName("storeId")
     public String storeId;
     @SerializedName("id")
@@ -39,6 +62,8 @@ public class TrolleyGoods {
     public String specId = "";
     @SerializedName("storeInventoryId")
     public String storeInventoryId = "";
+    public int inventory=0;
+
     transient public List<String> label=null;
 
     @SerializedName("price")
@@ -111,12 +136,14 @@ public class TrolleyGoods {
         if (num<=0) deleteFlag="DELETED";
     }
 
-    public void setInfoFromSyncToLocal(TrolleyStore trolleyStore){
+    public void formatSpecId(){
+        if (specId.equals("")) return;
         List<Long> ids=new ArrayList<>();
         for (String id : specId.split(",")) {
             if (id.equals("")) continue;
             ids.add(Long.valueOf(id));
         }
+        if (ids.isEmpty()) return;
         Collections.sort(ids,(o1, o2) -> {
             if (o1>o2) return 1;
             if (o1<o2) return -1;
@@ -124,6 +151,10 @@ public class TrolleyGoods {
         });
         String idsStr=ids.toString().replaceAll(" ","");
         specId=idsStr.substring(1,idsStr.length()-1);
+    }
+
+    public void setInfoFromSyncToLocal(TrolleyStore trolleyStore){
+        formatSpecId();
 
         String key=trolleyStore.getTrolleyGoodsKey(this);
         if (!trolleyStore.trolleyGoodsMap.containsKey(key)) return;

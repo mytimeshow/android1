@@ -20,6 +20,7 @@ import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.modules.balance.activity.AddBankCardActivity;
 import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.utils.CommonUtil;
+import cn.czyugang.tcg.client.utils.app.AppUtil;
 
 /**
  * @author ruiaa
@@ -111,6 +112,15 @@ public class PayOrderWayActivity extends BaseActivity {
 
     private void onICBC(String cardId) {
 
+    }
+
+    public void onPaySuccess(){
+        AppUtil.toast("支付成功");
+        PaySuccessActivity.startPaySuccessActivity(totalPay);
+    }
+
+    public void onPayFail(){
+        AppUtil.toast("支付失败，请重试");
     }
 
     @OnClick(R.id.pay_order_add_card)

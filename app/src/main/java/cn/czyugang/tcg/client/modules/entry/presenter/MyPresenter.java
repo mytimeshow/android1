@@ -12,6 +12,7 @@ import cn.czyugang.tcg.client.modules.entry.contract.MyContract;
 import cn.czyugang.tcg.client.utils.DictUtil;
 import cn.czyugang.tcg.client.utils.rxbus.RxBus;
 import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -40,10 +41,12 @@ public class MyPresenter implements MyContract.Presenter {
             mView.logout();
         }
         mCompositeDisposable.add(RxBus.getObservable(UpdateUserInfoEvent.class)
+                .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(updateUserInfoEvent -> {
                     mView.updateUserInfo(updateUserInfoEvent.getUserInfo());
                 }));
         mCompositeDisposable.add(RxBus.getObservable(LogoutEvent.class)
+                .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(logoutEvent -> mView.logout()));
     }
 
