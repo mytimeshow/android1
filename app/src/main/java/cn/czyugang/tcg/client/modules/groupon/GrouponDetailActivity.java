@@ -12,9 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -76,7 +76,8 @@ public class GrouponDetailActivity extends BaseActivity {
     @BindView(R.id.groupon_detail_open_group)
     TextView openGroup;
     private GroupDetail mGroupDetail;
-    private List<Member> memberList = new ArrayList<>();
+
+    private List<GroupDetail.HistoryListBean> list;
     private MemberAdapter adapter;
 
     public static void startGrouponDetailActivity() {
@@ -89,16 +90,7 @@ public class GrouponDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groupon_detail);
         ButterKnife.bind(this);
-
         getGroupDetail("940878770309607501");
-        for (int i = 0; i < 10; i++) {
-            memberList.add(new Member());
-        }
-
-        adapter = new MemberAdapter(memberList, this);
-        memberR.setLayoutManager(new LinearLayoutManager(this));
-        memberR.setAdapter(adapter);
-        memberR.setNestedScrollingEnabled(false);
     }
 
     @OnClick(R.id.title_back)
@@ -114,10 +106,10 @@ public class GrouponDetailActivity extends BaseActivity {
     }
 
     private static class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.Holder> {
-        private List<Member> list;
+        private List<GroupDetail.HistoryListBean> list;
         private Activity activity;
 
-        public MemberAdapter(List<Member> list, Activity activity) {
+        public MemberAdapter(List<GroupDetail.HistoryListBean> list, Activity activity) {
             this.list = list;
             this.activity = activity;
         }
@@ -130,19 +122,28 @@ public class GrouponDetailActivity extends BaseActivity {
 
         @Override
         public void onBindViewHolder(Holder holder, int position) {
-            Member data = list.get(position);
+           GroupDetail.HistoryListBean  data = list.get(position);
+           holder.textView1.setText(data.name);
+           holder.textView2.setText(data.createTime+" "+data.type);
             holder.itemView.setBackgroundResource(position == 0 ? R.drawable.bg_rect_red : R.drawable.bg_rect_light_red);
         }
 
         @Override
         public int getItemCount() {
+            Log.e(TAG, "getItemCount: "+list.size() );
             return list.size();
+
         }
 
         class Holder extends RecyclerView.ViewHolder {
-
+            ImageView imageView;
+            TextView textView1;
+            TextView textView2;
             public Holder(View itemView) {
                 super(itemView);
+                imageView=itemView.findViewById(R.id.item_img);
+                textView1=itemView.findViewById(R.id.item_name);
+                textView2=itemView.findViewById(R.id.item_time);
             }
         }
     }
@@ -156,6 +157,7 @@ public class GrouponDetailActivity extends BaseActivity {
                 Log.e(TAG, "onNext: " );
                 if(ErrorHandler.judge200(response)){
                     mGroupDetail=response.getData();
+                    list=mGroupDetail.historyList;
                     img.id(mGroupDetail.productPicId);
                     name.setText(mGroupDetail.productTitle);
                     nameSub.setText(mGroupDetail.productSubTitle);
@@ -169,10 +171,14 @@ public class GrouponDetailActivity extends BaseActivity {
                     timeRemain.setText("邀请更多好友参团，每人还能再省￥"+
                             mGroupDetail.restDiscount+"\n"+mGroupDetail.restTime/60+
                             "小时"+mGroupDetail.restTime%60+"分钟"+ "内成团");
+                    buy.setText("￥"+String.valueOf(mGroupDetail.productPrice)+"\n直接购买");
 
 
 
-
+                    adapter = new MemberAdapter(list, GrouponDetailActivity.this);
+                    memberR.setLayoutManager(new LinearLayoutManager(GrouponDetailActivity.this));
+                    memberR.setAdapter(adapter);
+                    memberR.setNestedScrollingEnabled(false);
 
 
 
@@ -184,7 +190,5 @@ public class GrouponDetailActivity extends BaseActivity {
 
     }
 
-    private static class Member {
 
-    }
 }

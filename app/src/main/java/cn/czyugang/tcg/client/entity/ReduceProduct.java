@@ -10,6 +10,7 @@ import java.util.List;
 
 public class ReduceProduct {
 
+
     /**
      * assessmentCount : 0
      * enableBuyCount : 0
@@ -35,9 +36,9 @@ public class ReduceProduct {
     @SerializedName("groupTime")
     public int groupTime;
     @SerializedName("minPrice")
-    public int minPrice;
+    public double minPrice;
     @SerializedName("productPrice")
-    public int productPrice;
+    public double productPrice;
     @SerializedName("productStoreId")
     public String productStoreId;
     @SerializedName("productStoreInventoryId")
@@ -47,15 +48,15 @@ public class ReduceProduct {
     @SerializedName("productTitle")
     public String productTitle;
     @SerializedName("reducePrice")
-    public int reducePrice;
+    public double reducePrice;
     @SerializedName("sales")
     public int sales;
     @SerializedName("score")
-    public int score;
+    public double score;
     @SerializedName("groupList")
-    public List<cn.czyugang.tcg.client.entity.GroupListBean> groupList;
+    public List<GroupListBean> groupList;
     @SerializedName("labelList")
-    public List<cn.czyugang.tcg.client.entity.LabelListBean> labelList;
+    public List<LabelListBean> labelList;
     @SerializedName("productPicIdList")
     public List<String> productPicIdList;
 
@@ -68,7 +69,7 @@ public class ReduceProduct {
          */
 
         @SerializedName("currentPrice")
-        public int currentPrice;
+        public double currentPrice;
         @SerializedName("id")
         public String id;
         @SerializedName("name")

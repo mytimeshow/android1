@@ -24,9 +24,7 @@ import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.api.ReduceProductApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.common.ErrorHandler;
-import cn.czyugang.tcg.client.entity.GroupListBean;
 import cn.czyugang.tcg.client.entity.GrouponGroup;
-import cn.czyugang.tcg.client.entity.LabelListBean;
 import cn.czyugang.tcg.client.entity.ReduceProduct;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.modules.store.StoreActivity;
@@ -82,9 +80,9 @@ public class GrouponGoodsActivity extends BaseActivity {
     private GroupsAdapter adapter;
     private ReduceProduct products;
     private List<String> imgList;
-    private List<LabelListBean> labelListBeans;
+    private List<ReduceProduct.LabelListBean> labelListBeans;
     //当前商品的组团数
-    private List<GroupListBean> groupListBeans;
+    private List<ReduceProduct.GroupListBean> groupListBeans;
 
     public static void startGrouponGoodsActivity() {
         Intent intent = new Intent(getTopActivity(), GrouponGoodsActivity.class);
@@ -97,16 +95,12 @@ public class GrouponGoodsActivity extends BaseActivity {
         setContentView(R.layout.activity_groupon_goods);
         ButterKnife.bind(this);
 
-        getReduceProduct("940506493684461569");
-
+        //getReduceProduct("940506493684461569");
+        getReduceProduct("940878770548682753");
         groupList.add(new GrouponGroup());
         groupList.add(new GrouponGroup());
         groupList.add(new GrouponGroup());
 
-        adapter = new GroupsAdapter(groupListBeans, this);
-        groupR.setLayoutManager(new LinearLayoutManager(this));
-        groupR.setAdapter(adapter);
-        groupR.setNestedScrollingEnabled(false);
 
 
         scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
@@ -169,7 +163,12 @@ public class GrouponGoodsActivity extends BaseActivity {
                     imgList=products.productPicIdList;
                     initData(products);
                     Log.e(TAG, "onNext: done3" );
-                    getReduceProduct("940878770548682753");
+
+                    adapter = new GroupsAdapter(groupListBeans, GrouponGoodsActivity.this);
+                    groupR.setLayoutManager(new LinearLayoutManager(GrouponGoodsActivity.this));
+                    groupR.setAdapter(adapter);
+                    groupR.setNestedScrollingEnabled(false);
+
                 }
             }
         });
@@ -187,17 +186,18 @@ public class GrouponGoodsActivity extends BaseActivity {
         priceMin.setText("拼团冰点价\n最低￥"+products.minPrice);
         timeLimit.setText("拼团有效时间\n"+products.groupTime+"小时");
         commentNum.setText(String.valueOf(products.assessmentCount)+"条评价");
-        fiveStar.setText(products.score+"分");
-        fiveStar.setStarResId(products.score);
+        fiveStar.setScore(products.score);
         buy.setText("￥"+String.valueOf(products.productPrice)+"\n直接购买");
         //评价标签
         labelListBeans=products.labelList;
         List<String> strList=new ArrayList<>();
         for(int i=0,size=labelListBeans.size();i<size;i++){
-            String str=labelListBeans.get(i).getName()+"("+ labelListBeans.get(i).getCount()+")";
+            String str=labelListBeans.get(i).name;
+                    //+"("+ labelListBeans.get(i).count+")";
             strList.add(str);
         }
-        commentLabel.setTexts(strList);
+        Log.e(TAG, "initData: "+strList.get(0)+" /n"+strList.get(1) );
+        commentLabel.setTextList(commentLabel,strList);
     }
 
     private void initGroupList(ReduceProduct products) {
@@ -210,10 +210,10 @@ public class GrouponGoodsActivity extends BaseActivity {
     }
 
     private static class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Holder> {
-        private List<GroupListBean> list;
+        private List<ReduceProduct.GroupListBean> list;
         private Activity activity;
 
-        public GroupsAdapter(List<GroupListBean> list, Activity activity) {
+        public GroupsAdapter(List<ReduceProduct.GroupListBean> list, Activity activity) {
             this.list = list;
             this.activity = activity;
         }
@@ -226,34 +226,32 @@ public class GrouponGoodsActivity extends BaseActivity {
 
         @Override
         public void onBindViewHolder(Holder holder, int position) {
+           if(list!=null) {
+               ReduceProduct.GroupListBean data = list.get(position);
+               holder.headName.setText(data.name);
+               holder.currentPrice.setText("当前拼团价 ￥" + data.currentPrice +
+                       "\n" + data.restTime / 60 + "小时" + data.restTime % 60 + "分钟" + "后成团");
 
-
-
-           if(list!=null){
-               GroupListBean data = list.get(position);
-               holder.headName.setText(data.getName());
-               holder.currentPrice.setText("当前拼团价 ￥"+data.getCurrentPrice()+
-                       "\n"+data.getRestTime() +"后成团");
+               holder.joinGroup.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View view) {
+                       Toast.makeText(activity, data.id, Toast.LENGTH_SHORT).show();
+                   }
+               });
            }
-           holder.joinGroup.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View view) {
-                   Toast.makeText(activity, "jionGroup", Toast.LENGTH_SHORT).show();
-               }
-           });
         }
 
         @Override
         public int getItemCount() {
-            if(list==null){
-                list=new ArrayList<>();
-                GroupListBean bean=new GroupListBean();
-                bean.setCurrentPrice(66);
-                bean.setId("555555");
-                bean.setName("lisi");
-                bean.setRestTime(12);
-                list.add(bean);
-            }
+//            if(list==null){
+//                list=new ArrayList<>();
+//                ReduceProduct.GroupListBean bean=new ReduceProduct.GroupListBean();
+//                bean.setCurrentPrice(66);
+//                bean.setId("555555");
+//                bean.setName("lisi");
+//                bean.setRestTime(12);
+//                list.add(bean);
+//            }
             return  list==null ?3:list.size();
         }
 
