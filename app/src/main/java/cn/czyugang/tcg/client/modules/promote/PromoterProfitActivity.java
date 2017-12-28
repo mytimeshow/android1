@@ -41,6 +41,10 @@ public class PromoterProfitActivity extends BaseActivity {
     TabLayout tabLayout;
     @BindView(R.id.promote_profit_viewpager)
     ViewPager viewPager;
+    @BindView(R.id.promote_profit_tab_down)
+    TabLayout tabLayoutDown;
+    @BindView(R.id.promote_profit_viewpager_down)
+    ViewPager viewPagerDown;
 
     private String lastMonthIncome;
     private String monthIncome;
@@ -66,6 +70,7 @@ public class PromoterProfitActivity extends BaseActivity {
     private String totalCommissionByMonth;
 
     private List<BaseFragment> fragments=new ArrayList<>();
+    private List<BaseFragment> fragmentsDown=new ArrayList<>();
 
     public static void startPromoterProfitActivity() {
         Intent intent = new Intent(getTopActivity(), PromoterProfitActivity.class);
@@ -132,6 +137,18 @@ public class PromoterProfitActivity extends BaseActivity {
         viewPager.setOffscreenPageLimit(4);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
+
+         //所有订单 邀请注册  推广商品  失效订单
+        fragmentsDown.add(PromoterProfitOrderFragment.newInstance("所有订单"));
+        fragmentsDown.add(PromoterProfitOrderFragment.newInstance("邀请注册"));
+        fragmentsDown.add(PromoterProfitOrderFragment.newInstance("推广商品"));
+        fragmentsDown.add(PromoterProfitOrderFragment.newInstance("失效订单"));
+
+
+        viewPagerDown.setAdapter(new BaseFragmentAdapter(getSupportFragmentManager(),fragmentsDown));
+        viewPagerDown.setOffscreenPageLimit(4);
+        tabLayout.setupWithViewPager(viewPagerDown);
+        tabLayoutDown.setTabMode(TabLayout.MODE_FIXED);
 
 
     }

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import cn.czyugang.tcg.client.common.UserOAuth;
+import cn.czyugang.tcg.client.entity.PromoteOrder;
+import cn.czyugang.tcg.client.entity.PromoterGoodDetail;
 import cn.czyugang.tcg.client.entity.PromoterGoods;
 import cn.czyugang.tcg.client.entity.PromoterReport;
 import cn.czyugang.tcg.client.entity.Response;
@@ -32,10 +34,10 @@ public class PromoterApi {
     }
 
     //api/auth/v3/marketing/promoter/submit  [可接入-v3]提交申请成为推广员
-    public static Observable<Response<Object>> becomePromoter() {
+    public static Observable<Response<String>> becomePromoter() {
         return UserOAuth.getInstance()
                 .post("api/auth/v3/marketing/promoter/submit", null)
-                .map(s -> (Response<Object>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, Object.class)))
+                .map(s -> (Response<String>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, String.class)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -45,30 +47,30 @@ public class PromoterApi {
     *   分享
     * */
     //api/auth/v3/marketing/promoter/share/register [可接入-v3]邀请注册分享
-    public static Observable<Response<Object>> getRegisterUrl() {
+    public static Observable<Response<String>> getRegisterUrl() {
         return UserOAuth.getInstance()
                 .get("api/auth/v3/marketing/promoter/share/register", null)
-                .map(s -> (Response<Object>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, Object.class)))
+                .map(s -> (Response<String>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, String.class)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     //api/auth/v3/marketing/promoter/get/code [可接入-v3]获取推广员用户推广码
-    public static Observable<Response<Object>> getPromoterCode() {
+    public static Observable<Response<String>> getPromoterCode() {
         return UserOAuth.getInstance()
                 .get("api/auth/v3/marketing/promoter/get/code", null)
-                .map(s -> (Response<Object>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, Object.class)))
+                .map(s -> (Response<String>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, String.class)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     //api/auth/v3/marketing/promoter/share/product [可接入-v3]商品推广分享  //店铺商品id
-    public static Observable<Response<Object>> getProductUrl(String id) {
+    public static Observable<Response<String>> getProductUrl(String id) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("id", id);
         return UserOAuth.getInstance()
                 .get("api/auth/v3/marketing/promoter/share/product", map)
-                .map(s -> (Response<Object>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, Object.class)))
+                .map(s -> (Response<String>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, String.class)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -106,12 +108,12 @@ public class PromoterApi {
 
 
     //api/auth/v3/marketing/promoter/get/product [可接入-v3]查看推广商品信息       SpreadProductSetting.id
-    public static Observable<Response<Object>> getProduct(String id) {
+    public static Observable<Response<PromoterGoodDetail>> getProduct(String id) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("id", id);
         return UserOAuth.getInstance()
                 .get("api/auth/v3/marketing/promoter/get/product", map)
-                .map(s -> (Response<Object>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, Object.class)))
+                .map(s -> (Response<PromoterGoodDetail>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, PromoterGoodDetail.class)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -132,15 +134,15 @@ public class PromoterApi {
 
 
     //api/auth/v3/marketing/promoter/page/order [可接入-v3]推广订单分页查询
-    public static Observable<Response<Object>> getOrderList(String page,String accessTime,String type) {
+    public static Observable<Response<List<PromoteOrder>>> getOrderList(String page,String accessTime,String type) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("page",page);
         map.put("size",15);
         map.put("accessTime", accessTime);
         map.put("type",type);  //订单类型(所有订单-空或不传,注册首单-'REGISTER’,商品订单-'PRODUCT’,失效订单-‘INVALID’)
         return UserOAuth.getInstance()
-                .get("api/auth/v2/order/product/userDelete", map)
-                .map(s -> (Response<Object>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, Object.class)))
+                .get("api/auth/v3/marketing/promoter/page/order", map)
+                .map(s -> (Response<List<PromoteOrder>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, new JsonParse.Type(List.class, PromoteOrder.class))))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

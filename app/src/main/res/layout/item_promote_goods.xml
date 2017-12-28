@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="@dimen/dp_10"
-    android:background="@color/white"
-    >
+    android:background="@color/white">
 
     <cn.czyugang.tcg.client.utils.img.ImgView
         android:id="@+id/item_img"
@@ -77,5 +76,19 @@
             android:textSize="@dimen/sp_10"/>
     </FrameLayout>
 
+    <cn.czyugang.tcg.client.widget.LabelLayout
+        android:id="@+id/item_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dp_10"
+        android:layout_below="@+id/item_price"
+        android:layout_alignLeft="@+id/item_price"
+        android:layout_alignRight="@+id/item_share"
+        app:child_layout="@layout/view_search_label"
+        app:horizontal_spacing="@dimen/dp_10"
+        app:vertical_spacing="@dimen/dp_10"
+        android:background="@color/white"
+        android:visibility="gone"
 
+        />
 </RelativeLayout>

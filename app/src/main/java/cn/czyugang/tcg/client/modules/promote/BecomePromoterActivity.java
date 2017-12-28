@@ -4,13 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.api.PromoterApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
+import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.common.UserOAuth;
+import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.modules.balance.activity.AddBankCardActivity;
 import cn.czyugang.tcg.client.modules.set.activity.AccountInfoActivity;
 import cn.czyugang.tcg.client.modules.set.activity.RealNameAuthActivity;
@@ -54,6 +58,7 @@ public class BecomePromoterActivity extends BaseActivity {
         head.id(UserOAuth.getUserPhotoId());
         name.setText(UserOAuth.getUserNickname());
         init();
+
     }
 
     void init() {
@@ -90,7 +95,14 @@ public class BecomePromoterActivity extends BaseActivity {
 
     @OnClick(R.id.promote_become_commit)
     public void onCommit() {
-
+        PromoterApi.becomePromoter().subscribe(new NetObserver<Response<String>>() {
+            @Override
+            public void onNext(Response<String> response) {
+                super.onNext(response);
+                if (!ErrorHandler.judge200(response)) return;
+                Toast.makeText(BecomePromoterActivity.this,"提交成功",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

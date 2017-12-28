@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
@@ -27,9 +28,12 @@ import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.PromoterGoods;
 import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
+import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
+import cn.czyugang.tcg.client.widget.LabelLayout;
 import cn.czyugang.tcg.client.widget.RefreshLoadHelper;
 import cn.czyugang.tcg.client.widget.SpinnerSelectView;
 
@@ -62,6 +66,8 @@ public class PromoteGoodListActivity extends BaseActivity {
     private Response<List<PromoterGoods>> goodsResponseSales;
     private Response<List<PromoterGoods>> goodsResponseRate;
     private int clickType = 1;
+
+
 
     public static void startPromoteGoodListActivity() {
         Intent intent = new Intent(getTopActivity(), PromoteGoodListActivity.class);
@@ -123,6 +129,8 @@ public class PromoteGoodListActivity extends BaseActivity {
             orderSale.setTextColor(ResUtil.getColor(R.color.text_dark_gray));
             orderCommission.setTextColor(ResUtil.getColor(R.color.text_dark_gray));
         }).build();
+
+
     }
 
     void refreshList(boolean loadmore, String type) {
@@ -156,12 +164,9 @@ public class PromoteGoodListActivity extends BaseActivity {
             public void onNext(Response<List<PromoterGoods>> response) {
                 super.onNext(response);
                 if (!ErrorHandler.judge200(response)) return;
-                if (response.data.isEmpty()) {
-                    if (loadmore) AppUtil.toast("没有更多了");
-                    return;
-                }
                 switch (type) {
                     case "COMPREHENSIVE":
+                        if (ErrorHandler.isRepeat(goodsResponseComprehensive, response)) return;
                         if (!loadmore) {
                             goodListComprehensive.clear();
                         }
@@ -169,6 +174,7 @@ public class PromoteGoodListActivity extends BaseActivity {
                         goodsResponseComprehensive = response;
                         break;
                     case "SALES":
+                        if (ErrorHandler.isRepeat(goodsResponseSales, response)) return;
                         if (!loadmore) {
                             goodListSales.clear();
                         }
@@ -176,6 +182,7 @@ public class PromoteGoodListActivity extends BaseActivity {
                         goodsResponseSales = response;
                         break;
                     case "RATE":
+                        if (ErrorHandler.isRepeat(goodsResponseRate, response)) return;
                         if (!loadmore) {
                             goodListRate.clear();
                         }
@@ -262,7 +269,14 @@ public class PromoteGoodListActivity extends BaseActivity {
         @Override
         public void onBindViewHolder(Holder holder, int position) {
             PromoterGoods data = list.get(position);
-
+            
+            PromoterApi.getPromoterCode().subscribe(new NetObserver<Response<String>>() {
+                @Override
+                public void onNext(Response<String> response) {
+                    super.onNext(response);
+                    holder.promoteCode=response.data;
+                }
+            });
             holder.priceDiscount.setVisibility(View.GONE);
             holder.img.id(data.picId);
             holder.title.setText(data.title);
@@ -280,7 +294,54 @@ public class PromoteGoodListActivity extends BaseActivity {
             }
 
             holder.profit.setText("赚￥"+data.commission);
-            holder.itemView.setOnClickListener(v -> PromoteGoodDetailActivity.startPromoteGoodDetailActivity());
+            holder.itemView.setOnClickListener(v -> PromoteGoodDetailActivity.startPromoteGoodDetailActivity(data.id));
+            holder.share.setOnClickListener(v -> {
+                MyDialog.showAllShare(activity, v1 -> {
+                    switch (v1.getId()) {
+                        case R.id.view_share_wechat:{
+                            PromoterApi.recordShare(holder.promoteCode,data.productStoreId).subscribe(new NetObserver<Response<Object>>() {
+                                @Override
+                                public void onNext(Response<Object> response) {
+                                    super.onNext(response);
+                                    if (!ErrorHandler.judge200(response)) return;
+                                }
+                            });
+                            PromoterApi.getProductUrl(data.productStoreId).subscribe(new NetObserver<Response<String>>() {
+                                @Override
+                                public void onNext(Response<String> response) {
+                                    super.onNext(response);
+                                    if (!ErrorHandler.judge200(response)) return;
+                                    holder.shareUrl=response.data;
+                                }
+                            });
+                            break;
+                        }
+                        case R.id.view_share_wechat_circle:{
+                            break;
+                        }
+                        case R.id.view_share_qq:{
+                            break;
+                        }
+                        case R.id.view_share_qzone:{
+                            break;
+                        }
+                        case R.id.view_share_sina_blog:{
+                            break;
+                        }
+                        case R.id.view_share_scan:{
+                            MyDialog.showShareCode(activity,holder.promoteCode);
+                            break;
+                        }
+                    }
+                });
+            });
+            if (data.labels!=null&&data.labels.size()!=0){
+                holder.label.setVisibility(View.VISIBLE);
+                holder.label.setTexts(data.labels);
+            }else {
+                holder.label.setVisibility(View.GONE);
+            }
+
         }
 
         @Override
@@ -295,6 +356,10 @@ public class PromoteGoodListActivity extends BaseActivity {
             TextView price;
             TextView priceDiscount;
             TextView profit;
+            FrameLayout share;
+            LabelLayout label;
+            private String promoteCode;
+            private String shareUrl;
 
             public Holder(View itemView) {
                 super(itemView);
@@ -304,6 +369,8 @@ public class PromoteGoodListActivity extends BaseActivity {
                 price=itemView.findViewById(R.id.item_price);
                 priceDiscount =itemView.findViewById(R.id.item_price_special);
                 profit=itemView.findViewById(R.id.item_profit);
+                share=itemView.findViewById(R.id.item_share);
+                label=itemView.findViewById(R.id.item_label);
             }
 
         }
