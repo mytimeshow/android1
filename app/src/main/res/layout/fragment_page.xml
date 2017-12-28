@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/bg_blur"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:text="这是描述"
+        android:id="@+id/product_descript"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    
+    
+</LinearLayout>

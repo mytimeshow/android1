@@ -29,7 +29,6 @@ import cn.czyugang.tcg.client.entity.ReduceProduct;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.modules.store.StoreActivity;
 import cn.czyugang.tcg.client.widget.FiveStarView;
-import cn.czyugang.tcg.client.widget.LabelLayout;
 import cn.czyugang.tcg.client.widget.MultiImgView;
 
 /**
@@ -67,10 +66,10 @@ public class GrouponGoodsActivity extends BaseActivity {
     FiveStarView fiveStar;
     @BindView(R.id.groupon_goods_comment_num)
     TextView commentNum;
-    @BindView(R.id.groupon_goods_comment_label)
+  /*  @BindView(R.id.groupon_goods_comment_label)
     LabelLayout commentLabel;
     @BindView(R.id.groupon_goods_pull_detail)
-    TextView pullToDetail;
+    TextView pullToDetail;*/
     @BindView(R.id.groupon_goods_buy)
     TextView buy;
     @BindView(R.id.groupon_goods_open_group)
@@ -103,13 +102,13 @@ public class GrouponGoodsActivity extends BaseActivity {
 
 
 
-        scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+     /*   scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             int maxScroll=-1;
             boolean isScrollToBottom=false;
             long lastBottomTime=0;
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (maxScroll<0) maxScroll=pullToDetail.getBottom()-scrollView.getHeight();
+               if (maxScroll<0) maxScroll=pullToDetail.getBottom()-scrollView.getHeight();
                 if (scrollY == maxScroll) {
                     if (isScrollToBottom) {
                         if (System.currentTimeMillis()-lastBottomTime>500){
@@ -126,7 +125,7 @@ public class GrouponGoodsActivity extends BaseActivity {
                     isScrollToBottom=false;
                 }
             }
-        });
+        });*/
 
     }
 
@@ -142,7 +141,7 @@ public class GrouponGoodsActivity extends BaseActivity {
 
     @OnClick(R.id.groupon_goods_buy)
     public void onBuy() {
-
+        GrouponDetailActivity.startGrouponDetailActivity();
     }
     
     @OnClick(R.id.groupon_goods_open_group)
@@ -197,7 +196,7 @@ public class GrouponGoodsActivity extends BaseActivity {
             strList.add(str);
         }
         Log.e(TAG, "initData: "+strList.get(0)+" /n"+strList.get(1) );
-        commentLabel.setTextList(commentLabel,strList);
+       // commentLabel.setTextList(commentLabel,strList);
     }
 
     private void initGroupList(ReduceProduct products) {

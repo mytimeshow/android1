@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/groupon_goods"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -156,7 +156,77 @@
                 />
 
             <include layout="@layout/view_split_bar_light_big"/>
+            <LinearLayout
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+              <LinearLayout
+                  android:layout_weight="1"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content">
+                  <cn.czyugang.tcg.client.utils.img.ImgView
+                      android:id="@+id/img_01"
+                      android:layout_width="@dimen/dp_40"
+                      android:layout_height="@dimen/dp_40"
+                      app:round="true"
+                      />
+                  <TextView
+                      android:text="绿色食品"
+                      android:layout_width="wrap_content"
+                      android:layout_height="20dp" />
+              </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <cn.czyugang.tcg.client.utils.img.ImgView
+                        android:id="@+id/img_02"
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dp_40"
+                        app:round="true"
+                        />
+                    <TextView
+                        android:text="绿色食品"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <cn.czyugang.tcg.client.utils.img.ImgView
+                        android:id="@+id/img_03"
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dp_40"
+                        app:round="true"
+                        />
+                    <TextView
+                        android:text="绿色食品"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <cn.czyugang.tcg.client.utils.img.ImgView
+                        android:id="@+id/img_04"
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dp_40"
+                        app:round="true"
+                        />
+                    <TextView
+                        android:text="绿色食品"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+                </LinearLayout>
+            </LinearLayout>
             <!--评价-->
+
             <LinearLayout
                 android:id="@+id/groupon_goods_commentL"
                 android:layout_width="match_parent"
@@ -188,8 +258,8 @@
 
             </LinearLayout>
 
-            <include layout="@layout/view_split_bar_light"/>
-            <!--评价标签-->
+          <!--  <include layout="@layout/view_split_bar_light"/>
+            &lt;!&ndash;评价标签&ndash;&gt;
             <cn.czyugang.tcg.client.widget.LabelLayout
                 android:id="@+id/groupon_goods_comment_label"
                 android:layout_width="match_parent"
@@ -206,7 +276,7 @@
                 android:text="↑ 上拉查看图文详情"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/sp_12"
-                />
+                />-->
 
         </LinearLayout>
 
