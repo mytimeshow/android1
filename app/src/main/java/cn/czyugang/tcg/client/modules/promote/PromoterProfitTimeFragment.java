@@ -34,10 +34,6 @@ public class PromoterProfitTimeFragment extends BaseFragment {
     TextView tvRegisterNum;
     @BindView(R.id.promote_profit_pay_nums)
     TextView payNums;
-    @BindView(R.id.promote_profit_tab)
-    TabLayout tabLayout;
-    @BindView(R.id.promote_profit_viewpager)
-    ViewPager viewPager;
     Unbinder unbinder;
 
     private String type=null;
@@ -70,17 +66,6 @@ public class PromoterProfitTimeFragment extends BaseFragment {
         rootView = inflater.inflate(R.layout.fragment_promoter_profit_time, container, false);
         unbinder = ButterKnife.bind(this, rootView);
 
-        //所有订单 邀请注册  推广商品  失效订单
-        fragments.add(PromoterProfitOrderFragment.newInstance("所有订单"));
-        fragments.add(PromoterProfitOrderFragment.newInstance("邀请注册"));
-        fragments.add(PromoterProfitOrderFragment.newInstance("推广商品"));
-        fragments.add(PromoterProfitOrderFragment.newInstance("失效订单"));
-
-
-        viewPager.setAdapter(new BaseFragmentAdapter(getChildFragmentManager(),fragments));
-        viewPager.setOffscreenPageLimit(4);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
         return rootView;
     }

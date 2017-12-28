@@ -86,16 +86,32 @@
                 </FrameLayout>
             </FrameLayout>
 
-            <TextView
-                android:id="@+id/promote_goods_detail_price"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/dp_8"
-                android:paddingLeft="@dimen/dp_10"
-                android:text="￥9.99-9.99  已售11份"
-                android:textSize="@dimen/sp_16"
-                android:textColor="@color/main_red"
-                />
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/promote_goods_detail_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/dp_8"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:text="￥9.99-9.99 "
+                    android:textSize="@dimen/sp_16"
+                    android:textColor="@color/main_red"
+                    />
+                <TextView
+                    android:id="@+id/promote_goods_detail_sale"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:layout_alignBaseline="@+id/promote_goods_detail_price"
+                    android:layout_toRightOf="@+id/promote_goods_detail_price"
+                    android:text="已售11份"
+                    android:textSize="@dimen/sp_10"
+                    android:textColor="@color/text_gray"
+                    />
+            </RelativeLayout>
+
             <TextView
                 android:id="@+id/promote_goods_detail_profit"
                 android:layout_width="match_parent"

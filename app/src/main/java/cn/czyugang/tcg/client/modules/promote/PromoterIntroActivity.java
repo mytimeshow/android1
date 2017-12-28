@@ -44,6 +44,8 @@ public class PromoterIntroActivity extends BaseActivity {
     private boolean bankCardFlag;
     private boolean realNameAuthFlag;
 
+    private String shareLinkUrl;
+
     public static void startPromoterIntroActivity() {
         Intent intent = new Intent(getTopActivity(), PromoterIntroActivity.class);
         getTopActivity().startActivity(intent);
@@ -56,6 +58,13 @@ public class PromoterIntroActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         //banner.setImageLoader(new BannerImgLoader()).setImages(images).start();
+        PromoterApi.getRegisterUrl().subscribe(new NetObserver<Response<String>>() {
+            @Override
+            public void onNext(Response<String> response) {
+                super.onNext(response);
+                shareLinkUrl=response.data;
+            }
+        });
 
         getPromoterInfo();
     }
@@ -93,6 +102,7 @@ public class PromoterIntroActivity extends BaseActivity {
         MyDialog.showAllShare(this, v -> {
             switch (v.getId()) {
                 case R.id.view_share_wechat:{
+                    LogRui.e("onInvite####"+shareLinkUrl);
                     break;
                 }
                 case R.id.view_share_wechat_circle:{

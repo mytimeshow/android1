@@ -2,27 +2,28 @@ package cn.czyugang.tcg.client.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+/**
+ * Created by Administrator on 2017/12/28.
+ */
 
-public class PromoterGoods {
+public class PromoterGoodDetail {
 
     /**
      * commission : 0
-     * discountPrice : 0
      * id : string
-     * labels : ["string"]
      * maxPrice : 0
      * minPrice : 0
      * picId : string
-     * praiseRate : string
+     * productStoreId : string
      * rate : 0
      * sales : 0
+     * subTitle : string
      * title : string
+     * type : string
      */
+
     @SerializedName("commission")
     public double commission;
-    @SerializedName("discountPrice")
-    public double discountPrice;
     @SerializedName("id")
     public String id;
     @SerializedName("maxPrice")
@@ -31,16 +32,16 @@ public class PromoterGoods {
     public double minPrice;
     @SerializedName("picId")
     public String picId;
-    @SerializedName("praiseRate")
-    public String praiseRate;
+    @SerializedName("productStoreId")
+    public String productStoreId;
     @SerializedName("rate")
     public double rate;
     @SerializedName("sales")
     public int sales;
+    @SerializedName("subTitle")
+    public String subTitle;
     @SerializedName("title")
     public String title;
-    @SerializedName("productStoreId")
-    public String productStoreId;
-    @SerializedName("labels")
-    public List<String> labels;
+    @SerializedName("type")
+    public String type;
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_230"
+    android:layout_height="@dimen/dp_330"
+    android:orientation="vertical"
+    android:background="@drawable/scan_code_bg">
+
+    <ImageView
+        android:id="@+id/scan_code"
+        android:layout_width="@dimen/dp_180"
+        android:layout_height="@dimen/dp_180"
+        android:layout_marginTop="@dimen/dp_108"
+        android:layout_gravity="center"/>
+
+
+</LinearLayout>

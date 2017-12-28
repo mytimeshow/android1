@@ -504,6 +504,22 @@ public class MyDialog extends DialogFragment {
                 .show();
     }
 
+    //居中  分享二维码
+    public static  void showShareCode(Activity activity,String code){
+        Builder.newBuilder(activity)
+                .custom(R.layout.dialog_share_code)
+                .gravity(Gravity.CENTER)
+                .width(-2)
+                .height(-2)
+                .bindView(myDialog -> {
+                    ImageView imgCode=myDialog.rootView.findViewById(R.id.scan_code);
+                    imgCode.setImageBitmap(QRCode.createQRImage(code));
+                })
+                .canceledOnTouchOutside(true)
+                .build()
+                .show();
+    }
+
     //正方形 大屏 二维码
     public static void qrCodeDialog(Activity activity, final String qrStr) {
         MyDialog.Builder.newBuilder(activity)
