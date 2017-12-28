@@ -8,10 +8,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -19,16 +23,27 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.api.RecordApi;
 import cn.czyugang.tcg.client.api.StoreApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseFragment;
+import cn.czyugang.tcg.client.common.ErrorHandler;
+import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.entity.TrolleyCheckResponse;
 import cn.czyugang.tcg.client.entity.TrolleyGoods;
 import cn.czyugang.tcg.client.entity.TrolleyResponse;
 import cn.czyugang.tcg.client.entity.TrolleyStore;
 import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.modules.common.dialog.StoreTrolleyDialog;
-import cn.czyugang.tcg.client.utils.rxbus.TrolleyBuyNumChangedEvent;
+import cn.czyugang.tcg.client.modules.order.ConfirmOrderActivity;
+import cn.czyugang.tcg.client.modules.store.GoodDetailActivity;
+import cn.czyugang.tcg.client.modules.store.StoreActivity;
+import cn.czyugang.tcg.client.utils.CommonUtil;
+import cn.czyugang.tcg.client.utils.LogRui;
+import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.rxbus.RxBus;
+import cn.czyugang.tcg.client.utils.rxbus.TrolleyBuyNumChangedEvent;
+import cn.czyugang.tcg.client.utils.string.RichText;
 import cn.czyugang.tcg.client.widget.ActivityTextView;
 import cn.czyugang.tcg.client.widget.BottomBalanceView;
 import cn.czyugang.tcg.client.widget.GoodsPlusMinusView;
@@ -55,6 +70,8 @@ public class TrolleyFragment extends BaseFragment {
 
     private List<TrolleyStore> trolleyList = new ArrayList<>();
     private TrolleyAdapter adapter;
+    private RefreshLoadHelper refreshLoadHelper;
+    private TrolleyResponse trolleyResponse = null;
 
     public static TrolleyFragment newInstance() {
         TrolleyFragment fragment = new TrolleyFragment();
@@ -76,35 +93,111 @@ public class TrolleyFragment extends BaseFragment {
         rootView = inflater.inflate(R.layout.fragment_trolley, container, false);
         unbinder = ButterKnife.bind(this, rootView);
 
-        for (int i = 0; i < 10; i++) {
-            trolleyList.add(new TrolleyStore());
-        }
-        trolleyList.add(new TrolleyStore().setViewType(R.layout.item_trolley_store_ad));
-
-
         adapter = new TrolleyAdapter(trolleyList, getActivity());
         storeR.setLayoutManager(new LinearLayoutManager(getActivity()));
         storeR.setAdapter(adapter);
-        new RefreshLoadHelper(getActivity()).build(storeR);
-
-        getTrolley(false);
+        refreshLoadHelper = new RefreshLoadHelper(getActivity(), true, false).build(storeR);
+        refreshLoadHelper.swipeToLoadLayout.setOnRefreshListener(() -> syncAndGetTrolley(false));
 
         return rootView;
     }
 
-    private void getTrolley(boolean loadmore){
+    @Override
+    public void onResume() {
+        super.onResume();
+        syncAndGetTrolley(false);
+    }
+
+    private void syncAndGetTrolley(boolean loadmore) {
+        if (trolleyResponse == null) {
+            getTrolley(loadmore);
+        } else {
+            StoreApi.syncTrolleyGoods(new ArrayList<>(trolleyResponse.storeHashMap.values())).subscribe(new BaseActivity.NetObserver<Response<List<TrolleyGoods>>>() {
+                @Override
+                public void onNext(Response<List<TrolleyGoods>> response) {
+                    super.onNext(response);
+                    if (ErrorHandler.judge200(response)) getTrolley(loadmore);
+                }
+            });
+        }
+    }
+
+    private void getTrolley(boolean loadmore) {
         StoreApi.getTrolley(null).subscribe(new BaseActivity.NetObserver<TrolleyResponse>() {
             @Override
             public void onNext(TrolleyResponse response) {
                 super.onNext(response);
+                if (!ErrorHandler.judge200(response)) return;
+                response.parse();
+                trolleyList.clear();
+                trolleyList.addAll(response.storeHashMap.values());
+                trolleyResponse = response;
+                adapter.notifyData();
+                refreshBottom();
+            }
+
+            @Override
+            public SwipeToLoadLayout getSwipeToLoadLayout() {
+                return refreshLoadHelper.swipeToLoadLayout;
             }
         });
     }
+
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    private void refreshItemChange(TrolleyStore trolleyStore) {
+        if (!trolleyStore.hasNormalGoods()) {
+            int p = trolleyList.indexOf(trolleyStore);
+            if (p >= 0) {
+                trolleyList.remove(p);
+                adapter.notifyItemRemoved(p);
+            }
+        }
+        refreshBottom();
+    }
+
+    private void refreshBottom() {
+        money.setText(RichText.newRichText("合计：")
+                .appendSpColorRes(CommonUtil.formatPrice(TrolleyStore.getAllPrice(trolleyList)), R.dimen.sp_18, R.color.text_black)
+                .append("\n")
+                .appendColorRes("不含配送费", R.color.text_gray)
+                .build());
+
+        int num = TrolleyStore.getAllGoodsBuyNum(trolleyList);
+        toBuy.setText(String.format("结算(%d)", num));
+        toBuy.setClickable(num > 0);
+    }
+
+    @OnClick(R.id.trolley_buy)
+    public void onCommit() {
+        if (trolleyList == null) return;
+        List<String> cards = new ArrayList<>();
+        for (TrolleyStore t : trolleyList) {
+            for (TrolleyGoods goods : t.trolleyGoodsMap.values()) {
+                if (!goods.hadDeleted() && goods.isSelect && !goods.trolleyId.equals("")) {
+                    cards.add(goods.trolleyId);
+                }
+            }
+        }
+        String shoppingCartIds = CommonUtil.listIdsToStr(cards);
+        if (shoppingCartIds.isEmpty()) return;
+        StoreApi.checkTrolley(shoppingCartIds).subscribe(new BaseActivity.NetObserver<TrolleyCheckResponse>() {
+            @Override
+            public void onNext(TrolleyCheckResponse response) {
+                super.onNext(response);
+                if (ErrorHandler.judge200(response)) {
+                    LogRui.d("****onNext####结算前检查购物车");
+                    if (response.errorTrolleyGoods.isEmpty()) {
+                        ConfirmOrderActivity.startConfirmOrderActivity(shoppingCartIds);
+                    }
+                }
+            }
+        });
     }
 
     @OnClick(R.id.title_right)
@@ -118,13 +211,67 @@ public class TrolleyFragment extends BaseFragment {
         }
     }
 
-    private static class TrolleyAdapter extends RecyclerView.Adapter<TrolleyAdapter.Holder> {
+    @OnClick(R.id.trolley_bottom_select)
+    public void onSelectAll(View v) {
+        if (trolleyList == null) return;
+        for (TrolleyStore t : trolleyList) {
+            t.selectAll(((CompoundButton) v).isChecked());
+        }
+        adapter.notifyDataSetChanged();
+        refreshBottom();
+    }
+
+    @OnClick(R.id.trolley_collect)
+    public void onCollect() {
+        onEdit();
+        if (trolleyList == null) return;
+        List<String> goodIds = new ArrayList<>();
+        for (TrolleyStore t : trolleyList) {
+            for (TrolleyGoods goods : t.trolleyGoodsMap.values()) {
+                goodIds.add(goods.goodId);
+            }
+        }
+        RecordApi.collect("PRODUCT", goodIds).subscribe(new BaseActivity.NetObserver<Response>() {
+            @Override
+            public void onNext(Response response) {
+                super.onNext(response);
+                if (ErrorHandler.judge200(response)) {
+                    AppUtil.toast("成功收藏商品");
+                }
+            }
+
+            @Override
+            public boolean showLoading() {
+                return false;
+            }
+        });
+    }
+
+    @OnClick(R.id.trolley_delete)
+    public void onDelete() {
+        onEdit();
+        if (trolleyList == null) return;
+        for (TrolleyStore t : trolleyList) {
+            t.deleteAll();
+        }
+        adapter.notifyData();
+    }
+
+    private class TrolleyAdapter extends RecyclerView.Adapter<TrolleyAdapter.Holder> {
         private List<TrolleyStore> list;
         private Activity activity;
 
         public TrolleyAdapter(List<TrolleyStore> list, Activity activity) {
             this.list = list;
             this.activity = activity;
+        }
+
+        private void notifyData() {
+            Iterator<TrolleyStore> iterator = list.iterator();
+            while (iterator.hasNext()) {
+                if (!iterator.next().hasNormalGoods()) iterator.remove();
+            }
+            notifyDataSetChanged();
         }
 
         @Override
@@ -143,9 +290,22 @@ public class TrolleyFragment extends BaseFragment {
             if (data.viewType == R.layout.item_trolley_store_ad) {
                 return;
             }
-            data.bindGoodsAdapter(activity, holder.goodsR, false,data);
+
+            holder.selectButton.setChecked(data.selected);
+            holder.selectButton.setOnClickListener(v -> {
+                data.selectAll(((CompoundButton) v).isChecked());
+                notifyItemChanged(list.indexOf(data));
+                refreshBottom();
+            });
+
+            holder.name.setText(data.store.name);
+            holder.name.setOnClickListener(v -> StoreActivity.startStoreActivity(data.store.id));
+
+            data.bindGoodsAdapter(activity, holder.goodsR, false, data);
+            data.adapter.trolleyFragment = TrolleyFragment.this;
+
             holder.packFeeAsk.setOnClickListener(v -> {
-                MyDialog.bubbleToast(activity, v, "啊啊ajdk哎哎哎");
+                MyDialog.bubbleToast(activity, v, " ");
             });
         }
 
@@ -198,14 +358,14 @@ public class TrolleyFragment extends BaseFragment {
         private TrolleyStore trolleyStore;
         public boolean isInStore = false;
         private BottomBalanceView bottomBalanceView;
-        private StoreTrolleyDialog storeTrolleyDialog=null;
+        private StoreTrolleyDialog storeTrolleyDialog = null;
+        public TrolleyFragment trolleyFragment = null;
 
 
-
-        public TrolleyGoodsAdapter(List<TrolleyGoods> list, Activity activity,TrolleyStore trolleyStore) {
+        public TrolleyGoodsAdapter(List<TrolleyGoods> list, Activity activity, TrolleyStore trolleyStore) {
             this.list = list;
             this.activity = activity;
-            this.trolleyStore=trolleyStore;
+            this.trolleyStore = trolleyStore;
         }
 
         public TrolleyGoodsAdapter setBottomBalanceView(BottomBalanceView bottomBalanceView) {
@@ -218,9 +378,10 @@ public class TrolleyFragment extends BaseFragment {
             return this;
         }
 
-        private void refreshOtherOnChange(){
-            if (bottomBalanceView!=null) bottomBalanceView.refresh();
-            if (storeTrolleyDialog!=null) storeTrolleyDialog.refreshPackFee();
+        private void refreshOtherOnChange() {
+            if (bottomBalanceView != null) bottomBalanceView.refresh();
+            if (storeTrolleyDialog != null) storeTrolleyDialog.refreshPackFee();
+            if (trolleyFragment != null) trolleyFragment.refreshItemChange(trolleyStore);
         }
 
         @Override
@@ -237,7 +398,7 @@ public class TrolleyFragment extends BaseFragment {
             holder.plusMinusView
                     .setIsMultiSpec(false)
                     .setOnPlusMinusListener(addNum -> {     //购物车
-                        trolleyStore.addGood(data,addNum);
+                        trolleyStore.addGood(data, addNum);
                         refreshOtherOnChange();
                         return data.num;
                     })
@@ -248,20 +409,36 @@ public class TrolleyFragment extends BaseFragment {
             holder.spec.setText(data.spec);
             holder.discountTag.setVisibility(View.GONE);
             holder.price.setText(data.getPriceStr());
-            if (holder.activityPrice!=null) holder.activityPrice.setVisibility(View.GONE);
-            if (holder.activityTime!=null) holder.activityTime.setVisibility(View.GONE);
+            if (holder.activityPrice != null) holder.activityPrice.setVisibility(View.GONE);
+            if (holder.activityTime != null) holder.activityTime.setVisibility(View.GONE);
 
             holder.delete.setOnClickListener(v -> {
                 trolleyStore.deleteGood(data);
                 notifyDataSetChanged();
                 refreshOtherOnChange();
             });
-            if (holder.collect!=null) holder.collect.setOnClickListener(v -> {
+            if (holder.collect != null) {
+                holder.collect.setOnClickListener(v -> {
+                    RecordApi.collect("PRODUCT", data.goodId).subscribe(new BaseActivity.NetObserver<Response>() {
+                        @Override
+                        public void onNext(Response response) {
+                            super.onNext(response);
+                            if (ErrorHandler.judge200(response))
+                                AppUtil.toast("成功收藏");
+                        }
 
-            });
+                        @Override
+                        public boolean showLoading() {
+                            return false;
+                        }
+                    });
+                });
+                holder.itemView.setOnClickListener(v -> GoodDetailActivity.startGoodDetailActivity(data.goodId, data.storeId));
+            }
 
             holder.selectButton.setChecked(data.isSelect);
-            holder.selectButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            holder.selectButton.setOnClickListener(v -> {
+                data.isSelect = ((CompoundButton) v).isChecked();
                 refreshOtherOnChange();
             });
         }
@@ -294,16 +471,16 @@ public class TrolleyFragment extends BaseFragment {
                 super(itemView);
                 selectButton = itemView.findViewById(R.id.item_select);
                 plusMinusView = itemView.findViewById(R.id.item_plus_minus);
-                hotTag= itemView.findViewById(R.id.item_hot_tag);
-                name= itemView.findViewById(R.id.item_name);
-                spec= itemView.findViewById(R.id.item_spec);
-                editSpec= itemView.findViewById(R.id.item_spec_edit);
-                discountTag= itemView.findViewById(R.id.item_tag);
-                price= itemView.findViewById(R.id.item_price);
-                activityPrice= itemView.findViewById(R.id.item_activity_price);
-                activityTime= itemView.findViewById(R.id.item_activity_price_time);
-                delete= itemView.findViewById(R.id.item_delete);
-                collect= itemView.findViewById(R.id.item_collect);
+                hotTag = itemView.findViewById(R.id.item_hot_tag);
+                name = itemView.findViewById(R.id.item_name);
+                spec = itemView.findViewById(R.id.item_spec);
+                editSpec = itemView.findViewById(R.id.item_spec_edit);
+                discountTag = itemView.findViewById(R.id.item_tag);
+                price = itemView.findViewById(R.id.item_price);
+                activityPrice = itemView.findViewById(R.id.item_activity_price);
+                activityTime = itemView.findViewById(R.id.item_activity_price_time);
+                delete = itemView.findViewById(R.id.item_delete);
+                collect = itemView.findViewById(R.id.item_collect);
             }
         }
     }

@@ -141,6 +141,16 @@ public class StoreApi {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public static Observable<Response<List<TrolleyGoods>>> syncTrolleyGoods(List<TrolleyStore> trolleyStores) {
+        HashMap<String, Object> innerMap = new HashMap<>();
+        innerMap.put("localShoppingCartVOList", TrolleyPost.newTrolleyPostList(trolleyStores));
+        return UserOAuth.getInstance()
+                .post("api/auth/v1/product/shopping/shoppingCart/sync", innerMap)
+                .map(s -> (Response<List<TrolleyGoods>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, new JsonParse.Type(List.class, TrolleyGoods.class))))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
     //结算前检查购物车
     public static Observable<TrolleyCheckResponse> checkTrolley(String shoppingCartIds) {
         HashMap<String, Object> map = new HashMap<>();

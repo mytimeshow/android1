@@ -13,6 +13,7 @@ import java.util.Map;
 
 import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.modules.order.PayOrderWayActivity;
 import cn.czyugang.tcg.client.utils.JsonParse;
 import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.string.EncryptUtils;
@@ -90,8 +91,13 @@ public class PayApi {
                 LogRui.i("openAlipay####5");
                 // 判断resultStatus 为9000则代表支付成功
                 if (TextUtils.equals(payResult.resultStatus, "9000")) {
-                    Toast.makeText(activity, "支付成功", Toast.LENGTH_SHORT).show();
+                    if (activity instanceof PayOrderWayActivity){
+                        ((PayOrderWayActivity)activity).onPaySuccess();
+                    }
                 } else {
+                    if (activity instanceof PayOrderWayActivity){
+                        ((PayOrderWayActivity)activity).onPayFail();
+                    }
                     Toast.makeText(activity, payResult.memo, Toast.LENGTH_SHORT).show();
                     LogRui.e("openAlipay####" + payResult.raw);
                     LogRui.e("openAlipay####" + payResult.result);

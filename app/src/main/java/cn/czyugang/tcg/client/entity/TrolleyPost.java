@@ -50,6 +50,16 @@ public class TrolleyPost {
         return postList;
     }
 
+    public static List<TrolleyPost> newTrolleyPostList(List<TrolleyStore> trolleyStores){
+        List<TrolleyPost> postList=new ArrayList<>();
+        for (TrolleyStore trolleyStore:trolleyStores){
+            for(TrolleyGoods trolleyGoods:trolleyStore.trolleyGoodsMap.values()){
+                postList.add(newTrolleyPost(trolleyGoods));
+            }
+        }
+        return postList;
+    }
+
     public static String newTrolleyPostListJson(TrolleyStore trolleyStore){
         return JsonParse.toJson(newTrolleyPostList(trolleyStore));
     }

@@ -41,7 +41,9 @@
             <TextView
                 android:id="@+id/trolley_money"
                 style="@style/text_14_dark_gray"
-                android:text="合计：\n￥666.66"/>
+                android:layout_marginLeft="@dimen/dp_10"
+                android:text="合计：\n￥0.00"
+                android:lineSpacingMultiplier="1.1"/>
             <include layout="@layout/space_h"/>
             <TextView
                 android:id="@+id/trolley_buy"
@@ -50,7 +52,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/main_red"
                 android:gravity="center"
-                android:text="结算(2)"/>
+                android:text="结算(0)"/>
         </LinearLayout>
 
         <!--编辑状态-->
@@ -63,6 +65,7 @@
             android:gravity="center_vertical"
             android:visibility="gone">
             <cn.czyugang.tcg.client.widget.SelectButton
+                android:id="@+id/trolley_bottom_select"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"

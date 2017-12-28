@@ -13,8 +13,6 @@ import com.aspsine.swipetoloadlayout.SwipeRefreshTrigger;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.aspsine.swipetoloadlayout.SwipeTrigger;
 
-import cn.czyugang.tcg.client.R;
-
 /**
  * @author ruiaa
  * @date 2017/12/8
@@ -22,43 +20,37 @@ import cn.czyugang.tcg.client.R;
 
 public class RefreshLoadHelper {
 
-    public SwipeToLoadLayout swipeToLoadLayout=null;
-    private RefreshHeaderView refreshHeaderView=null;
-    private LoadMoreFooterView loadMoreFooterView=null;
+    public SwipeToLoadLayout swipeToLoadLayout = null;
+    private RefreshHeaderView refreshHeaderView = null;
+    private LoadMoreFooterView loadMoreFooterView = null;
 
-    public RefreshLoadHelper(Activity activity){
-        swipeToLoadLayout=new SwipeToLoadLayout(activity);
-        refreshHeaderView=new RefreshLoadHelper.RefreshHeaderView(activity);
-        loadMoreFooterView=new RefreshLoadHelper.LoadMoreFooterView(activity);
-        swipeToLoadLayout.setOnRefreshListener(()->{
-            swipeToLoadLayout.postDelayed(()->{
-                swipeToLoadLayout.setRefreshing(false);
-            },2000);
-        });
-        swipeToLoadLayout.setOnLoadMoreListener(()->{
-            swipeToLoadLayout.postDelayed(()->{
-                swipeToLoadLayout.setLoadingMore(false);
-            },2000);
-        });
+    public RefreshLoadHelper(Activity activity) {
+        this(activity, true, true);
     }
 
-    public RefreshLoadHelper build(RecyclerView recyclerView){
+    public RefreshLoadHelper(Activity activity, boolean refreshable, boolean loadmoreable) {
+        swipeToLoadLayout = new SwipeToLoadLayout(activity);
+        if (refreshable) refreshHeaderView = new RefreshLoadHelper.RefreshHeaderView(activity);
+        if (loadmoreable) loadMoreFooterView = new RefreshLoadHelper.LoadMoreFooterView(activity);
+    }
+
+    public RefreshLoadHelper build(RecyclerView recyclerView) {
         swipeToLoadLayout.setLayoutParams(recyclerView.getLayoutParams());
-        ViewGroup viewGroup=(ViewGroup)(recyclerView.getParent());
-        int viewIndex=viewGroup.indexOfChild(recyclerView);
+        ViewGroup viewGroup = (ViewGroup) (recyclerView.getParent());
+        int viewIndex = viewGroup.indexOfChild(recyclerView);
         viewGroup.removeView(recyclerView);
-        recyclerView.setLayoutParams(new ViewGroup.MarginLayoutParams(-1,-1));
-        refreshHeaderView.setLayoutParams(new ViewGroup.MarginLayoutParams(-1,100));
-        loadMoreFooterView.setLayoutParams(new ViewGroup.MarginLayoutParams(-1,100));
-        swipeToLoadLayout.addView(refreshHeaderView);
+        recyclerView.setLayoutParams(new ViewGroup.MarginLayoutParams(-1, -1));
+        if (refreshHeaderView != null)
+            refreshHeaderView.setLayoutParams(new ViewGroup.MarginLayoutParams(-1, 100));
+        if (loadMoreFooterView != null)
+            loadMoreFooterView.setLayoutParams(new ViewGroup.MarginLayoutParams(-1, 100));
+        if (refreshHeaderView != null) swipeToLoadLayout.addView(refreshHeaderView);
         swipeToLoadLayout.addView(recyclerView);
-        swipeToLoadLayout.addView(loadMoreFooterView);
+        if (loadMoreFooterView != null) swipeToLoadLayout.addView(loadMoreFooterView);
         swipeToLoadLayout.refreshViewIdentity();
-        viewGroup.addView(swipeToLoadLayout,viewIndex);
+        viewGroup.addView(swipeToLoadLayout, viewIndex);
         return this;
     }
-
-
 
     /**
      * Created by ruiaa on 2017/11/13.

@@ -20,6 +20,8 @@ public class TrolleyStore {
 
 
     public HashMap<String, TrolleyGoods> trolleyGoodsMap = new HashMap<>();
+    transient public Store store = null;
+    transient public boolean selected = false;
 
     public TrolleyStore() {
 
@@ -32,6 +34,15 @@ public class TrolleyStore {
 
     public String getTrolleyGoodsKey(TrolleyGoods trolleyGoods) {
         return getTrolleyGoodsKey(trolleyGoods.goodId, trolleyGoods.storeInventoryId, trolleyGoods.specId);
+    }
+
+    //合并购物车
+    public void mergeTrolleyGoods(List<TrolleyGoods> trolleyGoodsList) {
+        if (trolleyGoodsList == null || trolleyGoodsList.isEmpty()) return;
+        for (TrolleyGoods t : trolleyGoodsList) {
+            t.formatSpecId();
+            trolleyGoodsMap.put(getTrolleyGoodsKey(t), t);
+        }
     }
 
     //添加商品  单规格
@@ -74,8 +85,16 @@ public class TrolleyStore {
         return 0;
     }
 
+    public void deleteAll(){
+        for(TrolleyGoods trolleyGoods:trolleyGoodsMap.values()){
+            if (goodsList != null) goodsList.remove(trolleyGoods);
+            trolleyGoods.setDeleteFlag(true);
+        }
+    }
+
     //全选
     public void selectAll(boolean isSelect) {
+        selected = isSelect;
         for (TrolleyGoods t : trolleyGoodsMap.values()) {
             t.isSelect = isSelect;
         }
@@ -101,34 +120,73 @@ public class TrolleyStore {
     public int getGoodsBuyNum() {
         int num = 0;
         for (TrolleyGoods t : trolleyGoodsMap.values()) {
-            if (!t.hadDeleted()&&t.isSelect) num += t.num;
+            if (!t.hadDeleted() && t.isSelect) num += t.num;
         }
         return num;
     }
 
-    public double getAllPrice(){
-        double d=0;
+    public double getAllPrice() {
+        double d = 0;
         for (TrolleyGoods t : trolleyGoodsMap.values()) {
-            if (!t.hadDeleted()&&t.isSelect) d += t.getAllPrice();
+            if (!t.hadDeleted() && t.isSelect) d += t.getAllPrice();
         }
         return d;
     }
 
-    public String getAllPriceStr(){
+    public String getAllPriceStr() {
         return String.format("￥%.2f", getAllPrice());
     }
 
-    public double getAllPackagePrice(){
-        double d=0;
+    public double getAllPackagePrice() {
+        double d = 0;
         for (TrolleyGoods t : trolleyGoodsMap.values()) {
-            if (!t.hadDeleted()&&t.isSelect) d += t.getAllPackagePrice();
+            if (!t.hadDeleted() && t.isSelect) d += t.getAllPackagePrice();
         }
         return d;
     }
 
-    public String getAllPackagePriceStr(){
+    public String getAllPackagePriceStr() {
         return String.format("￥%.2f", getAllPackagePrice());
     }
+
+    public boolean hasNormalGoods(){
+        if (trolleyGoodsMap.isEmpty()) return false;
+        for (TrolleyGoods trolleyGoods:trolleyGoodsMap.values()){
+            if (!trolleyGoods.hadDeleted()) return true;
+        }
+        return false;
+    }
+
+    public static int getAllGoodsBuyNum(List<TrolleyStore> list) {
+        int i = 0;
+        if (list == null) return i;
+        for (TrolleyStore t : list) {
+            i += t.getGoodsBuyNum();
+        }
+        return i;
+    }
+
+    public static double getAllPrice(List<TrolleyStore> list) {
+        double d = 0;
+        if (list == null) return d;
+        for (TrolleyStore t : list) {
+            d += t.getAllPrice();
+        }
+        return d;
+    }
+
+    public static double getAllPackagePrice(List<TrolleyStore> list) {
+        double d = 0;
+        if (list == null) return d;
+        for (TrolleyStore t : list) {
+            d += t.getAllPackagePrice();
+        }
+        return d;
+    }
+
+    /*
+    *
+    * */
 
     /*
     *   用于购物车内列表显示各种商品
