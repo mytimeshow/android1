@@ -156,74 +156,127 @@
                 />
 
             <include layout="@layout/view_split_bar_light_big"/>
+
+
+        <!--商品类型-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <cn.czyugang.tcg.client.utils.img.ImgView
+                    android:id="@+id/groupon_goods_img_01"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_40"
+                    app:round="true"
+                    />
+                <TextView
+                    android:id="@+id/groupon_goods_foods_01"
+                    android:text="绿色食品"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_20" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <cn.czyugang.tcg.client.utils.img.ImgView
+                    android:id="@+id/groupon_goods_img_02"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_40"
+                    app:round="true"
+                    />
+                <TextView
+                    android:id="@+id/groupon_goods_foods_02"
+                    android:text="绿色食品"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_20" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <cn.czyugang.tcg.client.utils.img.ImgView
+                    android:id="@+id/groupon_goods_img_03"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_40"
+                    app:round="true"
+                    />
+                <TextView
+                    android:id="@+id/groupon_goods_foods_03"
+                    android:text="绿色食品"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_20" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <cn.czyugang.tcg.client.utils.img.ImgView
+                    android:id="@+id/groupon_goods_img_04"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_40"
+                    app:round="true"
+                    />
+                <TextView
+                    android:id="@+id/groupon_goods_foods_04"
+                    android:text="绿色食品"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_20" />
+            </LinearLayout>
+        </LinearLayout>
+            <include layout="@layout/space_h"/>
+            <!--服务标签-->
             <LinearLayout
                 android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="@dimen/dp_60">
+                <cn.czyugang.tcg.client.utils.img.ImgView
+                    android:layout_margin="@dimen/dp_10"
+                    android:id="@+id/groupon_goods_img_serce_01"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_40"
+                    app:round="true"
+                    />
+                <TextView
+                    android:id="@+id/groupon_goods_tv_return"
+                    android:text="七天包退"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_30" />
 
-              <LinearLayout
-                  android:layout_weight="1"
-                  android:layout_width="0dp"
-                  android:layout_height="wrap_content">
-                  <cn.czyugang.tcg.client.utils.img.ImgView
-                      android:id="@+id/img_01"
-                      android:layout_width="@dimen/dp_40"
-                      android:layout_height="@dimen/dp_40"
-                      app:round="true"
-                      />
-                  <TextView
-                      android:text="绿色食品"
-                      android:layout_width="wrap_content"
-                      android:layout_height="20dp" />
-              </LinearLayout>
+                <cn.czyugang.tcg.client.utils.img.ImgView
+                    android:layout_margin="@dimen/dp_10"
+                    android:id="@+id/groupon_goods_img_serce_02"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_40"
+                    app:round="true"
+                    />
+                <TextView
+                    android:id="@+id/groupon_goods_tv_fix"
+                    android:text="保修"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_30" />
+            </LinearLayout>
 
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-                    <cn.czyugang.tcg.client.utils.img.ImgView
-                        android:id="@+id/img_02"
-                        android:layout_width="@dimen/dp_40"
-                        android:layout_height="@dimen/dp_40"
-                        app:round="true"
-                        />
-                    <TextView
-                        android:text="绿色食品"
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp" />
-                </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_60">
 
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-                    <cn.czyugang.tcg.client.utils.img.ImgView
-                        android:id="@+id/img_03"
-                        android:layout_width="@dimen/dp_40"
-                        android:layout_height="@dimen/dp_40"
-                        app:round="true"
-                        />
-                    <TextView
-                        android:text="绿色食品"
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-                    <cn.czyugang.tcg.client.utils.img.ImgView
-                        android:id="@+id/img_04"
-                        android:layout_width="@dimen/dp_40"
-                        android:layout_height="@dimen/dp_40"
-                        app:round="true"
-                        />
-                    <TextView
-                        android:text="绿色食品"
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp" />
-                </LinearLayout>
+
             </LinearLayout>
             <!--评价-->
 
