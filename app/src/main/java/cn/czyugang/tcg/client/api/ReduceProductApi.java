@@ -17,11 +17,13 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ReduceProductApi {
     //获取降价拍信息
-    public static Observable<Response<ReduceProduct>> getReducesProduct(String id){
+    public static Observable<Response<ReduceProduct>> getReducesProduct(String productid,String activityid){
         HashMap<String, Object> map = new HashMap<>();
-        map.put("activityProductId", id);
+        map.put("activityId",activityid);
+        map.put("activityType","REDUCE_PRICE");
+        map.put("id", productid);
         return UserOAuth.getInstance()
-                .get("api/auth/v1/marketing/reduce/detailInfo",map)
+                .get("api/auth/v1/product/store/get",map)
                 .map(s -> (Response<ReduceProduct>) JsonParse.fromJson(s, new JsonParse.Type(Response.class,ReduceProduct.class)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

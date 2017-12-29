@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,9 +78,9 @@ public class GrouponGoodsActivity extends BaseActivity {
     private GroupsAdapter adapter;
     private ReduceProduct products;
     private List<String> imgList;
-    private List<ReduceProduct.LabelListBean> labelListBeans;
+    //private List<ReduceProduct.LabelListBean> labelListBeans;
     //当前商品的组团数
-    private List<ReduceProduct.GroupListBean> groupListBeans;
+   // private List<ReduceProduct.GroupListBean> groupListBeans;
 
     public static void startGrouponGoodsActivity() {
         Intent intent = new Intent(getTopActivity(), GrouponGoodsActivity.class);
@@ -95,7 +94,7 @@ public class GrouponGoodsActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         //getReduceProduct("940506493684461569");
-        getReduceProduct("940878770548682753");
+        getReduceProduct("940511454422032384","940878770548682753");
         groupList.add(new GrouponGroup());
         groupList.add(new GrouponGroup());
         groupList.add(new GrouponGroup());
@@ -150,8 +149,8 @@ public class GrouponGoodsActivity extends BaseActivity {
 
     }
     //获取降价拍商品
-    public void getReduceProduct(String id){
-        ReduceProductApi.getReducesProduct(id).subscribe(new NetObserver<Response<ReduceProduct>>() {
+    public void getReduceProduct(String productid,String activityid){
+        ReduceProductApi.getReducesProduct(productid,activityid).subscribe(new NetObserver<Response<ReduceProduct>>() {
             @Override
             public void onNext(Response<ReduceProduct> response) {
                 super.onNext(response);
@@ -159,12 +158,12 @@ public class GrouponGoodsActivity extends BaseActivity {
                     Log.e(TAG, "onNext: done1" );
                     products=response.getData();
                     Log.e(TAG, "onNext: done2" );
-                    imgList=products.productPicIdList;
+                   // imgList=products.productPicIdList;
                     initData(products);
                     Log.e(TAG, "onNext: done3" );
                     Log.e(TAG, "onNext: done4" );
 
-                    adapter = new GroupsAdapter(groupListBeans, GrouponGoodsActivity.this);
+                  adapter = new GroupsAdapter();
                     groupR.setLayoutManager(new LinearLayoutManager(GrouponGoodsActivity.this));
                     groupR.setAdapter(adapter);
                     groupR.setNestedScrollingEnabled(false);
@@ -178,7 +177,7 @@ public class GrouponGoodsActivity extends BaseActivity {
     private void initData(ReduceProduct products) {
         initImgs();
         initGroupList(products);
-        name.setText(products.productTitle);
+       /* name.setText(products.productTitle);
         nameSub.setText(products.productSubTitle);
         price.setText("￥"+String.valueOf(products.productPrice));
         sale.setText("已售"+String.valueOf(products.sales));
@@ -196,12 +195,12 @@ public class GrouponGoodsActivity extends BaseActivity {
                     //+"("+ labelListBeans.get(i).count+")";
             strList.add(str);
         }
-        Log.e(TAG, "initData: "+strList.get(0)+" /n"+strList.get(1) );
+        Log.e(TAG, "initData: "+strList.get(0)+" /n"+strList.get(1) );*/
        // commentLabel.setTextList(commentLabel,strList);
     }
 
     private void initGroupList(ReduceProduct products) {
-            groupListBeans=products.groupList;
+           // groupListBeans=products.groupList;
 
     }
 
@@ -210,13 +209,13 @@ public class GrouponGoodsActivity extends BaseActivity {
     }
 
     private static class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Holder> {
-        private List<ReduceProduct.GroupListBean> list;
+     //   private List<ReduceProduct.GroupListBean> list;
         private Activity activity;
 
-        public GroupsAdapter(List<ReduceProduct.GroupListBean> list, Activity activity) {
-            this.list = list;
-            this.activity = activity;
-        }
+//        public GroupsAdapter(List<ReduceProduct.GroupListBean> list, Activity activity) {
+//            this.list = list;
+//            this.activity = activity;
+//        }
 
         @Override
         public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -226,19 +225,19 @@ public class GrouponGoodsActivity extends BaseActivity {
 
         @Override
         public void onBindViewHolder(Holder holder, int position) {
-           if(list!=null) {
-               ReduceProduct.GroupListBean data = list.get(position);
-               holder.headName.setText(data.name);
-               holder.currentPrice.setText("当前拼团价 ￥" + data.currentPrice +
-                       "\n" + data.restTime / 60 + "小时" + data.restTime % 60 + "分钟" + "后成团");
+          // if(list!=null) {
+//               ReduceProduct.GroupListBean data = list.get(position);
+//               holder.headName.setText(data.name);
+//               holder.currentPrice.setText("当前拼团价 ￥" + data.currentPrice +
+//                       "\n" + data.restTime / 60 + "小时" + data.restTime % 60 + "分钟" + "后成团");
 
-               holder.joinGroup.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View view) {
-                       Toast.makeText(activity, data.id, Toast.LENGTH_SHORT).show();
-                   }
-               });
-           }
+//               holder.joinGroup.setOnClickListener(new View.OnClickListener() {
+//                   @Override
+//                   public void onClick(View view) {
+//                      // Toast.makeText(activity, data.id, Toast.LENGTH_SHORT).show();
+//                   }
+//               });
+//           }
         }
 
         @Override
@@ -252,7 +251,7 @@ public class GrouponGoodsActivity extends BaseActivity {
 //                bean.setRestTime(12);
 //                list.add(bean);
 //            }
-            return  list==null ?3:list.size();
+            return  2;/*ist==null ?3:list.size();*/
         }
 
         class Holder extends RecyclerView.ViewHolder {
