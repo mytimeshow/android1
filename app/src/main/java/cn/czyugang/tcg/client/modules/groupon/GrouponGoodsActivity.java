@@ -162,6 +162,7 @@ public class GrouponGoodsActivity extends BaseActivity {
                     imgList=products.productPicIdList;
                     initData(products);
                     Log.e(TAG, "onNext: done3" );
+                    Log.e(TAG, "onNext: done4" );
 
                     adapter = new GroupsAdapter(groupListBeans, GrouponGoodsActivity.this);
                     groupR.setLayoutManager(new LinearLayoutManager(GrouponGoodsActivity.this));
