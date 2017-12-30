@@ -82,4 +82,10 @@ public class BaseFragment extends Fragment implements BaseView {
     public String getLabel(){
         return getClass().getName();
     }
+    public void setText(String text){
+
+    }
+    public void getCommetNum(int count){
+
+    }
 }

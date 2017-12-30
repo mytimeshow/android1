@@ -8,7 +8,7 @@
 
     <android.support.v4.widget.NestedScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/groupon_goods_scroll"
+        android:id="@+id/group_goods_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/dp_50"
@@ -21,14 +21,14 @@
 
             <!--图片-->
             <cn.czyugang.tcg.client.widget.MultiImgView
-                android:id="@+id/groupon_goods_multi_img"
+                android:id="@+id/group_goods_multi_img"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_370"
                 />
 
             <!--名称-->
             <TextView
-                android:id="@+id/groupon_goods_name"
+                android:id="@+id/group_goods_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
@@ -42,7 +42,7 @@
                 />
 
             <TextView
-                android:id="@+id/groupon_goods_name_sub"
+                android:id="@+id/group_goods_name_sub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
@@ -63,7 +63,7 @@
                 android:layout_marginTop="@dimen/dp_10">
 
                 <TextView
-                    android:id="@+id/groupon_goods_price"
+                    android:id="@+id/group_goods_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="￥25.55"
@@ -71,7 +71,7 @@
                     android:textSize="@dimen/sp_20"/>
 
                 <TextView
-                    android:id="@+id/groupon_goods_sale"
+                    android:id="@+id/group_goods_sale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|center_vertical"
@@ -98,7 +98,7 @@
                     android:src="@drawable/promote_tag"/>
 
                 <TextView
-                    android:id="@+id/groupon_goods_price_down"
+                    android:id="@+id/group_goods_price_down"
                     style="@style/text_12_white"
                     android:lineSpacingMultiplier="1.2"
                     android:text="每多一人参团\n拼团价降￥XX"/>
@@ -112,7 +112,7 @@
                     android:src="@drawable/promote_price_down"/>
 
                 <TextView
-                    android:id="@+id/groupon_goods_price_min"
+                    android:id="@+id/group_goods_price_min"
                     style="@style/text_12_white"
                     android:lineSpacingMultiplier="1.2"
                     android:text="拼团冰点价\n最低￥68.88"/>
@@ -126,7 +126,7 @@
                     android:src="@drawable/promote_24hours"/>
 
                 <TextView
-                    android:id="@+id/groupon_goods_time_limit"
+                    android:id="@+id/group_goods_time_limit"
                     style="@style/text_12_white"
                     android:lineSpacingMultiplier="1.2"
                     android:text="拼团有效时间\n24小时"/>
@@ -137,7 +137,7 @@
 
             <!--拼团说明-->
             <TextView
-                android:id="@+id/groupon_goods_explain"
+                android:id="@+id/group_goods_explain"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_60"
                 android:gravity="center"
@@ -148,7 +148,7 @@
                 />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/groupon_goods_group_list"
+                android:id="@+id/group_goods_group_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
@@ -159,145 +159,66 @@
 
 
         <!--商品类型-->
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            <!--标签-->
             <LinearLayout
+                android:id="@+id/group_good_tag"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginBottom="@dimen/dp_8"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_16"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
-                <cn.czyugang.tcg.client.utils.img.ImgView
-                    android:id="@+id/groupon_goods_img_01"
-                    android:layout_width="@dimen/dp_40"
-                    android:layout_height="@dimen/dp_40"
-                    app:round="true"
-                    />
-                <TextView
-                    android:id="@+id/groupon_goods_foods_01"
-                    android:text="绿色食品"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_20" />
-            </LinearLayout>
+                android:background="@color/bg"
+                >
+                <include layout="@layout/space_h"/>
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
-                <cn.czyugang.tcg.client.utils.img.ImgView
-                    android:id="@+id/groupon_goods_img_02"
-                    android:layout_width="@dimen/dp_40"
-                    android:layout_height="@dimen/dp_40"
-                    app:round="true"
-                    />
-                <TextView
-                    android:id="@+id/groupon_goods_foods_02"
-                    android:text="绿色食品"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_20" />
-            </LinearLayout>
+                <ImageView
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:src="@drawable/icon_more_black"/>
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
-                <cn.czyugang.tcg.client.utils.img.ImgView
-                    android:id="@+id/groupon_goods_img_03"
-                    android:layout_width="@dimen/dp_40"
-                    android:layout_height="@dimen/dp_40"
-                    app:round="true"
-                    />
-                <TextView
-                    android:id="@+id/groupon_goods_foods_03"
-                    android:text="绿色食品"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_20" />
             </LinearLayout>
-
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
-                <cn.czyugang.tcg.client.utils.img.ImgView
-                    android:id="@+id/groupon_goods_img_04"
-                    android:layout_width="@dimen/dp_40"
-                    android:layout_height="@dimen/dp_40"
-                    app:round="true"
-                    />
-                <TextView
-                    android:id="@+id/groupon_goods_foods_04"
-                    android:text="绿色食品"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_20" />
-            </LinearLayout>
-        </LinearLayout>
             <include layout="@layout/space_h"/>
             <!--服务标签-->
+            <!--包退-->
             <LinearLayout
-                android:layout_gravity="center_vertical"
+                android:id="@+id/group_good_guarantee"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_60">
-                <cn.czyugang.tcg.client.utils.img.ImgView
-                    android:layout_margin="@dimen/dp_10"
-                    android:id="@+id/groupon_goods_img_serce_01"
-                    android:layout_width="@dimen/dp_40"
-                    android:layout_height="@dimen/dp_40"
-                    app:round="true"
-                    />
-                <TextView
-                    android:id="@+id/groupon_goods_tv_return"
-                    android:text="七天包退"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_30" />
-
-                <cn.czyugang.tcg.client.utils.img.ImgView
-                    android:layout_margin="@dimen/dp_10"
-                    android:id="@+id/groupon_goods_img_serce_02"
-                    android:layout_width="@dimen/dp_40"
-                    android:layout_height="@dimen/dp_40"
-                    app:round="true"
-                    />
-                <TextView
-                    android:id="@+id/groupon_goods_tv_fix"
-                    android:text="保修"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_30" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_60">
-
-
-            </LinearLayout>
+                android:layout_height="@dimen/dp_40"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dp_10"
+                />
             <!--评价-->
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10"
+                android:background="@color/bg"/>
+
             <LinearLayout
-                android:id="@+id/groupon_goods_commentL"
+                android:id="@+id/group_good_commentL"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_40"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <cn.czyugang.tcg.client.widget.FiveStarView
-                    android:id="@+id/groupon_goods_five_star"
+                <TextView
+                    android:id="@+id/group_good_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_10"
-                    />
+                    android:text="商品评价（好评度80%）"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp_14"/>
 
                 <include layout="@layout/space_h"/>
 
                 <TextView
-                    android:id="@+id/groupon_goods_comment_num"
+                    android:id="@+id/group_good_comment_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/dp_6"
@@ -310,7 +231,22 @@
                     />
 
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10"
+                android:background="@color/bg"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/group_good_comment_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_60"
+                android:background="@color/bg"/>
           <!--  <include layout="@layout/view_split_bar_light"/>
             &lt;!&ndash;评价标签&ndash;&gt;
             <cn.czyugang.tcg.client.widget.LabelLayout
@@ -335,18 +271,7 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-    <ImageView
-        android:id="@+id/groupon_goods_back"
-        style="@style/icon_bg_black_35"
-        android:src="@drawable/ic_arrow_left_white"
-        />
 
-    <ImageView
-        android:id="@+id/groupon_goods_more"
-        style="@style/icon_bg_black_35"
-        android:layout_gravity="right"
-        android:src="@drawable/icon_more"
-        />
 
     <!--底部购物-->
     <LinearLayout
@@ -359,7 +284,7 @@
         >
 
         <TextView
-            android:id="@+id/groupon_goods_store"
+            android:id="@+id/group_goods_store"
             style="@style/text_12_dark_gray"
             android:drawablePadding="@dimen/dp_4"
             android:drawableTop="@drawable/icon_shop"
@@ -369,7 +294,7 @@
             />
 
         <TextView
-            android:id="@+id/groupon_goods_buy"
+            android:id="@+id/group_goods_buy"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -382,7 +307,7 @@
             />
 
         <TextView
-            android:id="@+id/groupon_goods_open_group"
+            android:id="@+id/group_goods_open_group"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

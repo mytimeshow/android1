@@ -1,53 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="cn.czyugang.tcg.client">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="cn.czyugang.tcg.client">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <!--腾讯所需权限-->
-    <!--<uses-permission android:name="android.permission.INTERNET"/>-->
-    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <!-- 腾讯所需权限 -->
+    <!-- <uses-permission android:name="android.permission.INTERNET"/> -->
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!--微信所需权限-->
-    <!--<uses-permission android:name="android.permission.INTERNET" />-->
-    <!--<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
-    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <!-- 微信所需权限 -->
+    <!-- <uses-permission android:name="android.permission.INTERNET" /> -->
+    <!-- <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> -->
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!-- 用于读取手机当前的状态-->
+    <!-- 用于读取手机当前的状态 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!--高德地图所需权限-->
-    <!--用于进行网络定位-->
+    <!-- 高德地图所需权限 -->
+    <!-- 用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!--用于访问GPS定位-->
+    <!-- 用于访问GPS定位 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!--用于获取运营商信息，用于支持提供运营商信息相关的接口-->
-    <!--<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>-->
-    <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
-    <!--<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>-->
-    <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <!-- 用于获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <!-- <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/> -->
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <!-- <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/> -->
+    <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <!--用于访问网络，网络定位需要上网-->
-    <!--<uses-permission android:name="android.permission.INTERNET"/>-->
-    <!--用于读取手机当前的状态-->
-    <!--<uses-permission android:name="android.permission.READ_PHONE_STATE"/>-->
-    <!--用于写入缓存数据到扩展存储卡-->
-    <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>-->
-    <!--用于申请调用A-GPS模块-->
+    <!-- 用于访问网络，网络定位需要上网 -->
+    <!-- <uses-permission android:name="android.permission.INTERNET"/> -->
+    <!-- 用于读取手机当前的状态 -->
+    <!-- <uses-permission android:name="android.permission.READ_PHONE_STATE"/> -->
+    <!-- 用于写入缓存数据到扩展存储卡 -->
+    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> -->
+    <!-- 用于申请调用A-GPS模块 -->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <!--用于申请获取蓝牙信息进行室内定位-->
+    <!-- 用于申请获取蓝牙信息进行室内定位 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
-
     <!-- 存储 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!-- 震动 -->
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <!--打电话-->
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
-    <!--相机-->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 打电话 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- 相机 -->
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -58,262 +57,264 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup,supportsRtl">
-        <!--启动页-->
-        <!--<activity-->
-        <!--android:name=".modules.entry.activity.SplashActivity"-->
-        <!--android:launchMode="singleTop"-->
-        <!--android:screenOrientation="portrait"-->
-        <!--android:theme="@style/AppTheme.Splash">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.MAIN"/>-->
-        <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-        <!--</intent-filter>-->
-        <!--</activity>-->
-        <!--新特性页面-->
+
+        <!-- 启动页 -->
+        <!-- <activity -->
+        <!-- android:name=".modules.entry.activity.SplashActivity" -->
+        <!-- android:launchMode="singleTop" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@style/AppTheme.Splash"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN"/> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
+        <!-- 新特性页面 -->
         <activity
             android:name=".modules.entry.activity.NewFeatureActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--主页面-->
+        <!-- 主页面 -->
         <activity
             android:name=".modules.entry.activity.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--登录-->
+        <!-- 登录 -->
         <activity
             android:name=".modules.login.activity.LoginActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--找回密码-->
+        <!-- 找回密码 -->
         <activity
             android:name=".modules.login.activity.ForgetPasswordActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--绑定手机-->
+        <!-- 绑定手机 -->
         <activity
             android:name=".modules.login.activity.BindMobileActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--设置-->
+        <!-- 设置 -->
         <activity
             android:name=".modules.set.activity.SetActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--账号信息-->
+        <!-- 账号信息 -->
         <activity
             android:name=".modules.set.activity.AccountInfoActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--修改昵称-->
+        <!-- 修改昵称 -->
         <activity
             android:name=".modules.set.activity.ModifyNicknameActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--账号与安全-->
+        <!-- 账号与安全 -->
         <activity
             android:name=".modules.set.activity.AccountSafeActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--修改账号-->
+        <!-- 修改账号 -->
         <activity
             android:name=".modules.set.activity.ModifyAccountActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--当前绑定的手机-->
+        <!-- 当前绑定的手机 -->
         <activity
             android:name=".modules.set.activity.CurrentBindMobileActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--填写当前手机验证码-->
+        <!-- 填写当前手机验证码 -->
         <activity
             android:name=".modules.set.activity.CurrentMobileCodeActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--实名认证-->
+        <!-- 实名认证 -->
         <activity
             android:name=".modules.set.activity.RealNameAuthActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--验证验证码-->
+        <!-- 验证验证码 -->
         <activity
             android:name=".modules.set.activity.MobileVerifyActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--设置密码-->
+        <!-- 设置密码 -->
         <activity
             android:name=".modules.set.activity.SetPasswordActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--修改密码-->
+        <!-- 修改密码 -->
         <activity
             android:name=".modules.set.activity.ModifyPasswordActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--设置支付密码-->
+        <!-- 设置支付密码 -->
         <activity
             android:name=".modules.set.activity.SetPayPasswordActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
-        <!--支付密码管理-->
+        <!-- 支付密码管理 -->
         <activity
             android:name=".modules.set.activity.PayPasswordManageActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--修改支付密码-->
+        <!-- 修改支付密码 -->
         <activity
             android:name=".modules.set.activity.ModifyPayPasswordActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--绑定邮箱-->
+        <!-- 绑定邮箱 -->
         <activity
             android:name=".modules.set.activity.BindEmailActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--解绑邮箱-->
+        <!-- 解绑邮箱 -->
         <activity
             android:name=".modules.set.activity.UnbindEmailActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--绑定第三方账号-->
+        <!-- 绑定第三方账号 -->
         <activity
             android:name=".modules.set.activity.BindThirdpartyActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--消息提醒-->
+        <!-- 消息提醒 -->
         <activity
             android:name=".modules.set.activity.NotificationSetActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--通用-->
+        <!-- 通用 -->
         <activity
             android:name=".modules.set.activity.GeneralActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--关于我们-->
+        <!-- 关于我们 -->
         <activity
             android:name=".modules.set.activity.AboutActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--地址管理-->
+        <!-- 地址管理 -->
         <activity
             android:name=".modules.address.activity.AddressManageActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--添加/编辑地址-->
+        <!-- 添加/编辑地址 -->
         <activity
             android:name=".modules.address.activity.AddAddressActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--选择位置-->
+        <!-- 选择位置 -->
         <activity
             android:name=".modules.address.activity.SelectLocationActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <!--我的资产-->
+        <!-- 我的资产 -->
         <activity
             android:name=".modules.balance.activity.BalanceActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--充值-->
+        <!-- 充值 -->
         <activity
             android:name=".modules.balance.activity.RechargeActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--充值密码-->
+        <!-- 充值密码 -->
         <activity
             android:name=".modules.balance.activity.RechargePasswordActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
-        <!--充值成功-->
+        <!-- 充值成功 -->
         <activity
             android:name=".modules.balance.activity.RechargeSucceedActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--提现-->
+        <!-- 提现 -->
         <activity
             android:name=".modules.balance.activity.WithdrawActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--提现说明-->
+        <!-- 提现说明 -->
         <activity
             android:name=".modules.balance.activity.ExplainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--选择银行卡-->
+        <!-- 选择银行卡 -->
         <activity
             android:name=".modules.balance.activity.SelectBankCardActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--提现密码-->
+        <!-- 提现密码 -->
         <activity
             android:name=".modules.balance.activity.WithdrawPasswordActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
-        <!--提现成功-->
+        <!-- 提现成功 -->
         <activity
             android:name=".modules.balance.activity.WithdrawSucceedActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--收支明细-->
+        <!-- 收支明细 -->
         <activity
             android:name=".modules.balance.activity.BillActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--账单筛选-->
+        <!-- 账单筛选 -->
         <activity
             android:name=".modules.balance.activity.BillFilterActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--账单详情-->
+        <!-- 账单详情 -->
         <activity
             android:name=".modules.balance.activity.BillDetailsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--账单选择日期-->
+        <!-- 账单选择日期 -->
         <activity
             android:name=".modules.balance.activity.BillSelectDateActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--银行卡管理-->
+        <!-- 银行卡管理 -->
         <activity
             android:name=".modules.balance.activity.BankCardManageActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--添加银行卡-->
+        <!-- 添加银行卡 -->
         <activity
             android:name=".modules.balance.activity.AddBankCardActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--银行卡验证-->
+        <!-- 银行卡验证 -->
         <activity
             android:name=".modules.balance.activity.BankCardVerifyActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--银行卡手机验证码-->
+        <!-- 银行卡手机验证码 -->
         <activity
             android:name=".modules.balance.activity.BankMobileVerifyActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--银行卡解除绑定-->
+        <!-- 银行卡解除绑定 -->
         <activity
             android:name=".modules.balance.activity.UnbindBankCardActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--解除银行卡绑定支付密码-->
+        <!-- 解除银行卡绑定支付密码 -->
         <activity
             android:name=".modules.balance.activity.AddBankCardPasswordActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--腾讯-->
+        <!-- 腾讯 -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
@@ -331,7 +332,7 @@
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <!--微信-->
+        <!-- 微信 -->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
@@ -340,7 +341,7 @@
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
-        <!--微博-->
+        <!-- 微博 -->
         <activity
             android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
             android:configChanges="keyboardHidden|orientation"
@@ -352,10 +353,11 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <!--支付宝-->
+        <!-- 支付宝 -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
@@ -366,89 +368,98 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind" />
-        <!--高德地图-->
+        <!-- 高德地图 -->
         <service android:name="com.amap.api.location.APSService" />
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="a29ac43262d81410e779e24a8d2a5a75" />
 
-        <!--通用web activity-->
-        <activity android:name=".modules.common.WebActivity"/>
-        <!--大图显示-->
-        <activity android:name=".modules.common.ImgActivity" android:theme="@style/BlackStatusTheme"/>
-        <!--视频-->
-        <activity android:name=".modules.common.VideoActivity" android:theme="@style/BlackStatusTheme"/>
+        <!-- 通用web activity -->
+        <activity android:name=".modules.common.WebActivity" />
+        <!-- 大图显示 -->
+        <activity
+            android:name=".modules.common.ImgActivity"
+            android:theme="@style/BlackStatusTheme" />
+        <!-- 视频 -->
+        <activity
+            android:name=".modules.common.VideoActivity"
+            android:theme="@style/BlackStatusTheme" />
 
-        <!--收藏-->
-        <activity android:name=".modules.person.CollectionActivity"/>
-        <!--足迹-->
-        <activity android:name=".modules.person.FootmarkActivity"/>
+        <!-- 收藏 -->
+        <activity android:name=".modules.person.CollectionActivity" />
+        <!-- 足迹 -->
+        <activity android:name=".modules.person.FootmarkActivity" />
 
-        <!--店铺 商品详情-->
-        <activity android:name=".modules.store.StoreActivity"/>
-        <activity android:name=".modules.store.StoreInfoActivity"/>
-        <activity android:name=".modules.store.GoodDetailActivity"/>
+        <!-- 店铺 商品详情 -->
+        <activity android:name=".modules.store.StoreActivity" />
+        <activity android:name=".modules.store.StoreInfoActivity" />
+        <activity android:name=".modules.store.GoodDetailActivity" />
 
-        <!--订单 确认/支付-->
-        <activity android:name=".modules.order.ConfirmOrderActivity"/>
-        <activity android:name=".modules.order.OrderGoodsListActivity"/>
-        <activity android:name=".modules.order.SelectAddressActivity"/>
-        <activity android:name=".modules.order.SelectDeliveryActivity"/>
-        <activity android:name=".modules.order.PayOrderActivity"/>
-        <activity android:name=".modules.order.PayOrderWayActivity"/>
-        <activity android:name=".modules.order.PaySuccessActivity"/>
+        <!-- 订单 确认/支付 -->
+        <activity android:name=".modules.order.ConfirmOrderActivity" />
+        <activity android:name=".modules.order.OrderGoodsListActivity" />
+        <activity android:name=".modules.order.SelectAddressActivity" />
+        <activity android:name=".modules.order.SelectDeliveryActivity" />
+        <activity android:name=".modules.order.PayOrderActivity" />
+        <activity android:name=".modules.order.PayOrderWayActivity" />
+        <activity android:name=".modules.order.PaySuccessActivity" />
 
-        <!--订单 列表/详情-->
-        <activity android:name=".modules.order.MyOrderActivity"/>
-        <activity android:name=".modules.order.OrderDetailActivity"/>
-        <activity android:name=".modules.order.OrderTrackMapActivity"/>
-        <activity android:name=".modules.order.OrderTrackActivity"/>
+        <!-- 订单 列表/详情 -->
+        <activity android:name=".modules.order.MyOrderActivity" />
+        <activity android:name=".modules.order.OrderDetailActivity" />
+        <activity android:name=".modules.order.OrderTrackMapActivity" />
+        <activity android:name=".modules.order.OrderTrackActivity" />
 
-        <!--商家入驻-->
-        <activity android:name=".modules.store.ApplyStoreActivity"/>
-        <activity android:name=".modules.store.ApplyStoreStatusActivity"/>
+        <!-- 商家入驻 -->
+        <activity android:name=".modules.store.ApplyStoreActivity" />
+        <activity android:name=".modules.store.ApplyStoreStatusActivity" />
 
-        <!--售后-->
-        <activity android:name=".modules.aftersale.AftersaleListActivity"/>
-        <activity android:name=".modules.aftersale.AftersaleDetailActivity"/>
-        <activity android:name=".modules.aftersale.AftersaleTrackActivity"/>
-        <activity android:name=".modules.aftersale.AftersaleServiceActivity"/>
-        <activity android:name=".modules.aftersale.RefundActivity"/>
-        <activity android:name=".modules.aftersale.RefundApplyFinishActivity"/>
-        <activity android:name=".modules.aftersale.RefundStatusActivity"/>
+        <!-- 售后 -->
+        <activity android:name=".modules.aftersale.AftersaleListActivity" />
+        <activity android:name=".modules.aftersale.AftersaleDetailActivity" />
+        <activity android:name=".modules.aftersale.AftersaleTrackActivity" />
+        <activity android:name=".modules.aftersale.AftersaleServiceActivity" />
+        <activity android:name=".modules.aftersale.RefundActivity" />
+        <activity android:name=".modules.aftersale.RefundApplyFinishActivity" />
+        <activity android:name=".modules.aftersale.RefundStatusActivity" />
 
-        <!--商品/店铺 搜索-->
-        <activity android:name=".modules.store.SearchActivity"/>
-        <activity android:name=".modules.store.SearchResultActivity"/>
+        <!-- 商品/店铺 搜索 -->
+        <activity android:name=".modules.store.SearchActivity" />
+        <activity android:name=".modules.store.SearchResultActivity" />
 
-        <!--积分-->
-        <activity android:name=".modules.score.ScoreActivity"/>
-        <activity android:name=".modules.score.ScoreHistoryActivity"/>
-        <activity android:name=".modules.score.ScoreUseActivity"/>
+        <!-- 积分 -->
+        <activity android:name=".modules.score.ScoreActivity" />
+        <activity android:name=".modules.score.ScoreHistoryActivity" />
+        <activity android:name=".modules.score.ScoreUseActivity" />
 
-        <!--扫码-->
-        <activity android:name=".modules.scan.ScanActivity" android:theme="@style/BlackStatusTheme"/>
-        <activity android:name=".modules.scan.ScanInputActivity" android:theme="@style/BlackStatusTheme"/>
-        <activity android:name=".modules.scan.ScanResultActivity"/>
-        <activity android:name=".modules.scan.ScanHistoryActivity"/>
+        <!-- 扫码 -->
+        <activity
+            android:name=".modules.scan.ScanActivity"
+            android:theme="@style/BlackStatusTheme" />
+        <activity
+            android:name=".modules.scan.ScanInputActivity"
+            android:theme="@style/BlackStatusTheme" />
+        <activity android:name=".modules.scan.ScanResultActivity" />
+        <activity android:name=".modules.scan.ScanHistoryActivity" />
 
-        <!--二维码优惠-->
-        <activity android:name=".modules.scan.ScanGoodsDetailActivity"/>
-        <activity android:name=".modules.scan.ScanGoodsListActivity"/>
-        <activity android:name=".modules.scan.ScanStoreActivity"/>
+        <!-- 二维码优惠 -->
+        <activity android:name=".modules.scan.ScanGoodsDetailActivity" />
+        <activity android:name=".modules.scan.ScanGoodsListActivity" />
+        <activity android:name=".modules.scan.ScanStoreActivity" />
 
-        <!--推广有礼-->
-        <activity android:name=".modules.promote.PromoterIntroActivity"/>
-        <activity android:name=".modules.promote.BecomePromoterActivity"/>
-        <activity android:name=".modules.promote.PromoteGoodListActivity"/>
-        <activity android:name=".modules.promote.PromoteGoodDetailActivity"/>
-        <activity android:name=".modules.promote.PromoterProfitActivity"/>
+        <!-- 推广有礼 -->
+        <activity android:name=".modules.promote.PromoterIntroActivity" />
+        <activity android:name=".modules.promote.BecomePromoterActivity" />
+        <activity android:name=".modules.promote.PromoteGoodListActivity" />
+        <activity android:name=".modules.promote.PromoteGoodDetailActivity" />
+        <activity android:name=".modules.promote.PromoterProfitActivity" />
 
-        <!--降价拍-->
-        <activity android:name=".modules.groupon.GrouponGoodsActivity"/>
-        <activity android:name=".modules.groupon.GrouponDetailActivity"/>
+        <!-- 降价拍 -->
+        <activity android:name=".modules.groupon.GrouponGoodsActivity" />
+        <activity android:name=".modules.groupon.GrouponDetailActivity" />
 
-        <!--资讯-->
+        <!-- 资讯 -->
         <activity android:name=".modules.inform.InformMySelfActivity" />
         <activity android:name=".modules.inform.InformChangeCoverActivity" />
         <activity android:name=".modules.inform.InformColumnMsgActivity" />
@@ -460,20 +471,22 @@
         <activity android:name=".modules.inform.InformDetailsActivity" />
         <activity android:name=".modules.inform.InformSearchAcitivity" />
 
-        <!--im-->
-        <activity android:name=".modules.im.ImListActivity"/>
-        <activity android:name=".modules.im.ImChatActivity"/>
-        <activity android:name=".modules.im.ImSettingActivity"/>
-        <activity android:name=".modules.im.ImSettingNoticeActivity"/>
+        <!-- im -->
+        <activity android:name=".modules.im.ImListActivity" />
+        <activity android:name=".modules.im.ImChatActivity" />
+        <activity android:name=".modules.im.ImSettingActivity" />
+        <activity android:name=".modules.im.ImSettingNoticeActivity" />
 
-        <!--版本更新-->
-        <activity android:name=".modules.set.activity.AboutVersionIntroActivity"/>
-        <activity android:name=".modules.set.activity.AboutVersionDetailActivity"/>
+        <!-- 版本更新 -->
+        <activity android:name=".modules.set.activity.AboutVersionIntroActivity" />
+        <activity android:name=".modules.set.activity.AboutVersionDetailActivity" />
 
-        <!--跑腿-->
-        <activity android:name=".modules.errand.ErrandListActivity"/>
-        <activity android:name=".modules.errand.ErrandDetailActivity"/>
-        <activity android:name=".modules.errand.ErrandOrderActivity"/>
-        <activity android:name=".modules.errand.ErrandBookActivity"/>
+        <!-- 跑腿 -->
+        <activity android:name=".modules.errand.ErrandListActivity" />
+        <activity android:name=".modules.errand.ErrandDetailActivity" />
+        <activity android:name=".modules.errand.ErrandOrderActivity" />
+        <activity android:name=".modules.errand.ErrandBookActivity" />
+        <activity android:name=".modules.groupon.GroupGoodActivity"></activity>
     </application>
+
 </manifest>

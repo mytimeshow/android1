@@ -1,34 +1,6 @@
 package cn.czyugang.tcg.client.modules.groupon;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import cn.czyugang.tcg.client.R;
-import cn.czyugang.tcg.client.api.ReduceProductApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
-import cn.czyugang.tcg.client.common.ErrorHandler;
-import cn.czyugang.tcg.client.entity.GrouponGroup;
-import cn.czyugang.tcg.client.entity.ReduceProduct;
-import cn.czyugang.tcg.client.entity.Response;
-import cn.czyugang.tcg.client.modules.store.StoreActivity;
-import cn.czyugang.tcg.client.widget.FiveStarView;
-import cn.czyugang.tcg.client.widget.MultiImgView;
 
 /**
  * @author ruiaa
@@ -38,7 +10,7 @@ import cn.czyugang.tcg.client.widget.MultiImgView;
  */
 
 public class GrouponGoodsActivity extends BaseActivity {
-    private static final String TAG = "GrouponGoodsActivity";
+   /* private static final String TAG = "GrouponGoodsActivity";
     @BindView(R.id.groupon_goods_scroll)
     NestedScrollView scrollView;
     @BindView(R.id.groupon_goods_multi_img)
@@ -61,14 +33,14 @@ public class GrouponGoodsActivity extends BaseActivity {
     TextView explain;
     @BindView(R.id.groupon_goods_group_list)
     RecyclerView groupR;
-    @BindView(R.id.groupon_goods_five_star)
-    FiveStarView fiveStar;
-    @BindView(R.id.groupon_goods_comment_num)
-    TextView commentNum;
-  /*  @BindView(R.id.groupon_goods_comment_label)
+//    @BindView(R.id.groupon_goods_five_star)
+//    FiveStarView fiveStar;
+//    @BindView(R.id.groupon_goods_comment_num)
+//    TextView commentNum;
+  *//*  @BindView(R.id.groupon_goods_comment_label)
     LabelLayout commentLabel;
     @BindView(R.id.groupon_goods_pull_detail)
-    TextView pullToDetail;*/
+    TextView pullToDetail;*//*
     @BindView(R.id.groupon_goods_buy)
     TextView buy;
     @BindView(R.id.groupon_goods_open_group)
@@ -85,6 +57,7 @@ public class GrouponGoodsActivity extends BaseActivity {
     public static void startGrouponGoodsActivity() {
         Intent intent = new Intent(getTopActivity(), GrouponGoodsActivity.class);
         getTopActivity().startActivity(intent);
+        Log.e(TAG, "had found: "+ getTopActivity());
     }
 
     @Override
@@ -101,7 +74,7 @@ public class GrouponGoodsActivity extends BaseActivity {
 
 
 
-     /*   scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+     *//*   scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             int maxScroll=-1;
             boolean isScrollToBottom=false;
             long lastBottomTime=0;
@@ -124,7 +97,7 @@ public class GrouponGoodsActivity extends BaseActivity {
                     isScrollToBottom=false;
                 }
             }
-        });*/
+        });*//*
 
     }
 
@@ -145,7 +118,7 @@ public class GrouponGoodsActivity extends BaseActivity {
     
     @OnClick(R.id.groupon_goods_open_group)
     public void onOpenGroup(){
-
+    startActivity(new Intent(GrouponGoodsActivity.this,GroupGoodActivity.class));
 
     }
     //获取降价拍商品
@@ -177,7 +150,7 @@ public class GrouponGoodsActivity extends BaseActivity {
     private void initData(ReduceProduct products) {
         initImgs();
         initGroupList(products);
-       /* name.setText(products.productTitle);
+       *//* name.setText(products.productTitle);
         nameSub.setText(products.productSubTitle);
         price.setText("￥"+String.valueOf(products.productPrice));
         sale.setText("已售"+String.valueOf(products.sales));
@@ -195,7 +168,7 @@ public class GrouponGoodsActivity extends BaseActivity {
                     //+"("+ labelListBeans.get(i).count+")";
             strList.add(str);
         }
-        Log.e(TAG, "initData: "+strList.get(0)+" /n"+strList.get(1) );*/
+        Log.e(TAG, "initData: "+strList.get(0)+" /n"+strList.get(1) );*//*
        // commentLabel.setTextList(commentLabel,strList);
     }
 
@@ -251,7 +224,7 @@ public class GrouponGoodsActivity extends BaseActivity {
 //                bean.setRestTime(12);
 //                list.add(bean);
 //            }
-            return  2;/*ist==null ?3:list.size();*/
+            return  2;*//*ist==null ?3:list.size();*//*
         }
 
         class Holder extends RecyclerView.ViewHolder {
@@ -268,5 +241,5 @@ public class GrouponGoodsActivity extends BaseActivity {
             }
         }
     }
-
+*/
 }

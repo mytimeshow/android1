@@ -29,7 +29,8 @@ import cn.czyugang.tcg.client.base.BaseFragmentAdapter;
 import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.GroupDetail;
 import cn.czyugang.tcg.client.entity.Response;
-import cn.czyugang.tcg.client.modules.store.GoodCommentFragment;
+import cn.czyugang.tcg.client.modules.store.GoodConmentCountFragment;
+import cn.czyugang.tcg.client.modules.store.GoodDescriptionFragment;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 
 /**
@@ -82,6 +83,7 @@ public class GrouponDetailActivity extends BaseActivity {
     private GroupDetail mGroupDetail;
     private List<GroupDetail.HistoryListBean> list;
     private MemberAdapter adapter;
+    List<BaseFragment> fragments=new ArrayList<>();
 
     public static void startGrouponDetailActivity() {
         Intent intent = new Intent(getTopActivity(), GrouponDetailActivity.class);
@@ -109,10 +111,10 @@ public class GrouponDetailActivity extends BaseActivity {
             public Fragment getItem(int position) {
                 if(position==0){
                     Log.e(TAG, "getItem:position==0 " );
-                    return new PageFragment();
+                    return new ReduceProductFragment();
 
                 }
-               return new PageFragment();
+               return new ReduceProductFragment();
             }
 
             @Override
@@ -126,13 +128,9 @@ public class GrouponDetailActivity extends BaseActivity {
             }
         });*/
 
-        List<BaseFragment> fragments=new ArrayList<>();
-        fragments.add(GoodCommentFragment.newInstance());
-        fragments.add(GoodCommentFragment.newInstance());
-        viewPager.setAdapter(new BaseFragmentAdapter(getSupportFragmentManager(),fragments));
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
-        memberR.setNestedScrollingEnabled(false);
+
+
+
     }
 
     @OnClick(R.id.title_back)
@@ -164,9 +162,12 @@ public class GrouponDetailActivity extends BaseActivity {
 
         @Override
         public void onBindViewHolder(Holder holder, int position) {
-         /*  GroupDetail.HistoryListBean  data = list.get(position);
-           holder.textView1.setText(data.name);
-           holder.textView2.setText(data.createTime+" "+data.type);*/
+            if(list!=null){
+                GroupDetail.HistoryListBean  data = list.get(position);
+                holder.textView1.setText(data.name);
+                holder.textView2.setText(data.createTime+" "+data.type);
+            }
+
             holder.itemView.setBackgroundResource(position == 0 ? R.drawable.bg_rect_red : R.drawable.bg_rect_light_red);
         }
         @Override
@@ -199,6 +200,16 @@ public class GrouponDetailActivity extends BaseActivity {
                 if(ErrorHandler.judge200(response)){
                     mGroupDetail=response.getData();
                     list=mGroupDetail.historyList;
+
+                    fragments.add(GoodDescriptionFragment.newInstance());
+                    fragments.add(GoodConmentCountFragment.newInstance());
+                    fragments.get(1).getCommetNum(mGroupDetail.assessmentCount);
+                    fragments.get(1).setText("");
+                    viewPager.setAdapter(new BaseFragmentAdapter(getSupportFragmentManager(),fragments));
+                    tabLayout.setupWithViewPager(viewPager);
+                    tabLayout.setTabMode(TabLayout.MODE_FIXED);
+                    memberR.setNestedScrollingEnabled(false);
+
                     img.id(mGroupDetail.productPicId);
                     name.setText(mGroupDetail.productTitle);
                     nameSub.setText(mGroupDetail.productSubTitle);
@@ -213,6 +224,9 @@ public class GrouponDetailActivity extends BaseActivity {
                             mGroupDetail.restDiscount+"\n"+mGroupDetail.restTime/60+
                             "小时"+mGroupDetail.restTime%60+"分钟"+ "内成团");
                     buy.setText("￥"+String.valueOf(mGroupDetail.productPrice)+"\n直接购买");
+                    Log.e(TAG, "onNext: "+mGroupDetail.description);
+                   fragments.get(0).setText(mGroupDetail.description);
+
 
 
                     adapter = new MemberAdapter(list, GrouponDetailActivity.this);
