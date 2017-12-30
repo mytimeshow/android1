@@ -219,7 +219,7 @@ public class GrouponGoodsActivity extends BaseActivity {
 
         @Override
         public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new Holder(LayoutInflater.from(activity).inflate(
+            return new Holder(LayoutInflater.from(parent.getContext()).inflate(
                     R.layout.item_groupon_group, parent, false));
         }
 

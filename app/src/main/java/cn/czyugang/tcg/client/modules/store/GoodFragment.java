@@ -105,6 +105,7 @@ public class GoodFragment extends BaseFragment {
         initTrolley();
         initProductTags();
         initServiceTag();
+        LogRui.i("initTrolley####1");
     }
 
     private void initTrolley(){
