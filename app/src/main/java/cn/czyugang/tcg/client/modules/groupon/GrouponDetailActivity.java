@@ -81,7 +81,7 @@ public class GrouponDetailActivity extends BaseActivity {
     @BindView(R.id.groupon_detail_open_group)
     TextView openGroup;
     private GroupDetail mGroupDetail;
-    private List<GroupDetail.HistoryListBean> list;
+    private List<GroupDetail.HistoryListBean> lists;
     private MemberAdapter adapter;
     List<BaseFragment> fragments=new ArrayList<>();
 
@@ -105,28 +105,7 @@ public class GrouponDetailActivity extends BaseActivity {
         //ViewPager不支持wrap_content  ViewPager.onMeasure()直接使用setMeasuredDimension(getDefaultSize(0, widthMeasureSpec),getDefaultSize(0, heightMeasureSpec));来测量大小了
         //如果要有用到wrap_content，使用cn.czyugang.tcg.client.widget.ViewPagerWrap
 
-        viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            private String[] titles={"商品描述","商品评价"};
-            @Override
-            public Fragment getItem(int position) {
-                if(position==0){
-                    Log.e(TAG, "getItem:position==0 " );
-                    return new ReduceProductFragment();
-
-                }
-               return new ReduceProductFragment();
-            }
-
-            @Override
-            public int getCount() {
-                return 2;
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return titles[position];
-            }
-        });*/
+ */
 
 
 
@@ -162,7 +141,7 @@ public class GrouponDetailActivity extends BaseActivity {
 
         @Override
         public void onBindViewHolder(Holder holder, int position) {
-            if(list!=null){
+            if(list!=null && list.size()>0){
                 GroupDetail.HistoryListBean  data = list.get(position);
                 holder.textView1.setText(data.name);
                 holder.textView2.setText(data.createTime+" "+data.type);
@@ -173,7 +152,7 @@ public class GrouponDetailActivity extends BaseActivity {
         @Override
         public int getItemCount() {
             Log.e(TAG, "getItemCount: "+list.size() );
-            return list.size()==0?6:list.size();
+            return list==null ? 0:list.size();
 
         }
 
@@ -199,7 +178,7 @@ public class GrouponDetailActivity extends BaseActivity {
                 Log.e(TAG, "onNext: " );
                 if(ErrorHandler.judge200(response)){
                     mGroupDetail=response.getData();
-                    list=mGroupDetail.historyList;
+                    lists=mGroupDetail.historyList;
 
                     fragments.add(GoodDescriptionFragment.newInstance());
                     fragments.add(GoodConmentCountFragment.newInstance());
@@ -229,7 +208,7 @@ public class GrouponDetailActivity extends BaseActivity {
 
 
 
-                    adapter = new MemberAdapter(list, GrouponDetailActivity.this);
+                    adapter = new MemberAdapter(lists, GrouponDetailActivity.this);
                     memberR.setLayoutManager(new LinearLayoutManager(GrouponDetailActivity.this));
                     memberR.setAdapter(adapter);
                     memberR.setNestedScrollingEnabled(false);

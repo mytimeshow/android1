@@ -243,10 +243,7 @@
                 android:paddingRight="@dimen/dp_10"
                 />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_60"
-                android:background="@color/bg"/>
+           
           <!--  <include layout="@layout/view_split_bar_light"/>
             &lt;!&ndash;评价标签&ndash;&gt;
             <cn.czyugang.tcg.client.widget.LabelLayout

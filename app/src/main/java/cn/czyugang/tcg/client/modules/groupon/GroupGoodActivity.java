@@ -62,6 +62,12 @@ public class GroupGoodActivity extends BaseActivity {
         setContentView(R.layout.activity_group_good);
         ButterKnife.bind(this);
 
+        initTitle();
+        LogRui.i("onCreate####");
+       // getGoodDetail();
+    }
+
+    private void initTitle() {
         pageFragment = ReduceProductFragment.newInstance();
         fragments.add(pageFragment);
 
@@ -74,9 +80,6 @@ public class GroupGoodActivity extends BaseActivity {
         viewPager.setOffscreenPageLimit(3);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
-
-        LogRui.i("onCreate####");
-       // getGoodDetail();
     }
 
     private void getGoodDetail() {

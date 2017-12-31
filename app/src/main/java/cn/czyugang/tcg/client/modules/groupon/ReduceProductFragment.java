@@ -13,6 +13,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +29,12 @@ import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.Good;
+import cn.czyugang.tcg.client.entity.GroupListBean;
 import cn.czyugang.tcg.client.entity.GrouponGroup;
 import cn.czyugang.tcg.client.entity.ReduceProduct;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.entity.TrolleyStore;
+import cn.czyugang.tcg.client.modules.common.ImgActivity;
 import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.modules.common.dialog.StoreTrolleyDialog;
 import cn.czyugang.tcg.client.modules.store.StoreActivity;
@@ -89,9 +94,12 @@ public class ReduceProductFragment extends BaseFragment {
 
     private List<GrouponGroup> groupList = new ArrayList<>();
     private GroupsAdapter adapter;
-    private ReduceProduct products;
-    private List<String> imgList;
-
+    private ReduceProduct reduceProduct;
+    private List<String> imgList=new ArrayList<>();
+    private List<GroupListBean> groupListBeans=new ArrayList<>();
+    private List<ServiceTagList> serviceTagLists;
+    private List<ProductTagList> productTagLists;
+    private double productPrice;
     //private GoodDetailActivity goodDetailActivity;
 
     //购物车
@@ -122,7 +130,7 @@ public class ReduceProductFragment extends BaseFragment {
     public void setGoodInfo(Good good) {
         this.good=good;
         initProductTags();
-        initServiceTag();
+
         LogRui.i("initTrolley####1");
     }
 
@@ -143,13 +151,13 @@ public class ReduceProductFragment extends BaseFragment {
 
     }
     private void initProductTags(){
-        if (good.productTagList==null||good.productTagList.isEmpty()) {
+        if (productTagLists==null) {
             tagL.setVisibility(View.GONE);
             return;
         }
 
-        for(int i=0,size=good.productTagList.size();i<size&&i<3;i++){
-            Good.Tag tag=good.productTagList.get(i);
+        for(int i=0,size=productTagLists.size();i<size&&i<3;i++){
+            ProductTagList tag=productTagLists.get(i);
             View view=LayoutInflater.from(getActivity()).inflate(R.layout.item_good_detail_tag,tagL,false);
             ((ImgView)view.findViewById(R.id.item_img)).id(tag.picId);
             ((TextView)view.findViewById(R.id.item_name)).setText(tag.name);
@@ -165,8 +173,8 @@ public class ReduceProductFragment extends BaseFragment {
                     .bindView(myDialog -> {
                         myDialog.onClick(R.id.dialog_close);
                         FlowLayout flowLayout=myDialog.rootView.findViewById(R.id.dialog_tags);
-                        for(int i=0,size=good.productTagList.size();i<size;i++){
-                            Good.Tag tag=good.productTagList.get(i);
+                        for(int i=0,size=productTagLists.size();i<size;i++){
+                            ProductTagList tag=productTagLists.get(i);
                             View view=LayoutInflater.from(getActivity()).inflate(R.layout.item_good_detail_tag_dialog,flowLayout,false);
                             ((ImgView)view.findViewById(R.id.item_img)).id(tag.picId);
                             ((TextView)view.findViewById(R.id.item_name)).setText(tag.name);
@@ -179,14 +187,14 @@ public class ReduceProductFragment extends BaseFragment {
     }
 
     private void initServiceTag(){
-        if (good.serviceTagList==null||good.serviceTagList.isEmpty()) {
+        if (serviceTagLists==null) {
             guaranteeL.setVisibility(View.GONE);
             return;
         }
-        for(Good.Tag tag:good.serviceTagList){
+        for(ServiceTagList tagList:serviceTagLists){
             View view=LayoutInflater.from(getActivity()).inflate(R.layout.item_good_detail_tag,guaranteeL,false);
-            ((ImgView)view.findViewById(R.id.item_img)).id(tag.picId);
-            ((TextView)view.findViewById(R.id.item_name)).setText(tag.name);
+            ((ImgView)view.findViewById(R.id.item_img)).id(tagList.picId);
+            ((TextView)view.findViewById(R.id.item_name)).setText(tagList.name);
             guaranteeL.addView(view,0);
         }
     }
@@ -216,15 +224,15 @@ public class ReduceProductFragment extends BaseFragment {
             public void onNext(Response<ReduceProduct> response) {
                 super.onNext(response);
                 if (ErrorHandler.judge200(response)) {
-                    Log.e(TAG, "onNext: done1" );
-                    products=response.getData();
-                    Log.e(TAG, "onNext: done2" );
-                    // imgList=products.productPicIdList;
-                    initData(products);
-                    Log.e(TAG, "onNext: done3" );
-                    Log.e(TAG, "onNext: done4" );
 
-                    adapter = new GroupsAdapter();
+                    reduceProduct=response.getData();
+                    JSONObject object=response.getValues();
+                    int sales=reduceProduct.sales;
+                    sale.setText("已售"+String.valueOf(sales));
+
+                    initData(object);
+                    Log.e(TAG, "onNext: done3" );
+                    adapter = new GroupsAdapter(groupListBeans,getActivity());
                     groupR.setLayoutManager(new LinearLayoutManager(getActivity()));
                     groupR.setAdapter(adapter);
                     groupR.setNestedScrollingEnabled(false);
@@ -235,20 +243,33 @@ public class ReduceProductFragment extends BaseFragment {
 
     }
 
-    private void initData(ReduceProduct products) {
-        initImgs();
+    private void initData(JSONObject products) {
+        initPicId(products);
         initGroupList(products);
-       /* name.setText(products.productTitle);
-        nameSub.setText(products.productSubTitle);
-        price.setText("￥"+String.valueOf(products.productPrice));
-        sale.setText("已售"+String.valueOf(products.sales));
-        priceDown.setText("每多一人参团\n拼团价降￥"+products.reducePrice);
-        priceMin.setText("拼团冰点价\n最低￥"+products.minPrice);
-        timeLimit.setText("拼团有效时间\n"+products.groupTime+"小时");
-        commentNum.setText(String.valueOf(products.assessmentCount)+"条评价");
-        fiveStar.setScore(products.score);
-        buy.setText("￥"+String.valueOf(products.productPrice)+"\n直接购买");
-        //评价标签
+        initServiceTagList(products);
+        initServiceTag();
+        initPrice(products);
+        initProductTagList(products);
+        initProductTags();
+        JSONObject body=products.optJSONObject("reducePriceActivityProduct");
+        String title=products.optJSONObject("productInfo").optString("title");
+        String subTitle=products.optJSONObject("productInfo").optString("subTitle");
+        double reducePrice=products.optDouble("reducePrice");
+        double minPrice=body.optDouble("minPrice");
+        int time=body.optInt("time");
+        int assessmentCount=products.optInt("countAssessment");
+        int goodAssessment=(int)products.optDouble("praiseRate")*100;
+
+        name.setText(title);
+        nameSub.setText(subTitle);
+       price.setText("￥"+String.valueOf(productPrice));
+        priceDown.setText("每多一人参团\n拼团价降￥"+reducePrice);
+        priceMin.setText("拼团冰点价\n最低￥"+minPrice);
+        timeLimit.setText("拼团有效时间\n"+time+"小时");
+        comment.setText("商品评价（好评度"+goodAssessment+"%）");
+       commentNum.setText(String.valueOf(assessmentCount)+"条评价");
+        buy.setText("￥"+String.valueOf(productPrice)+"\n直接购买");
+       /*  //评价标签
         labelListBeans=products.labelList;
         List<String> strList=new ArrayList<>();
         for(int i=0,size=labelListBeans.size();i<size;i++){
@@ -260,23 +281,81 @@ public class ReduceProductFragment extends BaseFragment {
         // commentLabel.setTextList(commentLabel,strList);
     }
 
-    private void initGroupList(ReduceProduct products) {
-        // groupListBeans=products.groupList;
+    private void initProductTagList(JSONObject products) {
+        JSONArray jsonArray=products.optJSONArray("productTagList");
+        if(jsonArray!=null && jsonArray.length()>0){
+            productTagLists=new ArrayList<>();
+            for(int i=0,size=jsonArray.length();i<size;i++){
+                ProductTagList tagList=new ProductTagList();
+                tagList.setPicId(jsonArray.optJSONObject(i).optString("picId"));
+                tagList.setName(jsonArray.optJSONObject(i).optString("name"));
+                productTagLists.add(tagList);
+            }
+        }
+    }
+
+    private void initPrice(JSONObject products) {
+        JSONArray jsonArray=products.optJSONArray("storeInventoryList");
+        if(jsonArray!=null && jsonArray.length()>0){
+            for(int i=0;i<1;i++){
+                productPrice=jsonArray.optJSONObject(i).optDouble("price");
+            }
+        }
+    }
+
+    private void initServiceTagList(JSONObject products) {
+        JSONArray jsonArray=products.optJSONArray("serviceTagList");
+        if(jsonArray!=null && jsonArray.length()>0){
+            serviceTagLists=new ArrayList<>();
+            for(int i=0,size=jsonArray.length();i<size;i++){
+                ServiceTagList tagList=new ServiceTagList();
+                tagList.setPicId(jsonArray.optJSONObject(i).optString("picId"));
+                tagList.setName(jsonArray.optJSONObject(i).optString("name"));
+                serviceTagLists.add(tagList);
+            }
+        }
 
     }
 
-    private void initImgs() {
-        multiImg.setImgIds(imgList);
+    private void initGroupList(JSONObject products) {
+       JSONArray jsonArray=products.optJSONArray("groupList");
+       for(int i=0,size=jsonArray.length();i<size;i++){
+           GroupListBean group=new GroupListBean();
+           for(int j=0;j<4;j++){
+               group.setCurrentPrice(jsonArray.optJSONObject(i).optDouble("currentPrice"));
+               group.setId(jsonArray.optJSONObject(i).optString("id"));
+               group.setName(jsonArray.optJSONObject(i).optString("name"));
+               group.setRestTime(jsonArray.optJSONObject(i).optInt("restTime"));
+           }
+           groupListBeans.add(group);
+
+       }
     }
+
+    private void initPicId(JSONObject products) {
+        JSONArray jsonArray=products.optJSONArray("productPicList");
+        Log.e(TAG, "initPicId: "+jsonArray );
+        if(jsonArray!=null && jsonArray.length()>0){
+            for(int i=0,size=jsonArray.length();i<size;i++){
+                imgList.add(jsonArray.optJSONObject(i).optString("picId"));
+            }
+            multiImg.setImgIds(imgList);
+            multiImg.setShowBigImg(true);
+            multiImg.setShowBigImg(false).setOnClickImg(v -> ImgActivity.startImgActivity((ArrayList<String>) imgList,multiImg.getPosition()))
+                    .setImgIds(imgList);
+        }
+
+    }
+
 
     public static class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Holder> {
-        //   private List<ReduceProduct.GroupListBean> list;
+          private List<GroupListBean> list;
         private Activity activity;
 
-//        public GroupsAdapter(List<ReduceProduct.GroupListBean> list, Activity activity) {
-//            this.list = list;
-//            this.activity = activity;
-//        }
+        public GroupsAdapter(List<GroupListBean> list, Activity activity) {
+            this.list = list;
+            this.activity = activity;
+        }
 
         @Override
         public GroupsAdapter.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -286,19 +365,19 @@ public class ReduceProductFragment extends BaseFragment {
 
         @Override
         public void onBindViewHolder(GroupsAdapter.Holder holder, int position) {
-            // if(list!=null) {
-//               ReduceProduct.GroupListBean data = list.get(position);
-//               holder.headName.setText(data.name);
-//               holder.currentPrice.setText("当前拼团价 ￥" + data.currentPrice +
-//                       "\n" + data.restTime / 60 + "小时" + data.restTime % 60 + "分钟" + "后成团");
+             if(list!=null) {
+              GroupListBean data = list.get(position);
+               holder.headName.setText(data.name);
+               holder.currentPrice.setText("当前拼团价 ￥" + data.currentPrice +
+                       "\n" + data.restTime / 60 + "小时" + data.restTime % 60 + "分钟" + "后成团");
 
-//               holder.joinGroup.setOnClickListener(new View.OnClickListener() {
-//                   @Override
-//                   public void onClick(View view) {
-//                      // Toast.makeText(activity, data.id, Toast.LENGTH_SHORT).show();
-//                   }
-//               });
-//           }
+               holder.joinGroup.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View view) {
+                      // Toast.makeText(activity, data.id, Toast.LENGTH_SHORT).show();
+                   }
+               });
+           }
         }
 
         @Override
@@ -312,7 +391,7 @@ public class ReduceProductFragment extends BaseFragment {
 //                bean.setRestTime(12);
 //                list.add(bean);
 //            }
-            return  2;/*ist==null ?3:list.size();*/
+            return  list==null ?3:list.size();
         }
 
         class Holder extends RecyclerView.ViewHolder {
@@ -329,5 +408,236 @@ public class ReduceProductFragment extends BaseFragment {
             }
         }
     }
+    public static class ServiceTagList{
 
+        /**
+         * createTime : 2017-12-31T02:07:49.983Z
+         * deleteFlag : string
+         * description : string
+         * id : string
+         * isAuth : string
+         * isGroup : string
+         * name : string
+         * picId : string
+         * status : string
+         * type : string
+         * updateTime : 2017-12-31T02:07:49.983Z
+         */
+
+        private String createTime;
+        private String deleteFlag;
+        private String description;
+        private String id;
+        private String isAuth;
+        private String isGroup;
+        public String name;
+        public String picId;
+        private String status;
+        private String type;
+        private String updateTime;
+
+        public String getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
+        }
+
+        public String getDeleteFlag() {
+            return deleteFlag;
+        }
+
+        public void setDeleteFlag(String deleteFlag) {
+            this.deleteFlag = deleteFlag;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getIsAuth() {
+            return isAuth;
+        }
+
+        public void setIsAuth(String isAuth) {
+            this.isAuth = isAuth;
+        }
+
+        public String getIsGroup() {
+            return isGroup;
+        }
+
+        public void setIsGroup(String isGroup) {
+            this.isGroup = isGroup;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getPicId() {
+            return picId;
+        }
+
+        public void setPicId(String picId) {
+            this.picId = picId;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getUpdateTime() {
+            return updateTime;
+        }
+
+        public void setUpdateTime(String updateTime) {
+            this.updateTime = updateTime;
+        }
+    }
+    public static class ProductTagList{
+
+        /**
+         * createTime : 2017-12-31T02:07:49.982Z
+         * deleteFlag : string
+         * description : string
+         * id : string
+         * isAuth : string
+         * isGroup : string
+         * name : string
+         * picId : string
+         * status : string
+         * type : string
+         * updateTime : 2017-12-31T02:07:49.982Z
+         */
+
+        private String createTime;
+        private String deleteFlag;
+        private String description;
+        private String id;
+        private String isAuth;
+        private String isGroup;
+        public String name;
+        public String picId;
+        private String status;
+        private String type;
+        private String updateTime;
+
+        public String getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
+        }
+
+        public String getDeleteFlag() {
+            return deleteFlag;
+        }
+
+        public void setDeleteFlag(String deleteFlag) {
+            this.deleteFlag = deleteFlag;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getIsAuth() {
+            return isAuth;
+        }
+
+        public void setIsAuth(String isAuth) {
+            this.isAuth = isAuth;
+        }
+
+        public String getIsGroup() {
+            return isGroup;
+        }
+
+        public void setIsGroup(String isGroup) {
+            this.isGroup = isGroup;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getPicId() {
+            return picId;
+        }
+
+        public void setPicId(String picId) {
+            this.picId = picId;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getUpdateTime() {
+            return updateTime;
+        }
+
+        public void setUpdateTime(String updateTime) {
+            this.updateTime = updateTime;
+        }
+    }
 }

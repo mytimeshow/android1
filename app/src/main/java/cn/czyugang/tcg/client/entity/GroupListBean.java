@@ -14,16 +14,16 @@ public class GroupListBean{
      * restTime : 0
      */
 
-    public int currentPrice;
+    public double currentPrice;
     public String id;
     public String name;
     public int restTime;
 
-    public int getCurrentPrice() {
+    public double getCurrentPrice() {
         return currentPrice;
     }
 
-    public void setCurrentPrice(int currentPrice) {
+    public void setCurrentPrice(double currentPrice) {
         this.currentPrice = currentPrice;
     }
 
