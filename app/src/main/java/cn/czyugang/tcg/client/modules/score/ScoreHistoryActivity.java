@@ -308,18 +308,22 @@ public class ScoreHistoryActivity extends BaseActivity {
                             getSignName(response.getValues(), "wayDict");
                             getSignName(response.getValues(), "businessDict");
                             //兼并跨越年份的积分
-                            if(months==2 && isDoThis1){
-                                isDoThis2=false;
-                                isDoThis3=false;
-                                setFirstType(i,months,response,id,type);
-                            }else if(months==1 && isDoThis2){
+                            if((months==01 ||months==12  || months==11)&& isDoThis2){
                                 isDoThis1=false;
                                 isDoThis3=false;
                                 setSecondType(i,months,response,id,type);
-                            }else if(months>2 && isDoThis3){
+                                Log.e(TAG, "onNext: 2yue" );
+                            }else  if((months==02 ||months==01 || months==12) && isDoThis1){
+                                isDoThis2=false;
+                                isDoThis3=false;
+                                setFirstType(i,months,response,id,type);
+                                Log.e(TAG, "onNext: 1yue" );
+                            }
+                            else if(months>2 && isDoThis3){
                                 isDoThis1=false;
                                 isDoThis2=false;
                                 setThridType(i,months,response,id,type);
+                                Log.e(TAG, "onNext: >2yue" );
                             }
 
 
@@ -427,7 +431,7 @@ public class ScoreHistoryActivity extends BaseActivity {
             initHistoryList(i,response);
             Log.e(TAG, "onNext:0 "+ months+"  "+month );
         }//上月的数据
-        else if(Math.abs(months-month)==1){
+        else if(Math.abs(months-month)==1 || Math.abs(months-month)==11){
             if(isLastMonth){
                 historyList.add(new ScoreHistory(strLaMonth));
                 isLastMonth=false;
@@ -435,7 +439,7 @@ public class ScoreHistoryActivity extends BaseActivity {
             initHistoryList(i,response);
             Log.e(TAG, "onNext:1 " );
         }//上上月的数据
-        else if(Math.abs(months-month)==2){
+        else if(Math.abs(months-month)==2 ||Math.abs(months-month)==10){
             if(isTheMonthLastMonth){
                 historyList.add(new ScoreHistory(strTheLaMonth));
                 isTheMonthLastMonth=false;
