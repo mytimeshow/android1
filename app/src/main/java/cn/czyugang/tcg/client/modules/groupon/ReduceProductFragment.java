@@ -40,6 +40,7 @@ import cn.czyugang.tcg.client.modules.common.dialog.StoreTrolleyDialog;
 import cn.czyugang.tcg.client.modules.store.StoreActivity;
 import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.img.ImgView;
+import cn.czyugang.tcg.client.widget.FiveStarView;
 import cn.czyugang.tcg.client.widget.FlowLayout;
 import cn.czyugang.tcg.client.widget.MultiImgView;
 
@@ -94,6 +95,7 @@ public class ReduceProductFragment extends BaseFragment {
 
     private List<GrouponGroup> groupList = new ArrayList<>();
     private GroupsAdapter adapter;
+    private CommenAdapter commenAdapter;
     private ReduceProduct reduceProduct;
     private List<String> imgList=new ArrayList<>();
     private List<GroupListBean> groupListBeans=new ArrayList<>();
@@ -232,10 +234,15 @@ public class ReduceProductFragment extends BaseFragment {
 
                     initData(object);
                     Log.e(TAG, "onNext: done3" );
+                    //团列表
                     adapter = new GroupsAdapter(groupListBeans,getActivity());
                     groupR.setLayoutManager(new LinearLayoutManager(getActivity()));
                     groupR.setAdapter(adapter);
                     groupR.setNestedScrollingEnabled(false);
+                    //评论列表
+                    commenAdapter=new CommenAdapter();
+                    commentR.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    commentR.setAdapter(commenAdapter);
 
                 }
             }
@@ -251,6 +258,8 @@ public class ReduceProductFragment extends BaseFragment {
         initPrice(products);
         initProductTagList(products);
         initProductTags();
+        initComments(products);
+
         JSONObject body=products.optJSONObject("reducePriceActivityProduct");
         String title=products.optJSONObject("productInfo").optString("title");
         String subTitle=products.optJSONObject("productInfo").optString("subTitle");
@@ -269,16 +278,12 @@ public class ReduceProductFragment extends BaseFragment {
         comment.setText("商品评价（好评度"+goodAssessment+"%）");
        commentNum.setText(String.valueOf(assessmentCount)+"条评价");
         buy.setText("￥"+String.valueOf(productPrice)+"\n直接购买");
-       /*  //评价标签
-        labelListBeans=products.labelList;
-        List<String> strList=new ArrayList<>();
-        for(int i=0,size=labelListBeans.size();i<size;i++){
-            String str=labelListBeans.get(i).name;
-                    //+"("+ labelListBeans.get(i).count+")";
-            strList.add(str);
-        }
-        Log.e(TAG, "initData: "+strList.get(0)+" /n"+strList.get(1) );*/
-        // commentLabel.setTextList(commentLabel,strList);
+
+    }
+
+    private void initComments(JSONObject products) {
+
+
     }
 
     private void initProductTagList(JSONObject products) {
@@ -638,6 +643,66 @@ public class ReduceProductFragment extends BaseFragment {
 
         public void setUpdateTime(String updateTime) {
             this.updateTime = updateTime;
+        }
+    }
+    public static class CommenAdapter extends RecyclerView.Adapter<CommenAdapter.Holder> {
+        private List<GroupListBean> list;
+        private Activity activity;
+
+      /*  public CommentList(List<GroupListBean> list, Activity activity) {
+            this.list = list;
+            this.activity = activity;
+        }*/
+
+        @Override
+        public CommenAdapter.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new CommenAdapter.Holder(LayoutInflater.from(parent.getContext()).inflate(
+                    R.layout.item_comment, parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(CommenAdapter.Holder holder, int position) {
+
+        }
+
+        @Override
+        public int getItemCount() {
+
+            return  list==null ?2:list.size();
+        }
+
+        class Holder extends RecyclerView.ViewHolder {
+            cn.czyugang.tcg.client.utils.img.ImgView headImg;
+            cn.czyugang.tcg.client.utils.img.ImgView flagImg1;
+            cn.czyugang.tcg.client.utils.img.ImgView flagImg2;
+            cn.czyugang.tcg.client.utils.img.ImgView flagImg3;
+            TextView headName;
+            FiveStarView starView;
+            TextView arriveTime;
+            TextView date;
+            TextView content;
+            LinearLayout imgFlagL;
+            LinearLayout replyL;
+            TextView reply;
+
+            public Holder(View itemView) {
+                super(itemView);
+               headImg=itemView.findViewById(R.id.comment_user_img);
+                flagImg1=itemView.findViewById(R.id.comment_img1);
+                flagImg2=itemView.findViewById(R.id.comment_img2);
+                flagImg3=itemView.findViewById(R.id.comment_img3);
+                headName=itemView.findViewById(R.id.comment_user_name);
+                starView=itemView.findViewById(R.id.comment_five_stars);
+                date=itemView.findViewById(R.id.comment_date);
+                arriveTime=itemView.findViewById(R.id.comment_arrive_time);
+                content=itemView.findViewById(R.id.comment_content);
+                imgFlagL=itemView.findViewById(R.id.comment_img_flag);
+                replyL=itemView.findViewById(R.id.comment_replay);
+                reply=itemView.findViewById(R.id.conment_reply_content);
+
+
+
+            }
         }
     }
 }

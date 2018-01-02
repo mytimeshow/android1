@@ -38,7 +38,7 @@ public class GoodConmentCountFragment extends BaseFragment {
     @Override
     public void setText(String text) {
         if(text!=null){
-            //descript.setText(text);
+            descript.setText(text);
         }else {
             descript.setText("");
         }
