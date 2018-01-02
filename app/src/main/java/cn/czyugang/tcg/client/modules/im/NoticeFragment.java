@@ -18,7 +18,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.api.ImApi;
+import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseFragment;
+import cn.czyugang.tcg.client.common.ErrorHandler;
+import cn.czyugang.tcg.client.entity.ImNoticeMsg;
+import cn.czyugang.tcg.client.entity.ImNoticeType;
+import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.widget.LabelLayout;
 
@@ -36,8 +43,10 @@ public class NoticeFragment extends BaseFragment {
     FrameLayout typesL;
     Unbinder unbinder;
 
-    private List<String> noticeList=new ArrayList<>();
+    private List<String> noticeList = new ArrayList<>();
     private NoticeAdapter adapter;
+    List<String> noticeType=new ArrayList<String>();
+    List<ImNoticeType> noticeTypeList = new ArrayList<ImNoticeType>();
 
     public static NoticeFragment newInstance() {
         NoticeFragment fragment = new NoticeFragment();
@@ -54,10 +63,35 @@ public class NoticeFragment extends BaseFragment {
         rootView = inflater.inflate(R.layout.fragment_im_notice, container, false);
         unbinder = ButterKnife.bind(this, rootView);
 
-        noticeList.addAll(Arrays.asList(".",".",".",".",".",".",".",".",".",".","."));
-        adapter=new NoticeAdapter(noticeList,getActivity());
+        noticeList.addAll(Arrays.asList(".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."));
+        adapter = new NoticeAdapter(noticeList, getActivity());
         noticeR.setLayoutManager(new LinearLayoutManager(getActivity()));
         noticeR.setAdapter(adapter);
+        ImApi.getNoticeList("100001",1).subscribe(new BaseActivity.NetObserver<Response<List<ImNoticeMsg>>>() {
+            @Override
+            public void onNext(Response<List<ImNoticeMsg>> response) {
+                super.onNext(response);
+            }
+        });
+        ImApi.getNoticeTypeList().subscribe(new BaseActivity.NetObserver<Response<List<ImNoticeType>>>() {
+            @Override
+            public void onNext(Response<List<ImNoticeType>> response) {
+                super.onNext(response);
+                if (!ErrorHandler.judge200(response)) return;
+                noticeTypeList.clear();
+                noticeTypeList.addAll(response.data);
+                if (noticeTypeList.size() != 0 && noticeTypeList != null) {
+                    for (int i = 0, size = noticeTypeList.size(); i < size; i++) {
+                        noticeType.add(noticeTypeList.get(i).name);
+                    }
+                    types.setTexts(noticeType);
+                    LogRui.e("onNext####"+noticeType);
+                }
+
+
+            }
+        });
+
 
         return rootView;
     }
@@ -70,8 +104,8 @@ public class NoticeFragment extends BaseFragment {
         typesL.setVisibility(View.GONE);
     }
 
-    public boolean typesIsShowing(){
-        return typesL.getVisibility()==View.VISIBLE;
+    public boolean typesIsShowing() {
+        return typesL.getVisibility() == View.VISIBLE;
     }
 
     @Override
@@ -88,38 +122,44 @@ public class NoticeFragment extends BaseFragment {
     private static class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.Holder> {
         private List<String> list;
         private Activity activity;
+
         public NoticeAdapter(List<String> list, Activity activity) {
             this.list = list;
             this.activity = activity;
         }
+
         @Override
         public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
             return new Holder(LayoutInflater.from(activity).inflate(
-                    R.layout.item_im_notice,parent,false));
+                    R.layout.item_im_notice, parent, false));
         }
+
         @Override
         public void onBindViewHolder(Holder holder, int position) {
-            String data=list.get(position);
+            String data = list.get(position);
 
-            holder.imgView.setVisibility(position%3==0?View.VISIBLE:View.GONE);
+            holder.imgView.setVisibility(position % 3 == 0 ? View.VISIBLE : View.GONE);
         }
+
         @Override
         public int getItemCount() {
             return list.size();
         }
+
         class Holder extends RecyclerView.ViewHolder {
             TextView time;
             TextView title;
             TextView subTitle;
             ImgView imgView;
             TextView category;
+
             public Holder(View itemView) {
                 super(itemView);
-                time=itemView.findViewById(R.id.item_time);
-                title=itemView.findViewById(R.id.item_title);
-                subTitle=itemView.findViewById(R.id.item_title_sub);
-                imgView=itemView.findViewById(R.id.item_img);
-                category=itemView.findViewById(R.id.item_category);
+                time = itemView.findViewById(R.id.item_time);
+                title = itemView.findViewById(R.id.item_title);
+                subTitle = itemView.findViewById(R.id.item_title_sub);
+                imgView = itemView.findViewById(R.id.item_img);
+                category = itemView.findViewById(R.id.item_category);
             }
         }
     }
