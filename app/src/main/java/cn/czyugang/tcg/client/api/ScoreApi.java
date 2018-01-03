@@ -22,6 +22,7 @@ public class ScoreApi {
     public static Observable<Response<Score>> getBaseScore(String id){
         HashMap<String, Object> map = new HashMap<>();
         map.put("scoreId", id);
+        map.put("page",10);
         return UserOAuth.getInstance()
                 .get("api/auth/v2/user/bonusPoints/pre",map)
                 .map(s -> (Response<Score>) JsonParse.fromJson(s, new JsonParse.Type(Response.class,Score.class)))
@@ -32,6 +33,8 @@ public class ScoreApi {
     public  static Observable<Response<List<Score>>> getScoreDetail(String id){
         HashMap<String, Object> map = new HashMap<>();
         map.put("scoreId", id);
+        map.put("page",10);
+        map.put("size",120);
         return UserOAuth.getInstance()
                 .get("api/auth/v2/user/bonusPoints/query/record/dict", map)
                 .map(s -> (Response<List<Score>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class,new JsonParse.Type(List.class,Score.class))))

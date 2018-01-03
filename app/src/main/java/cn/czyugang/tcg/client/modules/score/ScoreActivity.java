@@ -127,7 +127,7 @@ public class ScoreActivity extends BaseActivity {
        // continueSignAction.setText("+"+signedDayBonusDict);
         continueSignAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
         continueSignAction.setClickable(false);
-     if(isGotToday){
+     if(!isGotToday){
          postData("SIGN_CONTINUOUSLY",false);
      }else {
          //showToast("你已经领取过了");

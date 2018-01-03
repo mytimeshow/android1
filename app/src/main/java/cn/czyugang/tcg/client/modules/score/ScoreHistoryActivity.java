@@ -529,6 +529,7 @@ public class ScoreHistoryActivity extends BaseActivity {
             //  Log.e(TAG, "getSignName: "+list.optJSONObject(i).optString("id") );
             scoreType.put(list.optJSONObject(i).optString("id"), list.optJSONObject(i).optString("name"));
         }
+        scoreType.put("SIGN_CONTI","连续签到积分");
         // Log.e(TAG, "getSignName: isnull"+scoreType.size()  );
         return "";
     }
