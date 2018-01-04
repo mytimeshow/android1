@@ -33,6 +33,8 @@ public class Order {
     public String checked;      //是否已查看YES/NO
     @SerializedName("closeReason")
     public String closeReason;      //订单关闭原因
+    @SerializedName("isImmediately")
+    public String isImmediately;
     @SerializedName("createTime")
     public String createTime;
     @SerializedName("deleteFlag")

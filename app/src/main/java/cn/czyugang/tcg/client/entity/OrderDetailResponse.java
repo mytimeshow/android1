@@ -39,12 +39,13 @@ public class OrderDetailResponse extends Response<Order> {
     public OrderDelivery deliveryInfo = null;       //配送订单信息(配送方式type,券码fetchCode)
     public String deliveryUserName = "";        //配送员名称
     public String deliveryUserPhone = "";       //配送员电话
-    private Map<String, String> statusMap = new HashMap<>(); //订单状态字典
+    public Map<String, String> statusMap = new HashMap<>(); //订单状态字典
     public OrderDeliveryLocation deliveryLocation = null;       //配送原当前位置
     public UserBase userBaseInfo = null;        //买家信息(昵称nickName,账号account，手机号phone)
     public double orderPrice = 0;       //订单金额
     public double allDiscountPrice = 0;// 平台扫码购优惠总额
     private Map<String, String> payTypeDict = new HashMap<>();//
+    public Map<String, String> deliverTypeDict = new HashMap<>();//
     private List<String> payTypeList = new ArrayList<>();
 
     public OrderSchedule schedule=null;
