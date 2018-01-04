@@ -25,6 +25,7 @@
     <color name="main_light_red">#ff8585</color>
     <color name="main_light_blue">#77c6f7</color>
     <color name="main_orange">#ffae00</color>
+    <color name="main_yellow">#fff79b</color>
     <color name="main_light_orange">#fdf7d8</color>
     <!--字体颜色-->
     <color name="text_black">#333</color>

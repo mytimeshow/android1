@@ -217,6 +217,8 @@ public class SelectLocationActivity extends BaseActivity implements View.OnFocus
         } else {
             mPoiSearch.setQuery(query);
         }
+        //不做限制，以免只能搜到定位附近的地址
+        latLng=null;
         if (latLng != null) {
             mPoiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(latLng.latitude, latLng.longitude), 1000));
         } else {

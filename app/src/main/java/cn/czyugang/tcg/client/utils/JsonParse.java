@@ -122,6 +122,29 @@ public class JsonParse {
         return mGson.toJson(o);
     }
 
+
+    public static String toJsons(Object... objects){
+        StringBuilder builder=new StringBuilder();
+        for(Object o:objects){
+            if(o!=null){
+                String s=mGson.toJson(o);
+                if (builder.length()>0) {
+                    builder.append(s);
+                    builder.deleteCharAt(builder.length() - s.length());
+                }else {
+                    builder.append(s);
+                }
+                builder.deleteCharAt(builder.length()-1);
+                builder.append(",");
+            }
+        }
+        if (builder.length()>0){
+            builder.deleteCharAt(builder.length()-1);
+            builder.append("}");
+        }
+        return builder.toString();
+    }
+
     public static class Type implements ParameterizedType {
         private java.lang.reflect.Type raw;
         private java.lang.reflect.Type[] args;

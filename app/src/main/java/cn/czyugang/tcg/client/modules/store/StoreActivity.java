@@ -318,4 +318,8 @@ public class StoreActivity extends BaseActivity {
         }
     }
 
+    @OnClick(R.id.title_input)
+    public void onSearch(){
+        SearchActivity.startSearchActivity(SearchActivity.SEARCH_STORE);
+    }
 }

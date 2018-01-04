@@ -207,7 +207,7 @@ public class MyDialog extends DialogFragment {
                 .width(ResUtil.getDimenInPx(R.dimen.dp_120))
                 .gravity(Gravity.TOP | Gravity.RIGHT)
                 .offsetX(ResUtil.getDimenInPx(R.dimen.dp_10))
-                .offsetY(ResUtil.getDimenInPx(R.dimen.dp_50))
+                .offsetY(ResUtil.getDimenInPx(R.dimen.dp_44))
                 .bindView(myDialog -> {
                     myDialog.rootView.findViewById(R.id.more_msg).setVisibility(moreDialogListener.showMsg() ? View.VISIBLE : View.GONE);
                     myDialog.rootView.findViewById(R.id.more_footprint).setVisibility(moreDialogListener.showFootprint() ? View.VISIBLE : View.GONE);

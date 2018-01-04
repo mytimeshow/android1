@@ -69,7 +69,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="Awai  13690000000"
+                        android:text="  "
                         android:textColor="@color/text_black"
                         android:textSize="@dimen/sp_16"
                         />
@@ -81,7 +81,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="广东省潮州市湘桥区黄北路七胶村杜奔头斜对面"
+                        android:text="   "
                         android:textColor="@color/text_gray"
                         android:textSize="@dimen/sp_12"
                         />
@@ -200,7 +200,7 @@
             android:id="@+id/confirm_order_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="￥9999.99"
+            android:text="￥0.00"
             android:textColor="@color/main_red"
             android:textSize="@dimen/sp_14"
             />

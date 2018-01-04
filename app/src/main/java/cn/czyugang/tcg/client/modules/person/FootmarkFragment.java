@@ -172,6 +172,7 @@ public class FootmarkFragment extends BaseFragment {
     @OnClick(R.id.view_cancel)
     public void onCancelSelect() {
         showBottom(false);
+        ((FootmarkActivity)getActivity()).cancelEdit();
     }
 
     @OnClick(R.id.view_delete)

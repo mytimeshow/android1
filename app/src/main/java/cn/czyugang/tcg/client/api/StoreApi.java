@@ -36,7 +36,7 @@ public class StoreApi {
 
     //店铺  recordFootMarkAuto
     public static Observable<Response<Store>> getStoreById(String id) {
-        RecordApi.recordFootMarkAuto("STORE",id);
+        RecordApi.recordFootMarkAuto("STORE", id);
         HashMap<String, Object> map = new HashMap<>();
         map.put("storeId", id);
         return UserOAuth.getInstance()
@@ -69,12 +69,12 @@ public class StoreApi {
     }
 
     //店铺商品  商超
-    public static Observable<GoodsResponse> getGoods(String id, String classifyId, String order,int page,String accessTime) {
+    public static Observable<GoodsResponse> getGoods(String id, String classifyId, String order, int page, String accessTime) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("storeId", id);
         map.put("page", page);
         map.put("size", 20);
-        if (accessTime!=null) map.put("accessTime",accessTime);
+        if (accessTime != null) map.put("accessTime", accessTime);
         if (classifyId != null) map.put("classifyId", classifyId);
         if (order != null) {
             switch (order) {
@@ -177,28 +177,28 @@ public class StoreApi {
     }
 
     //结算购物车(下单)
-    public static Observable<Response<List<String>>> settleTrolley(OrderPreSettleResponse orderPreSettleResponse){
+    public static Observable<Response<List<String>>> settleTrolley(OrderPreSettleResponse orderPreSettleResponse) {
         HashMap<String, Object> map = new HashMap<>();
-        List<HashMap<String,String>> deliveryWayList=new ArrayList<>();
-        for(OrderPreSettleResponse.StoreMoreInfo storeMoreInfo:orderPreSettleResponse.moreInfoHashMap.values()){
+        List<HashMap<String, String>> deliveryWayList = new ArrayList<>();
+        for (OrderPreSettleResponse.StoreMoreInfo storeMoreInfo : orderPreSettleResponse.moreInfoHashMap.values()) {
             HashMap<String, String> deliveryMap = new HashMap<>();
             deliveryMap.put("deliveryWay", OrderPreSettleResponse.StoreMoreInfo.transferDeliveryType(storeMoreInfo.selectedDeliveryWay));
-            deliveryMap.put("expectDeliveryTime",storeMoreInfo.selectedDeliveryTime);
-            deliveryMap.put("note",storeMoreInfo.noteToStore);
-            deliveryMap.put("storeId",storeMoreInfo.storeId);
+            deliveryMap.put("expectDeliveryTime", storeMoreInfo.selectedDeliveryTime);
+            deliveryMap.put("note", storeMoreInfo.noteToStore);
+            deliveryMap.put("storeId", storeMoreInfo.storeId);
             deliveryWayList.add(deliveryMap);
         }
-        List<String> shoppingCartIdList=new ArrayList<>();
-        for(TrolleyGoods trolleyGoods:orderPreSettleResponse.trolleyGoodsMap.values()){
+        List<String> shoppingCartIdList = new ArrayList<>();
+        for (TrolleyGoods trolleyGoods : orderPreSettleResponse.trolleyGoodsMap.values()) {
             shoppingCartIdList.add(trolleyGoods.trolleyId);
         }
-        map.put("addressId",orderPreSettleResponse.address.id);
-        map.put("deliveryWayList",deliveryWayList);
-        map.put("shoppingCartIdList",shoppingCartIdList);
+        map.put("addressId", orderPreSettleResponse.address.id);
+        map.put("deliveryWayList", deliveryWayList);
+        map.put("shoppingCartIdList", shoppingCartIdList);
 
         return UserOAuth.getInstance()
                 .post("api/auth/v1/product/shopping/shoppingCart/settle", map)
-                .map(s -> (Response<List<String>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class,new JsonParse.Type(List.class,String.class))))
+                .map(s -> (Response<List<String>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, new JsonParse.Type(List.class, String.class))))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -206,10 +206,14 @@ public class StoreApi {
 
     //api/auth/v1/product/store/get ［可接入］根据id获取店铺商品详情
     //recordFootMarkAuto
-    public static Observable<Response<Good>> getGoodDetail(String id) {
-        RecordApi.recordFootMarkAuto("PRODUCT",id);
+    public static Observable<Response<Good>> getGoodDetail(String id, String activityId, String activityType) {
+        RecordApi.recordFootMarkAuto("PRODUCT", id);
         HashMap<String, Object> map = new HashMap<>();
-        map.put("id",id );
+        map.put("id", id);
+        if (activityId != null && !activityId.isEmpty()) {
+            map.put("activityId", activityId);
+            map.put("activityType", activityType);
+        }
         return UserOAuth.getInstance()
                 .get("api/auth/v1/product/store/get", map)
                 .map(s -> (Response<Good>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, Good.class)))
@@ -225,7 +229,7 @@ public class StoreApi {
     public static Observable<Response<Object>> storeApply(HashMap<String, Object> map) {
         return UserOAuth.getInstance()
                 .post("api/auth/v1/store/apply/submit", map)
-                .map(s -> (Response<Object>) JsonParse.fromJson(s, new JsonParse.Type(Response.class,Object.class)))
+                .map(s -> (Response<Object>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, Object.class)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
 
@@ -234,8 +238,8 @@ public class StoreApi {
     //api/auth/v1/store/apply/status    [可接入]根据用户id查看审核结果/信息
     public static Observable<Response<StoreApplyInfo>> storeApplyStatus() {
         return UserOAuth.getInstance()
-                .get("api/auth/v1/store/apply/status",null)
-                .map(s -> (Response<StoreApplyInfo>) JsonParse.fromJson(s, new JsonParse.Type(Response.class,StoreApplyInfo.class)))
+                .get("api/auth/v1/store/apply/status", null)
+                .map(s -> (Response<StoreApplyInfo>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, StoreApplyInfo.class)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
 
@@ -253,6 +257,7 @@ public class StoreApi {
                 .observeOn(AndroidSchedulers.mainThread());
 
     }
+
     //api/auth/v1/product/shopping/search/product［DOC-v2］搜索商品
     public static Observable<SearchGoodsResponse> searchGoods(HashMap<String, Object> map) {
         //HashMap<String, Object> map = new HashMap<>();

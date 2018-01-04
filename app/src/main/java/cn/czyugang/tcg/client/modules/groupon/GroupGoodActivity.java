@@ -6,9 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +14,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.api.RecordApi;
-import cn.czyugang.tcg.client.api.StoreApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.base.BaseFragmentAdapter;
@@ -82,6 +78,7 @@ public class GroupGoodActivity extends BaseActivity {
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
     }
 
+/*
     private void getGoodDetail() {
         StoreApi.getGoodDetail(id).subscribe(new NetObserver<Response<Good>>() {
             @Override
@@ -122,6 +119,7 @@ public class GroupGoodActivity extends BaseActivity {
         });
 
     }
+*/
 
     @OnClick(R.id.title_back)
     public void onBack() {

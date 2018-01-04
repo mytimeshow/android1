@@ -280,7 +280,9 @@ public class MyFragment extends BaseFragment implements MyContract.View {
             list.add(new Item("商品收藏", () -> {
                 CollectionActivity.startCollectionActivity(CollectionActivity.COLLECTION_TYPE_GOODS);
             }));
-            list.add(new Item("我的资讯"));
+            list.add(new Item("我的资讯",()->{
+                CollectionActivity.startCollectionActivity(CollectionActivity.COLLECTION_TYPE_INFORM);
+            }));
             list.add(new Item("我的足迹",()->{
                 FootmarkActivity.startFootmarkActivity();
             }));

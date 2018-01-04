@@ -29,6 +29,8 @@ import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.Record;
 import cn.czyugang.tcg.client.entity.RecordResponse;
 import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.modules.inform.InformDetailsActivity;
+import cn.czyugang.tcg.client.modules.store.StoreActivity;
 import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.widget.FiveStarView;
@@ -121,30 +123,26 @@ public class CollectionFragment extends BaseFragment {
             @Override
             public void onNext(RecordResponse response) {
                 super.onNext(response);
-                if (ErrorHandler.judge200(response)){
-                    if (response.data==null||response.data.isEmpty()){
-                        if (loadmore) AppUtil.toast("没有更多了");
-                        return;
-                    }
-                    switch (type) {
-                        case CollectionActivity.COLLECTION_TYPE_SHOP:
-                            response.parseStoreCollection();
-                            break;
-                        case CollectionActivity.COLLECTION_TYPE_GOODS:
-                            response.parseGoodCollection();
-                            break;
-                        default:
-                            response.parseInformCollection();
-                            break;
-                    }
-
-                    if (!loadmore){
-                        recordList.clear();
-                    }
-                    recordList.addAll(response.data);
-                    adapter.notifyDataSetChanged();
-                    recordResponse=response;
+                if (!ErrorHandler.judge200(response)) return;
+                if (loadmore&&ErrorHandler.isRepeat(recordResponse,response)) return;
+                switch (type) {
+                    case CollectionActivity.COLLECTION_TYPE_SHOP:
+                        response.parseStoreCollection();
+                        break;
+                    case CollectionActivity.COLLECTION_TYPE_GOODS:
+                        response.parseGoodCollection();
+                        break;
+                    default:
+                        response.parseInformCollection();
+                        break;
                 }
+
+                if (!loadmore){
+                    recordList.clear();
+                }
+                recordList.addAll(response.data);
+                adapter.notifyDataSetChanged();
+                recordResponse=response;
             }
 
             @Override
@@ -176,6 +174,7 @@ public class CollectionFragment extends BaseFragment {
     @OnClick(R.id.view_cancel)
     public void onCancelSelect(){
         showBottom(false);
+        ((CollectionActivity)getActivity()).cancelEdit();
     }
 
     @OnClick(R.id.view_delete)
@@ -265,10 +264,14 @@ public class CollectionFragment extends BaseFragment {
         }
 
         private void showStore(Holder holder,Record data){
+            if (data.store==null) return;
             holder.imgView.id(data.store.avatarId);
             holder.name.setText(data.store.name);
             holder.starView.setScore(data.starScore);
             holder.activity.setText(String.format("本店有%d个活动",data.activityNum));
+            holder.itemView.setOnClickListener(v -> {
+                StoreActivity.startStoreActivity(data.store.id);
+            });
         }
 
         private void showGood(Holder holder,Record data){
@@ -276,9 +279,13 @@ public class CollectionFragment extends BaseFragment {
         }
 
         private void showInform(Holder holder,Record data){
+            if (data.inform==null) return;
             holder.imgView.id(data.inform.coverThumbImageFileId);
             holder.name.setText(data.inform.title);
             holder.from.setText(data.getInformFrom());
+            holder.itemView.setOnClickListener(v -> {
+                InformDetailsActivity.startInformDetailsActivity(data.inform.id);
+            });
         }
 
         @Override

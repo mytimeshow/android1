@@ -34,15 +34,18 @@ public class ImgView extends ImageView {
 
     public ImgView(Context context) {
         super(context);
+        setScaleType(ScaleType.FIT_XY);
     }
 
     public ImgView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setScaleType(ScaleType.FIT_XY);
         parse(context, attrs);
     }
 
     public ImgView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        setScaleType(ScaleType.FIT_XY);
         parse(context, attrs);
     }
 
@@ -57,7 +60,7 @@ public class ImgView extends ImageView {
     }
 
     private Paint paint = null;
-    private String disCount = "网络图片";
+    private String disCount = "";
     private boolean isRound = false;
     private boolean noCache = false;
 
@@ -71,11 +74,12 @@ public class ImgView extends ImageView {
                 paint.setTextAlign(Paint.Align.CENTER);
                 paint.setTextSize(ResUtil.getDimenInPx(R.dimen.sp_10));
             }
-            paint.setColor(0x7F000000);
-            canvas.drawRect(0, getHeight() * 0.75f, getWidth(), getHeight(), paint);
-            canvas.drawRect(0, 0, getWidth(), getHeight()*0.25f, paint);
-            paint.setColor(Color.WHITE);
-            canvas.drawText(disCount, getWidth() / 2, getHeight() * 0.94f, paint);
+            if (disCount!=null&&!disCount.isEmpty()){
+                paint.setColor(0x7F000000);
+                canvas.drawRect(0, getHeight() * 0.75f, getWidth(), getHeight(), paint);
+                paint.setColor(Color.WHITE);
+                canvas.drawText(disCount, getWidth() / 2, getHeight() * 0.94f, paint);
+            }
         }
     }
 

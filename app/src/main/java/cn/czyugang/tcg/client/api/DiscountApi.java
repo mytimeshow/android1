@@ -1,5 +1,14 @@
 package cn.czyugang.tcg.client.api;
 
+import java.util.HashMap;
+
+import cn.czyugang.tcg.client.common.UserOAuth;
+import cn.czyugang.tcg.client.entity.QrcodeActRespose;
+import cn.czyugang.tcg.client.utils.JsonParse;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 /**
  * @author ruiaa
  * @date 2017/12/23
@@ -22,13 +31,64 @@ public class DiscountApi {
     /*
     *   扫码购
     * */
-    // api/auth/v3/marketing/store/qrcode/activity/get［可接入-v3］查看活动详情
+    // /api/auth/v3/order/qrcode/activity/products［可接入-v3］查询扫码购优惠活动商品信息列表
+    public static Observable<QrcodeActRespose> getQrcodeGoods(String activityId, String storeId, String order, int page, String accessTime) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("activityId", activityId);
+        if (storeId != null && !storeId.isEmpty()) map.put("storeId", storeId);
+        if (accessTime != null && !accessTime.isEmpty()) {
+            map.put("accessTime", accessTime);
+            map.put("page", page);
+        } else {
+            map.put("page", 1);
+        }
+        map.put("size", 20);
+        if (order != null) {
+            //排序字段（综合排序：COMPREHENSIVE，评价：EVALUATE，价格：PRICE，销量：SALES，距离:DISTANCE）
+            switch (order) {
+                case "COMPREHENSIVE": {
+                    map.put("orderFields", "COMPREHENSIVE");
+                    map.put("orderTypes", "DESC");
+                    break;
+                }
+                case "EVALUATE": {
+                    map.put("orderFields", "EVALUATE");
+                    map.put("orderTypes", "DESC");
+                    break;
+                }
+                case "SALES": {
+                    map.put("orderFields", "SALES");
+                    map.put("orderTypes", "DESC");
+                    break;
+                }
+                case "DISTANCE": {
+                    map.put("orderFields", "DISTANCE");
+                    map.put("orderTypes", "DESC");
+                    break;
+                }
+                case "priceASC": {
+                    map.put("orderFields", "PRICE");
+                    map.put("orderTypes", "ASC");
+                    break;
+                }
+                case "priceDESC": {
+                    map.put("orderFields", "PRICE");
+                    map.put("orderTypes", "DESC");
+                    break;
+                }
+            }
+        }
+        return UserOAuth.getInstance()
+                .get("api/auth/v3/order/qrcode/activity/products", map)
+                .map(s -> (QrcodeActRespose) JsonParse.fromJson(s, QrcodeActRespose.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
 
-    // api/auth/v3/marketing/store/qrcode/activity/list［可接入-v3］查询扫码购优惠活动
+    }
 
-    // api/auth/v3/marketing/store/qrcode/activity/related/delivery [可接入-v3] 关联订单(物流方式)
-
-    // api/auth/v3/marketing/store/qrcode/activity/related/direct [可接入-v3] 关联订单(直接购买)
+    //api/auth/v3/order/qrcode/activity/pre/confirm  确认订单数据加载
+    //api/auth/v3/order/qrcode/activity/place/by/delivery 下单(走配送)
+    //api/auth/v3/order/qrcode/activity/place/in/store 下单(到店)"
 
 
     /*

@@ -60,6 +60,7 @@ public class SelectAddressActivity extends BaseActivity {
             @Override
             public void onNext(Response<List<Address>> response) {
                 super.onNext(response);
+                addressList.clear();
                 addressList.addAll(response.getData());
                 Address.clearNotReceivedAddress(addressList);
                 adapter.selectAddress = Address.findDefaultAddress(addressList);

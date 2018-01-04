@@ -27,6 +27,7 @@ public class HomeFoodFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_home_food, container, false);
+
         return rootView;
     }
 

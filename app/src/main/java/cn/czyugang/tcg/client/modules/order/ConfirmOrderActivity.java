@@ -30,6 +30,8 @@ import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.entity.Store;
 import cn.czyugang.tcg.client.entity.TrolleyGoods;
 import cn.czyugang.tcg.client.utils.CommonUtil;
+import cn.czyugang.tcg.client.utils.LogRui;
+import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.storage.AppKeyStorage;
 import cn.czyugang.tcg.client.widget.CalculateOrderView;
 
@@ -197,6 +199,11 @@ public class ConfirmOrderActivity extends BaseActivity {
 
     @OnClick(R.id.confirm_order_commit)
     public void onCommit() {
+        if (preSettleResponse==null) return;
+        if (preSettleResponse.address==null||preSettleResponse.address.id==null){
+            AppUtil.toast("请先选择收货地址");
+            return;
+        }
         confirmOrder();
     }
 
@@ -245,6 +252,7 @@ public class ConfirmOrderActivity extends BaseActivity {
             //是否在配送范围
             holder.addressDisable.setVisibility(storeMoreInfo.isInDeliveryRange ? View.GONE : View.VISIBLE);
 
+            LogRui.i("onBindViewHolder####",storeMoreInfo.selectedDeliveryWay);
             //配送方式
             if (preSettleResponse.data.size() > 1) {
                 deliveryL.setVisibility(View.GONE);

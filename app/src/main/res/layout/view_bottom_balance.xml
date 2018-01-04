@@ -63,7 +63,7 @@
         android:layout_height="match_parent"
         android:background="@color/grey_350"
         android:gravity="center"
-        android:text="20元起送"
+        android:text="0.01元起送"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_18"
         android:clickable="false"

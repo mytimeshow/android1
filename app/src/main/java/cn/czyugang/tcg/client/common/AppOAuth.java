@@ -7,6 +7,8 @@ import android.text.TextUtils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import cn.czyugang.tcg.client.api.OAuthApi;
 import cn.czyugang.tcg.client.entity.AccessToken;
@@ -25,6 +27,7 @@ public class AppOAuth {
     private static AppOAuth mInstance;
     private Network mNetwork = Network.getInstance();
     private OAuthApi mOAuthApi = new OAuthApi();
+    private Lock mLock = new ReentrantLock();
 
     private SharedPreferences mSharedPreferences;
     private AppToken mAppToken;
@@ -82,12 +85,14 @@ public class AppOAuth {
                         //回调统一处理
                         Response response = JsonParse.fromJson(s, Response.class);
                         switch (response.getCode()) {
+                            case 14002://AppId、AppToken无效
                             case 14004://AccessToken无效
                                 clearAppToken();
                                 clearAccessToken();
                                 return getAccessToken()
                                         .flatMap(accessToken -> get(url, params, headers));
                             case 14006://AccessToken过期
+                                mAccessToken.setAccessToken(null);
                                 return refreshAccessToken()
                                         .flatMap(accessToken -> get(url, params, headers));
                             default:
@@ -125,12 +130,14 @@ public class AppOAuth {
                         //回调统一处理
                         Response response = JsonParse.fromJson(s, Response.class);
                         switch (response.getCode()) {
+                            case 14002://AppId、AppToken无效
                             case 14004://AccessToken无效
                                 clearAppToken();
                                 clearAccessToken();
                                 return getAccessToken()
                                         .flatMap(accessToken -> post(url, params, headers));
                             case 14006://AccessToken过期
+                                mAccessToken.setAccessToken(null);
                                 return refreshAccessToken()
                                         .flatMap(accessToken -> post(url, params, headers));
                             default:
@@ -165,18 +172,20 @@ public class AppOAuth {
         if (mAppToken != null && mAccessToken != null) {
             return mNetwork.upload(url, params, getOAuthHeaders(headers))
                     .flatMap(progress -> {
-                        if (TextUtils.isEmpty(progress.getBodyStr())){
+                        if (TextUtils.isEmpty(progress.getBodyStr())) {
                             return Observable.just(progress);
                         }
                         //回调统一处理
                         Response response = JsonParse.fromJson(progress.getBodyStr(), Response.class);
                         switch (response.getCode()) {
+                            case 14002://AppId、AppToken无效
                             case 14004://AccessToken无效
                                 clearAppToken();
                                 clearAccessToken();
                                 return getAccessToken()
                                         .flatMap(accessToken -> upload(url, params, headers));
                             case 14006://AccessToken过期
+                                mAccessToken.setAccessToken(null);
                                 return refreshAccessToken()
                                         .flatMap(accessToken -> upload(url, params, headers));
                             default:
@@ -219,15 +228,21 @@ public class AppOAuth {
      * @return
      */
     private Observable<AccessToken> getAccessToken() {
-        return mOAuthApi.getAppToken()
-                .flatMap(response -> {
-                    writeAppToken(response.getData());
-                    return mOAuthApi.getAccessToken(mAppToken.getAppId(), mAppToken.getAppToken());
-                })
-                .map(response -> {
-                    writeAccessToken(response.getData());
-                    return mAccessToken;
-                });
+        mLock.lock();
+        if (mAppToken == null || mAccessToken == null) {
+            return mOAuthApi.getAppToken()
+                    .flatMap(response -> {
+                        writeAppToken(response.getData());
+                        return mOAuthApi.getAccessToken(mAppToken.getAppId(), mAppToken.getAppToken());
+                    })
+                    .map(response -> {
+                        writeAccessToken(response.getData());
+                        mLock.unlock();
+                        return mAccessToken;
+                    });
+        }
+        mLock.unlock();
+        return Observable.just(mAccessToken);
     }
 
     /**
@@ -236,11 +251,26 @@ public class AppOAuth {
      * @return
      */
     private Observable<AccessToken> refreshAccessToken() {
-        return mOAuthApi.refreshAccessToken(mAppToken.getAppId(), mAppToken.getAppToken(), mAccessToken.getRefreshToken())
-                .map(response -> {
-                    writeAccessToken(response.getData());
-                    return mAccessToken;
-                });
+        mLock.lock();
+        if (TextUtils.isEmpty(mAccessToken.getAccessToken())) {
+            return mOAuthApi.refreshAccessToken(mAppToken.getAppId(), mAppToken.getAppToken(), mAccessToken.getRefreshToken())
+                    .flatMap(response -> {
+                        switch (response.getCode()) {
+                            case 14002://AppId、AppToken无效
+                            case 14005://RefreshToken无效
+                            case 14009://RefreshToken过期
+                                clearAppToken();
+                                clearAccessToken();
+                                return getAccessToken();
+                            default:
+                                writeAccessToken(response.getData());
+                                mLock.unlock();
+                                return Observable.just(mAccessToken);
+                        }
+                    });
+        }
+        mLock.unlock();
+        return Observable.just(mAccessToken);
     }
 
     /**

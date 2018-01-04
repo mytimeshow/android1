@@ -7,6 +7,8 @@ import android.text.TextUtils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import cn.czyugang.tcg.client.api.OAuthApi;
 import cn.czyugang.tcg.client.entity.Progress;
@@ -34,6 +36,7 @@ public class UserOAuth {
     private static UserOAuth mInstance;
     private AppOAuth mAppOAuth = AppOAuth.getInstance();
     private OAuthApi mOAuthApi = new OAuthApi();
+    private Lock mLock = new ReentrantLock();
 
     private SharedPreferences mSharedPreferences;
     private UserToken mUserToken;
@@ -73,16 +76,16 @@ public class UserOAuth {
     *   判断是否已经登录，未登录将跳转至登录界面
     *
     * */
-    public static boolean judgeOrLogin(){
-        if (mInstance.isLogin()){
+    public static boolean judgeOrLogin() {
+        if (mInstance.isLogin()) {
             return true;
-        }else {
+        } else {
             MyApplication.getContext().startActivity(new Intent(MyApplication.getContext(), LoginActivity.class));
             return false;
         }
     }
 
-    public static boolean judgeHadLogin(){
+    public static boolean judgeHadLogin() {
         return mInstance.isLogin;
     }
 
@@ -104,6 +107,7 @@ public class UserOAuth {
                                 logout();
                                 throw new LoginExpiredException();
                             case 14013://userToken过期
+                                mUserToken.setUserToken(null);
                                 return refreshUserToken()
                                         .flatMap(userToken -> get(url, params));
                             default:
@@ -135,6 +139,7 @@ public class UserOAuth {
                                 logout();
                                 throw new LoginExpiredException();
                             case 14013://userToken过期
+                                mUserToken.setUserToken(null);
                                 return refreshUserToken()
                                         .flatMap(userToken -> post(url, params));
                             default:
@@ -169,6 +174,7 @@ public class UserOAuth {
                                 logout();
                                 throw new LoginExpiredException();
                             case 14013://userToken过期
+                                mUserToken.setUserToken(null);
                                 return refreshUserToken()
                                         .flatMap(userToken -> upload(url, params));
                             default:
@@ -257,30 +263,31 @@ public class UserOAuth {
     }
 
 
-    public static String getUserId(){
-		UserInfo userInfo=getInstance().getUserInfo();
-        if (userInfo==null) return "";
-        UserBase userBase=userInfo.getUserBase();
-        if (userBase==null) return "";
+    public static String getUserId() {
+        UserInfo userInfo = getInstance().getUserInfo();
+        if (userInfo == null) return "";
+        UserBase userBase = userInfo.getUserBase();
+        if (userBase == null) return "";
         return userBase.getId();
     }
 
 
-    public static String getUserNickname(){
-        UserInfo userInfo=getInstance().getUserInfo();
-        if (userInfo==null) return "";
-        UserBase userBase=userInfo.getUserBase();
-        if (userBase==null) return "";
+    public static String getUserNickname() {
+        UserInfo userInfo = getInstance().getUserInfo();
+        if (userInfo == null) return "";
+        UserBase userBase = userInfo.getUserBase();
+        if (userBase == null) return "";
         return userBase.getNickname();
     }
 
-    public static String getUserPhotoId(){
-        UserInfo userInfo=getInstance().getUserInfo();
-        if (userInfo==null) return "";
-        UserDetail userDetail=userInfo.getUserDetail();
-        if (userDetail==null) return "";
+    public static String getUserPhotoId() {
+        UserInfo userInfo = getInstance().getUserInfo();
+        if (userInfo == null) return "";
+        UserDetail userDetail = userInfo.getUserDetail();
+        if (userDetail == null) return "";
         return userDetail.getFileId();
     }
+
     /**
      * 生成认证接口都要传入的headers
      *
@@ -303,11 +310,24 @@ public class UserOAuth {
      * @return
      */
     private Observable<UserToken> refreshUserToken() {
-        return mOAuthApi.refreshUserToken(mUserToken.getUserId(), mUserToken.getUserRefreshToken())
-                .map(response -> {
-                    writeUserToken(response.getData());
-                    return mUserToken;
-                });
+        mLock.lock();
+        if (TextUtils.isEmpty(mUserToken.getUserToken())) {
+            return mOAuthApi.refreshUserToken(mUserToken.getUserId(), mUserToken.getUserRefreshToken())
+                    .flatMap(response -> {
+                        switch (response.getCode()) {
+                            case 14014://RefreshToken过期
+                            case 14015://RefreshToken无效
+                                logout();
+                                throw new LoginExpiredException();
+                            default:
+                                writeUserToken(response.getData());
+                                mLock.unlock();
+                                return Observable.just(mUserToken);
+                        }
+                    });
+        }
+        mLock.unlock();
+        return Observable.just(mUserToken);
     }
 
     /**
