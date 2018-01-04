@@ -255,10 +255,18 @@ public class ScoreHistoryActivity extends BaseActivity {
             }
 
             holder.time.setText(data.getTime);
-            holder.name.setText(RichText.newRichText(data.name)
-                    .append(data.tip.equals("") ? "" : "\n")
-                    .appendSpColorRes(data.tip, R.dimen.sp_12, R.color.text_gray)
-                    .build());
+            if(data.name==null){
+                holder.name.setText(RichText.newRichText("dd")
+                        .append(data.tip.equals("") ? "" : "\n")
+                        .appendSpColorRes(data.tip, R.dimen.sp_12, R.color.text_gray)
+                        .build());
+            }else {
+                holder.name.setText(RichText.newRichText(data.name)
+                        .append(data.tip.equals("") ? "" : "\n")
+                        .appendSpColorRes(data.tip, R.dimen.sp_12, R.color.text_gray)
+                        .build());
+            }
+
             holder.score.setText(data.getScoreStr());
             holder.score.setTextColor(data.isValid ?
                     ResUtil.getColor(R.color.main_red) : ResUtil.getColor(R.color.text_gray));
@@ -307,6 +315,7 @@ public class ScoreHistoryActivity extends BaseActivity {
                             Log.e(TAG, "onNext: "+type );
                             getSignName(response.getValues(), "wayDict");
                             getSignName(response.getValues(), "businessDict");
+                            getSignName(response.getValues(), "typeDict");
                             //兼并跨越年份的积分
                             if((months==01 ||months==12  || months==11)&& isDoThis2){
                                 isDoThis1=false;
@@ -520,6 +529,7 @@ public class ScoreHistoryActivity extends BaseActivity {
             //  Log.e(TAG, "getSignName: "+list.optJSONObject(i).optString("id") );
             scoreType.put(list.optJSONObject(i).optString("id"), list.optJSONObject(i).optString("name"));
         }
+        scoreType.put("SIGN_CONTI","连续签到积分");
         // Log.e(TAG, "getSignName: isnull"+scoreType.size()  );
         return "";
     }

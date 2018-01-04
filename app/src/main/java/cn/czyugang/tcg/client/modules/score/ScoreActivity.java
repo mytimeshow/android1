@@ -99,14 +99,26 @@ public class ScoreActivity extends BaseActivity {
     }
     //用户签到后，同步数据到服务器
     private void asynSignDays() {
-        if(!isSignToday){
-            postData("SIGN",true);
+      /*  if(Integer.parseInt(signedDay)>1){
+            if(!isSignToday){
+                postData("SIGN_CONTINUOUSLY",true);
 
 
-        }else {
-            showToast("你已经签到过了");
+            }else {
+                showToast("你已经签到过了");
 
-        }
+            }
+        }else {*/
+            if(!isSignToday){
+                postData("SIGN",true);
+
+
+            }else {
+                showToast("你已经签到过了");
+
+            }
+      //  }
+
 
     }
 

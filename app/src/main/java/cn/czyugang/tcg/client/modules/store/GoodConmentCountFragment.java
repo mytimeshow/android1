@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import butterknife.BindView;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseFragment;
 
@@ -16,7 +15,7 @@ import cn.czyugang.tcg.client.base.BaseFragment;
 
 public class GoodConmentCountFragment extends BaseFragment {
     private int count=0;
-    @BindView(R.id.fragment_good_descript)
+
     TextView descript;
     public static GoodConmentCountFragment newInstance() {
         GoodConmentCountFragment fragment = new GoodConmentCountFragment();
@@ -31,14 +30,14 @@ public class GoodConmentCountFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_good_description, container, false);
-
+        descript=rootView.findViewById(R.id.fragment_good_descript);
         return rootView;
     }
 
     @Override
     public void setText(String text) {
         if(text!=null){
-            //descript.setText(text);
+            descript.setText(text);
         }else {
             descript.setText("");
         }

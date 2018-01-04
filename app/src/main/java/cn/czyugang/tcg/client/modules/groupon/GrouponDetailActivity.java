@@ -183,7 +183,7 @@ public class GrouponDetailActivity extends BaseActivity {
                     fragments.add(GoodDescriptionFragment.newInstance());
                     fragments.add(GoodConmentCountFragment.newInstance());
                     fragments.get(1).getCommetNum(mGroupDetail.assessmentCount);
-                    fragments.get(1).setText("");
+
                     viewPager.setAdapter(new BaseFragmentAdapter(getSupportFragmentManager(),fragments));
                     tabLayout.setupWithViewPager(viewPager);
                     tabLayout.setTabMode(TabLayout.MODE_FIXED);

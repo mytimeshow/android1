@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/comment_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+     android:paddingLeft="@dimen/dp_10"
+    android:layout_marginRight="@dimen/dp_11"
+    android:layout_marginBottom="@dimen/dp_16"
+    android:layout_marginTop="@dimen/dp_8"
+    android:orientation="vertical"
+    >
+    <!--评论用户-->
+    <RelativeLayout
+        android:layout_gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60">
+        <cn.czyugang.tcg.client.utils.img.ImgView
+            android:id="@+id/comment_user_img"
+            android:layout_width="@dimen/dp_35"
+            android:layout_height="@dimen/dp_35"
+            android:layout_marginRight="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_10"
+            />
+        <LinearLayout
+            android:id="@+id/comment_name_star"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/comment_user_img"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_35">
+            <TextView
+                android:id="@+id/comment_user_name"
+                android:textSize="@dimen/sp_12"
+                android:text="本**明"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_14" />
+            <LinearLayout
+                android:layout_marginTop="@dimen/dp_5"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <cn.czyugang.tcg.client.widget.FiveStarView
+                android:layout_marginRight="@dimen/dp_5"
+                android:id="@+id/comment_five_stars"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_14">
+            </cn.czyugang.tcg.client.widget.FiveStarView>
+                <TextView
+                   android:id="@+id/comment_arrive_time"
+                    android:text="30分钟内送达"
+                    android:textSize="@dimen/sp_12"
+                    android:textColor="#999999"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/comment_date"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:textColor="#999999"
+            android:textSize="@dimen/sp_12"
+            android:text="2016-12-27"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <!--评论内容-->
+    <TextView
+        android:id="@+id/comment_content"
+        android:textColor="#333333"
+        android:textSize="@dimen/sp_14"
+        android:text="this is content"
+         android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <!--img标签-->
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp_10"
+        android:orientation="horizontal"
+        android:id="@+id/comment_img_flag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <cn.czyugang.tcg.client.utils.img.ImgView
+            android:id="@+id/comment_img1"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="@dimen/dp_80"
+            android:layout_marginRight="@dimen/dp_5"
+            />
+        <cn.czyugang.tcg.client.utils.img.ImgView
+            android:id="@+id/comment_img2"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="@dimen/dp_80"
+            android:layout_marginRight="@dimen/dp_5"
+            />
+        <cn.czyugang.tcg.client.utils.img.ImgView
+            android:id="@+id/comment_img3"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="@dimen/dp_80"
+            android:layout_marginRight="@dimen/dp_5"
+            />
+    </LinearLayout>
+    <!--回复-->
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="#f0f0f0"
+        android:orientation="horizontal"
+        android:id="@+id/comment_replay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/conment_reply_content"
+        android:layout_marginLeft="@dimen/dp_8"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:textSize="@dimen/sp_12"
+        android:layout_marginTop="@dimen/dp_8"
+        android:text="回复： 谢谢亲！"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    </LinearLayout>
+<View
+    android:layout_width="match_parent"
+    android:layout_height="2px"></View>
+
+
+</LinearLayout>
