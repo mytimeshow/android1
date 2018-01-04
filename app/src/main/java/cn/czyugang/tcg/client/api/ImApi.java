@@ -43,7 +43,7 @@ public class ImApi {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    //api/auth/v1/bus/message/deleteMessage[可接入-v2]删除消息
+    //api/auth/v1/bus/message/deleteMessage[可接入-v2]删除消息                 9
     public static Observable<Response> deleteNotice(String id) {
         Map<String, Object> params = new HashMap<>();
         params.put("DeleteMessageVO",id);

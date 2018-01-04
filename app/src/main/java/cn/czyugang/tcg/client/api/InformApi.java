@@ -6,6 +6,7 @@ import java.util.Map;
 
 import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.entity.InformColumnResponse;
+import cn.czyugang.tcg.client.entity.InformDetailResponse;
 import cn.czyugang.tcg.client.entity.InformFollowResponse;
 import cn.czyugang.tcg.client.entity.InformResponse;
 import cn.czyugang.tcg.client.entity.MyInformResponse;
@@ -205,13 +206,13 @@ public class InformApi {
     }
 
     //api/auth/v1/info/get [可接入]根据id获取资讯详情
-    public static Observable<Response> getInformDetail(String id){
+    public static Observable<InformDetailResponse> getInformDetail(String id){
         RecordApi.recordFootMarkAuto("INFO",id);
         HashMap<String,Object> map=new HashMap<>();
         map.put("id",id);
         return UserOAuth.getInstance()
                 .get("api/auth/v1/info/get",map)
-                .map(s -> (Response) JsonParse.fromJson(s,Response.class))
+                .map(s -> (InformDetailResponse) JsonParse.fromJson(s,InformDetailResponse.class))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -225,4 +226,5 @@ public class InformApi {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
 }

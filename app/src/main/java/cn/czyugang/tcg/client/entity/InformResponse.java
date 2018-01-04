@@ -214,7 +214,7 @@ public class InformResponse extends Response<List<Inform>> {
             // 发布者粉丝数
             userFansNum=values.optString("fansCountNumber");
             //是否关注作者
-            userIsFollow=values.optString("").equals("YES");
+            userIsFollow=values.optString("isFollow").equals("YES");
             // 个人主页封面
             userCover=values.optString("coverFileId");
 
