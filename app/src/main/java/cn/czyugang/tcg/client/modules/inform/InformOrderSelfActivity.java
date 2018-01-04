@@ -23,6 +23,7 @@ import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.Inform;
 import cn.czyugang.tcg.client.entity.InformResponse;
+import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.modules.store.SearchActivity;
 import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.img.ImgView;
@@ -108,7 +109,8 @@ public class InformOrderSelfActivity extends BaseActivity {
                     userFollowNum.setText(response.userFollowNum);
                     userFansNum.setText(response.userFansNum);
                     isFollow=response.userIsFollow;
-
+                    userIsFollow.setText(response.userIsFollow ? "已关注" : "+关注");
+                    userIsFollow.setBackgroundResource(response.userIsFollow ? R.drawable.bg_rect_cir_grey_ccc : R.drawable.bg_rect_cir_red);
                     if(response.userIdentity.equals("NORMAL")){
                         userSummary.setText("");
                     }else {
@@ -133,65 +135,29 @@ public class InformOrderSelfActivity extends BaseActivity {
 
     @OnClick(R.id.inform_order_isfollow)
     void onFollow(){
-        /*if (!isFollow) {
-            InformApi.toFollowColumn(data.id).subscribe(
-                    new Observer<Response>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-
-                        }
-
-                        @Override
-                        public void onNext(Response response) {
-                            switch (response.getCode()) {
-                                case 200:
-                                    userIsFollow.setText("已关注");
-                                    userIsFollow.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
-
-                            }
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-
-                        @Override
-                        public void onComplete() {
-
-                        }
-                    }
-            );
+        if (!isFollow) {
+            InformApi.toFollowUser(userId).subscribe(new NetObserver<Response>() {
+                @Override
+                public void onNext(Response response) {
+                    super.onNext(response);
+                    if (!ErrorHandler.judge200(response)) return;
+                    userIsFollow.setText("已关注");
+                    userIsFollow.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
+                    isFollow = (isFollow ? false : true);
+                }
+            });
         } else {
-            InformApi.toUnFollowColumn(data.id).subscribe(
-                    new Observer<Response>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-
-                        }
-
-                        @Override
-                        public void onNext(Response response) {
-                            switch (response.getCode()) {
-                                case 200:
-                                    userIsFollow.setText("+关注");
-                                    userIsFollow.setBackgroundResource(R.drawable.bg_rect_cir_red);
-
-                            }
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-
-                        @Override
-                        public void onComplete() {
-
-                        }
-                    }
-            );
-        }*/
+            InformApi.toUnFollowUser(userId).subscribe(new NetObserver<Response>() {
+                @Override
+                public void onNext(Response response) {
+                    super.onNext(response);
+                    if (!ErrorHandler.judge200(response)) return;
+                    userIsFollow.setText("+关注");
+                    userIsFollow.setBackgroundResource(R.drawable.bg_rect_cir_red);
+                    isFollow = (isFollow ? false : true);
+                }
+            });
+        }
     }
 
     @OnClick(R.id.title_back)

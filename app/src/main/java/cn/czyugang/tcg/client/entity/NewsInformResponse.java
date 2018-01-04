@@ -109,8 +109,7 @@ public class NewsInformResponse extends Response<List<Inform>> {
                     String id=jsonObject.optString("id");
                     for (Inform inform:data){
                         if (inform.id.equals(id)){
-                            inform.isThumbs=jsonObject.optBoolean("name");
-
+                            inform.isThumbs=jsonObject.optString("name").equals("YES");
                         }
                     }
                 }
