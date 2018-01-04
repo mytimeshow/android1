@@ -62,7 +62,7 @@ public class ScanGoodsDetailActivity extends BaseActivity {
 
     @OnClick(R.id.good_back)
     public void onBack() {
-        ScanGoodsListActivity.startScanGoodsListActivity();
+        ScanGoodsListActivity.startScanGoodsListActivity("","");
     }
 
     @OnClick(R.id.goods_trolley_img)

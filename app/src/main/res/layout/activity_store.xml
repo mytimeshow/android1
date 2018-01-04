@@ -34,6 +34,8 @@
             android:textColorHint="@color/grey_500"
             android:singleLine="true"
             android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:focusable="false"
             />
 
         <ImageView

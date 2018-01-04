@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseFragment;
-import cn.czyugang.tcg.client.modules.groupon.GroupGoodActivity;
 
 /**
  * @author ruiaa
@@ -33,12 +32,12 @@ public class HomeGoodsFragment extends BaseFragment {
         rootView.findViewById(R.id.homepage_store2).setOnClickListener(v -> StoreActivity.startStoreActivity(getActivity(), "930278266785427456"));
         rootView.findViewById(R.id.homepage_store3).setOnClickListener(v -> StoreActivity.startStoreActivity(getActivity(), "918003175762620416"));
 
-        rootView.findViewById(R.id.homepage_groupon).setOnClickListener(v -> GroupGoodActivity.startGroupGoodActivity("",""));
-
         // rootView.findViewById(R.id.homepage_groupon).setOnClickListener(v -> VideoActivity.startVideoActivity());
 
        // rootView.findViewById(R.id.homepage_groupon).setOnClickListener(v -> VideoActivity.startVideoActivity());
 
+        rootView.findViewById(R.id.homepage_ewmyh).setOnClickListener(v -> GoodDetailActivity.startGoodDetailForQrcodeActivity("924892677336653824","943757002256068608"));
+        rootView.findViewById(R.id.homepage_groupon).setOnClickListener(v -> GoodDetailActivity.startGoodDetailForGroupon("940511454422032384","940878770548682753"));
 
         return rootView;
     }

@@ -84,4 +84,11 @@ public class CollectionActivity extends BaseActivity {
             }
         }
     }
+
+    public void cancelEdit(){
+        title_right.setText("编辑");
+        for(BaseFragment f:fragments){
+            ((CollectionFragment)f).showBottom(false);
+        }
+    }
 }

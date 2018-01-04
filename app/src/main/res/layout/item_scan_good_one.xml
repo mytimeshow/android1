@@ -64,7 +64,7 @@
         android:layout_alignBottom="@id/item_progress"
         android:layout_marginLeft="@dimen/dp_8"
         android:layout_toRightOf="@id/item_progress"
-        android:text="已抢 40 件"
+        android:text="已抢 0 件"
         android:textColor="@color/main_red"/>
 
     <TextView
@@ -73,7 +73,7 @@
         android:layout_alignLeft="@id/item_name"
         android:layout_below="@id/item_progress"
         android:layout_marginTop="@dimen/dp_12"
-        android:text="￥99.99"
+        android:text="￥0.00"
         android:textColor="@color/main_red"/>
 
     <TextView
@@ -83,7 +83,7 @@
         android:layout_below="@id/item_price"
         android:layout_marginBottom="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_8"
-        android:text="每人限购2件"
+        android:text="每人限购0件"
         android:textColor="@color/main_light_blue"
         />
 
@@ -96,77 +96,14 @@
         android:layout_marginTop="@dimen/dp_16"
         />
 
-    <LinearLayout
+    <cn.czyugang.tcg.client.widget.GoodsPlusMinusView
+        android:id="@+id/item_plus"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_24"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/dp_15"
         android:layout_below="@id/item_progress"
         android:layout_marginTop="@dimen/dp_12"
-        android:background="@drawable/border_rect_grey"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        >
-
-        <View
-            android:id="@+id/item_minus"
-            android:layout_width="@dimen/dp_10"
-            android:layout_height="@dimen/dp_2"
-            android:layout_marginLeft="@dimen/dp_7"
-            android:layout_marginRight="@dimen/dp_7"
-            android:background="@color/grey_350"
-            android:visibility="gone"
-            />
-
-        <View
-            android:id="@+id/item_minus_bar"
-            android:layout_width="@dimen/dp_1"
-            android:layout_height="match_parent"
-            android:background="@color/grey_350"
-            android:visibility="gone"
-            />
-
-        <TextView
-            android:id="@+id/item_num"
-            style="@style/text_14_black"
-            android:minWidth="@dimen/dp_23"
-            android:gravity="center"
-            android:text="0"
-            android:visibility="gone"
-            />
-
-        <View
-            android:id="@+id/item_num_bar"
-            android:layout_width="@dimen/dp_1"
-            android:layout_height="match_parent"
-            android:background="@color/grey_350"
-            android:visibility="gone"
-            />
-
-        <ImageView
-            android:id="@+id/item_plus"
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
-            android:padding="@dimen/dp_7"
-            android:src="@drawable/icon_add"
-            />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/item_dot_num"
-        android:layout_width="@dimen/dp_18"
-        android:layout_height="@dimen/dp_18"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/dp_10"
-        android:layout_below="@id/item_progress"
-        android:layout_marginTop="@dimen/dp_4"
-        android:background="@drawable/dot_red"
-        android:gravity="center"
-        android:text="0"
-        android:textSize="@dimen/sp_14"
-        android:textColor="@color/white"
-        android:visibility="gone"
         />
 
     <include layout="@layout/view_split_bar_light"/>

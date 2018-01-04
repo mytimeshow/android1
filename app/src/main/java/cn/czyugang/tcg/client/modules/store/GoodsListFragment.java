@@ -265,7 +265,7 @@ public class GoodsListFragment extends BaseFragment {
             holder.name.setText(data.title);
             CommonUtil.setTextViewSingleLine(holder.name);
             if (holder.nameSub != null) holder.nameSub.setText(data.subTitle);
-            holder.sale.setText(String.valueOf(data.sales));//已售11份  评价22
+            holder.sale.setText(String.format("已售%d份  评价%d",data.sales,(int)data.score));//已售11份  评价22
             holder.price.setText(data.getShowPriceStr());
             holder.tag.setText(data.getTag());
 

@@ -76,11 +76,13 @@ public class ProgressBgView extends TextView {
 
     public ProgressBgView setLeftColor(int leftColor) {
         this.leftColor = leftColor;
+        invalidate();
         return this;
     }
 
     public ProgressBgView setRightColor(int rightColor) {
         this.rightColor = rightColor;
+        invalidate();
         return this;
     }
 

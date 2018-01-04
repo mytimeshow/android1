@@ -5,9 +5,9 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical"
+    android:paddingBottom="@dimen/dp_2"
     android:paddingLeft="@dimen/dp_10"
     android:paddingTop="@dimen/dp_10"
-    android:paddingBottom="@dimen/dp_2"
     >
 
     <FrameLayout
@@ -35,8 +35,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_30"
-            android:background="@drawable/scan_good_img_bg"
             android:layout_gravity="bottom"
+            android:background="@drawable/scan_good_img_bg"
             />
 
         <cn.czyugang.tcg.client.widget.ProgressBgView
@@ -57,8 +57,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
-            android:layout_marginRight="@dimen/dp_3"
             android:layout_marginBottom="@dimen/dp_4"
+            android:layout_marginRight="@dimen/dp_3"
             android:text="已抢40件"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_10"
@@ -93,75 +93,14 @@
         android:textColor="@color/main_light_blue"
         />
 
-    <LinearLayout
+    <cn.czyugang.tcg.client.widget.GoodsPlusMinusView
+        android:id="@+id/item_plus"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_24"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@id/item_price"
         android:layout_marginRight="@dimen/dp_6"
         android:layout_marginTop="@dimen/dp_6"
-        android:background="@drawable/border_rect_grey"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        >
-
-        <View
-            android:id="@+id/item_minus"
-            android:layout_width="@dimen/dp_10"
-            android:layout_height="@dimen/dp_2"
-            android:layout_marginLeft="@dimen/dp_7"
-            android:layout_marginRight="@dimen/dp_7"
-            android:background="@color/grey_350"
-            android:visibility="gone"
-            />
-
-        <View
-            android:id="@+id/item_minus_bar"
-            android:layout_width="@dimen/dp_1"
-            android:layout_height="match_parent"
-            android:background="@color/grey_350"
-            android:visibility="gone"
-            />
-
-        <TextView
-            android:id="@+id/item_num"
-            style="@style/text_14_black"
-            android:gravity="center"
-            android:minWidth="@dimen/dp_23"
-            android:text="0"
-            android:visibility="gone"
-            />
-
-        <View
-            android:id="@+id/item_num_bar"
-            android:layout_width="@dimen/dp_1"
-            android:layout_height="match_parent"
-            android:background="@color/grey_350"
-            android:visibility="gone"
-            />
-
-        <ImageView
-            android:id="@+id/item_plus"
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
-            android:padding="@dimen/dp_7"
-            android:src="@drawable/icon_add"
-            />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/item_dot_num"
-        android:layout_width="@dimen/dp_18"
-        android:layout_height="@dimen/dp_18"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/item_price"
-        android:background="@drawable/dot_red"
-        android:gravity="center"
-        android:text="0"
-        android:textColor="@color/white"
-        android:textSize="@dimen/sp_14"
-        android:visibility="gone"
         />
 
 </RelativeLayout>

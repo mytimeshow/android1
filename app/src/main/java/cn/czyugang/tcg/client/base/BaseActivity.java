@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
@@ -43,6 +44,21 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
         activityList.add(this);
         context = getApplicationContext();
     }
+
+    public void onBack(){
+        finish();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            onBack();
+            return true;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
+    }
+
 
     @Override
     public void showLoadingDialog() {
