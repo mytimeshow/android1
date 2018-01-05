@@ -10,7 +10,7 @@
         android:layout_height="@dimen/dp_45"
         android:background="@null"
         android:gravity="center|left"
-        android:text="热门评论"
+        android:text="最新评论"
         style="@style/text_14_dark_gray"
         android:paddingLeft="@dimen/dp_20"
         android:paddingRight="@dimen/dp_10"

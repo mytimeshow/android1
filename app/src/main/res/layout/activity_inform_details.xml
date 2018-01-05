@@ -166,34 +166,12 @@
             app:horizontal_spacing="@dimen/dp_10"
             app:vertical_spacing="@dimen/dp_10" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:background="@color/white">
 
-            <TextView
-                style="@style/text_14_dark_gray"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_45"
-                android:background="@null"
-                android:gravity="center|left"
-                android:paddingLeft="@dimen/dp_20"
-                android:paddingRight="@dimen/dp_10"
-                android:text="热门评论" />
-
-            <View
-                android:layout_width="@dimen/dp_4"
-                android:layout_height="@dimen/dp_19"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_13"
-                android:background="@color/main_red" />
-        </RelativeLayout>
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/comment_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/white">
 
         </android.support.v7.widget.RecyclerView>
