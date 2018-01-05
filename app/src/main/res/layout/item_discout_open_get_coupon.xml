@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_180"
+    android:layout_height="@dimen/dp_40"
+    android:background="@color/white">
+
+    <TextView
+        style="@style/text_14_dark_gray"
+        android:layout_gravity="center"
+        android:text="去领券中心看看"/>
+
+</FrameLayout>

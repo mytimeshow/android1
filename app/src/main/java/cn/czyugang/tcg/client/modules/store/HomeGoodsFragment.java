@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseFragment;
+import cn.czyugang.tcg.client.modules.discount.MyCouponActivity;
 
 /**
  * @author ruiaa
@@ -38,6 +39,9 @@ public class HomeGoodsFragment extends BaseFragment {
 
         rootView.findViewById(R.id.homepage_ewmyh).setOnClickListener(v -> GoodDetailActivity.startGoodDetailForQrcodeActivity("924892677336653824","943757002256068608"));
         rootView.findViewById(R.id.homepage_groupon).setOnClickListener(v -> GoodDetailActivity.startGoodDetailForGroupon("940511454422032384","940878770548682753"));
+
+        rootView.findViewById(R.id.homepage_coupon).setOnClickListener(v -> MyCouponActivity.startMyCouponActivity());
+
 
         return rootView;
     }

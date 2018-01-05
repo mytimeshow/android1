@@ -459,6 +459,11 @@
         <activity android:name=".modules.groupon.GrouponGoodsActivity" />
         <activity android:name=".modules.groupon.GrouponDetailActivity" />
 
+        <!--折扣-->
+        <activity android:name=".modules.discount.MyCouponActivity"/>
+        <activity android:name=".modules.discount.GetCouponActivity"/>
+        <activity android:name=".modules.discount.SelectDiscountActivity"/>
+
         <!-- 资讯 -->
         <activity android:name=".modules.inform.InformMySelfActivity" />
         <activity android:name=".modules.inform.InformChangeCoverActivity" />

@@ -3,7 +3,9 @@ package cn.czyugang.tcg.client.api;
 import java.util.HashMap;
 
 import cn.czyugang.tcg.client.common.UserOAuth;
+import cn.czyugang.tcg.client.entity.DiscountsResponse;
 import cn.czyugang.tcg.client.entity.QrcodeActRespose;
+import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.utils.JsonParse;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -94,19 +96,163 @@ public class DiscountApi {
     /*
     *   优惠券
     * */
+    //api/auth/v1/marketing/user/coupon/get/coupon [Doc-v3]领取优惠券  couponId
+    public static Observable<Response<Object>> getCoupon(String couponId) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("couponId ", couponId);
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/marketing/user/coupon/get/coupon", map)
+                .map(s -> (Response<Object>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, Object.class)))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
+
     // api/auth/v1/marketing/user/coupon/pay/platform/coupon/list [Doc-v3]选择平台优惠券（类型：可用，不可用）分页
+    public static Observable<DiscountsResponse> payPlatformCoupon(int page, String accessTime) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("size", 20);
+        if (accessTime != null) {
+            map.put("page", page);
+            map.put("accessTime", accessTime);
+        } else {
+            map.put("page", 1);
+        }
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/marketing/user/coupon/pay/platform/coupon/list", map)
+                .map(s -> (DiscountsResponse) JsonParse.fromJson(s, DiscountsResponse.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
 
     // api/auth/v1/marketing/user/coupon/pay/store/coupon/list  [Doc-v3]选取商家优惠券（类型：可用，不可用）分页
+    public static Observable<DiscountsResponse> payStoreCoupon(int page, String accessTime) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("size", 20);
+        if (accessTime != null) {
+            map.put("page", page);
+            map.put("accessTime", accessTime);
+        } else {
+            map.put("page", 1);
+        }
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/marketing/user/coupon/pay/store/coupon/list", map)
+                .map(s -> (DiscountsResponse) JsonParse.fromJson(s, DiscountsResponse.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
 
     // api/auth/v1/marketing/user/coupon/pay/user/coupon/list      [Doc-v3]用户可使用/不可用优惠券列表(付款时候)分页
+    public static Observable<DiscountsResponse> payCoupon(int page, String accessTime) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("size", 20);
+        if (accessTime != null) {
+            map.put("page", page);
+            map.put("accessTime", accessTime);
+        } else {
+            map.put("page", 1);
+        }
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/marketing/user/coupon/pay/user/coupon/list", map)
+                .map(s -> (DiscountsResponse) JsonParse.fromJson(s, DiscountsResponse.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
 
     // api/auth/v1/marketing/user/coupon/platform/activity/list      [Doc-v3]选择平台活动
+    public static Observable<DiscountsResponse> getPlatformActivity(int page, String accessTime) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("size", 20);
+        if (accessTime != null) {
+            map.put("page", page);
+            map.put("accessTime", accessTime);
+        } else {
+            map.put("page", 1);
+        }
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/marketing/user/coupon/platform/activity/list", map)
+                .map(s -> (DiscountsResponse) JsonParse.fromJson(s, DiscountsResponse.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
 
     // api/auth/v1/marketing/user/coupon/store/activity/list      [Doc-v3]选取店铺活动
+    public static Observable<DiscountsResponse> getStoreActivity(int page, String accessTime) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("size", 20);
+        if (accessTime != null) {
+            map.put("page", page);
+            map.put("accessTime", accessTime);
+        } else {
+            map.put("page", 1);
+        }
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/marketing/user/coupon/store/activity/list", map)
+                .map(s -> (DiscountsResponse) JsonParse.fromJson(s, DiscountsResponse.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
 
-    // api/auth/v1/marketing/user/coupon/store/coupon/list      [Doc-v3]店铺领券列表分页
+    }
+
+    // api/auth/v1/marketing/user/coupon/store/coupon/list      [Doc-v3]店铺领券列表分页 storeId
+    public static Observable<DiscountsResponse> getStoreCoupon(String storeId, int page, String accessTime) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("storeId",storeId);
+        map.put("size", 20);
+        if (accessTime != null) {
+            map.put("page", page);
+            map.put("accessTime", accessTime);
+        } else {
+            map.put("page", 1);
+        }
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/marketing/user/coupon/store/coupon/list", map)
+                .map(s -> (DiscountsResponse) JsonParse.fromJson(s, DiscountsResponse.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
 
     // api/auth/v1/marketing/user/coupon/user/coupon/list      [Doc-v3]我的优惠券（类型：未使用，已使用，已过期）分页
+    //type 优惠券类型（UNUSED-未使用，USED-已使用，EXPIRED-已过期）
+    public static Observable<DiscountsResponse> userCoupon(int page, String accessTime) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("size", 20);
+        if (accessTime != null) {
+            map.put("page", page);
+            map.put("accessTime", accessTime);
+        } else {
+            map.put("page", 1);
+        }
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/marketing/user/coupon/user/coupon/list", map)
+                .map(s -> (DiscountsResponse) JsonParse.fromJson(s, DiscountsResponse.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
 
     // api/auth/v1/marketing/user/coupon/voucher/center      [Doc-v3]领券中心列表分页
+    //type 优惠券类型（平台代金券-PCASH，平台优惠券-PDISCOUNT，店铺优惠券-SDISCOUNT）
+    public static Observable<DiscountsResponse> getCoupon(int page, String accessTime) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("size", 20);
+        if (accessTime != null) {
+            map.put("page", page);
+            map.put("accessTime", accessTime);
+        } else {
+            map.put("page", 1);
+        }
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/marketing/user/coupon/voucher/center", map)
+                .map(s -> (DiscountsResponse) JsonParse.fromJson(s, DiscountsResponse.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
+
 }
