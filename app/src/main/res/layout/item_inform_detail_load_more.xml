@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+    <TextView
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_15"
+        android:background="@drawable/border_rect_red"
+        android:layout_centerHorizontal="true"
+        android:text="查看更多"
+        android:textSize="@dimen/sp_11"
+        android:textColor="@color/main_red"
+        android:gravity="center"/>
+</RelativeLayout>

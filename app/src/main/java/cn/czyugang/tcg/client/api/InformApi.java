@@ -226,5 +226,26 @@ public class InformApi {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+    //api/auth/v1/info/comment/hot/top5[可接入]查看资讯热评前5评论列表
+    public static Observable<InformColumnResponse> getHotComment(String infoId){
+        HashMap<String,Object> map=new HashMap<>();
+        map.put("infoId",infoId);
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/info/comment/hot/top5",map)
+                .map(s -> (InformColumnResponse) JsonParse.fromJson(s,InformColumnResponse.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    //api/auth/v1/info/comment/list[可接入]查看资讯最新评论列表
+    public static Observable<InformColumnResponse> getNewComment(String infoId){
+        HashMap<String,Object> map=new HashMap<>();
+        map.put("infoId",infoId);
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/info/comment/list",map)
+                .map(s -> (InformColumnResponse) JsonParse.fromJson(s,InformColumnResponse.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 
 }

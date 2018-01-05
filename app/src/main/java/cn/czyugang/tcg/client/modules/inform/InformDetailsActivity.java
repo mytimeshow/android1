@@ -1,11 +1,19 @@
 package cn.czyugang.tcg.client.modules.inform;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -15,6 +23,9 @@ import cn.czyugang.tcg.client.api.InformApi;
 import cn.czyugang.tcg.client.api.RecordApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.common.ErrorHandler;
+import cn.czyugang.tcg.client.entity.Inform;
+import cn.czyugang.tcg.client.entity.InformColumnResponse;
+import cn.czyugang.tcg.client.entity.InformComment;
 import cn.czyugang.tcg.client.entity.InformDetail;
 import cn.czyugang.tcg.client.entity.InformDetailResponse;
 import cn.czyugang.tcg.client.entity.Response;
@@ -45,6 +56,8 @@ public class InformDetailsActivity extends BaseActivity {
     TextView thumbNum;
     @BindView(R.id.thumb_up)
     ImageView thumbUp;
+    @BindView(R.id.comment_list)
+    RecyclerView commitList;
 
     private boolean isFollow;
     private boolean isLike;
@@ -68,6 +81,19 @@ public class InformDetailsActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         getInformDetail();
+
+        InformApi.getHotComment(id).subscribe(new NetObserver<InformColumnResponse>() {
+            @Override
+            public void onNext(InformColumnResponse response) {
+                super.onNext(response);
+            }
+        });
+        InformApi.getNewComment(id).subscribe(new NetObserver<InformColumnResponse>() {
+            @Override
+            public void onNext(InformColumnResponse response) {
+                super.onNext(response);
+            }
+        });
     }
 
     private void getInformDetail() {
@@ -90,7 +116,7 @@ public class InformDetailsActivity extends BaseActivity {
                     labelLayout.setVisibility(View.VISIBLE);
                     labelLayout.setTexts(response.data.labelNames.split(","));
                 }
-                likeNum=response.likeCount;
+                likeNum = response.likeCount;
                 commentNum.setText(StringUtil.returnMoreNum(response.commentCount));
                 thumbNum.setText(StringUtil.returnMoreNum(response.likeCount));
 
@@ -137,8 +163,9 @@ public class InformDetailsActivity extends BaseActivity {
             });
         }
     }
+
     @OnClick(R.id.inform_detail_thumbs)
-    public void onThumb(){
+    public void onThumb() {
         if (!isLike) {
             InformApi.toLikeInform(id).subscribe(new BaseActivity.NetObserver<Response>() {
                 @Override
@@ -161,5 +188,72 @@ public class InformDetailsActivity extends BaseActivity {
             });
         }
         isLike = (isLike ? false : true);
+    }
+
+    static class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Holder> {
+        private List<InformComment> list;
+        private Activity activity;
+
+        public CommentAdapter(List<InformComment> list, Activity activity) {
+            this.list = list;
+            this.activity = activity;
+        }
+
+        @Override
+        public CommentAdapter.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new CommentAdapter.Holder(LayoutInflater.from(activity).inflate(
+                    viewType, parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(CommentAdapter.Holder holder, int position) {
+            InformComment data = list.get(position);
+            switch (getItemViewType(position)) {
+
+                case R.layout.item_inform_details_comment_cotent:
+                    break;
+
+                case R.layout.item_inform_details_comment_title:
+                    break;
+
+            }
+
+            holder.itemView.setOnClickListener(v -> {
+                InformDetailsActivity.startInformDetailsActivity(data.id);
+            });
+
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return list.size();
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            int type = R.layout.item_inform_details_comment_cotent;
+
+            if (position == 0) {
+                type = R.layout.item_inform_details_comment_title;
+            } else if (position == list.size() - 1) {
+                type = R.layout.item_inform_detail_load_more;
+            } else if (list.get(position) == null && position < list.size() - 1) {
+                type = R.layout.item_inform_details_comment_title_new;
+            }
+
+            return type;
+        }
+
+        class Holder extends RecyclerView.ViewHolder {
+
+            TextView title;
+
+            public Holder(View itemView) {
+                super(itemView);
+                title = itemView.findViewById(R.id.comment_title);
+
+            }
+        }
     }
 }
