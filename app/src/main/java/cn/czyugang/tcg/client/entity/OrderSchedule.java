@@ -9,15 +9,15 @@ import com.google.gson.annotations.SerializedName;
 
 public class OrderSchedule {
     @SerializedName("arrive")
-    public String arrive;           //配送员/商家已送达
+    public String arrive="";           //配送员/商家已送达
     @SerializedName("arriveServerPoint")
-    public String arriveServerPoint;    //配送员到达服务点
+    public String arriveServerPoint="";    //配送员到达服务点
     @SerializedName("businessOrder")
-    public String businessOrder;        //商家接单
+    public String businessOrder="";        //商家接单
     @SerializedName("close")
-    public String close;        //已关闭(取消订单导致关闭,售后被拒绝导致关闭)  取消时间
+    public String close="";        //已关闭(取消订单导致关闭,售后被拒绝导致关闭)  取消时间
     @SerializedName("confirmReceipt")
-    public String confirmReceipt;   //买家确认收货
+    public String confirmReceipt="";   //买家确认收货
     @SerializedName("create")
     public String create;       //创建订单
     @SerializedName("createTime")
