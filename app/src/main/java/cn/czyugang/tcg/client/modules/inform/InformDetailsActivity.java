@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -26,6 +28,7 @@ import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.Inform;
 import cn.czyugang.tcg.client.entity.InformColumnResponse;
 import cn.czyugang.tcg.client.entity.InformComment;
+import cn.czyugang.tcg.client.entity.InformCommentRespone;
 import cn.czyugang.tcg.client.entity.InformDetail;
 import cn.czyugang.tcg.client.entity.InformDetailResponse;
 import cn.czyugang.tcg.client.entity.Response;
@@ -63,6 +66,10 @@ public class InformDetailsActivity extends BaseActivity {
     private boolean isLike;
     private int likeNum;
     private String userId;
+    private List<InformComment> hotComments = new ArrayList<InformComment>();
+    private List<InformComment> newComments = new ArrayList<InformComment>();
+    private List<InformComment> comments = new ArrayList<InformComment>();
+    private CommentAdapter commentAdapter;
 
     public static void startInformDetailsActivity(String id) {
         Intent intent = new Intent(getTopActivity(), InformDetailsActivity.class);
@@ -81,19 +88,13 @@ public class InformDetailsActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         getInformDetail();
+        loadComment();
 
-        InformApi.getHotComment(id).subscribe(new NetObserver<InformColumnResponse>() {
-            @Override
-            public void onNext(InformColumnResponse response) {
-                super.onNext(response);
-            }
-        });
-        InformApi.getNewComment(id).subscribe(new NetObserver<InformColumnResponse>() {
-            @Override
-            public void onNext(InformColumnResponse response) {
-                super.onNext(response);
-            }
-        });
+        commentAdapter = new CommentAdapter(comments, this);
+        commitList.setLayoutManager(new LinearLayoutManager(this));
+        commitList.setAdapter(commentAdapter);
+
+
     }
 
     private void getInformDetail() {
@@ -122,6 +123,38 @@ public class InformDetailsActivity extends BaseActivity {
 
             }
         });
+    }
+
+    private void loadComment() {
+        InformApi.getHotComment(id).subscribe(new NetObserver<InformCommentRespone>() {
+            @Override
+            public void onNext(InformCommentRespone response) {
+                super.onNext(response);
+                if (!ErrorHandler.judge200(response)) return;
+                response.parse();
+                hotComments.clear();
+                hotComments.add(null);
+                hotComments.addAll(response.data);
+                if (response.data.size() > 5) {
+                    hotComments.add(null);
+                }
+                comments.addAll(hotComments);
+                commentAdapter.notifyDataSetChanged();
+            }
+        });
+        /*InformApi.getNewComment(id).subscribe(new NetObserver<InformCommentRespone>() {
+            @Override
+            public void onNext(InformCommentRespone response) {
+                super.onNext(response);
+                if (!ErrorHandler.judge200(response)) return;
+                response.parse();
+                newComments.clear();
+                newComments.add(null);
+                newComments.addAll(response.data);
+            }
+        });*/
+
+//        comments.addAll(newComments);
     }
 
     @OnClick(R.id.inform_detail_shoucang)
@@ -219,7 +252,7 @@ public class InformDetailsActivity extends BaseActivity {
             }
 
             holder.itemView.setOnClickListener(v -> {
-                InformDetailsActivity.startInformDetailsActivity(data.id);
+//                InformDetailsActivity.startInformDetailsActivity(data.id);
             });
 
 
@@ -232,14 +265,16 @@ public class InformDetailsActivity extends BaseActivity {
 
         @Override
         public int getItemViewType(int position) {
-            int type = R.layout.item_inform_details_comment_cotent;
+            int type;
 
             if (position == 0) {
                 type = R.layout.item_inform_details_comment_title;
-            } else if (position == list.size() - 1) {
+            } else if (position == list.size() - 1 && list.size() > 5) {
                 type = R.layout.item_inform_detail_load_more;
-            } else if (list.get(position) == null && position < list.size() - 1) {
+            } else if (list.get(position) == null && position < list.size() - 1 ) {
                 type = R.layout.item_inform_details_comment_title_new;
+            } else {
+                type = R.layout.item_inform_details_comment_cotent;
             }
 
             return type;

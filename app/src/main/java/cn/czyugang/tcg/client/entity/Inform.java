@@ -103,6 +103,7 @@ public class Inform {
     public String followNum;
     public String userName;
     public String sortName;
+    public String userIdentity;
 
     String bannerImg;
 

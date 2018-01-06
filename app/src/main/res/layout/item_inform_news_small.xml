@@ -33,6 +33,21 @@
             android:layout_alignBottom="@id/inform_news_small_head"
             android:layout_toRightOf="@id/inform_news_small_head"
             android:text="博主名称"/>
+        <TextView
+            android:id="@+id/inform_news_small_identity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_rect_cir_red"
+            android:padding="@dimen/dp_2"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_toRightOf="@id/inform_news_small_name"
+            android:layout_alignBaseline="@id/inform_news_small_name"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="个人认证"
+            android:textSize="@dimen/sp_6"
+            android:textColor="@color/main_red"
+            android:visibility="gone"/>
         <LinearLayout
             android:id="@+id/inform_news_small_commit"
             android:layout_width="@dimen/dp_50"

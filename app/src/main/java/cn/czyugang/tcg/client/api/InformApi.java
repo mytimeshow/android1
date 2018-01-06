@@ -6,6 +6,7 @@ import java.util.Map;
 
 import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.entity.InformColumnResponse;
+import cn.czyugang.tcg.client.entity.InformCommentRespone;
 import cn.czyugang.tcg.client.entity.InformDetailResponse;
 import cn.czyugang.tcg.client.entity.InformFollowResponse;
 import cn.czyugang.tcg.client.entity.InformResponse;
@@ -227,23 +228,23 @@ public class InformApi {
                 .observeOn(AndroidSchedulers.mainThread());
     }
     //api/auth/v1/info/comment/hot/top5[可接入]查看资讯热评前5评论列表
-    public static Observable<InformColumnResponse> getHotComment(String infoId){
+    public static Observable<InformCommentRespone> getHotComment(String infoId){
         HashMap<String,Object> map=new HashMap<>();
         map.put("infoId",infoId);
         return UserOAuth.getInstance()
                 .get("api/auth/v1/info/comment/hot/top5",map)
-                .map(s -> (InformColumnResponse) JsonParse.fromJson(s,InformColumnResponse.class))
+                .map(s -> (InformCommentRespone) JsonParse.fromJson(s,InformCommentRespone.class))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     //api/auth/v1/info/comment/list[可接入]查看资讯最新评论列表
-    public static Observable<InformColumnResponse> getNewComment(String infoId){
+    public static Observable<InformCommentRespone> getNewComment(String infoId){
         HashMap<String,Object> map=new HashMap<>();
         map.put("infoId",infoId);
         return UserOAuth.getInstance()
                 .get("api/auth/v1/info/comment/list",map)
-                .map(s -> (InformColumnResponse) JsonParse.fromJson(s,InformColumnResponse.class))
+                .map(s -> (InformCommentRespone) JsonParse.fromJson(s,InformCommentRespone.class))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

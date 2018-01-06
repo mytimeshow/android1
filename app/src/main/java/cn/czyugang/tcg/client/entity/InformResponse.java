@@ -102,22 +102,22 @@ public class InformResponse extends Response<List<Inform>> {
                 }
 
             }
-/*
+
             // 发布人身份
-            JSONArray identityArray=values.optJSONArray("mediaIdToMediaTypeDict");
+            JSONArray identityArray=values.optJSONArray("mediaIdToMediaTypeDesDict");
             if (identityArray!=null&&identityArray.length()!=0) {
                 for (int i=0,size=identityArray.length();i<size;i++){
                     JSONObject jsonObject=identityArray.optJSONObject(i);
                     String id=jsonObject.optString("id");
                     for (Inform inform:data){
                         if (inform.mediaId.equals(id)){
-                            //inform.name=jsonObject.getString("name");
+                            inform.userIdentity=jsonObject.optString("name");
 
                         }
                     }
                 }
 
-            }*/
+            }
 
             // 评论数
             JSONArray commitNumArray=values.optJSONArray("idToCommentCountDict");

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp_15"
+        android:text="扎心了老铁"
+        android:textSize="@dimen/sp_12"
+        android:textColor="@color/text_gray"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:text="10-05 15:12"
+        android:textSize="@dimen/sp_10"
+        android:textColor="@color/text_light_gray" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="看完评论区，我觉得还是回去看我的“白夜追凶”吧..."
+        android:textSize="@dimen/sp_12"
+        android:textColor="@color/text_gray"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"
+        android:background="@color/text_gray"
+        android:layout_marginTop="@dimen/dp_15"
+        />
+
+
+</LinearLayout>

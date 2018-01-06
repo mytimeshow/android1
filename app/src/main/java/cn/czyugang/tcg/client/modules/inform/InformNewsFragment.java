@@ -78,12 +78,12 @@ public class InformNewsFragment extends BaseFragment {
             accessTime = newsInformResponse.accessTime;
             pagerIndex = newsInformResponse.currentPage + 1;
         }
-        InformApi.getNewsInform(accessTime,pagerIndex).subscribe(new BaseActivity.NetObserver<NewsInformResponse>() {
+        InformApi.getNewsInform(accessTime, pagerIndex).subscribe(new BaseActivity.NetObserver<NewsInformResponse>() {
             @Override
             public void onNext(NewsInformResponse response) {
                 super.onNext(response);
                 if (!ErrorHandler.judge200(response)) return;
-                if (ErrorHandler.isRepeat(newsInformResponse,response)) return;
+                if (ErrorHandler.isRepeat(newsInformResponse, response)) return;
                 response.parse();
                 if (!loadmore) {
                     informs.clear();
@@ -136,13 +136,19 @@ public class InformNewsFragment extends BaseFragment {
                     holder.newsLargeContent.setText(data.title);
                     holder.newsLargeContentName.setText("—— " + data.sortName + " ——");
                     holder.newsLargeCommitNum.setText(StringUtil.returnMoreNum(data.commentNum));
-                    holder.newsLargeImg.id(data.coverThumbImageFileId==null||data.coverThumbImageFileId.equals("")?data.coverImageFileId:data.coverThumbImageFileId);
+                    holder.newsLargeImg.id(data.coverThumbImageFileId == null || data.coverThumbImageFileId.equals("") ? data.coverImageFileId : data.coverThumbImageFileId);
                     holder.newsLargeHead.setOnClickListener(v -> {
                         InformOrderSelfActivity.startInformOrderSelfActivity(data.userId);
                     });
                     holder.newsLargePersonName.setOnClickListener(v -> {
                         InformOrderSelfActivity.startInformOrderSelfActivity(data.userId);
                     });
+                    if (data.userIdentity != null&&!data.userIdentity.equals("") ) {
+                        holder.newsLargeCommitIdentity.setVisibility(View.VISIBLE);
+                        holder.newsLargeCommitIdentity.setText(data.userIdentity);
+                    } else {
+                        holder.newsLargeCommitIdentity.setVisibility(View.GONE);
+                    }
                     break;
 
                 case R.layout.item_inform_news_small:
@@ -150,13 +156,19 @@ public class InformNewsFragment extends BaseFragment {
                     holder.newsSmallName.setText(data.userName);
                     holder.newsSmallContent.setText(data.title);
                     holder.newsSmallCommitNum.setText(StringUtil.returnMoreNum(data.commentNum));
-                    holder.newsSmallImg.id(data.coverThumbImageFileId==null||data.coverThumbImageFileId.equals("")?data.coverImageFileId:data.coverThumbImageFileId);
+                    holder.newsSmallImg.id(data.coverThumbImageFileId == null || data.coverThumbImageFileId.equals("") ? data.coverImageFileId : data.coverThumbImageFileId);
                     holder.newsSmallName.setOnClickListener(v -> {
                         InformOrderSelfActivity.startInformOrderSelfActivity(data.userId);
                     });
                     holder.newsSmallHead.setOnClickListener(v -> {
                         InformOrderSelfActivity.startInformOrderSelfActivity(data.userId);
                     });
+                    if (data.userIdentity != null && !data.userIdentity.equals("")) {
+                        holder.newsSmallCommitIdentity.setVisibility(View.VISIBLE);
+                        holder.newsSmallCommitIdentity.setText(data.userIdentity);
+                    } else {
+                        holder.newsSmallCommitIdentity.setVisibility(View.GONE);
+                    }
                     break;
             }
 
@@ -217,12 +229,14 @@ public class InformNewsFragment extends BaseFragment {
             TextView newsLargeContentName;
             TextView newsLargePersonName;
             TextView newsLargeCommitNum;
+            TextView newsLargeCommitIdentity;
             //资讯小图item
             ImgView newsSmallImg;
             ImgView newsSmallHead;
             TextView newsSmallContent;
             TextView newsSmallName;
             TextView newsSmallCommitNum;
+            TextView newsSmallCommitIdentity;
 
             public Holder(View itemView) {
                 super(itemView);
@@ -235,12 +249,14 @@ public class InformNewsFragment extends BaseFragment {
                 newsLargeContentName = itemView.findViewById(R.id.inform_news_large_cotentname);
                 newsLargePersonName = itemView.findViewById(R.id.inform_news_large_name);
                 newsLargeCommitNum = itemView.findViewById(R.id.inform_news_large_commitNum);
+                newsLargeCommitIdentity = itemView.findViewById(R.id.inform_news_large_identity);
                 //资讯小图item
                 newsSmallImg = itemView.findViewById(R.id.inform_news_small_img);
                 newsSmallHead = itemView.findViewById(R.id.inform_news_small_head);
                 newsSmallContent = itemView.findViewById(R.id.inform_news_small_content);
                 newsSmallName = itemView.findViewById(R.id.inform_news_small_name);
                 newsSmallCommitNum = itemView.findViewById(R.id.inform_news_small_commit_num);
+                newsSmallCommitIdentity = itemView.findViewById(R.id.inform_news_small_identity);
 
             }
         }
