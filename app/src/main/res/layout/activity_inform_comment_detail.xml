@@ -81,36 +81,18 @@
         android:textSize="@dimen/sp_11"
         android:textColor="@color/text_gray"
         android:lineSpacingExtra="@dimen/dp_5"/>
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_inform_comment"
-        android:padding="@dimen/dp_10"
-        android:orientation="vertical">
-        <TextView
+        android:background="@drawable/bg_inform_comment">
+        <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:text="扎心了老铁：蛮好奇有谁看过的，看过的举个爪哩~"
-            android:textSize="@dimen/sp_11"
-            android:lineSpacingExtra="@dimen/dp_5"
-            android:textColor="@color/text_gray"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_5"
-            android:text="干啥呢：就想知道这电影真有网上吹的那么神吗？到底值不值得我去找资源的......"
-            android:textSize="@dimen/sp_11"
-            android:lineSpacingExtra="@dimen/dp_5"
-            android:textColor="@color/text_gray"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_5"
-            android:text="共23条回复"
-            android:textSize="@dimen/sp_11"
-            android:textColor="@color/text_light_gray"/>
-    </LinearLayout>
+            android:layout_marginTop="@dimen/dp_20"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+    </FrameLayout>
 
 
 </LinearLayout>
