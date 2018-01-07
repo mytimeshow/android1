@@ -32,7 +32,7 @@ public class PayApi {
     public static Observable<Response<Object>> prePayOrder(List<String> orderIds) {
         HashMap<String, Object> map = new HashMap<>();
         String str = orderIds.toString();
-        str = str.substring(1, str.length() - 1);
+        str = str.replaceAll(" ","").substring(1, str.length() - 1);
         map.put("orderIds", str);
         return UserOAuth.getInstance()
                 .get("api/auth/v1/finance/user/prePayOrder", map)

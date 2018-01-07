@@ -96,20 +96,8 @@ public class DiscountApi {
     /*
     *   优惠券
     * */
-    //api/auth/v1/marketing/user/coupon/get/coupon [Doc-v3]领取优惠券  couponId
-    public static Observable<Response<Object>> getCoupon(String couponId) {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("couponId ", couponId);
-        return UserOAuth.getInstance()
-                .get("api/auth/v1/marketing/user/coupon/get/coupon", map)
-                .map(s -> (Response<Object>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, Object.class)))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-
-    }
-
     // api/auth/v1/marketing/user/coupon/pay/platform/coupon/list [Doc-v3]选择平台优惠券（类型：可用，不可用）分页
-    public static Observable<DiscountsResponse> payPlatformCoupon(int page, String accessTime) {
+    public static Observable<DiscountsResponse> payPlatformCoupon(boolean useful,int page, String accessTime) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("size", 20);
         if (accessTime != null) {
@@ -127,7 +115,7 @@ public class DiscountApi {
     }
 
     // api/auth/v1/marketing/user/coupon/pay/store/coupon/list  [Doc-v3]选取商家优惠券（类型：可用，不可用）分页
-    public static Observable<DiscountsResponse> payStoreCoupon(int page, String accessTime) {
+    public static Observable<DiscountsResponse> payStoreCoupon(boolean useful,int page, String accessTime) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("size", 20);
         if (accessTime != null) {
@@ -219,8 +207,9 @@ public class DiscountApi {
 
     // api/auth/v1/marketing/user/coupon/user/coupon/list      [Doc-v3]我的优惠券（类型：未使用，已使用，已过期）分页
     //type 优惠券类型（UNUSED-未使用，USED-已使用，EXPIRED-已过期）
-    public static Observable<DiscountsResponse> userCoupon(int page, String accessTime) {
+    public static Observable<DiscountsResponse> myCoupon(int type,int page, String accessTime) {
         HashMap<String, Object> map = new HashMap<>();
+        map.put("type",type==1?"UNUSED":(type==2?"USED":"EXPIRED"));
         map.put("size", 20);
         if (accessTime != null) {
             map.put("page", page);
@@ -238,7 +227,7 @@ public class DiscountApi {
 
     // api/auth/v1/marketing/user/coupon/voucher/center      [Doc-v3]领券中心列表分页
     //type 优惠券类型（平台代金券-PCASH，平台优惠券-PDISCOUNT，店铺优惠券-SDISCOUNT）
-    public static Observable<DiscountsResponse> getCoupon(int page, String accessTime) {
+    public static Observable<DiscountsResponse> gainCoupon(String type,int page, String accessTime) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("size", 20);
         if (accessTime != null) {
@@ -250,6 +239,18 @@ public class DiscountApi {
         return UserOAuth.getInstance()
                 .get("api/auth/v1/marketing/user/coupon/voucher/center", map)
                 .map(s -> (DiscountsResponse) JsonParse.fromJson(s, DiscountsResponse.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
+
+    //api/auth/v1/marketing/user/coupon/get/coupon [Doc-v3]领取优惠券  couponId
+    public static Observable<Response<Object>> gainCoupon(String couponId) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("couponId ", couponId);
+        return UserOAuth.getInstance()
+                .get("api/auth/v1/marketing/user/coupon/get/coupon", map)
+                .map(s -> (Response<Object>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, Object.class)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
 

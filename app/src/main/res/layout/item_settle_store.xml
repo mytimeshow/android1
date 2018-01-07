@@ -147,11 +147,22 @@
 
     </LinearLayout>
 
-    <View
+<!--    <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_10"
-        android:background="@color/bg"/>
+        android:background="@color/bg"/>-->
 
+    <TextView
+        android:id="@+id/confirm_order_discount_goods_limit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:background="@color/main_light_orange"
+        android:textSize="@dimen/dp_12"
+        android:textColor="@color/text_orange"
+        android:text="折扣商品不能与店铺活动优惠同享"
+        />
     <!--店铺活动优惠-->
     <LinearLayout
         android:id="@+id/confirm_order_store_activity"
@@ -173,7 +184,7 @@
         <include layout="@layout/space_h"/>
 
         <TextView
-            android:id="@+id/confirm_order_store_activity_num"
+            android:id="@+id/confirm_order_store_activity_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -189,7 +200,17 @@
             android:layout_marginRight="@dimen/dp_10"
             android:src="@drawable/ic_goto_arrow"/>
     </LinearLayout>
-
+    <TextView
+        android:id="@+id/confirm_order_store_activity_limit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:background="@color/main_light_orange"
+        android:textSize="@dimen/dp_12"
+        android:textColor="@color/text_orange"
+        android:text="此店铺活动优惠不能与折扣商品同享"
+        />
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0.5"
@@ -246,7 +267,17 @@
             android:layout_marginRight="@dimen/dp_10"
             android:src="@drawable/ic_goto_arrow"/>
     </LinearLayout>
-
+    <TextView
+        android:id="@+id/confirm_order_store_coupon_limit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:background="@color/main_light_orange"
+        android:textSize="@dimen/dp_12"
+        android:textColor="@color/text_orange"
+        android:text="此商家优惠券不能与折扣商品同享"
+        />
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0.5"
@@ -289,7 +320,17 @@
             android:layout_marginRight="@dimen/dp_10"
             android:src="@drawable/ic_goto_arrow"/>
     </LinearLayout>
-
+    <TextView
+        android:id="@+id/confirm_order_app_activity_limit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:background="@color/main_light_orange"
+        android:textSize="@dimen/dp_12"
+        android:textColor="@color/text_orange"
+        android:text="此平台活动优惠不能与店铺活动优惠同享"
+        />
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0.5"
@@ -346,7 +387,17 @@
             android:layout_marginRight="@dimen/dp_10"
             android:src="@drawable/ic_goto_arrow"/>
     </LinearLayout>
-
+    <TextView
+        android:id="@+id/confirm_order_app_coupon_limit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:background="@color/main_light_orange"
+        android:textSize="@dimen/dp_12"
+        android:textColor="@color/text_orange"
+        android:text="此平台优惠券不能与商家优惠券同享"
+        />
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0.5"

@@ -86,10 +86,6 @@ public class OrderResponse extends Response<List<Order>> {
         }
     }
 
-    public void merge(OrderResponse newOrderResponse) {
-        if (newOrderResponse != null) data.addAll(newOrderResponse.data);
-    }
-
     public String getStatusStr(String statusType) {
         if (statusMap.containsKey(statusType)) return statusMap.get(statusType);
         return "";

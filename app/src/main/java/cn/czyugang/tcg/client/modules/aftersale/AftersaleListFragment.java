@@ -25,7 +25,6 @@ import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.Aftersale;
 import cn.czyugang.tcg.client.entity.AftersaleRespose;
 import cn.czyugang.tcg.client.utils.CommonUtil;
-import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.widget.RecycleViewDivider;
@@ -108,13 +107,10 @@ public class AftersaleListFragment extends BaseFragment {
             public void onNext(AftersaleRespose response) {
                 super.onNext(response);
                 if (!ErrorHandler.judge200(response)) return;
-                if (response.data == null || response.data.isEmpty()) {
-                    if (loadmore) AppUtil.toast("没有更多了");
-                   // return;
-                }
+                if (loadmore&&ErrorHandler.isRepeat(aftersaleRespose,response)) return;
                 if (!loadmore) aftersaleList.clear();
+                response.parse();
                 aftersaleList.addAll(response.data);
-                aftersaleList.add(new Aftersale());
                 adapter.notifyDataSetChanged();
                 aftersaleRespose = response;
             }

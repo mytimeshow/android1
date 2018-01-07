@@ -1,12 +1,15 @@
 package cn.czyugang.tcg.client.modules.aftersale;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -46,24 +49,8 @@ import cn.czyugang.tcg.client.widget.RecycleViewDivider;
 
 public class RefundActivity extends BaseActivity {
 
-    @BindView(R.id.item_img)
-    ImgView goodsImg;
-    @BindView(R.id.item_name)
-    TextView goodsName;
-    @BindView(R.id.item_spec)
-    TextView goodsSpec;
-    @BindView(R.id.item_labels)
-    LabelLayout labels;
-    @BindView(R.id.item_price)
-    TextView goodsPrice;
-    @BindView(R.id.item_price_origin)
-    TextView goodsPriceOrigin;
-    @BindView(R.id.item_num)
-    TextView goodsNum;
-    @BindView(R.id.item_tag)
-    TextView goodsTag;
-
-
+    @BindView(R.id.refund_goods_list)
+    RecyclerView goodsR;
     @BindView(R.id.title_text)
     TextView title;
     @BindView(R.id.refund_goods_status)
@@ -79,7 +66,7 @@ public class RefundActivity extends BaseActivity {
     @BindView(R.id.refund_upload_img)
     RecyclerView uploadImg;
 
-    private OrderGoods orderGoods;
+    private List<OrderGoods> goodsList;
     private boolean onlyRefund = true;
     private UploadImgAdapter adapter;
 
@@ -88,7 +75,16 @@ public class RefundActivity extends BaseActivity {
     public static void startRefundActivity(boolean onlyRefund, OrderGoods orderGoods) {
         Intent intent = new Intent(getTopActivity(), RefundActivity.class);
         intent.putExtra("onlyRefund", onlyRefund);
-        MyApplication.getInstance().activityTransferData = orderGoods;
+        List<OrderGoods> goodsList=new ArrayList<>();
+        goodsList.add(orderGoods);
+        MyApplication.getInstance().activityTransferData = goodsList;
+        getTopActivity().startActivity(intent);
+    }
+
+    public static void startRefundActivity(boolean onlyRefund, List<OrderGoods> orderGoodsList) {
+        Intent intent = new Intent(getTopActivity(), RefundActivity.class);
+        intent.putExtra("onlyRefund", onlyRefund);
+        MyApplication.getInstance().activityTransferData = orderGoodsList;
         getTopActivity().startActivity(intent);
     }
 
@@ -96,7 +92,7 @@ public class RefundActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         onlyRefund = getIntent().getBooleanExtra("onlyRefund", true);
-        orderGoods = (OrderGoods) MyApplication.getInstance().activityTransferData;
+        goodsList = (List<OrderGoods>) MyApplication.getInstance().activityTransferData;
         MyApplication.getInstance().activityTransferData = null;
 
         setContentView(R.layout.activity_aftersale_refund);
@@ -135,18 +131,38 @@ public class RefundActivity extends BaseActivity {
     }
 
     private void showGoods() {
-        goodsImg.id(orderGoods.picId);
+        GoodsAdapter adapter=new GoodsAdapter(goodsList,this);
+        goodsR.setLayoutManager(new LinearLayoutManager(this));
+        goodsR.setAdapter(adapter);
+        goodsR.setNestedScrollingEnabled(false);
 
-        goodsName.setText(orderGoods.title);
-        goodsSpec.setText(orderGoods.getSpec());
-        labels.setTexts(orderGoods.getLabels());
+        moneyMax.setText(String.format("最多退￥%.2f，含配送费￥%.2f",getPayPrice(),getPayPackagePrice()));
+    }
 
-        goodsPrice.setText(CommonUtil.formatPrice(orderGoods.realPrice));
-        if (orderGoods.unitPrice > orderGoods.realPrice)
-            goodsPriceOrigin.setText(CommonUtil.formatOriginPrice(orderGoods.unitPrice));
-        goodsNum.setText("x" + orderGoods.number);
+    private double getPayPrice(){
+        double d=0;
+        for(OrderGoods orderGoods:goodsList){
+            d+=orderGoods.payPrice;
+        }
+        return d;
+    }
 
-        moneyMax.setText(String.format("最多退￥%.2f，含配送费￥%.2f",orderGoods.payPrice,orderGoods.packagePrice));
+    private double getPayPackagePrice(){
+        double d=0;
+        for(OrderGoods orderGoods:goodsList){
+            d+=orderGoods.packagePrice;
+        }
+        return d;
+    }
+
+    private String getOderGoodsIds(){
+        StringBuilder builder=new StringBuilder();
+        for(OrderGoods orderGoods:goodsList){
+            builder.append(orderGoods.id);
+            builder.append(",");
+        }
+        if (builder.length()>1) builder.deleteCharAt(builder.length()-1);
+        return builder.toString();
     }
 
     @Override
@@ -262,23 +278,84 @@ public class RefundActivity extends BaseActivity {
         HashMap<String,Object> map=new HashMap<>();
         map.put("type",onlyRefund?"REFUND":"RETURN_ALL");
         map.put("actualRefund",refundNum);
-        map.put("refund",orderGoods.payPrice);
+        map.put("refund",getPayPrice());
         map.put("goodsStatus",status);
         map.put("reasonId",reasonId);
         map.put("supplement",explain.getText().toString());
-        map.put("orderId",orderGoods.orderId);
-        map.put("subOrderDetailId",orderGoods.id);
+        map.put("orderId",goodsList.get(0).orderId);
+        map.put("subOrderDetailId",getOderGoodsIds());
         map.put("picIdList",adapter.getUploadImgIds());
         OrderApi.aftersaleRefund(map).subscribe(new NetObserver<Response<Object>>() {
             @Override
             public void onNext(Response<Object> response) {
                 super.onNext(response);
                 if (ErrorHandler.judge200(response)){
-
+                    RefundApplyFinishActivity.startRefundApplyFinishActivity();
                 }
             }
         });
+    }
 
-        RefundApplyFinishActivity.startRefundApplyFinishActivity();
+    static class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.Holder> {
+        private List<OrderGoods> list;
+        private Activity activity;
+        public GoodsAdapter(List<OrderGoods> list, Activity activity) {
+            this.list = list;
+            this.activity = activity;
+        }
+        @Override
+        public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new Holder(LayoutInflater.from(activity).inflate(
+                    viewType,parent,false));
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return R.layout.view_item_good;
+        }
+
+        @Override
+        public int getItemCount() {
+            return list.size();
+        }
+
+        @Override
+        public void onBindViewHolder(Holder holder, int position) {
+            OrderGoods orderGoods=list.get(position);
+
+            holder.goodsImg.id(orderGoods.picId);
+
+            holder.goodsName.setText(orderGoods.title);
+            holder.goodsSpec.setText(orderGoods.getSpec());
+            holder.labels.setTexts(orderGoods.getLabels());
+
+            holder.goodsPrice.setText(CommonUtil.formatPrice(orderGoods.realPrice));
+            if (orderGoods.unitPrice > orderGoods.realPrice)
+                holder.goodsPriceOrigin.setText(CommonUtil.formatOriginPrice(orderGoods.unitPrice));
+            holder.goodsNum.setText("x" + orderGoods.number);
+        }
+
+        class Holder extends RecyclerView.ViewHolder {
+            @BindView(R.id.item_img)
+            ImgView goodsImg;
+            @BindView(R.id.item_name)
+            TextView goodsName;
+            @BindView(R.id.item_spec)
+            TextView goodsSpec;
+            @BindView(R.id.item_labels)
+            LabelLayout labels;
+            @BindView(R.id.item_price)
+            TextView goodsPrice;
+            @BindView(R.id.item_price_origin)
+            TextView goodsPriceOrigin;
+            @BindView(R.id.item_num)
+            TextView goodsNum;
+            @BindView(R.id.item_tag)
+            TextView goodsTag;
+            public Holder(View itemView) {
+                super(itemView);
+                ButterKnife.bind(this,itemView);
+            }
+        }
     }
 }

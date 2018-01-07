@@ -85,6 +85,18 @@
         <include layout="@layout/space_h"/>
 
         <TextView
+            android:id="@+id/item_order_apply_refund"
+            style="@style/button_order_small"
+            android:text="申请退款"
+            />
+
+        <TextView
+            android:id="@+id/item_order_apply_aftersale"
+            style="@style/button_order_small"
+            android:text="申请售后"
+            />
+
+        <TextView
             android:id="@+id/item_order_cancel"
             style="@style/button_order_small"
             android:text="取消订单"

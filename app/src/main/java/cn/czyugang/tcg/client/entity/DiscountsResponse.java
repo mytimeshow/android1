@@ -7,5 +7,9 @@ import java.util.List;
  * @date 2018/1/5
  */
 
-public class DiscountsResponse extends Response<List<Object>> {
+public class DiscountsResponse extends Response<List<Discount>> {
+
+    public void parse(){
+
+    }
 }
