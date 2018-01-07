@@ -326,11 +326,12 @@ public class ReduceProductFragment extends BaseFragment {
        JSONArray jsonArray=products.optJSONArray("groupList");
        for(int i=0,size=jsonArray.length();i<size;i++){
            GroupListBean group=new GroupListBean();
-           for(int j=0;j<4;j++){
+           for(int j=0;j<5;j++){
                group.setCurrentPrice(jsonArray.optJSONObject(i).optDouble("currentPrice"));
                group.setId(jsonArray.optJSONObject(i).optString("id"));
                group.setName(jsonArray.optJSONObject(i).optString("name"));
                group.setRestTime(jsonArray.optJSONObject(i).optInt("restTime"));
+               group.setHeadId(jsonArray.optJSONObject(i).optString("headId"));
            }
            groupListBeans.add(group);
 
@@ -372,6 +373,7 @@ public class ReduceProductFragment extends BaseFragment {
         public void onBindViewHolder(GroupsAdapter.Holder holder, int position) {
              if(list!=null) {
               GroupListBean data = list.get(position);
+             // holder.imgView.id(data.headId);
                holder.headName.setText(data.name);
                holder.currentPrice.setText("当前拼团价 ￥" + data.currentPrice +
                        "\n" + data.restTime / 60 + "小时" + data.restTime % 60 + "分钟" + "后成团");
@@ -387,15 +389,6 @@ public class ReduceProductFragment extends BaseFragment {
 
         @Override
         public int getItemCount() {
-//            if(list==null){
-//                list=new ArrayList<>();
-//                ReduceProduct.GroupListBean bean=new ReduceProduct.GroupListBean();
-//                bean.setCurrentPrice(66);
-//                bean.setId("555555");
-//                bean.setName("lisi");
-//                bean.setRestTime(12);
-//                list.add(bean);
-//            }
             return  list==null ?3:list.size();
         }
 

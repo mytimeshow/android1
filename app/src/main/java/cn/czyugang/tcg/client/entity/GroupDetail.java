@@ -78,7 +78,8 @@ public class GroupDetail {
          * name : string
          * restTime : 0
          */
-
+        @SerializedName("headId")
+        public String headId;
         @SerializedName("currentPrice")
         public double currentPrice;
         @SerializedName("id")
