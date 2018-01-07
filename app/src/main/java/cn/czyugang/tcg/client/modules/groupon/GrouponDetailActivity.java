@@ -174,7 +174,7 @@ public class GrouponDetailActivity extends BaseActivity {
             @Override
             public void onNext(Response<GroupDetail> response) {
                 super.onNext(response);
-                showToast("done");
+                //showToast("done");
                 Log.e(TAG, "onNext: " );
                 if(ErrorHandler.judge200(response)){
                     mGroupDetail=response.getData();
@@ -212,9 +212,6 @@ public class GrouponDetailActivity extends BaseActivity {
                     memberR.setLayoutManager(new LinearLayoutManager(GrouponDetailActivity.this));
                     memberR.setAdapter(adapter);
                     memberR.setNestedScrollingEnabled(false);
-
-
-
 
 
                 }

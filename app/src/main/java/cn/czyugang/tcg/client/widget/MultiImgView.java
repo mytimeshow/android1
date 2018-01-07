@@ -88,6 +88,7 @@ public class MultiImgView extends FrameLayout {
         return this;
     }
 
+
     public MultiImgView setOnClickImg(View.OnClickListener onClickImg){
         onClickListener=onClickImg;
         return  this;

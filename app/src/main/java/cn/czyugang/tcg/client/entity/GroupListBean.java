@@ -13,6 +13,11 @@ public class GroupListBean{
      * name : string
      * restTime : 0
      */
+    public String headId;
+
+    public void setHeadId(String headId) {
+        this.headId = headId;
+    }
 
     public double currentPrice;
     public String id;
