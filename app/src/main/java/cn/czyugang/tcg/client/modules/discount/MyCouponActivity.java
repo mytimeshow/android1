@@ -44,8 +44,8 @@ public class MyCouponActivity extends BaseActivity {
 
         List<BaseFragment> fragments = new ArrayList<>();
         fragments.add(MyCouponFragment.newInstance(1));
-        fragments.add(MyCouponFragment.newInstance(3));
         fragments.add(MyCouponFragment.newInstance(2));
+        fragments.add(MyCouponFragment.newInstance(3));
         viewPager.setAdapter(new BaseFragmentAdapter(getSupportFragmentManager(), fragments));
         viewPager.setOffscreenPageLimit(3);
         tabLayout.setupWithViewPager(viewPager);

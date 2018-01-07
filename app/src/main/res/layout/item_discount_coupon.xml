@@ -4,6 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:paddingLeft="@dimen/dp_10"
+    android:paddingRight="@dimen/dp_10"
+    android:paddingBottom="@dimen/dp_8"
+    android:paddingTop="@dimen/dp_2"
     >
 
     <RelativeLayout
@@ -20,14 +24,14 @@
             android:gravity="center"
             />
 
-        <ImageView
+        <View
             android:id="@+id/item_price_bg_left"
             android:layout_width="@dimen/dp_5"
             android:layout_height="match_parent"
             android:background="@color/main_red"
             />
 
-        <ImageView
+        <View
             android:id="@+id/item_price_bg"
             android:layout_width="@dimen/dp_110"
             android:layout_height="match_parent"
@@ -55,7 +59,7 @@
             android:layout_height="@dimen/dp_30"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@id/item_price"
-            android:drawableRight="@drawable/icon_arrow_up_circle"
+            android:drawableRight="@drawable/icon_arrow_down_circle"
             android:gravity="center_vertical"
             android:paddingRight="@dimen/dp_10"
             android:text="详细信息"

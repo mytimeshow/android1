@@ -25,10 +25,12 @@ import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.api.StoreApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.common.ErrorHandler;
+import cn.czyugang.tcg.client.entity.Discount;
 import cn.czyugang.tcg.client.entity.OrderPreSettleResponse;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.entity.Store;
 import cn.czyugang.tcg.client.entity.TrolleyGoods;
+import cn.czyugang.tcg.client.modules.discount.SelectDiscountActivity;
 import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.app.AppUtil;
@@ -46,8 +48,8 @@ public class ConfirmOrderActivity extends BaseActivity {
     private static final int REQUEST_CODE_DELIVERY = 2;
     private static final int REQUEST_CODE_STORE_ACTIVITY = 3;
     private static final int REQUEST_CODE_STORE_COUPON = 4;
-    private static final int REQUEST_CODE_APP_ACTIVITY = 5;
-    private static final int REQUEST_CODE_APP_COUPON = 6;
+    private static final int REQUEST_CODE_PLATFORM_ACTIVITY = 5;
+    private static final int REQUEST_CODE_PLATFORM_COUPON = 6;
 
     @BindView(R.id.confirm_order_scroll)
     NestedScrollView scrollView;
@@ -95,9 +97,9 @@ public class ConfirmOrderActivity extends BaseActivity {
     public static void startConfirmOrderActivity(List<String> shoppingCartIds) {
         Intent intent = new Intent(getTopActivity(), ConfirmOrderActivity.class);
         String str = shoppingCartIds.toString();
-        str=str.replaceAll(" ", "");
+        str = str.replaceAll(" ", "");
         if (str.length() <= 2) return;
-        intent.putExtra("shoppingCartIds", str.substring(1,str.length()-1));
+        intent.putExtra("shoppingCartIds", str.substring(1, str.length() - 1));
         getTopActivity().startActivity(intent);
     }
 
@@ -199,8 +201,8 @@ public class ConfirmOrderActivity extends BaseActivity {
 
     @OnClick(R.id.confirm_order_commit)
     public void onCommit() {
-        if (preSettleResponse==null) return;
-        if (preSettleResponse.address==null||preSettleResponse.address.id==null){
+        if (preSettleResponse == null) return;
+        if (preSettleResponse.address == null || preSettleResponse.address.id == null) {
             AppUtil.toast("请先选择收货地址");
             return;
         }
@@ -252,7 +254,7 @@ public class ConfirmOrderActivity extends BaseActivity {
             //是否在配送范围
             holder.addressDisable.setVisibility(storeMoreInfo.isInDeliveryRange ? View.GONE : View.VISIBLE);
 
-            LogRui.i("onBindViewHolder####",storeMoreInfo.selectedDeliveryWay);
+            LogRui.i("onBindViewHolder####", storeMoreInfo.selectedDeliveryWay);
             //配送方式
             if (preSettleResponse.data.size() > 1) {
                 deliveryL.setVisibility(View.GONE);
@@ -273,6 +275,16 @@ public class ConfirmOrderActivity extends BaseActivity {
             holder.goodsNum.setOnClickListener(v -> OrderGoodsListActivity.startOrderGoodsListActivity(storeMoreInfo.trolleyGoodsList));
 
             storeMoreInfo.bindImgAdapter(ConfirmOrderActivity.this, holder.goodsR);
+
+            //优惠券
+            holder.storeActivity.setOnClickListener(v ->
+                    SelectDiscountActivity.startSelectDiscountActivity(Discount.TYPE_STORE_ACTIVITY, store.id));
+            holder.storeCoupon.setOnClickListener(v ->
+                    SelectDiscountActivity.startSelectDiscountActivity(Discount.TYPE_STORE_COUPON, store.id));
+            holder.platformActivity.setOnClickListener(v ->
+                    SelectDiscountActivity.startSelectDiscountActivity(Discount.TYPE_PLATFORM_ACTIVITY, store.id));
+            holder.platformCoupon.setOnClickListener(v ->
+                    SelectDiscountActivity.startSelectDiscountActivity(Discount.TYPE_PLATFORM_COUPON, store.id));
 
 /*            holder.orderCalculate.addItem("减", "满1减20", "-￥ 1.0");
             holder.orderCalculate.addItem("减", "满1减20", "-￥ 2.0");
@@ -322,18 +334,42 @@ public class ConfirmOrderActivity extends BaseActivity {
             View deliveryL;
             @BindView(R.id.confirm_order_delivery)
             TextView delivery;
-            @BindView(R.id.confirm_order_store_activity_num)
-            TextView storeActivityNum;
+
+            @BindView(R.id.confirm_order_discount_goods_limit)
+            TextView limitDiscountGoods;
+            @BindView(R.id.confirm_order_store_activity_limit)
+            TextView limitStoreActivity;
+            @BindView(R.id.confirm_order_store_coupon_limit)
+            TextView limitStoreCoupon;
+            @BindView(R.id.confirm_order_app_activity_limit)
+            TextView limitPlatformActivity;
+            @BindView(R.id.confirm_order_app_coupon_limit)
+            TextView limitPlatformCoupon;
+            //店铺活动优惠
+            @BindView(R.id.confirm_order_store_activity)
+            View storeActivity;
+            @BindView(R.id.confirm_order_store_activity_name)
+            TextView storeActivityName;
+            //商家优惠券
+            @BindView(R.id.confirm_order_store_coupon)
+            View storeCoupon;
             @BindView(R.id.confirm_order_store_coupon_num)
-            TextView couponNum;
+            TextView storeCouponNum;
             @BindView(R.id.confirm_order_store_coupon_name)
-            TextView couponName;
+            TextView storeCouponName;
+            //平台活动优惠
+            @BindView(R.id.confirm_order_app_activity)
+            View platformActivity;
             @BindView(R.id.confirm_order_app_activity_name)
-            TextView appActivityName;
+            TextView platformActivityName;
+            //平台优惠券
+            @BindView(R.id.confirm_order_app_coupon)
+            View platformCoupon;
             @BindView(R.id.confirm_order_app_coupon_num)
-            TextView appCouponNum;
+            TextView platformCouponNum;
             @BindView(R.id.confirm_order_app_coupon_name)
-            TextView appCouponName;
+            TextView platformCouponName;
+
             @BindView(R.id.confirm_order_calculate)
             CalculateOrderView orderCalculate;
             @BindView(R.id.confirm_order_message)

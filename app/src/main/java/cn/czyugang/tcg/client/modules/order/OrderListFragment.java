@@ -29,6 +29,7 @@ import cn.czyugang.tcg.client.entity.Order;
 import cn.czyugang.tcg.client.entity.OrderGoods;
 import cn.czyugang.tcg.client.entity.OrderResponse;
 import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.modules.aftersale.RefundActivity;
 import cn.czyugang.tcg.client.modules.store.StoreActivity;
 import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.LogRui;
@@ -61,6 +62,7 @@ public class OrderListFragment extends BaseFragment {
     private MyOrderActivity myOrderActivity;
     private OrderListAdapter adapter;
     private OrderResponse orderResponse = null;
+    private List<Order> orderList = new ArrayList<>();
     private RefreshLoadHelper refreshLoadHelper;
 
     public static OrderListFragment newInstance(int type) {
@@ -95,9 +97,9 @@ public class OrderListFragment extends BaseFragment {
             adapter.setShowSelectButton(true);
         }
 
-        refreshLoadHelper=new RefreshLoadHelper(getActivity()).build(orderR);
-        refreshLoadHelper.swipeToLoadLayout.setOnLoadMoreListener(()->getOrders(true));
-        refreshLoadHelper.swipeToLoadLayout.setOnRefreshListener(()->getOrders(false));
+        refreshLoadHelper = new RefreshLoadHelper(getActivity()).build(orderR);
+        refreshLoadHelper.swipeToLoadLayout.setOnLoadMoreListener(() -> getOrders(true));
+        refreshLoadHelper.swipeToLoadLayout.setOnRefreshListener(() -> getOrders(false));
 
         registerOnDeleteOrder();
         getOrders(false);
@@ -142,13 +144,13 @@ public class OrderListFragment extends BaseFragment {
             @Override
             public void onNext(OrderResponse response) {
                 super.onNext(response);
+                if (!ErrorHandler.judge200(response)) return;
+                if (loadMore && ErrorHandler.isRepeat(orderResponse, response)) return;
                 response.parse();
-                if (loadMore && orderResponse != null) {
-                    orderResponse.merge(response);
-                } else {
-                    orderResponse = response;
-                }
+                if (!loadMore) orderList.clear();
+                orderList.addAll(response.data);
                 adapter.notifyDataSetChanged();
+                orderResponse = response;
             }
 
             @Override
@@ -191,9 +193,8 @@ public class OrderListFragment extends BaseFragment {
     * */
     @OnClick(R.id.order_list_delete)
     public void onDeleteOrders() {
-        if (orderResponse == null) return;
         ArrayList<String> deleteOrderIds = new ArrayList<>();
-        Iterator<Order> iterator = orderResponse.data.iterator();
+        Iterator<Order> iterator = orderList.iterator();
         while (iterator.hasNext()) {
             Order order = iterator.next();
             if (order.selected) {
@@ -222,7 +223,7 @@ public class OrderListFragment extends BaseFragment {
 
     private void deleteOrder(Order order) {
         if (order == null) return;
-        orderResponse.data.remove(order);
+        orderList.remove(order);
         adapter.notifyDataSetChanged();
 
         List<String> list = new ArrayList<>();
@@ -256,8 +257,7 @@ public class OrderListFragment extends BaseFragment {
 
     private void removeOrderInResponse(List<String> orderIds) {
         if (orderIds == null || orderIds.isEmpty()) return;
-        if (orderResponse == null) return;
-        Iterator<Order> iterator = orderResponse.data.iterator();
+        Iterator<Order> iterator = orderList.iterator();
         boolean hadChange = false;
         while (iterator.hasNext()) {
             Order order = iterator.next();
@@ -273,7 +273,8 @@ public class OrderListFragment extends BaseFragment {
     *   再次购买
     * */
     private void buyAgain(Order order) {
-
+        if (order.storeId != null && !order.storeId.isEmpty())
+            StoreActivity.startStoreActivity(order.storeId);
     }
 
     /*
@@ -298,6 +299,10 @@ public class OrderListFragment extends BaseFragment {
             @Override
             public void onNext(Response<Object> response) {
                 super.onNext(response);
+                if (ErrorHandler.judge200(response)) {
+                    order.status = "CLOSE";
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -315,6 +320,25 @@ public class OrderListFragment extends BaseFragment {
         PayOrderActivity.startPayOrderActivity(order.id);
     }
 
+
+    /*
+    *   合并付款
+    * */
+    @OnClick(R.id.order_list_pay)
+    public void onPayOrder() {
+        StringBuilder builder = new StringBuilder();
+        for (Order order : orderList) {
+            if (order.selected) {
+                builder.append(order.id);
+                builder.append(",");
+            }
+        }
+        if (builder.length() > 1) {
+            builder.deleteCharAt(builder.length() - 1);
+            PayOrderActivity.startPayOrderActivity(builder.toString());
+        }
+    }
+
     /*
     *   确认收货
     * */
@@ -323,6 +347,10 @@ public class OrderListFragment extends BaseFragment {
             @Override
             public void onNext(Response<Object> response) {
                 super.onNext(response);
+                if (ErrorHandler.judge200(response)) {
+                    order.status = "FINISH";
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -332,10 +360,15 @@ public class OrderListFragment extends BaseFragment {
         });
     }
 
+    /*
+    *   申请退款
+    * */
+    private void applyRefund(Order order){
+        RefundActivity.startRefundActivity(true,order.goodsList);
+    }
 
-    @OnClick(R.id.order_list_pay)
-    public void onPayOrder() {
-
+    private void applyAftersale(Order order){
+        RefundActivity.startRefundActivity(false,order.goodsList);
     }
 
     class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Holder> {
@@ -353,7 +386,7 @@ public class OrderListFragment extends BaseFragment {
 
         @Override
         public int getItemCount() {
-            return orderResponse == null ? 0 : orderResponse.data.size();
+            return orderList.size();
         }
 
         @Override
@@ -364,7 +397,7 @@ public class OrderListFragment extends BaseFragment {
 
         @Override
         public void onBindViewHolder(Holder holder, int position) {
-            Order data = orderResponse.data.get(position);
+            Order data = orderList.get(position);
 
             //选择
             if (showSelectButton) holder.selectButton.setVisibility(View.VISIBLE);
@@ -413,6 +446,8 @@ public class OrderListFragment extends BaseFragment {
             holder.pay.setVisibility(View.GONE);
             holder.buyAgain.setVisibility(View.GONE);
             holder.receipt.setVisibility(View.GONE);
+            holder.applyRefund.setVisibility(View.GONE);
+            holder.applyAftersale.setVisibility(View.GONE);
 
             holder.cancel.setOnClickListener(v -> {
                 cancel(data);
@@ -435,8 +470,11 @@ public class OrderListFragment extends BaseFragment {
             holder.pay.setOnClickListener(v -> {
                 toPay(data);
             });
+            holder.applyRefund.setOnClickListener(v -> applyRefund(data));
+            holder.applyAftersale.setOnClickListener(v -> applyAftersale(data));
 
             //WAIT_PAY:待付款。PAY:已付款。ORDERS已接单。DELIVERY:已发货。REACH:已送达。FINISH:已完成
+            //申请退款，申请售后
             switch (data.status) {
                 case "WAIT_PAY": {
                     //待付款  取消订单 | 删除订单| 去付款
@@ -453,18 +491,21 @@ public class OrderListFragment extends BaseFragment {
                     break;
                 }
                 case "DELIVERY": {
-                    //待收货   再次购买
+                    //待收货   申请退款 / 再次购买
+                    holder.applyRefund.setVisibility(View.VISIBLE);
                     holder.buyAgain.setVisibility(View.VISIBLE);
                     break;
                 }
                 case "REACH": {
-                    //待收货   确认收货 | 再次购买
+                    //待收货   申请售后 / 确认收货 | 再次购买
+                    holder.applyAftersale.setVisibility(View.VISIBLE);
                     holder.receipt.setVisibility(View.VISIBLE);
                     holder.buyAgain.setVisibility(View.VISIBLE);
                     break;
                 }
                 case "FINISH": {
-                    //待评价    删除订单 | 评价 | 再次购买
+                    //待评价    申请售后 / 删除订单 | 评价 | 再次购买
+                    holder.applyAftersale.setVisibility(View.VISIBLE);
                     holder.delete.setVisibility(View.VISIBLE);
                     holder.comment.setVisibility(View.VISIBLE);
                     holder.buyAgain.setVisibility(View.VISIBLE);
@@ -524,6 +565,11 @@ public class OrderListFragment extends BaseFragment {
             View commentMore;
             @BindView(R.id.item_order_receipt)
             View receipt;
+
+            @BindView(R.id.item_order_apply_refund)
+            View applyRefund;
+            @BindView(R.id.item_order_apply_aftersale)
+            View applyAftersale;
 
 
             public Holder(View itemView) {
