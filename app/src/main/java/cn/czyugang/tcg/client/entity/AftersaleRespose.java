@@ -56,6 +56,9 @@ public class AftersaleRespose extends Response<List<Aftersale>> {
 
             //退款状态-values.refundStatusOf{data.id}
 
+            //values.subOrderDetailIdToPicId#id={data.subOrderDetailId} {name-图片id}
+            Map<String,String> productPic=JsonParse.parseMap(values,"subOrderDetailIdToPicId");
+
             for(Aftersale aftersale:data){
                 aftersale.storeName=storeName.get(aftersale.id);
                 aftersale.productName=productName.get(aftersale.id);
@@ -65,6 +68,7 @@ public class AftersaleRespose extends Response<List<Aftersale>> {
                 aftersale.productNumber=productNumber.get(aftersale.id);
                 aftersale.orderStatus=orderStatus.get(aftersale.id);
                 aftersale.refundStatus=values.optString("refundStatusOf"+aftersale.id);
+                aftersale.orderPic=productPic.get(aftersale.subOrderDetailId);
             }
         }catch (Exception e){
             LogRui.e("parse####",e);

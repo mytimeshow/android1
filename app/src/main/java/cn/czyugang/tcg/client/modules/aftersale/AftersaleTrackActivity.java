@@ -22,6 +22,7 @@ import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.common.MyApplication;
+import cn.czyugang.tcg.client.entity.AftersaleDetailResponse;
 import cn.czyugang.tcg.client.modules.common.ImgAdapter;
 import cn.czyugang.tcg.client.utils.CommonUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
@@ -41,14 +42,21 @@ public class AftersaleTrackActivity extends BaseActivity {
     private List<AftersaleTrack> trackList = new ArrayList<>();
     private TrackAdapter adapter;
 
-    public static void startAftersaleTrackActivity() {
+    //售后订单详情的所有信息
+    private AftersaleDetailResponse detailResponse;
+
+    public static void startAftersaleTrackActivity(AftersaleDetailResponse response) {
         Intent intent = new Intent(getTopActivity(), AftersaleTrackActivity.class);
+        MyApplication.getInstance().activityTransferData=response;
         getTopActivity().startActivity(intent);
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        detailResponse=(AftersaleDetailResponse)MyApplication.getInstance().activityTransferData;
+        MyApplication.getInstance().activityTransferData=null;
+
         setContentView(R.layout.activity_aftersale_track);
         ButterKnife.bind(this);
 

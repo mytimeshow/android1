@@ -25,13 +25,13 @@ import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.api.StoreApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseFragment;
+import cn.czyugang.tcg.client.common.ErrorHandler;
 import cn.czyugang.tcg.client.entity.Good;
 import cn.czyugang.tcg.client.entity.GoodCategory;
 import cn.czyugang.tcg.client.entity.GoodsResponse;
 import cn.czyugang.tcg.client.modules.common.dialog.GoodsSpecDialog;
 import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.utils.CommonUtil;
-import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.widget.GoodsPlusMinusView;
@@ -120,14 +120,10 @@ public class GoodsListFragment extends BaseFragment {
             @Override
             public void onNext(GoodsResponse response) {
                 super.onNext(response);
-                if (response.data.isEmpty()) {
-                    if (loadmore) AppUtil.toast("没有更多了");
-                    return;
-                }
+                if (!ErrorHandler.judge200(response)) return;
+                if (loadmore && ErrorHandler.isRepeat(goodsResponse, response)) return;
                 response.parse();
-                if (!loadmore) {
-                    goodList.clear();
-                }
+                if (!loadmore) goodList.clear();
                 goodList.addAll(response.data);
                 adapter.notifyDataSetChanged();
                 if (goodsResponse == null) {
@@ -261,15 +257,24 @@ public class GoodsListFragment extends BaseFragment {
         public void onBindViewHolder(Holder holder, int position) {
             Good data = list.get(position);
 
+            if (!data.isSaleAble()) {
+                holder.imgView.setDisCount("暂停售卖");
+                holder.itemView.setEnabled(false);
+                holder.imgView.setClickable(false);
+            } else {
+                holder.itemView.setEnabled(true);
+                holder.imgView.setClickable(true);
+            }
+
             holder.imgView.id(data.pic);
             holder.name.setText(data.title);
             CommonUtil.setTextViewSingleLine(holder.name);
             if (holder.nameSub != null) holder.nameSub.setText(data.subTitle);
-            holder.sale.setText(String.format("已售%d份  评价%d",data.sales,(int)data.score));//已售11份  评价22
+            holder.sale.setText(String.format("已售%d份  评价%d", data.sales, (int) data.score));//已售11份  评价22
             holder.price.setText(data.getShowPriceStr());
             holder.tag.setText(data.getTag());
 
-            holder.itemView.setOnClickListener(v -> GoodDetailActivity.startGoodDetailActivity(data.id,storeActivity.id));
+            holder.itemView.setOnClickListener(v -> GoodDetailActivity.startGoodDetailActivity(data.id, storeActivity.id));
             holder.itemView.setOnLongClickListener(v -> {
                 MyDialog.collectionBg(activity, v, false, myDialog -> {
                     myDialog.dismiss();

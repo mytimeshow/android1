@@ -59,8 +59,6 @@ public class MyOrderActivity extends BaseActivity {
 
     @OnClick(R.id.title_back)
     public void onBack() {
-        //finish();
-        messageDialog = MessageDialog.newInstance().setMessage("hhh").setNegativeButton("取消").setPositiveButton("确定");
-        messageDialog.show(getSupportFragmentManager(), "ll");
+        finish();
     }
 }
