@@ -159,11 +159,12 @@ public class AftersaleListFragment extends BaseFragment {
         @Override
         public void onBindViewHolder(Holder holder, int position) {
             Aftersale data = list.get(position);
-            holder.itemView.setOnClickListener(v -> AftersaleDetailActivity.startAftersaleDetailActivity());
+            holder.itemView.setOnClickListener(v -> AftersaleDetailActivity.startAftersaleDetailActivity(data.id));
 
             holder.storeName.setText(data.storeName);
             holder.status.setText(data.getStatusStr());
 
+            holder.goodImg.id(data.orderPic);
             holder.goodName.setText(data.productName);
             holder.goodPrice.setText(CommonUtil.formatPrice(data.productRealPrice));
             //holder.goodOriginPrice.setText(CommonUtil.formatOriginPrice(data.productUnitPrice));
@@ -195,6 +196,8 @@ public class AftersaleListFragment extends BaseFragment {
             TextView goodSpec;
             TextView goodNum;
 
+            RecyclerView goodList;
+
             View typeRefund;
             View typeReturnAll;
             TextView type;
@@ -215,6 +218,8 @@ public class AftersaleListFragment extends BaseFragment {
                 goodOriginPrice=itemView.findViewById(R.id.item_price_origin);
                 goodSpec=itemView.findViewById(R.id.item_spec);
                 goodNum=itemView.findViewById(R.id.item_num);
+
+                goodList=itemView.findViewById(R.id.item_list);
 
                 typeRefund=itemView.findViewById(R.id.item_img_refund);
                 typeReturnAll=itemView.findViewById(R.id.item_img_return_goods);

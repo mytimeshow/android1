@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import cn.czyugang.tcg.client.common.UserOAuth;
+import cn.czyugang.tcg.client.entity.AftersaleDetailResponse;
 import cn.czyugang.tcg.client.entity.AftersaleRespose;
 import cn.czyugang.tcg.client.entity.OrderDetailResponse;
 import cn.czyugang.tcg.client.entity.OrderResponse;
@@ -140,6 +141,37 @@ public class OrderApi {
 
     }
 
+    //api/auth/v2/order/after/sale/user/page    [可接入-v2]获取售后订单 status  售后订单状态(空-查询全部,FINISH-已完结,PROCESSING-处理中)
+    public static Observable<AftersaleRespose> aftersaleOrders(String status, String accessTime, int page) {
+        HashMap<String, Object> map = new HashMap<>();
+        if (status != null) map.put("status", status);
+        if (accessTime==null) {
+            map.put("page",1);
+        }else {
+            map.put("accessTime",accessTime);
+            map.put("page",page);
+        }
+        map.put("size",10);
+        return UserOAuth.getInstance()
+                .get("api/auth/v2/order/after/sale/user/page", map)
+                .map(s -> (AftersaleRespose) JsonParse.fromJson(s, AftersaleRespose.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
+
+    //api/auth/v2/order/after/sale/user/get  [可接入-v2]查看售后订单详情(暂缺钱款去向)
+    public static Observable<AftersaleDetailResponse> aftersaleOrder(String id) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("id",id );
+        return UserOAuth.getInstance()
+                .get("api/auth/v2/order/after/sale/user/get", map)
+                .map(s -> (AftersaleDetailResponse) JsonParse.fromJson(s,AftersaleDetailResponse.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
+
     //api/auth/v2/order/after/sale/user/return/revoke   [可接入-v2]撤销退货退款申请
     public static Observable<Response<Object>> aftersaleRevoke(String id) {
         HashMap<String, Object> map = new HashMap<>();
@@ -161,9 +193,9 @@ public class OrderApi {
         * returnSubOrderId*	string  退货退款申请id
         * */
         HashMap<String, Object> map = new HashMap<>();
-        map.put("logisticsMode", logisticsMode);
-        map.put("logisticsName", logisticsName);
-        map.put("logisticsOrder", logisticsOrder);
+        if (logisticsMode!=null&&!logisticsMode.isEmpty())map.put("logisticsMode", logisticsMode);
+        if (logisticsName!=null&&!logisticsName.isEmpty())map.put("logisticsName", logisticsName);
+        if (logisticsOrder!=null&&!logisticsOrder.isEmpty())map.put("logisticsOrder", logisticsOrder);
         map.put("returnSubOrderId", returnSubOrderId);
         return UserOAuth.getInstance()
                 .post("api/auth/v2/order/after/sale/user/return/logistics", map)
@@ -184,36 +216,4 @@ public class OrderApi {
                 .observeOn(AndroidSchedulers.mainThread());
 
     }
-
-    //api/auth/v2/order/after/sale/user/page    [可接入-v2]获取售后订单 status  售后订单状态(空-查询全部,FINISH-已完结,PROCESSING-处理中)
-    public static Observable<AftersaleRespose> aftersaleOrders(String status, String accessTime, int page) {
-        HashMap<String, Object> map = new HashMap<>();
-        if (status != null) map.put("status", status);
-        if (accessTime==null) {
-            map.put("page",1);
-        }else {
-            map.put("accessTime",accessTime);
-            map.put("page",page);
-        }
-        map.put("size",10);
-        return UserOAuth.getInstance()
-                .get("api/auth/v2/order/after/sale/user/page", map)
-                .map(s -> (AftersaleRespose) JsonParse.fromJson(s, AftersaleRespose.class))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-
-    }
-
-    //api/auth/v2/order/after/sale/user/get  [可接入-v2]查看售后订单详情(暂缺钱款去向)
-    public static Observable<Response<Object>> aftersaleOrder(String id) {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("id ",id );
-        return UserOAuth.getInstance()
-                .get("api/auth/v2/order/after/sale/user/page", map)
-                .map(s -> (Response<Object>) JsonParse.fromJson(s, new JsonParse.Type(Response.class, Object.class)))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-
-    }
-
 }

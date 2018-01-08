@@ -34,7 +34,7 @@
             android:layout_weight="1"
             android:gravity="bottom"
             android:paddingBottom="@dimen/dp_2"
-            android:text="订单退款中，商家拒绝退款申请>"
+            android:text=">"
             android:textColor="@color/white"
             />
 
@@ -45,7 +45,7 @@
             android:layout_weight="1"
             android:gravity="top"
             android:paddingTop="@dimen/dp_4"
-            android:text="请在XX:XX:XX内处理，超时未处理将自动撤销申请"
+            android:text="  "
             android:textColor="@color/white"
             />
     </LinearLayout>
@@ -124,6 +124,20 @@
                     style="@style/text_14_dark_gray"
                     android:layout_marginLeft="@dimen/dp_15"
                     android:text="￥99.89"/>
+
+                <include layout="@layout/space_h"/>
+
+                <TextView
+                    android:id="@+id/aftersale_money_flow"
+                    style="@style/text_12_black"
+                    android:text="查看钱款去向"
+                    android:background="@drawable/border_rect_grey"
+                    android:paddingLeft="@dimen/dp_6"
+                    android:paddingRight="@dimen/dp_6"
+                    android:paddingTop="@dimen/dp_2"
+                    android:paddingBottom="@dimen/dp_2"
+                    />
+
             </LinearLayout>
 
             <!--售后原因-->
@@ -182,6 +196,7 @@
 
             <!--退款时间-->
             <LinearLayout
+                android:id="@+id/aftersale_time_refundL"
                 style="@style/item_40_group"
                 android:layout_height="@dimen/dp_28"
                 android:layout_marginTop="@dimen/dp_0.5">
@@ -198,6 +213,7 @@
             </LinearLayout>
             <!--关闭时间-->
             <LinearLayout
+                android:id="@+id/aftersale_time_closeL"
                 style="@style/item_40_group"
                 android:layout_height="@dimen/dp_28"
                 android:layout_marginTop="@dimen/dp_0.5">
@@ -227,17 +243,22 @@
         <TextView
             android:id="@+id/aftersale_revoke"
             style="@style/button_100"
-            android:text="撤销申请"/>
+            android:text="撤销申请"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/aftersale_platform_interpose"
             style="@style/button_100"
-            android:text="平台介入"/>
+            android:text="平台介入"
+            android:visibility="gone"
+            />
 
         <TextView
             android:id="@+id/aftersale_return_goods"
             style="@style/button_100"
-            android:text="退货"/>
+            android:text="退货"
+
+            />
 
     </LinearLayout>
 

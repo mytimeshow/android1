@@ -45,6 +45,11 @@ public class OrderResponse extends Response<List<Order>> {
                 String goodsStr = values.optString("subOrderListOf" + order.id);
                 if (!CommonUtil.responseIsNull(goodsStr)) {
                     order.goodsList = JsonParse.fromJson(goodsStr, new JsonParse.Type(List.class, OrderGoods.class));
+                    if (order.goodsList != null) {
+                        for (OrderGoods g : order.goodsList) {
+                            g.orderId = order.id;
+                        }
+                    }
                 } else {
                     order.goodsList = new ArrayList<>();
                 }

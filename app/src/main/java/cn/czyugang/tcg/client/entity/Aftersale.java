@@ -98,7 +98,7 @@ FINISH:申请退货退款成功
     public String updateTime;
 
     /*
-    *   售后列表
+    *   售后列表  未确定赋值前不要用于售后详情
     * */
     public String storeName = "";
     public String productName = "";
@@ -108,6 +108,8 @@ FINISH:申请退货退款成功
     public double productNumber = 0;
     public String orderStatus = "";
     public String refundStatus = "";
+
+    public String orderPic="";
 
     public String getStatusStr() {
         switch (status) {
@@ -162,6 +164,6 @@ FINISH:申请退货退款成功
             case "SETTLEMENT":return "已结算";
             case "CLOSE":return "已关闭";
         }
-        return "";
+        return refundStatus;
     }
 }
