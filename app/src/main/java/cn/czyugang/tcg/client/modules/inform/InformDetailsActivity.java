@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory;
@@ -36,6 +37,7 @@ import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.utils.string.StringUtil;
+import cn.czyugang.tcg.client.utils.string.TimeUtils;
 import cn.czyugang.tcg.client.widget.LabelLayout;
 
 /**
@@ -107,6 +109,7 @@ public class InformDetailsActivity extends BaseActivity {
                 head.id(response.userFileId);
                 name.setText(response.userName);
                 isFollow = response.isFollow;
+                isLike = response.isLike;
                 userId = response.data.userId;
                 tvIsFollow.setText(response.isFollow ? "已关注" : "+关注");
                 tvIsFollow.setBackgroundResource(response.isFollow ? R.drawable.bg_rect_cir_grey_ccc : R.drawable.bg_rect_cir_red);
@@ -125,7 +128,7 @@ public class InformDetailsActivity extends BaseActivity {
         });
     }
 
-    private void loadComment() {
+    void loadComment() {
         InformApi.getHotComment(id).subscribe(new NetObserver<InformCommentRespone>() {
             @Override
             public void onNext(InformCommentRespone response) {
@@ -135,26 +138,14 @@ public class InformDetailsActivity extends BaseActivity {
                 hotComments.clear();
                 hotComments.add(null);
                 hotComments.addAll(response.data);
-                if (response.data.size() > 5) {
+                if (newComments.isEmpty() && response.data.size() >= 5 ) {
                     hotComments.add(null);
                 }
                 comments.addAll(hotComments);
                 commentAdapter.notifyDataSetChanged();
             }
         });
-        /*InformApi.getNewComment(id).subscribe(new NetObserver<InformCommentRespone>() {
-            @Override
-            public void onNext(InformCommentRespone response) {
-                super.onNext(response);
-                if (!ErrorHandler.judge200(response)) return;
-                response.parse();
-                newComments.clear();
-                newComments.add(null);
-                newComments.addAll(response.data);
-            }
-        });*/
 
-//        comments.addAll(newComments);
     }
 
     @OnClick(R.id.inform_detail_shoucang)
@@ -223,7 +214,7 @@ public class InformDetailsActivity extends BaseActivity {
         isLike = (isLike ? false : true);
     }
 
-    static class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Holder> {
+    class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Holder> {
         private List<InformComment> list;
         private Activity activity;
 
@@ -244,9 +235,67 @@ public class InformDetailsActivity extends BaseActivity {
             switch (getItemViewType(position)) {
 
                 case R.layout.item_inform_details_comment_cotent:
+                    holder.head.id(data.userFileId);
+                    holder.name.setText(data.userName);
+                    holder.time.setText(TimeUtils.getTimeDifferent(data.createTime));
+                    holder.thumbNum.setText(StringUtil.returnMoreNum(data.likeCount));
+                    holder.thumb.setImageResource(data.isThumbs ? R.drawable.icon_dianzan2 : R.drawable.ic_thumb_up);
+                    holder.content.setText(data.content);
+                    holder.thumb.setOnClickListener(v -> {
+                        if (!data.isThumbs) {
+                            InformApi.toLikeComment(data.id).subscribe(new BaseActivity.NetObserver<Response>() {
+                                @Override
+                                public void onNext(Response response) {
+                                    super.onNext(response);
+                                    if (!ErrorHandler.judge200(response)) return;
+                                    holder.thumb.setImageResource(R.drawable.icon_dianzan2);
+                                    holder.thumbNum.setText(StringUtil.returnMoreNum(Integer.valueOf(data.likeCount) + 1));
+                                    data.likeCount+=1;
+                                }
+                            });
+                        } else {
+                            InformApi.toUnLikeComment(data.id).subscribe(new BaseActivity.NetObserver<Response>() {
+                                @Override
+                                public void onNext(Response response) {
+                                    super.onNext(response);
+                                    if (!ErrorHandler.judge200(response)) return;
+                                    holder.thumb.setImageResource(R.drawable.ic_thumb_up);
+                                    holder.thumbNum.setText(StringUtil.returnMoreNum(Integer.valueOf(data.likeCount)-1));
+                                    data.likeCount-=1;
+                                }
+                            });
+                        }
+                        data.isThumbs = (data.isThumbs ? false : true);
+
+                    });
+                    if (data.replyComment == null || data.replyComment.size() == 0) {
+                        holder.reply.setVisibility(View.GONE);
+                    } else {
+                        holder.reply.setVisibility(View.VISIBLE);
+                    }
                     break;
 
                 case R.layout.item_inform_details_comment_title:
+                    break;
+
+                case R.layout.item_inform_detail_load_more:
+                    holder.itemView.setOnClickListener(v -> {
+                        InformApi.getNewComment(id).subscribe(new NetObserver<InformCommentRespone>() {
+                            @Override
+                            public void onNext(InformCommentRespone response) {
+                                super.onNext(response);
+                                if (!ErrorHandler.judge200(response)) return;
+                                response.parse();
+                                newComments.clear();
+                                newComments.add(null);
+                                newComments.addAll(response.data);
+                            }
+                        });
+
+                        comments.addAll(newComments);
+                    });
+                    break;
+                default:
                     break;
 
             }
@@ -269,9 +318,9 @@ public class InformDetailsActivity extends BaseActivity {
 
             if (position == 0) {
                 type = R.layout.item_inform_details_comment_title;
-            } else if (position == list.size() - 1 && list.size() > 5) {
+            } else if (position == list.size() - 1 && list.get(list.size() - 1) == null && list.size() > 5) {
                 type = R.layout.item_inform_detail_load_more;
-            } else if (list.get(position) == null && position < list.size() - 1 ) {
+            } else if (list.get(position) == null && position < list.size() - 1) {
                 type = R.layout.item_inform_details_comment_title_new;
             } else {
                 type = R.layout.item_inform_details_comment_cotent;
@@ -282,13 +331,38 @@ public class InformDetailsActivity extends BaseActivity {
 
         class Holder extends RecyclerView.ViewHolder {
 
-            TextView title;
+            ImgView head;
+            TextView name;
+            TextView time;
+            TextView thumbNum;
+            ImageView thumb;
+            TextView content;
+
+            LinearLayout reply;
+            TextView replyFirst;
+            TextView replySecond;
+            TextView replyNum;
+
+
 
             public Holder(View itemView) {
                 super(itemView);
-                title = itemView.findViewById(R.id.comment_title);
+                head = itemView.findViewById(R.id.inform_details_comment_head);
+                name = itemView.findViewById(R.id.inform_details_comment_name);
+                time = itemView.findViewById(R.id.inform_details_comment_time);
+                thumbNum = itemView.findViewById(R.id.inform_details_comment_thumbs_num);
+                thumb = itemView.findViewById(R.id.inform_details_comment_thumbs);
+                content = itemView.findViewById(R.id.inform_details_comment_content);
+
+                reply = itemView.findViewById(R.id.inform_details_comment_reply);
+                replyFirst = itemView.findViewById(R.id.inform_details_comment_reply_first);
+                replySecond = itemView.findViewById(R.id.inform_details_comment_reply_second);
+                replyNum = itemView.findViewById(R.id.inform_details_comment_reply_num);
+
 
             }
         }
+
+
     }
 }

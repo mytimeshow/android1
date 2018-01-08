@@ -249,4 +249,28 @@ public class InformApi {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    //点赞评论
+    public static Observable<Response> toLikeComment(String id) {
+        Map<String, Object> params = new HashMap<>();
+        //评论id
+        params.put("id", id);
+        return UserOAuth.getInstance()
+                .post("api/auth/v1/info/comment/like", params)
+                .map(s -> (Response) JsonParse.fromJson(s, Response.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    //取消点赞评论
+    public static Observable<Response> toUnLikeComment(String id) {
+        Map<String, Object> params = new HashMap<>();
+        //评论id
+        params.put("id", id);
+        return UserOAuth.getInstance()
+                .post("api/auth/v1/info/comment/cancel/like", params)
+                .map(s -> (Response) JsonParse.fromJson(s, Response.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 }

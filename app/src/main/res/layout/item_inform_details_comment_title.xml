@@ -12,13 +12,12 @@
         android:gravity="center|left"
         android:text="热门评论"
         style="@style/text_14_dark_gray"
-        android:paddingLeft="@dimen/dp_20"
+        android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
         />
     <View
         android:layout_width="@dimen/dp_4"
         android:layout_height="@dimen/dp_19"
-        android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_13"
         android:background="@color/main_red" />

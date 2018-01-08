@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/dp_5"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical">
     <RelativeLayout
@@ -15,7 +15,8 @@
             android:id="@+id/inform_details_comment_head"
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20"
-            android:src="@drawable/ic_logout_avatar"/>
+            android:src="@drawable/ic_logout_avatar"
+            app:round="true"/>
         <TextView
             android:id="@+id/inform_details_comment_name"
             android:layout_width="wrap_content"
@@ -71,6 +72,7 @@
         android:background="@color/grey_350"
         />
     <TextView
+        android:id="@+id/inform_details_comment_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_5"
@@ -82,12 +84,14 @@
         android:textColor="@color/text_gray"
         android:lineSpacingExtra="@dimen/dp_5"/>
     <LinearLayout
+        android:id="@+id/inform_details_comment_reply"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_inform_comment"
         android:padding="@dimen/dp_10"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/inform_details_comment_reply_first"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
@@ -96,6 +100,7 @@
             android:lineSpacingExtra="@dimen/dp_5"
             android:textColor="@color/text_gray"/>
         <TextView
+            android:id="@+id/inform_details_comment_reply_second"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_5"
@@ -104,6 +109,7 @@
             android:lineSpacingExtra="@dimen/dp_5"
             android:textColor="@color/text_gray"/>
         <TextView
+            android:id="@+id/inform_details_comment_reply_num"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_5"
