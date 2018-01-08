@@ -2,6 +2,9 @@ package cn.czyugang.tcg.client.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Administrator on 2018/1/5.
  */
@@ -49,4 +52,5 @@ public class InformComment {
     public String userName;
 
     public boolean isThumbs;
+    public List<InformComment> replyComment=new ArrayList<InformComment>();
 }
