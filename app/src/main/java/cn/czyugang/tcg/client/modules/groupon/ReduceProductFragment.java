@@ -377,11 +377,9 @@ public class ReduceProductFragment extends BaseFragment {
                holder.headName.setText(data.name);
                holder.currentPrice.setText("当前拼团价 ￥" + data.currentPrice +
                        "\n" + data.restTime / 60 + "小时" + data.restTime % 60 + "分钟" + "后成团");
-
                holder.joinGroup.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View view) {
-                      // Toast.makeText(activity, data.id, Toast.LENGTH_SHORT).show();
                    }
                });
            }
@@ -389,7 +387,7 @@ public class ReduceProductFragment extends BaseFragment {
 
         @Override
         public int getItemCount() {
-            return  list==null ?3:list.size();
+            return  list==null ?0:list.size();
         }
 
         class Holder extends RecyclerView.ViewHolder {
@@ -661,7 +659,7 @@ public class ReduceProductFragment extends BaseFragment {
         @Override
         public int getItemCount() {
 
-            return  list==null ?2:list.size();
+            return  list==null ?0:list.size();
         }
 
         class Holder extends RecyclerView.ViewHolder {

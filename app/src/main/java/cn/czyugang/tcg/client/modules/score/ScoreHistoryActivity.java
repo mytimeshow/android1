@@ -524,13 +524,10 @@ public class ScoreHistoryActivity extends BaseActivity {
     //获取积分来源的订单或资讯标题
     public String getSignName(JSONObject object, String type) {
         JSONArray list = object.optJSONArray(type);
-        // Log.e(TAG, "getSignName: isnull" +list.length() );
         for (int i = 0, size = list.length(); i < size; i++) {
-            //  Log.e(TAG, "getSignName: "+list.optJSONObject(i).optString("id") );
             scoreType.put(list.optJSONObject(i).optString("id"), list.optJSONObject(i).optString("name"));
         }
         scoreType.put("SIGN_CONTI","连续签到积分");
-        // Log.e(TAG, "getSignName: isnull"+scoreType.size()  );
         return "";
     }
 

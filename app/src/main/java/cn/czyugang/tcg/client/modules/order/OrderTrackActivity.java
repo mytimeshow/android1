@@ -89,12 +89,15 @@ public class OrderTrackActivity extends BaseActivity {
 
         id=getIntent().getStringExtra("id");
         getOrderDetail("948752830892789760");
+        //948752830892789760
 
     }
 
     @OnClick(R.id.title_back)
     public void onBack() {
-        finish();
+       // GroupGoodActivity.startGroupGoodActivity("","");
+      //  finish();
+        getOrderDetail("950247191308587008");
     }
 
     @OnClick(R.id.order_track_distributorL)
@@ -172,14 +175,14 @@ public class OrderTrackActivity extends BaseActivity {
         imgList.add(R.drawable.icon_merchant);
         imgList.add(R.drawable.icon_merchant);
         imgList.add(R.drawable.icon_money_white);
-        imgList.add(R.drawable.icon_store_white);
+        imgList.add(R.drawable.icon_paid_white);
         imgList.add(R.drawable.icon_money_white);
         imgList.add(R.drawable.icon_money_white);
         imgList.add(R.drawable.icon_money_white);
         imgList.add(R.drawable.icon_money_white);
         imgList.add(R.drawable.icon_money_white);
-        imgList.add(R.drawable.icon_merchant);
-        imgList.add(R.drawable.icon_money_white);
+        imgList.add(R.drawable.icon_paid_white);
+        imgList.add(R.drawable.icon_paid_white);
     }
 
     private void initStatusTitle1(OrderDetailResponse result) {
@@ -221,6 +224,7 @@ public class OrderTrackActivity extends BaseActivity {
         orderschedule.add(orderScheduleO.noUseTicketCode );
         orderschedule.add(orderScheduleO.evaluate);
 
+
     }
 
     //平台配送
@@ -251,7 +255,7 @@ public class OrderTrackActivity extends BaseActivity {
         imgList.add(R.drawable.icon_delivery_man_white);
         imgList.add(R.drawable.icon_delivery_man_white);
         imgList.add(R.drawable.icon_merchant);
-        imgList.add(R.drawable.icon_merchant);
+        imgList.add(R.drawable.icon_paid_white);
 
 
     }
@@ -328,7 +332,7 @@ public class OrderTrackActivity extends BaseActivity {
         imgList.add(R.drawable.icon_store_white);
         imgList.add(R.drawable.icon_store_white);
         imgList.add(R.drawable.icon_merchant);
-        imgList.add(R.drawable.icon_merchant);
+        imgList.add(R.drawable.icon_paid_white);
 
 
     }
@@ -370,7 +374,7 @@ public class OrderTrackActivity extends BaseActivity {
         orderschedule.add(orderScheduleO.evaluate);
     }
 
-    private static class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.Holder> {
+    private  class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.Holder> {
         private List<Track> list;
         private Activity activity;
         private String  type;
@@ -385,6 +389,8 @@ public class OrderTrackActivity extends BaseActivity {
             this.list = list;
             this.activity = activity;
             this.type=type;
+
+
         }
 
         @Override
@@ -418,7 +424,7 @@ public class OrderTrackActivity extends BaseActivity {
                     holder.icon.setBackgroundResource(R.drawable.bg_dot_red);
                 }
             }else if(type.equals("商家配送")){
-                    if(getItemCount()==5 && index==4){
+                    if(getItemCount()==7 && index==6){
                         holder.icon.setBackgroundResource(R.drawable.bg_dot_red);
                     }
             }else {
@@ -427,6 +433,7 @@ public class OrderTrackActivity extends BaseActivity {
                 }
 
             }
+
             holder.icon.setImageResource(data.headImg);
             holder.status.setText(data.statuTitle);
             holder.statusTitle.setText(data.statu);

@@ -20,6 +20,7 @@ import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.entity.Score;
 import cn.czyugang.tcg.client.modules.entry.activity.MainActivity;
+import cn.czyugang.tcg.client.modules.groupon.GroupGoodActivity;
 import cn.czyugang.tcg.client.modules.order.MyOrderActivity;
 
 /**
@@ -99,27 +100,12 @@ public class ScoreActivity extends BaseActivity {
     }
     //用户签到后，同步数据到服务器
     private void asynSignDays() {
-      /*  if(Integer.parseInt(signedDay)>1){
-            if(!isSignToday){
-                postData("SIGN_CONTINUOUSLY",true);
-
-
-            }else {
-                showToast("你已经签到过了");
-
-            }
-        }else {*/
             if(!isSignToday){
                 postData("SIGN",true);
-
-
             }else {
                 showToast("你已经签到过了");
-
+                GroupGoodActivity.startGroupGoodActivity("","");
             }
-      //  }
-
-
     }
 
     @OnClick(R.id.score_continue_sign_action)
@@ -228,7 +214,6 @@ public class ScoreActivity extends BaseActivity {
         });
     }
     public void initData(JSONObject values){
-
         myUserBonus= String.valueOf(values.opt("myUserBonus"));
         signedDay= String.valueOf(values.opt("signedDay"));
         currentOrderBonus= String.valueOf(values.opt("currentOrderBonus"));

@@ -96,7 +96,8 @@ public class GroupDetail {
          * name : string
          * type : string
          */
-
+        @SerializedName("headId")
+        public String headId;
         @SerializedName("createTime")
         public String createTime;
         @SerializedName("name")
