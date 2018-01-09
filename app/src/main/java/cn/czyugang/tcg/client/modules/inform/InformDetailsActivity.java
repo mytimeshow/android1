@@ -289,10 +289,12 @@ public class InformDetailsActivity extends BaseActivity {
                                 newComments.clear();
                                 newComments.add(null);
                                 newComments.addAll(response.data);
+                                comments.addAll(newComments);
+                                commentAdapter.notifyDataSetChanged();
                             }
                         });
 
-                        comments.addAll(newComments);
+
                     });
                     break;
                 default:
