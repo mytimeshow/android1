@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -143,6 +142,7 @@ public class GrouponDetailActivity extends BaseActivity {
         public void onBindViewHolder(Holder holder, int position) {
             if(list!=null && list.size()>0){
                 GroupDetail.HistoryListBean  data = list.get(position);
+                holder.imageView.id(data.headId);
                 holder.textView1.setText(data.name);
                 holder.textView2.setText(data.createTime+" "+data.type);
             }
@@ -157,7 +157,7 @@ public class GrouponDetailActivity extends BaseActivity {
         }
 
         class Holder extends RecyclerView.ViewHolder {
-            ImageView imageView;
+            ImgView imageView;
             TextView textView1;
             TextView textView2;
             public Holder(View itemView) {
@@ -205,6 +205,12 @@ public class GrouponDetailActivity extends BaseActivity {
                     buy.setText("￥"+String.valueOf(mGroupDetail.productPrice)+"\n直接购买");
                     Log.e(TAG, "onNext: "+mGroupDetail.description);
                    fragments.get(0).setText(mGroupDetail.description);
+                   if(lists!=null && lists.size()==1){
+                       headerImg.id(lists.get(0).headId);
+                   }
+                    if(lists!=null && lists.size()>1){
+                        memberImg.id(lists.get(1).headId);
+                    }
 
 
 
