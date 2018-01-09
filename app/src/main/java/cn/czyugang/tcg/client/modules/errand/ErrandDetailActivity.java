@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
-import cn.czyugang.tcg.client.modules.order.OrderTrackActivity;
 
 /**
  * @author ruiaa
@@ -31,6 +30,6 @@ public class ErrandDetailActivity extends BaseActivity {
 
     @OnClick(R.id.order_detail_statusL)
     public void onOpenTrack(){
-        OrderTrackActivity.startOrderTrackActivity();
+        //OrderTrackActivity.startOrderTrackActivity();
     }
 }

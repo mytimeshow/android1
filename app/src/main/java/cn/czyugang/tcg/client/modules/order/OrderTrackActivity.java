@@ -76,8 +76,9 @@ public class OrderTrackActivity extends BaseActivity {
     private String id="123123";
 
 
-    public static void startOrderTrackActivity() {
+    public static void startOrderTrackActivity(String id) {
         Intent intent = new Intent(getTopActivity(), OrderTrackActivity.class);
+        intent.putExtra("id",id);
         getTopActivity().startActivity(intent);
     }
 

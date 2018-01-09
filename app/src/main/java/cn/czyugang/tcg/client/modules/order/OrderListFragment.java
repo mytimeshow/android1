@@ -498,7 +498,7 @@ public class OrderListFragment extends BaseFragment {
                 }
                 case "REACH": {
                     //待收货   申请售后 / 确认收货 | 再次购买
-                    holder.applyAftersale.setVisibility(View.VISIBLE);
+                    //holder.applyAftersale.setVisibility(View.VISIBLE);
                     holder.receipt.setVisibility(View.VISIBLE);
                     holder.buyAgain.setVisibility(View.VISIBLE);
                     break;

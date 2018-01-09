@@ -239,9 +239,16 @@ public class InformApi {
     }
 
     //api/auth/v1/info/comment/list[可接入]查看资讯最新评论列表
-    public static Observable<InformCommentRespone> getNewComment(String infoId){
+    public static Observable<InformCommentRespone> getNewComment(String infoId,int page,String accessTime){
         HashMap<String,Object> map=new HashMap<>();
         map.put("infoId",infoId);
+        map.put("size",20);
+        if (accessTime!=null) {
+            map.put("accessTime",accessTime);
+            map.put("page",page);
+        }else {
+            map.put("page",1);
+        }
         return UserOAuth.getInstance()
                 .get("api/auth/v1/info/comment/list",map)
                 .map(s -> (InformCommentRespone) JsonParse.fromJson(s,InformCommentRespone.class))

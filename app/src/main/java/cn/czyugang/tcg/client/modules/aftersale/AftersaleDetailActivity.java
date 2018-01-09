@@ -61,11 +61,11 @@ public class AftersaleDetailActivity extends BaseActivity {
     @BindView(R.id.aftersale_time_refund)
     TextView timeRefund;
     @BindView(R.id.aftersale_time_refundL)
-    TextView timeRefundL;
+    View timeRefundL;
     @BindView(R.id.aftersale_time_close)
     TextView timeClose;
     @BindView(R.id.aftersale_time_closeL)
-    TextView timeCloseL;
+    View timeCloseL;
     @BindView(R.id.aftersale_revoke)
     TextView revoke;
     @BindView(R.id.aftersale_platform_interpose)
@@ -374,7 +374,7 @@ TIME_OUT_AUTO_REVOKE:超时系统自动撤销申请,
                     logisticsMode.setOnClickListener(v -> onSelectLogisticsMode());
                     logisticsName = myDialog.rootView.findViewById(R.id.dialog_aftersale_logistics_name);
                     logisticsName.setOnClickListener(v -> onSelectLogisticsName());
-                    //logisticsOrder = myDialog.rootView.findViewById(R.id.dialog_aftersale_logistics_order);
+                    logisticsOrder = myDialog.rootView.findViewById(R.id.dialog_aftersale_logistics_order);
                     myDialog.onClick(R.id.tv_negative);
                     myDialog.onClick(R.id.tv_positive, v -> {
                         postReturnGoodsLogistics();
@@ -412,6 +412,8 @@ TIME_OUT_AUTO_REVOKE:超时系统自动撤销申请,
                     .setSubCalSize(16)
                     .setSubmitColor(ResUtil.getColor(R.color.text_black))
                     .setSubCalSize(16)
+                    .isDialog(true)
+                    .setOutSideCancelable(true)
                     .build();
             logisticsModePicker.setPicker(logisticsModeList);
         }
@@ -438,6 +440,8 @@ TIME_OUT_AUTO_REVOKE:超时系统自动撤销申请,
                     .setSubCalSize(16)
                     .setSubmitColor(ResUtil.getColor(R.color.text_black))
                     .setSubCalSize(16)
+                    .isDialog(true)
+                    .setOutSideCancelable(true)
                     .build();
             logisticsNamePicker.setPicker(logisticsNameList);
         }

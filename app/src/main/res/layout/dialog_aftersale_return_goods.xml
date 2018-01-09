@@ -73,7 +73,7 @@
             android:layout_gravity="center_vertical"
             />
 
-<!--        <EditText
+        <EditText
             android:id="@+id/dialog_aftersale_logistics_order"
             android:layout_width="@dimen/dp_90"
             android:layout_height="@dimen/dp_30"
@@ -81,7 +81,7 @@
             android:textColor="@color/text_black"
             android:gravity="center"
             android:background="@drawable/border_rect_grey"
-            />-->
+            />
 
     </LinearLayout>
 

@@ -151,7 +151,7 @@ public class OrderDetailActivity extends BaseActivity {
 
 
     private String orderId = "";
-    private boolean showMapView = true;
+    private boolean showMapView = false;
     private OrderDetailResponse response = null;
     private Bundle savedInstanceState;
 
@@ -188,6 +188,7 @@ public class OrderDetailActivity extends BaseActivity {
             @Override
             public void onNext(OrderDetailResponse response) {
                 super.onNext(response);
+                if (ErrorHandler.judge200(response)) return;
                 response.parse();
                 OrderDetailActivity.this.response = response;
                 initTopStatus();
@@ -241,22 +242,23 @@ public class OrderDetailActivity extends BaseActivity {
                 status.setText("订单已支付，商家已发货>");
                 statusSub.setText("商家已备货完毕，待配送员接单配送");
                 // statusSub.setText("商家已备货完毕，将由商家配送员为您配送");
+                showMapView=true;
                 break;
             }
             case "REACH": {
                 //已送达   确认收货 | 再次购买
-                status.setText("");
-                statusSub.setText("");
+                status.setText("订单已支付，用户待确认收货");
+                statusSub.setText("配送员已送达，等待用户确认收货");
                 break;
             }
             case "FINISH": {
                 //待评价    删除订单 | 评价 | 再次购买
-                status.setText("");
-                statusSub.setText("");
+                status.setText("订单已完成");
+                statusSub.setText("任何意见和吐槽，欢迎随时联系我们");
                 break;
             }
             default: {
-                status.setText("");
+                status.setText(response.data.status);
                 statusSub.setText("");
             }
         }
@@ -266,15 +268,13 @@ public class OrderDetailActivity extends BaseActivity {
 
     @OnClick(R.id.order_detail_statusL)
     public void onOrderTrack() {
-        OrderTrackActivity.startOrderTrackActivity();
+        OrderTrackActivity.startOrderTrackActivity(orderId);
     }
 
     /*
     *   小地图
     * */
     private void initMapView() {
-        showMapView = false;
-
         if (!showMapView) return;
         mapView.onCreate(savedInstanceState);
         LatLng latLng = new LatLng(23.657626, 116.621468);
@@ -558,8 +558,8 @@ public class OrderDetailActivity extends BaseActivity {
     }
 
     private boolean showAftersale() {
-        return  true;
-        /*switch (response.data.status) {
+        //return  true;
+        switch (response.data.status) {
             case "CLOSE": {
                 //已关闭
                 break;
@@ -578,7 +578,8 @@ public class OrderDetailActivity extends BaseActivity {
             }
             case "DELIVERY": {
                 //已发货
-                return true;
+                //return true;
+                break;
             }
             case "REACH": {
                 //已送达
@@ -589,7 +590,7 @@ public class OrderDetailActivity extends BaseActivity {
                 return true;
             }
         }
-        return false;*/
+        return false;
     }
 
     private void applyRefund(OrderGoods orderGoods) {
