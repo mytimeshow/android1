@@ -43,11 +43,12 @@ public class AftersaleTrackActivity extends BaseActivity {
     private TrackAdapter adapter;
 
     //售后订单详情的所有信息
-    private AftersaleDetailResponse detailResponse;
+    private static AftersaleDetailResponse detailResponse;
 
     public static void startAftersaleTrackActivity(AftersaleDetailResponse response) {
         Intent intent = new Intent(getTopActivity(), AftersaleTrackActivity.class);
         MyApplication.getInstance().activityTransferData=response;
+        detailResponse=response;
         getTopActivity().startActivity(intent);
     }
 
@@ -60,6 +61,8 @@ public class AftersaleTrackActivity extends BaseActivity {
         setContentView(R.layout.activity_aftersale_track);
         ButterKnife.bind(this);
 
+        initData();
+
         trackList.add(new AftersaleTrack());
         trackList.add(new AftersaleTrack());
         trackList.add(new AftersaleTrack());
@@ -68,6 +71,21 @@ public class AftersaleTrackActivity extends BaseActivity {
         adapter = new TrackAdapter(trackList, this);
         tracksR.setLayoutManager(new LinearLayoutManager(this));
         tracksR.setAdapter(adapter);
+    }
+
+    private void initData() {
+        int size=detailResponse.statusList.size();
+        for(int i=0;i<size;i++){
+            AftersaleTrack aftersaleTrack=new AftersaleTrack();
+            aftersaleTrack.setHeadImg(detailResponse.imgList.get(i));
+            aftersaleTrack.setStatu(detailResponse.statusList.get(i));
+            aftersaleTrack.setStatuTitle(detailResponse.titleList.get(i));
+            aftersaleTrack.setStatuTime(detailResponse.timeList.get(i));
+            if(i==0 && detailResponse.buyerImgList.size()>0) aftersaleTrack.setImgList(detailResponse.buyerImgList);
+            if(i==1 && detailResponse.sellerImgList.size()>0) aftersaleTrack.setImgList(detailResponse.sellerImgList);
+            if(size>4 && i==5 && detailResponse.sellerImgList.size()>0) aftersaleTrack.setImgList(detailResponse.sellerImgList);
+            trackList.add(aftersaleTrack);
+        }
     }
 
     @OnClick(R.id.title_back)
@@ -92,12 +110,41 @@ public class AftersaleTrackActivity extends BaseActivity {
 
         @Override
         public void onBindViewHolder(Holder holder, int position) {
+            int index=getItemCount()-position-1;
+            int count=getItemCount();
             AftersaleTrack data = list.get(position);
             data.bindImgAdapter(activity, holder.imgs);
-            holder.text.setText(RichText.newRichText().
-                    appendSpColorRes("订单退款成功", R.dimen.sp_14, R.color.main_red)
-                    .append("\n经平台仲裁，此次退款申请予以通过")
-                    .build());
+
+            if(count==8 && (index==7 || index==6 || index==2)){
+                String reason="",explian="";
+                if(index==7) {reason=detailResponse.buyerReason;explian=detailResponse.buyerExplian;}
+                if (index==6){reason=detailResponse.sellerReason1;explian=detailResponse.sellerExplian1;}
+                if (index==2){reason=detailResponse.sellerReason2;explian=detailResponse.sellerExplian2;}
+                holder.text.setText(RichText.newRichText().
+                        appendSpColorRes(data.statu, R.dimen.sp_14, R.color.main_red)
+                        .append("\n"+data.statuTitle)
+                        .append("\n"+"拒绝理由:"+reason)
+                        .append("\n"+"补充说明:"+explian)
+                        .build());
+            }else if(count==4 &&(index==3 || index==2)){
+                String reason="",explian="";
+                if(index==3) {reason=detailResponse.buyerReason;explian=detailResponse.buyerExplian;}
+                if (index==2){reason=detailResponse.sellerReason1;explian=detailResponse.sellerExplian1;}
+                holder.text.setText(RichText.newRichText().
+                        appendSpColorRes(data.statu, R.dimen.sp_14, R.color.main_red)
+                        .append("\n"+data.statuTitle)
+                        .append("\n"+"拒绝理由:"+reason)
+                        .append("\n"+"补充说明:"+explian)
+                        .build());
+            }else {
+                holder.text.setText(RichText.newRichText().
+                        appendSpColorRes(data.statu, R.dimen.sp_14, R.color.main_red)
+                        .append("\n"+data.statuTitle)
+                        .build());
+            }
+            holder.icon.setImageResource(data.headImg);
+            holder.time.setText(data.statuTime);
+
 
             if (position==0){
                 holder.itemView.setOnClickListener(v -> {
@@ -167,21 +214,16 @@ public class AftersaleTrackActivity extends BaseActivity {
         public void setStatuTime(String statuTime) {
             this.statuTime = statuTime;
         }
+        public void setImgList(List<String> imgList){
+            this.imgList=imgList;
+        }
 
         private List<String> imgList = null;
         private ImgAdapter imgAdapter = null;
 
         public void bindImgAdapter(Activity activity, RecyclerView recyclerView) {
-            if (recyclerView == null) return;
+            if (recyclerView == null || imgList==null) return;
             if (imgAdapter == null) {
-                imgList = new ArrayList<>();
-                imgList.add("325789");
-                imgList.add("325789");
-                imgList.add("325789");
-                imgList.add("325789");
-                imgList.add("325789");
-                imgList.add("325789");
-                imgList.add("325789");
                 imgAdapter = new ImgAdapter(imgList, activity);
                 imgAdapter.setSizeRes(R.dimen.dp_60);
             }

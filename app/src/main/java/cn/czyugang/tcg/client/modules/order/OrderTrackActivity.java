@@ -73,6 +73,7 @@ public class OrderTrackActivity extends BaseActivity {
     private OrderSchedule orderScheduleO;
     private DeliveryOrder deliveryOrder;
     private String deliverWay;
+    //订单id
     private String id="123123";
 
 
@@ -89,7 +90,7 @@ public class OrderTrackActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         id=getIntent().getStringExtra("id");
-        getOrderDetail("950247191308587008");
+        getOrderDetail(id);
         //948752830892789760
 
     }
@@ -235,8 +236,8 @@ public class OrderTrackActivity extends BaseActivity {
         }
         orderschedule.add(orderScheduleO.create );
         orderschedule.add(orderScheduleO.create );
-        orderschedule.add(orderScheduleO.noUseTicketCode );
-        orderschedule.add(orderScheduleO.evaluate);
+        orderschedule.add(orderScheduleO.pay );
+        orderschedule.add(orderScheduleO.useTicketCode);
 
 
     }
