@@ -229,7 +229,6 @@ public class ConfirmOrderActivity extends BaseActivity {
                         }
                     }).start();
                     PayOrderActivity.startPayOrderActivity(response.data.get(0));
-                    commit.postDelayed(() -> clearAllActivityExceptMainAndTop(), 300);
                 }
             }
         });

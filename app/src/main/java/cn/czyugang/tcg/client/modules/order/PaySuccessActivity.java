@@ -40,8 +40,15 @@ public class PaySuccessActivity extends BaseActivity {
         payT.setText(CommonUtil.formatPrice(pay));
     }
 
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        clearAllActivityExceptMainAndTop();
+    }
+
     @OnClick(R.id.pay_success_open_order)
     public void onOpenOrder(){
         MyOrderActivity.startMyOrderActivity();
+        finish();
     }
 }

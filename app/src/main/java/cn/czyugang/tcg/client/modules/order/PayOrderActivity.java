@@ -151,19 +151,20 @@ public class PayOrderActivity extends BaseActivity {
 
     private void payAllByWallet() {
         if (myDialog != null) myDialog.dismiss();
-        PayApi.payOrder(orderId, true, psw, null).subscribe(new NetObserver<Response<Object>>() {
-            @Override
-            public void onNext(Response<Object> response) {
-                super.onNext(response);
-                if (!ErrorHandler.judge200(response)) {
-                    psw = "";
-                    return;
-                } else {
-                    AppUtil.toast("支付成功");
-                    PaySuccessActivity.startPaySuccessActivity(totalPay);
-                }
-            }
-        });
+        PayApi.payOrder(orderId, true, psw, null)
+                .subscribe(new NetObserver<Response<Object>>() {
+                    @Override
+                    public void onNext(Response<Object> response) {
+                        super.onNext(response);
+                        if (!ErrorHandler.judge200(response)) {
+                            psw = "";
+                            return;
+                        } else {
+                            AppUtil.toast("支付成功");
+                            PaySuccessActivity.startPaySuccessActivity(totalPay);
+                        }
+                    }
+                });
     }
 
 

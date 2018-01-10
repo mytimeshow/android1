@@ -1,5 +1,7 @@
 package cn.czyugang.tcg.client.utils.storage;
 
+import android.support.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +11,7 @@ import cn.czyugang.tcg.client.entity.TrolleyGoods;
 import cn.czyugang.tcg.client.entity.TrolleyStore;
 import cn.czyugang.tcg.client.modules.store.SearchActivity;
 import cn.czyugang.tcg.client.utils.LogRui;
+import cn.czyugang.tcg.client.utils.im.MqUserInfo;
 
 /**
  * Created by ruiaa on 2017/8/8.
@@ -118,5 +121,20 @@ public class AppKeyStorage {
             trolleyStoreMap.remove(storeId);
         }
         KeyStorage.put("TrolleyStoreMap",trolleyStoreMap);
+    }
+
+    /*
+    *   记录用户的mqtt账号
+    * */
+    public static void saveMqUserInfo(@Nullable MqUserInfo mqUserInfo){
+        if (mqUserInfo!=null) KeyStorage.put("MqUserInfo",mqUserInfo);
+    }
+
+    public static void clearMqUserInfo(){
+        KeyStorage.delete("MqUserInfo");
+    }
+
+    public static MqUserInfo getMqUserInfo(){
+        return KeyStorage.get("MqUserInfo");
     }
 }

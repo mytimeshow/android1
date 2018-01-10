@@ -10,13 +10,9 @@ import cn.czyugang.tcg.client.api.WXApi;
 import cn.czyugang.tcg.client.api.WeiboApi;
 import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.entity.Response;
-import cn.czyugang.tcg.client.entity.UserBase;
-import cn.czyugang.tcg.client.entity.UserDetail;
-import cn.czyugang.tcg.client.entity.UserInfo;
 import cn.czyugang.tcg.client.entity.UserToken;
-import cn.czyugang.tcg.client.utils.rxbus.LoginEvent;
 import cn.czyugang.tcg.client.modules.login.contract.LoginContract;
-import cn.czyugang.tcg.client.utils.DictUtil;
+import cn.czyugang.tcg.client.utils.rxbus.LoginEvent;
 import cn.czyugang.tcg.client.utils.rxbus.RxBus;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
@@ -69,11 +65,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                     public void onNext(@NonNull Response<UserToken> response) {
                         switch (response.getCode()) {
                             case 200:
-                                UserInfo userInfo = new UserInfo();
-                                userInfo.setUserBase(DictUtil.getObject(response.getValues(), "userBase", UserBase.class));
-                                userInfo.setUserDetail(DictUtil.getObject(response.getValues(), "userDetail", UserDetail.class));
-                                userInfo.setSexDict(DictUtil.getStaticDict(response.getValues(), "sexDict"));
-                                UserOAuth.getInstance().login(response.getData(), userInfo);
+                                UserOAuth.getInstance().login(response);
                                 break;
                             case 7004://账号未绑定
                                 mView.startBindMobileActivity(UserApi.TYPE_THIRDPARTY_TENCENT, mAuthInfo, mAuthToken);
@@ -123,11 +115,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                     public void onNext(@NonNull Response<UserToken> response) {
                         switch (response.getCode()) {
                             case 200:
-                                UserInfo userInfo = new UserInfo();
-                                userInfo.setUserBase(DictUtil.getObject(response.getValues(), "userBase", UserBase.class));
-                                userInfo.setUserDetail(DictUtil.getObject(response.getValues(), "userDetail", UserDetail.class));
-                                userInfo.setSexDict(DictUtil.getStaticDict(response.getValues(), "sexDict"));
-                                UserOAuth.getInstance().login(response.getData(), userInfo);
+                                UserOAuth.getInstance().login(response);
                                 break;
                             case 7004://账号未绑定
                                 mView.startBindMobileActivity(UserApi.TYPE_THIRDPARTY_WX, mAuthInfo, mAuthToken);
@@ -170,11 +158,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                     public void onNext(@NonNull Response<UserToken> response) {
                         switch (response.getCode()) {
                             case 200:
-                                UserInfo userInfo = new UserInfo();
-                                userInfo.setUserBase(DictUtil.getObject(response.getValues(), "userBase", UserBase.class));
-                                userInfo.setUserDetail(DictUtil.getObject(response.getValues(), "userDetail", UserDetail.class));
-                                userInfo.setSexDict(DictUtil.getStaticDict(response.getValues(), "sexDict"));
-                                UserOAuth.getInstance().login(response.getData(), userInfo);
+                                UserOAuth.getInstance().login(response);
                                 break;
                             case 7004://账号未绑定
                                 mView.startBindMobileActivity(UserApi.TYPE_THIRDPARTY_WEIBO, mAuthInfo, mAuthToken);

@@ -64,6 +64,7 @@ public class SelectDeliveryActivity extends BaseActivity {
 
 
     public static void startSelectDeliveryActivity(Activity activity, int requestCode, Store store, OrderPreSettleResponse.StoreMoreInfo storeMoreInfo) {
+        if (storeMoreInfo.deliveryTimeList == null) return;
         Intent intent = new Intent(activity, SelectDeliveryActivity.class);
         MyApplication.getInstance().activityTransferData = store;
         MyApplication.getInstance().activityTransferDataTwo = storeMoreInfo;
@@ -155,7 +156,7 @@ public class SelectDeliveryActivity extends BaseActivity {
 
     @OnClick(R.id.select_delivery_confirm)
     public void onConfirm() {
-        if (selectedTime.split(":").length==2) selectedTime=selectedTime+":00";
+        if (selectedTime.split(":").length == 2) selectedTime = selectedTime + ":00";
         storeMoreInfo.selectedDeliveryWay = selectedWay;
         storeMoreInfo.selectedDeliveryTime = selectedTime;
         Intent intent = new Intent();
@@ -190,17 +191,17 @@ public class SelectDeliveryActivity extends BaseActivity {
     }
 
     public void refreshTime() {
-        if (hourAdapter.selectTime.contains("尽快送达")){
-            selectedTime=storeMoreInfo.deliveryTimeList.get(0).date;
+        if (hourAdapter.selectTime.contains("尽快送达")) {
+            selectedTime = storeMoreInfo.deliveryTimeList.get(0).date;
             deliveryTime.setText(hourAdapter.selectTime);
-        }else {
+        } else {
             selectedTime = dayAdapter.selectDate + " " + hourAdapter.selectTime;
             deliveryTime.setText(selectedTime);
         }
     }
 
     private class DayAdapter extends RecyclerView.Adapter<DayAdapter.Holder> {
-        private List<String> list=new ArrayList<>();
+        private List<String> list = new ArrayList<>();
         private List<OrderPreSettleResponse.DeliveryTime> originList;
         private List<String> dateList = new ArrayList<>();
         private Activity activity;

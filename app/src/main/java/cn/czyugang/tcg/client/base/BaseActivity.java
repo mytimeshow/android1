@@ -19,6 +19,7 @@ import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.modules.common.dialog.LoadingDialog;
 import cn.czyugang.tcg.client.modules.entry.activity.MainActivity;
 import cn.czyugang.tcg.client.utils.LogRui;
+import cn.czyugang.tcg.client.utils.im.UmengUtil;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
@@ -43,6 +44,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
         super.onCreate(savedInstanceState);
         activityList.add(this);
         context = getApplicationContext();
+        UmengUtil.doOnActivityCreate(this);
     }
 
     public void onBack(){
@@ -64,9 +66,11 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     public void showLoadingDialog() {
         if (mLoadingDialog == null) {
             mLoadingDialog = LoadingDialog.newInstance();
+            LogRui.d("showLoadingDialog####  create");
         }
         if (requestLoadingDialogTimes == 0) {
             mLoadingDialog.show(getSupportFragmentManager(), "LoadingDialog");
+            LogRui.d("showLoadingDialog####  show");
         }
         requestLoadingDialogTimes++;
     }
@@ -74,10 +78,11 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     @Override
     public void dismissLoadingDialog() {
         requestLoadingDialogTimes--;
-        if (requestLoadingDialogTimes <= 0 && mLoadingDialog != null) {
+        if (requestLoadingDialogTimes <= 0 && mLoadingDialog != null&&mLoadingDialog.getFragmentManager()!=null) {
             requestLoadingDialogTimes = 0;
             mLoadingDialog.dismiss();
             mLoadingDialog = null;
+            LogRui.d("dismissLoadingDialog####");
         }
 
     }
@@ -161,7 +166,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
 
         @Override
         public void onError(@NonNull Throwable e) {
-            LogRui.d("****onError####");
+            LogRui.e("onError####",e);
             getTopActivity().showError(e);
             if (showLoading()) getTopActivity().dismissLoadingDialog();
             if (getSwipeToLoadLayout() != null) {

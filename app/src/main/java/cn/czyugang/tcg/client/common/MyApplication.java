@@ -16,6 +16,9 @@ import cn.czyugang.tcg.client.api.WXApi;
 import cn.czyugang.tcg.client.api.WeiboApi;
 import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
+import cn.czyugang.tcg.client.utils.im.EMUtil;
+import cn.czyugang.tcg.client.utils.im.MqttManager;
+import cn.czyugang.tcg.client.utils.im.UmengUtil;
 import cn.czyugang.tcg.client.utils.storage.FileStorage;
 import cn.czyugang.tcg.client.utils.storage.KeyStorage;
 
@@ -75,6 +78,10 @@ public class MyApplication extends Application {
             ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
         }
         ARouter.init(this);
+        //环信
+        EMUtil.init(application);
+        UmengUtil.init(application);
+        MqttManager.connect();
 
         ZXingLibrary.initDisplayOpinion(this);
     }

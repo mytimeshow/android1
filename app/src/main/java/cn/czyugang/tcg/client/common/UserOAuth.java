@@ -18,11 +18,16 @@ import cn.czyugang.tcg.client.entity.UserDetail;
 import cn.czyugang.tcg.client.entity.UserInfo;
 import cn.czyugang.tcg.client.entity.UserToken;
 import cn.czyugang.tcg.client.modules.login.activity.LoginActivity;
+import cn.czyugang.tcg.client.utils.DictUtil;
 import cn.czyugang.tcg.client.utils.JsonParse;
+import cn.czyugang.tcg.client.utils.im.EMUtil;
+import cn.czyugang.tcg.client.utils.im.MqUserInfo;
+import cn.czyugang.tcg.client.utils.im.MqttManager;
 import cn.czyugang.tcg.client.utils.rxbus.LoginEvent;
 import cn.czyugang.tcg.client.utils.rxbus.LogoutEvent;
 import cn.czyugang.tcg.client.utils.rxbus.RxBus;
 import cn.czyugang.tcg.client.utils.rxbus.UpdateUserInfoEvent;
+import cn.czyugang.tcg.client.utils.storage.AppKeyStorage;
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
@@ -194,7 +199,7 @@ public class UserOAuth {
      * @param userToken
      * @param userInfo
      */
-    public void login(UserToken userToken, UserInfo userInfo) {
+    private void login(UserToken userToken, UserInfo userInfo) {
         if (userToken == null || userInfo == null) {
             return;
         }
@@ -209,6 +214,19 @@ public class UserOAuth {
         }
     }
 
+    public void login(Response<UserToken> response) {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUserBase(DictUtil.getObject(response.getValues(), "userBase", UserBase.class));
+        userInfo.setUserDetail(DictUtil.getObject(response.getValues(), "userDetail", UserDetail.class));
+        userInfo.setSexDict(DictUtil.getStaticDict(response.getValues(), "sexDict"));
+
+        AppKeyStorage.saveMqUserInfo(DictUtil.getObject(response.getValues(), "mqUser", MqUserInfo.class));
+        MqttManager.connect();
+        EMUtil.login();
+
+        UserOAuth.getInstance().login(response.getData(), userInfo);
+    }
+
     /**
      * 注销
      */
@@ -221,6 +239,10 @@ public class UserOAuth {
                 mLogoutEvent = new LogoutEvent();
             }
             RxBus.post(mLogoutEvent);
+
+            AppKeyStorage.clearMqUserInfo();
+            MqttManager.release();
+            EMUtil.logout();
         }
     }
 
