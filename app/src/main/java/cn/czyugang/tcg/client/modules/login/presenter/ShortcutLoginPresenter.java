@@ -6,12 +6,8 @@ import cn.czyugang.tcg.client.api.UserApi;
 import cn.czyugang.tcg.client.common.Config;
 import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.entity.Response;
-import cn.czyugang.tcg.client.entity.UserBase;
-import cn.czyugang.tcg.client.entity.UserDetail;
-import cn.czyugang.tcg.client.entity.UserInfo;
 import cn.czyugang.tcg.client.entity.UserToken;
 import cn.czyugang.tcg.client.modules.login.contract.ShortcutLoginContract;
-import cn.czyugang.tcg.client.utils.DictUtil;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -104,11 +100,7 @@ public class ShortcutLoginPresenter implements ShortcutLoginContract.Presenter {
                     public void onNext(@NonNull Response<UserToken> response) {
                         switch (response.getCode()) {
                             case 200:
-                                UserInfo userInfo = new UserInfo();
-                                userInfo.setUserBase(DictUtil.getObject(response.getValues(), "userBase", UserBase.class));
-                                userInfo.setUserDetail(DictUtil.getObject(response.getValues(), "userDetail", UserDetail.class));
-                                userInfo.setSexDict(DictUtil.getStaticDict(response.getValues(), "sexDict"));
-                                UserOAuth.getInstance().login(response.getData(), userInfo);
+                                UserOAuth.getInstance().login(response);
                                 break;
                             default:
                                 mView.showToast(response.getMessage());
