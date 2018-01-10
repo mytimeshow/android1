@@ -88,7 +88,7 @@ public class OrderTrackActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         id=getIntent().getStringExtra("id");
-        getOrderDetail("948752830892789760");
+        getOrderDetail("950247191308587008");
         //948752830892789760
 
     }
@@ -96,8 +96,8 @@ public class OrderTrackActivity extends BaseActivity {
     @OnClick(R.id.title_back)
     public void onBack() {
        // GroupGoodActivity.startGroupGoodActivity("","");
-      //  finish();
-        getOrderDetail("950247191308587008");
+       finish();
+       // getOrderDetail("950247191308587008");
     }
 
     @OnClick(R.id.order_track_distributorL)
@@ -121,27 +121,29 @@ public class OrderTrackActivity extends BaseActivity {
                     initDeliverType(result);
                     deliverWay=deliverTypeDict.get(order.deliveryWay);
                     deliveryType.setText(deliverTypeDict.get(order.deliveryWay));
-                    deliveryTime.setText(order.isImmediately.equals("YES") ? "尽快送达" : "非立即送达");
+
                     if (deliverTypeDict.get(order.deliveryWay).equals("自提")) {
-                        String fetchCode=result.values.optString("deliveryOrder");
-                        deliveryOrder=JsonParse.fromJson(fetchCode,DeliveryOrder.class);
+                        JSONObject fetchCode=result.values.optJSONObject("deliveryOrder");
+                        deliveryOrder=JsonParse.fromJson(fetchCode.toString(),DeliveryOrder.class);
                         track_person.setVisibility(View.GONE);
                         deliverySelf.setText("自提券码");
+                        deliveryTime.setText(deliveryOrder.fetchCode+"（已使用）");
                         distributorName.setText(deliveryOrder.fetchCode);
                         selfTake(result);
                     } else if(deliverTypeDict.get(order.deliveryWay).equals("商家配送")){
                         deliverySelf.setText("配送时间");
+                        deliveryTime.setText(order.isImmediately.equals("YES") ? "尽快送达" : "非立即送达");
                         distributorName.setText(result.values.optString("deliveryUserName")
                                 + "      " + result.values.optString("deliveryUserPhone"));
                         merchantShipping(result);
                     }else if(deliverTypeDict.get(order.deliveryWay).equals("平台配送")){
                         deliverySelf.setText("配送时间");
+                        deliveryTime.setText(order.isImmediately.equals("YES") ? "尽快送达" : "非立即送达");
                         distributorName.setText(result.values.optString("deliveryUserName")
                                 + "      " + result.values.optString("deliveryUserPhone"));
                         Platform0Distribution(result);
                     }
                     distributorImg.drawableId(R.drawable.icon_delivery_man_white);
-                   // initTrackList(result);
                     trackR.setLayoutManager(new LinearLayoutManager(OrderTrackActivity.this));
                     trackR.setAdapter(new TrackAdapter(trackList, OrderTrackActivity.this,deliverWay));
                 }
@@ -162,11 +164,22 @@ public class OrderTrackActivity extends BaseActivity {
     }
     //自提
     private void selfTake(OrderDetailResponse result) {
+        statuList.clear();
+        statusTitle.clear();
+        imgList.clear();
+        orderschedule.clear();
         initschedule1(result);
         initStatus1();
         initStatusTitle1(result); 
-        initImaList1(); 
-           
+        initImaList1();
+        for(int i=0;i<4;i++){
+            Track track=new Track();
+            track.setStatu(statuList.get(i));
+            track.setStatuTitle(statusTitle.get(i));
+            track.setStatuTime(orderschedule.get(i));
+            track.setHeadImg(imgList.get(i));
+            trackList.add(track);
+        }
       
 
     }
@@ -229,6 +242,10 @@ public class OrderTrackActivity extends BaseActivity {
 
     //平台配送
     private void Platform0Distribution(OrderDetailResponse result){
+        statuList.clear();
+        statusTitle.clear();
+        imgList.clear();
+        orderschedule.clear();
         initschedule2(result);
         initStatus2(result);
         initStatusTitle2(result);
@@ -239,6 +256,7 @@ public class OrderTrackActivity extends BaseActivity {
             track.setStatuTitle(statusTitle.get(i));
             track.setStatuTime(orderschedule.get(i));
             track.setHeadImg(imgList.get(i));
+            trackList.add(track);
         }
 
 
@@ -261,6 +279,7 @@ public class OrderTrackActivity extends BaseActivity {
     }
 
     private void initStatusTitle2(OrderDetailResponse result) {
+
         statusTitle.add("订单编号："+id);
         statusTitle.add("请在提交订单后"+result.values.optString("payTimeout")+"min内完成支付");
         statusTitle.add("商家在"+result.values.optString("orderTimeout")+"min内未接单，将自动取消订单");
@@ -276,6 +295,7 @@ public class OrderTrackActivity extends BaseActivity {
     }
 
     private void initStatus2(OrderDetailResponse result) {
+
         statuList.add("订单提交成功");
         statuList.add("订单待支付");
         statuList.add("订单已支付，商家待接单");
@@ -310,6 +330,10 @@ public class OrderTrackActivity extends BaseActivity {
 
     //商家配送
     private void merchantShipping(OrderDetailResponse result){
+        statuList.clear();
+        statusTitle.clear();
+        imgList.clear();
+        orderschedule.clear();
         initschedule3(result);
         initStatus3();
         initStatusTitle3(result);
@@ -442,6 +466,7 @@ public class OrderTrackActivity extends BaseActivity {
 
         @Override
         public int getItemCount() {
+            Log.e(TAG, "getItemCount: "+ list.size());
             return list.size();
         }
 

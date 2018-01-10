@@ -61,11 +61,11 @@ public class AftersaleDetailActivity extends BaseActivity {
     @BindView(R.id.aftersale_time_refund)
     TextView timeRefund;
     @BindView(R.id.aftersale_time_refundL)
-    TextView timeRefundL;
+    View timeRefundL;
     @BindView(R.id.aftersale_time_close)
     TextView timeClose;
     @BindView(R.id.aftersale_time_closeL)
-    TextView timeCloseL;
+    View timeCloseL;
     @BindView(R.id.aftersale_revoke)
     TextView revoke;
     @BindView(R.id.aftersale_platform_interpose)

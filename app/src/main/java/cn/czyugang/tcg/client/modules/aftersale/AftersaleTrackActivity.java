@@ -146,6 +146,27 @@ public class AftersaleTrackActivity extends BaseActivity {
     }
 
     private static class AftersaleTrack {
+        public int headImg;
+        public String statu;
+        public String statuTitle;
+        public String statuTime;
+
+
+        public void setHeadImg(int headImg) {
+            this.headImg = headImg;
+        }
+
+        public void setStatu(String statu) {
+            this.statu = statu;
+        }
+
+        public void setStatuTitle(String statuTitle) {
+            this.statuTitle = statuTitle;
+        }
+
+        public void setStatuTime(String statuTime) {
+            this.statuTime = statuTime;
+        }
 
         private List<String> imgList = null;
         private ImgAdapter imgAdapter = null;
