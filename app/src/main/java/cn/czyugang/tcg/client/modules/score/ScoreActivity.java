@@ -20,7 +20,6 @@ import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.entity.Score;
 import cn.czyugang.tcg.client.modules.entry.activity.MainActivity;
-import cn.czyugang.tcg.client.modules.groupon.GroupGoodActivity;
 import cn.czyugang.tcg.client.modules.order.MyOrderActivity;
 
 /**
@@ -104,7 +103,7 @@ public class ScoreActivity extends BaseActivity {
                 postData("SIGN",true);
             }else {
                 showToast("你已经签到过了");
-                GroupGoodActivity.startGroupGoodActivity("","");
+
             }
     }
 
