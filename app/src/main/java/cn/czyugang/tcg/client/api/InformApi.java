@@ -280,4 +280,17 @@ public class InformApi {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    //api/auth/v1/info/comment/save[可接入]保存评论
+    public static Observable<Response> sendComment(String id,String content) {
+        Map<String, Object> params = new HashMap<>();
+        //评论id,评论内容
+        params.put("infoId", id);
+        params.put("content", content);
+        return UserOAuth.getInstance()
+                .post("api/auth/v1/info/comment/save", params)
+                .map(s -> (Response) JsonParse.fromJson(s, Response.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 }

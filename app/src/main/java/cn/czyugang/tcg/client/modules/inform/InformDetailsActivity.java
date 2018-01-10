@@ -6,12 +6,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 
@@ -31,6 +36,7 @@ import cn.czyugang.tcg.client.entity.InformCommentRespone;
 import cn.czyugang.tcg.client.entity.InformDetailResponse;
 import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.utils.app.AppUtil;
+import cn.czyugang.tcg.client.utils.app.KeyboardWatcher;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.utils.string.StringUtil;
 import cn.czyugang.tcg.client.utils.string.TimeUtils;
@@ -61,6 +67,13 @@ public class InformDetailsActivity extends BaseActivity {
     @BindView(R.id.comment_list)
     RecyclerView commitList;
 
+    @BindView(R.id.inform_detail_operation)
+    RelativeLayout relaOperation;
+    @BindView(R.id.inform_detail_send_comment)
+    TextView sendComment;
+    @BindView(R.id.inform_detail_comment_content)
+    EditText commentContent;
+
     private boolean isFollow;
     private boolean isLike;
     private int likeNum;
@@ -69,6 +82,7 @@ public class InformDetailsActivity extends BaseActivity {
     private List<InformComment> newComments = new ArrayList<InformComment>();
     private CommentAdapter commentAdapter;
     private RefreshLoadHelper refreshLoadHelper = null;
+    private int sendCommentState = -1;
 
     public static void startInformDetailsActivity(String id) {
         Intent intent = new Intent(getTopActivity(), InformDetailsActivity.class);
@@ -93,6 +107,7 @@ public class InformDetailsActivity extends BaseActivity {
         //数据加载和显示需要引用view和adapte，放在最后规避空指针
         getInformDetail();
         getComment(false);
+        init();
     }
 
     private void getInformDetail() {
@@ -122,6 +137,48 @@ public class InformDetailsActivity extends BaseActivity {
 
             }
         });
+    }
+
+    private void init() {
+        KeyboardWatcher keyboardWatcher = new KeyboardWatcher(this);
+        keyboardWatcher.setListener(new KeyboardWatcher.OnKeyboardToggleListener() {
+            @Override
+            public void onKeyboardShown(int keyboardSize) {
+                relaOperation.setVisibility(View.GONE);
+                sendComment.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onKeyboardClosed() {
+                relaOperation.setVisibility(View.VISIBLE);
+                sendComment.setVisibility(View.GONE);
+            }
+        });
+
+        commentContent.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (commentContent.getText().toString().equals("") || commentContent == null) {
+                    sendComment.setBackgroundResource(R.drawable.bg_rect_dark_grey);
+                    sendCommentState = -1;
+                } else {
+                    sendComment.setBackgroundResource(R.drawable.bg_rect_red);
+                    sendCommentState = 1;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
     }
 
     //加载评论统一入口
@@ -267,6 +324,23 @@ public class InformDetailsActivity extends BaseActivity {
         isLike = (isLike ? false : true);
     }
 
+    @OnClick(R.id.inform_detail_send_comment)
+    public void onSendComment(){
+        if (sendCommentState < 0) {
+            Toast.makeText(InformDetailsActivity.this,"内容不能为空",Toast.LENGTH_SHORT).show();
+        } else {
+            InformApi.sendComment(id,commentContent.getText().toString()).subscribe(new NetObserver<Response>() {
+                @Override
+                public void onNext(Response response) {
+                    super.onNext(response);
+                    if (!ErrorHandler.judge200(response)) return;
+                    commentContent.setText("");
+                    Toast.makeText(InformDetailsActivity.this,"发送成功",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
     private class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Holder> {
         private List<InformComment> list;
         private Activity activity;
@@ -300,9 +374,6 @@ public class InformDetailsActivity extends BaseActivity {
                     break;
             }
 
-            holder.itemView.setOnClickListener(v -> {
-//                InformDetailsActivity.startInformDetailsActivity(data.id);
-            });
         }
 
         private void getCommentView(Holder holder, int position) {
@@ -344,7 +415,29 @@ public class InformDetailsActivity extends BaseActivity {
                 holder.reply.setVisibility(View.GONE);
             } else {
                 holder.reply.setVisibility(View.VISIBLE);
+                holder.replyNum.setText("共 "+StringUtil.returnMoreNum(data.replyCount)+" 条回复");
+                if (data.replyComment.size() ==1){
+                    if (data.replyComment.get(0).userName.equals(data.replyComment.get(0).targetUserName)){
+                        holder.replyFirst.setText(data.replyComment.get(0).userName+": "+data.replyComment.get(0).content);
+                    }else {
+                        holder.replyFirst.setText(data.replyComment.get(0).userName+" 回复了 "+data.replyComment.get(0).targetUserName+": "+data.replyComment.get(0).content);
+                    }
+                    holder.replySecond.setVisibility(View.GONE);
+                }else {
+                    holder.replySecond.setVisibility(View.VISIBLE);
+                    if (data.replyComment.get(0).userName.equals(data.replyComment.get(0).targetUserName)){
+                        holder.replyFirst.setText(data.replyComment.get(0).userName+": "+data.replyComment.get(0).content);
+                    }else {
+                        holder.replyFirst.setText(data.replyComment.get(0).userName+" 回复了 "+data.replyComment.get(0).targetUserName+":"+data.replyComment.get(0).content);
+                    }
+                    if (data.replyComment.get(1).userName.equals(data.replyComment.get(1).targetUserName)){
+                        holder.replySecond.setText(data.replyComment.get(1).userName+": "+data.replyComment.get(1).content);
+                    }else {
+                        holder.replySecond.setText(data.replyComment.get(1).userName+" 回复了 "+data.replyComment.get(1).targetUserName+":"+data.replyComment.get(0).content);
+                    }
+                }
             }
+
         }
 
         @Override
@@ -367,7 +460,7 @@ public class InformDetailsActivity extends BaseActivity {
         //列表的合并可能多次使用，并且与getItemViewType关联大
         private void notifyChange() {
             list.clear();
-            if (hotComments.isEmpty()&&newComments.isEmpty()) return;
+            if (hotComments.isEmpty() && newComments.isEmpty()) return;
 
             if (hadClickLoadmore) {
                 list.add(null);//热评标题

@@ -53,4 +53,19 @@ public class InformComment {
 
     public boolean isThumbs;
     public List<InformComment> replyComment=new ArrayList<InformComment>();
+
+
+    /**
+     * 评论回复
+     * commentId : string
+     * targetUserId : string
+     * targetUserName : string
+     */
+
+    @SerializedName("commentId")
+    public String commentId;
+    @SerializedName("targetUserId")
+    public String targetUserId;
+    @SerializedName("targetUserName")
+    public String targetUserName;
 }

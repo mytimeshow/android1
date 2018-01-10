@@ -26,9 +26,9 @@
                     android:id="@+id/myself_cover"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_210"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/inform_order_isfollow_frame"
+                    android:layout_toRightOf="@+id/inform_order_isfollow_frame"
                     android:adjustViewBounds="true"
                     android:scaleType="fitXY"
                     android:src="@drawable/score_bg_red" />
