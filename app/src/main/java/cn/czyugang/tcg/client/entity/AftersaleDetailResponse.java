@@ -1,5 +1,7 @@
 package cn.czyugang.tcg.client.entity;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,6 +17,7 @@ import cn.czyugang.tcg.client.utils.LogRui;
  */
 
 public class AftersaleDetailResponse extends Response<Aftersale> {
+    private static final String TAG = "AftersaleDetailResponse";
     public String returnType="";
     public String buyerReason="";
     public String buyerExplian="";
@@ -23,7 +26,8 @@ public class AftersaleDetailResponse extends Response<Aftersale> {
     public String sellerReason2="";
     public String sellerExplian2="";
     public List<String> buyerImgList=new ArrayList<>();
-    public List<String> sellerImgList=new ArrayList<>();
+    public List<String> sellerImgList1=new ArrayList<>();
+    public List<String> sellerImgList2=new ArrayList<>();
     public List<String> statusList=new ArrayList<>();
     public List<String> timeList=new ArrayList<>();
     public List<Integer> imgList=new ArrayList<>();
@@ -70,9 +74,6 @@ public class AftersaleDetailResponse extends Response<Aftersale> {
             initImgList();
             initstatusTitleList();
             initGoodsImg();
-
-
-
         }catch (Exception e){
             LogRui.e("parse####",e);
         }
@@ -84,10 +85,16 @@ public class AftersaleDetailResponse extends Response<Aftersale> {
             for(int i=0,size=array.length();i<size;i++){
                 String type=array.optJSONObject(i).optString("type");
                 String imgId=array.optJSONObject(i).optString("fileId");
+                int times=array.optJSONObject(i).optInt("time");
                 if(type!=null && type.equals("BUYER")){
                     buyerImgList.add(imgId);
+
+                }else if(type!=null && type.equals("BUSINESS") && times==1){
+                    sellerImgList1.add(imgId);
+
                 }else {
-                    sellerImgList.add(imgId);
+                    sellerImgList2.add(imgId);
+
                 }
             }
 
@@ -95,21 +102,36 @@ public class AftersaleDetailResponse extends Response<Aftersale> {
     }
 
     private void initstatusTitleList() {
+        Log.e(TAG, "initstatusTitleList: 1" );
+        JSONObject jsonObject=values.optJSONObject("returnGoodsInfo");
+        Log.e(TAG, "initstatusTitleList:2" );
+        String conpanyName="";
+        String dillNum="";
+        if(jsonObject!=null)
+         conpanyName=jsonObject.optString("logisticsName");
+        Log.e(TAG, "initstatusTitleList: 3" );
+        if(jsonObject!=null)
+         dillNum=jsonObject.optString("logisticsOrder");
+        Log.e(TAG, "initstatusTitleList: 4" );
         if(returnType.equals("退款")){
-            titleList.add("退货退款申请:商品【AAAAAAAAAAAAAA】X3");
+            Log.e(TAG, "initstatusTitleList:5" );
+            titleList.add("退款申请:商品   "+values.optString("productTitle")+"   X"+values.optString("productNumber"));
+            Log.e(TAG, "initstatusTitleList:6" );
             titleList.add("商家拒绝了退款申请，您可联系客服介入");
             titleList.add("客服正在处理中，请耐心等待处理结果哦~|");
             titleList.add("经平台仲裁，此次退款申请予以通过");
+            Log.e(TAG, "initstatusTitleList: 退款" );
         }else {
-            titleList.add("退货退款申请:商品【AAAAAAAAAAAAAA】X3");
+            titleList.add("退货退款申请:商品   "+values.optString("productTitle")+"   X"+values.optString("productNumber"));
             titleList.add("商家拒绝了退货退款申请，仍需退货退款可申请介入");
             titleList.add("客服正在处理中，请耐心等待处理结果哦~|");
             titleList.add("经平台仲裁同意了您的退货退款申请，请尽快将您商\n" +
                     "品寄回");
-            titleList.add("物流快递：XXXXX快递 \n"+"运单号：4451211111111111");
+            titleList.add("物流快递："+conpanyName+"快递 \n"+"运单号："+dillNum);
             titleList.add("商家拒绝了退款申请，仍需退款可申请介入");
             titleList.add("客服正在处理中，请耐心等待处理结果哦~|");
             titleList.add("经平台仲裁，此次退款申请予以通过");
+            Log.e(TAG, "initstatusTitleList: 退款退款  " );
         }
 
 
@@ -137,6 +159,7 @@ public class AftersaleDetailResponse extends Response<Aftersale> {
     private void initTimeList() {
         JSONArray jsonArray=values.optJSONArray("returnOrderStatusRecordList");
         if(jsonArray!=null && jsonArray.length()>0){
+
             for(int i=0,size=jsonArray.length();i<size;i++){
                 String object=jsonArray.optJSONObject(i).optString("status");
                 String time=jsonArray.optJSONObject(i).optString("createTime");
@@ -157,7 +180,7 @@ public class AftersaleDetailResponse extends Response<Aftersale> {
     private void initStatusList() {
         if(returnType.equals("退款")){
             statusList.add("订单退款中，用户申请退款");
-            statusList.add("订单退款中，订单退款中，商家拒绝退款申请");
+            statusList.add("订单退款中，商家拒绝退款申请");
             statusList.add("订单退款中，用户申请平台介入");
             statusList.add("订单退款成功");
         }else {
