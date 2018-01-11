@@ -537,6 +537,7 @@
             android:name=".modules.inform.InformDetailsActivity"
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".modules.inform.InformSearchAcitivity" />
+        <activity android:name=".modules.inform.InformCommentDetailAcitivity" />
 
 
         <!-- im -->

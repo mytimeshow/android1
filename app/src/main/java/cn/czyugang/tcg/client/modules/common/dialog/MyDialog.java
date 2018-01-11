@@ -8,6 +8,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -360,7 +362,7 @@ public class MyDialog extends DialogFragment {
     }
 
     //底部  回复+点赞+举报+取消 按钮
-    public static void informCommentOperationDialog(Activity activity, String content,boolean isThumb,String id) {
+    public static void informCommentOperationDialog(Activity activity, String content,boolean isThumb,String id,String targetUserId) {
         MyDialog.Builder.newBuilder(activity)
                 .custom(R.layout.dialog_inform_comment_operation)
                 .width(-1)
@@ -372,7 +374,7 @@ public class MyDialog extends DialogFragment {
                     CommonUtil.setTextViewLinesWithEllipsis(commentCotent, 2);
                     thumb.setText(isThumb?"取消点赞":"点赞");
                     myDialog.onClick(R.id.dialog_inform_commment_reply, v -> {
-                        informCommentSendContentDialog(activity);
+                        informCommentSendContentDialog(activity,targetUserId,id);
                         myDialog.dismiss();
                     })
                             .onClick(R.id.dialog_inform_commment_report, v -> {
@@ -422,7 +424,7 @@ public class MyDialog extends DialogFragment {
                     commentCotent.setText(content);
                     CommonUtil.setTextViewLinesWithEllipsis(commentCotent, 2);
                     myDialog.onClick(R.id.dialog_inform_commment_content_reply, v -> {
-                        informCommentSendContentDialog(activity);
+                        informCommentSendContentDialog(activity,"","");
                         myDialog.dismiss();
                     })
                             .onClick(R.id.dialog_inform_commment_content_report, v -> {
@@ -476,13 +478,50 @@ public class MyDialog extends DialogFragment {
     }
 
     //底部  编辑评论详情+发送 按钮
-    public static void informCommentSendContentDialog(Activity activity) {
+    public static void informCommentSendContentDialog(Activity activity,String targetUserId,String commentId) {
         MyDialog.Builder.newBuilder(activity)
                 .custom(R.layout.dialog_inform_comment_edit_content)
                 .width(-1)
                 .gravity(Gravity.BOTTOM)
                 .bindView(myDialog -> {
+                    EditText content = myDialog.rootView.findViewById(R.id.inform_comment_reply);
+                    TextView send = myDialog.rootView.findViewById(R.id.inform_send_comment);
+                    send.setOnClickListener(v -> {
+                        if (content==null ||content.getText().toString().equals("")) return;
+                        InformApi.sendReplyComment(commentId,content.getText().toString(),targetUserId).subscribe(new BaseActivity.NetObserver<Response>() {
+                            @Override
+                            public void onNext(Response response) {
+                                super.onNext(response);
+                                if (!ErrorHandler.judge200(response)) return;
+                                content.setText("");
+                                myDialog.dismiss();
+                            }
+                        });
+                    });
+                    content.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            if (content == null||content.getText().toString().equals("")  ) {
+                                send.setBackgroundResource(R.drawable.bg_rect_dark_grey);
+                                send.setClickable(false);
+                            } else {
+                                send.setBackgroundResource(R.drawable.bg_rect_red);
+                                send.setClickable(true);
+
+
+                            }
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+
+                        }
+                    });
                 })
                 .canceledOnTouchOutside(true)
                 .build()

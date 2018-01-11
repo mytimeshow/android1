@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:padding="@dimen/dp_5"
     android:background="@color/white"
     android:orientation="vertical">
@@ -81,18 +81,24 @@
         android:textSize="@dimen/sp_11"
         android:textColor="@color/text_gray"
         android:lineSpacingExtra="@dimen/dp_5"/>
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_inform_comment">
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/triangle"
+            android:layout_marginLeft="@dimen/dp_10"/>
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/bg_rect_dark_f5"
+            android:padding="@dimen/dp_10"
             >
 
         </android.support.v7.widget.RecyclerView>
-    </FrameLayout>
+    </LinearLayout>
 
 
 </LinearLayout>

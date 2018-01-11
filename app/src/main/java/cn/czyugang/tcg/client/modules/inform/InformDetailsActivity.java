@@ -442,9 +442,11 @@ public class InformDetailsActivity extends BaseActivity {
             }
 
             holder.content.setOnClickListener(v -> {
-                MyDialog.informCommentOperationDialog(activity,data.userName+": "+data.content,data.isThumbs,data.id);
+                MyDialog.informCommentOperationDialog(activity,data.userName+": "+data.content,data.isThumbs,data.id,data.userId);
             });
-
+            holder.reply.setOnClickListener(v -> {
+                InformCommentDetailAcitivity.startInformCommentDetailAcitivity();
+            });
         }
 
         @Override

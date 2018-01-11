@@ -283,7 +283,7 @@ public class InformApi {
     //api/auth/v1/info/comment/save[可接入]保存评论
     public static Observable<Response> sendComment(String id,String content) {
         Map<String, Object> params = new HashMap<>();
-        //评论id,评论内容
+        //资讯id,评论内容
         params.put("infoId", id);
         params.put("content", content);
         return UserOAuth.getInstance()
@@ -292,5 +292,21 @@ public class InformApi {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    //api/auth/v1/info/comment/reply/save[可接入]保存回复
+    public static Observable<Response> sendReplyComment(String id,String content,String targetUserId) {
+        Map<String, Object> params = new HashMap<>();
+        //评论id,评论内容,被评论者id
+        params.put("commentId", id);
+        params.put("content", content);
+        params.put("targetUserId", targetUserId);
+        return UserOAuth.getInstance()
+                .post("api/auth/v1/info/comment/reply/save", params)
+                .map(s -> (Response) JsonParse.fromJson(s, Response.class))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+
 
 }
