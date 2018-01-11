@@ -77,26 +77,31 @@
         android:id="@+id/inform_details_comment_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_5"
-        android:layout_marginBottom="@dimen/dp_5"
+        android:paddingTop="@dimen/dp_5"
+        android:paddingBottom="@dimen/dp_5"
         android:text="hhhhhhhhhhhhhhhhhhhhhh
  hhhhhhhhhhhhhhhhhhh
  hhhhhhhhhhhh"
         android:textSize="@dimen/sp_11"
         android:textColor="@color/text_gray"
         android:lineSpacingExtra="@dimen/dp_5"/>
+    <ImageView
+        android:id="@+id/inform_details_comment_reply_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/triangle"
+        android:layout_marginLeft="@dimen/dp_10"/>
     <LinearLayout
         android:id="@+id/inform_details_comment_reply"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_inform_comment"
+        android:background="@drawable/bg_rect_dark_f5"
         android:padding="@dimen/dp_10"
         android:orientation="vertical">
         <TextView
             android:id="@+id/inform_details_comment_reply_first"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
             android:text="扎心了老铁：蛮好奇有谁看过的，看过的举个爪哩~"
             android:textSize="@dimen/sp_11"
             android:lineSpacingExtra="@dimen/dp_5"
