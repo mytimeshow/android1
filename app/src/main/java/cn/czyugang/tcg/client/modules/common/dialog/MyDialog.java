@@ -21,7 +21,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import cn.czyugang.tcg.client.R;
+import cn.czyugang.tcg.client.api.InformApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
+import cn.czyugang.tcg.client.common.ErrorHandler;
+import cn.czyugang.tcg.client.entity.Response;
 import cn.czyugang.tcg.client.modules.entry.activity.MainActivity;
 import cn.czyugang.tcg.client.modules.im.ImChatActivity;
 import cn.czyugang.tcg.client.modules.set.activity.MobileVerifyActivity;
@@ -30,6 +33,7 @@ import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.QRCode;
+import cn.czyugang.tcg.client.utils.string.StringUtil;
 import cn.czyugang.tcg.client.widget.PayPasswordEditText;
 
 /**
@@ -356,21 +360,47 @@ public class MyDialog extends DialogFragment {
     }
 
     //底部  回复+点赞+举报+取消 按钮
-    public static void informCommentOperationDialog(Activity activity, String content) {
+    public static void informCommentOperationDialog(Activity activity, String content,boolean isThumb,String id) {
         MyDialog.Builder.newBuilder(activity)
                 .custom(R.layout.dialog_inform_comment_operation)
                 .width(-1)
                 .gravity(Gravity.BOTTOM)
                 .bindView(myDialog -> {
                     TextView commentCotent = myDialog.rootView.findViewById(R.id.dialog_inform_commment_content);
+                    TextView thumb = myDialog.rootView.findViewById(R.id.dialog_inform_commment_thumbs);
                     commentCotent.setText(content);
                     CommonUtil.setTextViewLinesWithEllipsis(commentCotent, 2);
+                    thumb.setText(isThumb?"取消点赞":"点赞");
                     myDialog.onClick(R.id.dialog_inform_commment_reply, v -> {
                         informCommentSendContentDialog(activity);
                         myDialog.dismiss();
                     })
                             .onClick(R.id.dialog_inform_commment_report, v -> {
                                 informCommentReportDialog(activity, content);
+                                myDialog.dismiss();
+                            })
+                            .onClick(R.id.dialog_inform_commment_thumbs, v -> {
+
+                                    if (!isThumb) {
+                                        InformApi.toLikeComment(id).subscribe(new BaseActivity.NetObserver<Response>() {
+                                            @Override
+                                            public void onNext(Response response) {
+                                                super.onNext(response);
+                                                if (!ErrorHandler.judge200(response)) return;
+                                                thumb.setText("取消点赞");
+                                            }
+                                        });
+                                    } else {
+                                        InformApi.toUnLikeComment(id).subscribe(new BaseActivity.NetObserver<Response>() {
+                                            @Override
+                                            public void onNext(Response response) {
+                                                super.onNext(response);
+                                                if (!ErrorHandler.judge200(response)) return;
+                                                thumb.setText("点赞");
+                                            }
+                                        });
+                                    }
+
                                 myDialog.dismiss();
                             })
                             .onClick(R.id.dialog_cancel);

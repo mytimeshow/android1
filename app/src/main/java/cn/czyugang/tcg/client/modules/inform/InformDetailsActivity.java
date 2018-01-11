@@ -35,6 +35,7 @@ import cn.czyugang.tcg.client.entity.InformComment;
 import cn.czyugang.tcg.client.entity.InformCommentRespone;
 import cn.czyugang.tcg.client.entity.InformDetailResponse;
 import cn.czyugang.tcg.client.entity.Response;
+import cn.czyugang.tcg.client.modules.common.dialog.MyDialog;
 import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.app.KeyboardWatcher;
 import cn.czyugang.tcg.client.utils.img.ImgView;
@@ -413,8 +414,10 @@ public class InformDetailsActivity extends BaseActivity {
             });
             if (data.replyComment == null || data.replyComment.size() == 0) {
                 holder.reply.setVisibility(View.GONE);
+                holder.replyTop.setVisibility(View.GONE);
             } else {
                 holder.reply.setVisibility(View.VISIBLE);
+                holder.replyTop.setVisibility(View.VISIBLE);
                 holder.replyNum.setText("共 "+StringUtil.returnMoreNum(data.replyCount)+" 条回复");
                 if (data.replyComment.size() ==1){
                     if (data.replyComment.get(0).userName.equals(data.replyComment.get(0).targetUserName)){
@@ -428,15 +431,19 @@ public class InformDetailsActivity extends BaseActivity {
                     if (data.replyComment.get(0).userName.equals(data.replyComment.get(0).targetUserName)){
                         holder.replyFirst.setText(data.replyComment.get(0).userName+": "+data.replyComment.get(0).content);
                     }else {
-                        holder.replyFirst.setText(data.replyComment.get(0).userName+" 回复了 "+data.replyComment.get(0).targetUserName+":"+data.replyComment.get(0).content);
+                        holder.replyFirst.setText(data.replyComment.get(0).userName+" 回复了 "+data.replyComment.get(0).targetUserName+": "+data.replyComment.get(0).content);
                     }
                     if (data.replyComment.get(1).userName.equals(data.replyComment.get(1).targetUserName)){
                         holder.replySecond.setText(data.replyComment.get(1).userName+": "+data.replyComment.get(1).content);
                     }else {
-                        holder.replySecond.setText(data.replyComment.get(1).userName+" 回复了 "+data.replyComment.get(1).targetUserName+":"+data.replyComment.get(0).content);
+                        holder.replySecond.setText(data.replyComment.get(1).userName+" 回复了 "+data.replyComment.get(1).targetUserName+": "+data.replyComment.get(0).content);
                     }
                 }
             }
+
+            holder.content.setOnClickListener(v -> {
+                MyDialog.informCommentOperationDialog(activity,data.userName+": "+data.content,data.isThumbs,data.id);
+            });
 
         }
 
@@ -503,6 +510,7 @@ public class InformDetailsActivity extends BaseActivity {
             TextView replyFirst;
             TextView replySecond;
             TextView replyNum;
+            ImageView replyTop;
 
 
             public Holder(View itemView) {
@@ -518,6 +526,7 @@ public class InformDetailsActivity extends BaseActivity {
                 replyFirst = itemView.findViewById(R.id.inform_details_comment_reply_first);
                 replySecond = itemView.findViewById(R.id.inform_details_comment_reply_second);
                 replyNum = itemView.findViewById(R.id.inform_details_comment_reply_num);
+                replyTop = itemView.findViewById(R.id.inform_details_comment_reply_top);
 
 
             }
