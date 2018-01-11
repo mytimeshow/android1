@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ import cn.czyugang.tcg.client.widget.RecycleViewDivider;
  */
 
 public class AftersaleTrackActivity extends BaseActivity {
+    private static final String TAG = "AftersaleTrackActivity";
     @BindView(R.id.aftersale_tracks)
     RecyclerView tracksR;
     private List<AftersaleTrack> trackList = new ArrayList<>();
@@ -63,10 +65,10 @@ public class AftersaleTrackActivity extends BaseActivity {
 
         initData();
 
+     /*   trackList.add(new AftersaleTrack());
         trackList.add(new AftersaleTrack());
         trackList.add(new AftersaleTrack());
-        trackList.add(new AftersaleTrack());
-        trackList.add(new AftersaleTrack());
+        trackList.add(new AftersaleTrack());*/
 
         adapter = new TrackAdapter(trackList, this);
         tracksR.setLayoutManager(new LinearLayoutManager(this));
@@ -74,16 +76,24 @@ public class AftersaleTrackActivity extends BaseActivity {
     }
 
     private void initData() {
-        int size=detailResponse.statusList.size();
+        if(detailResponse==null){
+            return;
+        }
+        detailResponse.parse();
+        Log.e(TAG, "initData: had ran one" );
+        int size=detailResponse.timeList.size();
+        Log.e(TAG, "initData: had ran two" +size);
         for(int i=0;i<size;i++){
+            Log.e(TAG, "initData: had ran three" );
             AftersaleTrack aftersaleTrack=new AftersaleTrack();
             aftersaleTrack.setHeadImg(detailResponse.imgList.get(i));
+            Log.e(TAG, "initData: "+ detailResponse.imgList.get(i));
             aftersaleTrack.setStatu(detailResponse.statusList.get(i));
             aftersaleTrack.setStatuTitle(detailResponse.titleList.get(i));
             aftersaleTrack.setStatuTime(detailResponse.timeList.get(i));
             if(i==0 && detailResponse.buyerImgList.size()>0) aftersaleTrack.setImgList(detailResponse.buyerImgList);
-            if(i==1 && detailResponse.sellerImgList.size()>0) aftersaleTrack.setImgList(detailResponse.sellerImgList);
-            if(size>4 && i==5 && detailResponse.sellerImgList.size()>0) aftersaleTrack.setImgList(detailResponse.sellerImgList);
+            if(i==1 && detailResponse.sellerImgList1.size()>0) aftersaleTrack.setImgList(detailResponse.sellerImgList1);
+            if(size>4 && i==5 && detailResponse.sellerImgList2.size()>0) aftersaleTrack.setImgList(detailResponse.sellerImgList2);
             trackList.add(aftersaleTrack);
         }
     }
@@ -98,6 +108,12 @@ public class AftersaleTrackActivity extends BaseActivity {
         private Activity activity;
 
         public TrackAdapter(List<AftersaleTrack> list, Activity activity) {
+            for(int i=0,size=list.size();i<size;i++){
+                if(list.get(i).statuTime==null){
+                    list.remove(i);
+                    i--;
+                }
+            }
             this.list = list;
             this.activity = activity;
         }
@@ -111,25 +127,28 @@ public class AftersaleTrackActivity extends BaseActivity {
         @Override
         public void onBindViewHolder(Holder holder, int position) {
             int index=getItemCount()-position-1;
-            int count=getItemCount();
-            AftersaleTrack data = list.get(position);
+            String type=detailResponse.returnType;
+
+            AftersaleTrack data = list.get(index);
             data.bindImgAdapter(activity, holder.imgs);
 
-            if(count==8 && (index==7 || index==6 || index==2)){
+            if(index==7) holder.icon.setBackgroundResource(R.drawable.bg_dot_red);
+            if(type.equals("退货退款") &&(index==5 || index==1 || index==0)){
                 String reason="",explian="";
-                if(index==7) {reason=detailResponse.buyerReason;explian=detailResponse.buyerExplian;}
-                if (index==6){reason=detailResponse.sellerReason1;explian=detailResponse.sellerExplian1;}
-                if (index==2){reason=detailResponse.sellerReason2;explian=detailResponse.sellerExplian2;}
+                if(index==0) {reason=detailResponse.buyerReason;explian=detailResponse.buyerExplian;}
+                if (index==1){reason=detailResponse.sellerReason1;explian=detailResponse.sellerExplian1;}
+                if (index==5){reason=detailResponse.sellerReason2;explian=detailResponse.sellerExplian2;}
                 holder.text.setText(RichText.newRichText().
                         appendSpColorRes(data.statu, R.dimen.sp_14, R.color.main_red)
                         .append("\n"+data.statuTitle)
                         .append("\n"+"拒绝理由:"+reason)
                         .append("\n"+"补充说明:"+explian)
                         .build());
-            }else if(count==4 &&(index==3 || index==2)){
+            }else if(type.equals("退款") && (index==1 || index==0)){
                 String reason="",explian="";
-                if(index==3) {reason=detailResponse.buyerReason;explian=detailResponse.buyerExplian;}
-                if (index==2){reason=detailResponse.sellerReason1;explian=detailResponse.sellerExplian1;}
+                if(index==3 ) holder.icon.setBackgroundResource(R.drawable.bg_dot_red);
+                if(index==0) {reason=detailResponse.buyerReason;explian=detailResponse.buyerExplian;}
+                if (index==1){reason=detailResponse.sellerReason1;explian=detailResponse.sellerExplian1;}
                 holder.text.setText(RichText.newRichText().
                         appendSpColorRes(data.statu, R.dimen.sp_14, R.color.main_red)
                         .append("\n"+data.statuTitle)
@@ -173,7 +192,7 @@ public class AftersaleTrackActivity extends BaseActivity {
 
         @Override
         public int getItemViewType(int position) {
-            return position % 2 == 0 ? R.layout.item_aftersale_track_text : R.layout.item_aftersale_track_img;
+            return (position == 2 || position == 3 || position == 6 || position == 7) ?  R.layout.item_aftersale_track_img:R.layout.item_aftersale_track_text ;
         }
 
         class Holder extends RecyclerView.ViewHolder {

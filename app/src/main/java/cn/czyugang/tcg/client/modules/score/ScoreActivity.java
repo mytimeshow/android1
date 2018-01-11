@@ -109,21 +109,30 @@ public class ScoreActivity extends BaseActivity {
 
     @OnClick(R.id.score_continue_sign_action)
     public void onContinueSign() {
-       // continueSignAction.setText("+"+signedDayBonusDict);
-        continueSignAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
-        continueSignAction.setClickable(false);
-     if(!isGotToday){
-         postData("SIGN_CONTINUOUSLY",false);
-     }else {
-         //showToast("你已经领取过了");
-     }
+        if(Integer.parseInt(signedDay)>Integer.parseInt(signedDayDict)){
+            if(isGotToday){
+                continueSignAction.setClickable(false);
+                continueSignAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
+            }
+            if(!isGotToday){
+                postData("SIGN_CONTINUOUSLY",false);
+            }else {
+                showToast("你已经领取过了");
+            }
+
+        }
+
+        if(isGotToday)continueSignAction.setText("+"+signedDayBonusDict);
+
+
+
     }
     @OnClick(R.id.score_order_comment_action)
     public void onOrderComment() {
 				MyOrderActivity.startMyOrderActivity();
         //orderCommentAction.setText("+XX");
-        orderCommentAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
-        orderCommentAction.setClickable(false);
+       // orderCommentAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
+       // orderCommentAction.setClickable(false);
 
 
     }
@@ -132,8 +141,8 @@ public class ScoreActivity extends BaseActivity {
     public void onInformComment() {
         MainActivity.openAndSelectFragment(1);
        // informCommentAction.setText("+XX");
-        informCommentAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
-        informCommentAction.setClickable(false);
+       // informCommentAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
+       // informCommentAction.setClickable(false);
 
     }
 
@@ -141,8 +150,8 @@ public class ScoreActivity extends BaseActivity {
     public void onBuyGive() {
         MainActivity.openAndSelectFragment(0);
      //   buyGiveAction.setText("+XX");
-        buyGiveAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
-        buyGiveAction.setClickable(false);
+      //  buyGiveAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
+        //buyGiveAction.setClickable(false);
 
     }
 
