@@ -67,5 +67,9 @@ public class InformEditArticleActivity extends BaseActivity {
         MyDialog.informEditLinkDialog(this);
 
     }
+    @OnClick(R.id.title_back)
+    public void onBack(){
+        finish();
+    }
 
 }

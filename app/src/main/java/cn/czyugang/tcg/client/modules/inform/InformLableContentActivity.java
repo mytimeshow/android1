@@ -12,6 +12,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.entity.Inform;
@@ -58,5 +59,10 @@ public class InformLableContentActivity extends BaseActivity {
         InformFollowFragment.FollowContentAdapter followContentAdapter = new InformFollowFragment.FollowContentAdapter(followCotentsList,this);
         labelContentList.setLayoutManager(new LinearLayoutManager(this));
         labelContentList.setAdapter(followContentAdapter);
+    }
+
+    @OnClick(R.id.title_back)
+    public void onBack(){
+        finish();
     }
 }

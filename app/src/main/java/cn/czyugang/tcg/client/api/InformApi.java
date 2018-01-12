@@ -6,6 +6,7 @@ import java.util.Map;
 
 import cn.czyugang.tcg.client.common.UserOAuth;
 import cn.czyugang.tcg.client.entity.InformColumnResponse;
+import cn.czyugang.tcg.client.entity.InformCommentDetailRespone;
 import cn.czyugang.tcg.client.entity.InformCommentRespone;
 import cn.czyugang.tcg.client.entity.InformDetailResponse;
 import cn.czyugang.tcg.client.entity.InformFollowResponse;
@@ -307,6 +308,16 @@ public class InformApi {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+   // api/auth/v1/info/comment/detail[可接入]查看评论详情
+   public static Observable<InformCommentDetailRespone> getCommentDetail(String commentId){
+       HashMap<String,Object> map=new HashMap<>();
+       map.put("id",commentId);
+       return UserOAuth.getInstance()
+               .get("api/auth/v1/info/comment/detail",map)
+               .map(s -> (InformCommentDetailRespone) JsonParse.fromJson(s,InformCommentDetailRespone.class))
+               .subscribeOn(Schedulers.io())
+               .observeOn(AndroidSchedulers.mainThread());
+   }
 
 
 }
