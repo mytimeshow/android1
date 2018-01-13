@@ -12,6 +12,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.api.InformApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
@@ -64,5 +65,10 @@ public class InformSelfFansActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    @OnClick(R.id.title_back)
+    public void onBack(){
+        finish();
     }
 }

@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.czyugang.tcg.client.R;
 import cn.czyugang.tcg.client.base.BaseActivity;
 
@@ -46,5 +47,9 @@ public class InformSearchAcitivity extends BaseActivity {
         searchTitle.setText(getIntent().getStringExtra("searchTitle"));
 
 
+    }
+    @OnClick(R.id.title_back)
+    public void onBack(){
+        finish();
     }
 }

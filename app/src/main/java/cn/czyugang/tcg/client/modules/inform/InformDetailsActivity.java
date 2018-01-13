@@ -66,7 +66,7 @@ public class InformDetailsActivity extends BaseActivity {
     @BindView(R.id.thumb_up)
     ImageView thumbUp;
     @BindView(R.id.comment_list)
-    RecyclerView commitList;
+    RecyclerView commentList;
 
     @BindView(R.id.inform_detail_operation)
     RelativeLayout relaOperation;
@@ -102,8 +102,8 @@ public class InformDetailsActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         commentAdapter = new CommentAdapter(new ArrayList<>(), this);
-        commitList.setLayoutManager(new LinearLayoutManager(this));
-        commitList.setAdapter(commentAdapter);
+        commentList.setLayoutManager(new LinearLayoutManager(this));
+        commentList.setAdapter(commentAdapter);
 
         //数据加载和显示需要引用view和adapte，放在最后规避空指针
         getInformDetail();
@@ -251,7 +251,7 @@ public class InformDetailsActivity extends BaseActivity {
         commentAdapter.notifyChange();
 
         //不在onCreate()创建，避免未点击加载更多就能够上拉加载
-        refreshLoadHelper = new RefreshLoadHelper(this).build(commitList);
+        refreshLoadHelper = new RefreshLoadHelper(this).build(commentList);
         refreshLoadHelper.swipeToLoadLayout.setOnLoadMoreListener(() -> getComment(true));
         refreshLoadHelper.swipeToLoadLayout.setOnRefreshListener(() -> getComment(false));
 
@@ -340,6 +340,11 @@ public class InformDetailsActivity extends BaseActivity {
                 }
             });
         }
+    }
+
+    @OnClick(R.id.title_back)
+    public void onBack(){
+        finish();
     }
 
     private class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Holder> {
@@ -445,7 +450,7 @@ public class InformDetailsActivity extends BaseActivity {
                 MyDialog.informCommentOperationDialog(activity,data.userName+": "+data.content,data.isThumbs,data.id,data.userId);
             });
             holder.reply.setOnClickListener(v -> {
-                InformCommentDetailAcitivity.startInformCommentDetailAcitivity();
+                InformCommentDetailAcitivity.startInformCommentDetailAcitivity(data.id);
             });
         }
 

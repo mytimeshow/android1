@@ -2,14 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/dp_5"
     android:background="@color/white"
     android:orientation="vertical">
+    <FrameLayout
+        android:id="@+id/title"
+        style="@style/title_title">
+        <ImageView
+            style="@style/title_back"
+            android:src="@drawable/ic_back_arrow" />
+    </FrameLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"
+        android:background="@color/grey_350"
+        />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginBottom="@dimen/dp_10">
+        android:layout_marginBottom="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10">
         
         <cn.czyugang.tcg.client.utils.img.ImgView
             android:id="@+id/inform_details_comment_head"
@@ -69,12 +83,16 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0.5"
         android:background="@color/grey_350"
+        android:layout_marginLeft="@dimen/dp_10"
         />
     <TextView
+        android:id="@+id/inform_details_comment_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_5"
         android:layout_marginBottom="@dimen/dp_5"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
         android:text="hhhhhhhhhhhhhhhhhhhhhh
  hhhhhhhhhhhhhhhhhhh
  hhhhhhhhhhhh"
@@ -84,17 +102,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/triangle"
             android:layout_marginLeft="@dimen/dp_10"/>
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/commentList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_rect_dark_f5"
-            android:padding="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"
             >
 
         </android.support.v7.widget.RecyclerView>
