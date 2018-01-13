@@ -41,6 +41,7 @@ import cn.czyugang.tcg.client.utils.app.KeyboardWatcher;
 import cn.czyugang.tcg.client.utils.img.ImgView;
 import cn.czyugang.tcg.client.utils.string.StringUtil;
 import cn.czyugang.tcg.client.utils.string.TimeUtils;
+import cn.czyugang.tcg.client.widget.BaseWebView;
 import cn.czyugang.tcg.client.widget.LabelLayout;
 import cn.czyugang.tcg.client.widget.RefreshLoadHelper;
 
@@ -74,6 +75,8 @@ public class InformDetailsActivity extends BaseActivity {
     TextView sendComment;
     @BindView(R.id.inform_detail_comment_content)
     EditText commentContent;
+    @BindView(R.id.inform_detail_content_detail)
+    BaseWebView baseWebView;
 
     private boolean isFollow;
     private boolean isLike;
@@ -126,6 +129,10 @@ public class InformDetailsActivity extends BaseActivity {
                 tvIsFollow.setText(response.isFollow ? "已关注" : "+关注");
                 tvIsFollow.setBackgroundResource(response.isFollow ? R.drawable.bg_rect_cir_grey_ccc : R.drawable.bg_rect_cir_red);
                 thumbUp.setImageResource(response.isLike ? R.drawable.icon_dianzan2 : R.drawable.ic_thumb_up);
+                //能够的调用JavaScript代码
+                baseWebView.webView.getSettings().setJavaScriptEnabled(true);
+                //加载HTML字符串进行显示
+                baseWebView.webView.loadDataWithBaseURL(null,response.data.content, "text/html", "utf-8", null);
                 if (response.data.labelNames.equals("") || response.data.labelNames == null) {
                     labelLayout.setVisibility(View.GONE);
                 } else {

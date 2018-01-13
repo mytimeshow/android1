@@ -234,6 +234,7 @@
 
 
                     <cn.czyugang.tcg.client.widget.BaseWebView
+                        android:id="@+id/inform_detail_content_detail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 

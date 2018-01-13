@@ -46,6 +46,8 @@ public class BaseWebView extends FrameLayout {
 
         webProgressBar=findViewById(R.id.web_progressbar);
         webView=findViewById(R.id.web_webview);
+
+        setWebView();
     }
 
     private void loadUrl(String url){
