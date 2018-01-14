@@ -18,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.czyugang.tcg.client.R;
-import cn.czyugang.tcg.client.api.ImApi;
+import cn.czyugang.tcg.client.api.NoticeApi;
 import cn.czyugang.tcg.client.base.BaseActivity;
 import cn.czyugang.tcg.client.base.BaseFragment;
 import cn.czyugang.tcg.client.common.ErrorHandler;
@@ -67,13 +67,13 @@ public class NoticeFragment extends BaseFragment {
         adapter = new NoticeAdapter(noticeList, getActivity());
         noticeR.setLayoutManager(new LinearLayoutManager(getActivity()));
         noticeR.setAdapter(adapter);
-        ImApi.getNoticeList("100001",1).subscribe(new BaseActivity.NetObserver<Response<List<ImNoticeMsg>>>() {
+        NoticeApi.getNoticeList("100001",1).subscribe(new BaseActivity.NetObserver<Response<List<ImNoticeMsg>>>() {
             @Override
             public void onNext(Response<List<ImNoticeMsg>> response) {
                 super.onNext(response);
             }
         });
-        ImApi.getNoticeTypeList().subscribe(new BaseActivity.NetObserver<Response<List<ImNoticeType>>>() {
+        NoticeApi.getNoticeTypeList().subscribe(new BaseActivity.NetObserver<Response<List<ImNoticeType>>>() {
             @Override
             public void onNext(Response<List<ImNoticeType>> response) {
                 super.onNext(response);

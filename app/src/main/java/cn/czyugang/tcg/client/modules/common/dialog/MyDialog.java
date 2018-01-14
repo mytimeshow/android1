@@ -2,6 +2,7 @@ package cn.czyugang.tcg.client.modules.common.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -50,6 +51,12 @@ public class MyDialog extends DialogFragment {
         dialog.setCanceledOnTouchOutside(builder.canceledOnTouchOutside);
         Window window = dialog.getWindow();
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+
+            }
+        });
         return dialog;
     }
 

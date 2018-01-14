@@ -259,11 +259,9 @@ public class GoodsListFragment extends BaseFragment {
 
             if (!data.isSaleAble()) {
                 holder.imgView.setDisCount("暂停售卖");
-                holder.itemView.setEnabled(false);
-                holder.imgView.setClickable(false);
+                holder.plusMinusView.setClickable(false);
             } else {
-                holder.itemView.setEnabled(true);
-                holder.imgView.setClickable(true);
+                holder.plusMinusView.setClickable(true);
             }
 
             holder.imgView.id(data.pic);

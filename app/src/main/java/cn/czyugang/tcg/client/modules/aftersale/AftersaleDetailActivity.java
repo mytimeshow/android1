@@ -119,7 +119,7 @@ public class AftersaleDetailActivity extends BaseActivity {
         type.setText(aftersale.getTypeStr());
         money.setText(CommonUtil.formatPrice(0));
         moneyFlow.setVisibility(View.GONE);
-        reason.setText(detailResponse.reason);
+        reason.setText(detailResponse.buyerReason);
         explain.setText("");
 
         timeApply.setText("");
