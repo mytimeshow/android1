@@ -19,7 +19,7 @@ public class ImNoticeMsg {
      * object : string
      * readNumber : 0
      * receiver : string
-     * send : string
+     * sendAccount : string
      * sendMode : string
      * sendNumber : 0
      * sendTime : 2018-01-02T01:42:08.370Z
@@ -51,7 +51,7 @@ public class ImNoticeMsg {
     public int readNumber;
     @SerializedName("receiver")
     public String receiver;
-    @SerializedName("send")
+    @SerializedName("sendAccount")
     public String send;
     @SerializedName("sendMode")
     public String sendMode;

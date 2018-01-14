@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.DrawableRes;
@@ -61,8 +62,10 @@ public class ImgView extends ImageView {
 
     private Paint paint = null;
     private String disCount = "";
+    private int baseline=0;
     private boolean isRound = false;
     private boolean noCache = false;
+    private float rectTop=0;
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -73,12 +76,17 @@ public class ImgView extends ImageView {
                 paint.setStyle(Paint.Style.FILL);
                 paint.setTextAlign(Paint.Align.CENTER);
                 paint.setTextSize(ResUtil.getDimenInPx(R.dimen.sp_10));
+
+                rectTop=getHeight() * 0.75f;
+
+                Paint.FontMetricsInt fontMetrics = paint.getFontMetricsInt();
+                baseline = (getHeight() + (int)rectTop - fontMetrics.bottom - fontMetrics.top) / 2;
             }
             if (disCount!=null&&!disCount.isEmpty()){
                 paint.setColor(0x7F000000);
-                canvas.drawRect(0, getHeight() * 0.75f, getWidth(), getHeight(), paint);
+                canvas.drawRect(0, rectTop, getWidth(), getHeight(), paint);
                 paint.setColor(Color.WHITE);
-                canvas.drawText(disCount, getWidth() / 2, getHeight() * 0.94f, paint);
+                canvas.drawText(disCount, getWidth() / 2, baseline, paint);
             }
         }
     }
