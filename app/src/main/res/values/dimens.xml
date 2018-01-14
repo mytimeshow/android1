@@ -19,7 +19,7 @@
     <!--分割线宽度-->
     <dimen name="divider">0.5dp</dimen>
     <!--标题栏高度-->
-    <dimen name="title_bar_height">45dp</dimen>
+    <dimen name="title_bar_height">44dp</dimen>
     <!--按钮尺寸-->
     <!--主按钮-->
     <dimen name="corners_radius_main_button">2dp</dimen>

@@ -11,7 +11,6 @@ import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,11 +30,11 @@ import cn.czyugang.tcg.client.modules.entry.activity.MainActivity;
 import cn.czyugang.tcg.client.modules.im.ImChatActivity;
 import cn.czyugang.tcg.client.modules.set.activity.MobileVerifyActivity;
 import cn.czyugang.tcg.client.utils.CommonUtil;
-import cn.czyugang.tcg.client.utils.LogRui;
 import cn.czyugang.tcg.client.utils.app.AppUtil;
 import cn.czyugang.tcg.client.utils.app.ResUtil;
 import cn.czyugang.tcg.client.utils.img.QRCode;
-import cn.czyugang.tcg.client.utils.string.StringUtil;
+import cn.czyugang.tcg.client.utils.rxbus.EditArticleInputLinkEvent;
+import cn.czyugang.tcg.client.utils.rxbus.RxBus;
 import cn.czyugang.tcg.client.widget.PayPasswordEditText;
 
 /**
@@ -559,13 +558,56 @@ public class MyDialog extends DialogFragment {
                 .widthPercent(0.8f)
                 .gravity(Gravity.CENTER)
                 .bindView(myDialog -> {
+                    EditText title=myDialog.rootView.findViewById(R.id.edit_article_link_title);
                     EditText source = myDialog.rootView.findViewById(R.id.edit_article_link_content);
-                    source.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                    TextView confirm=myDialog.rootView.findViewById(R.id.btnOK);
+                    title.addTextChangedListener(new TextWatcher() {
                         @Override
-                        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                            LogRui.e("onEditorAction####" + v.getText());
-                            return false;
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
                         }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            if (source.getText().length()!=0&&s.length()!=0){
+                                confirm.setClickable(true);
+                                confirm.setBackgroundResource(R.drawable.bg_rect_black);
+                            }else {
+                                confirm.setClickable(false);
+                                confirm.setBackgroundResource(R.drawable.bg_rect_dark_grey);
+                            }
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+
+                        }
+                    });
+                    source.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            if (title.getText().length()!=0&&s.length()!=0){
+                                confirm.setClickable(true);
+                                confirm.setBackgroundResource(R.drawable.bg_rect_black);
+                            }else {
+                                confirm.setClickable(false);
+                                confirm.setBackgroundResource(R.drawable.bg_rect_dark_grey);
+                            }
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+
+                        }
+                    });
+                    myDialog.onClick(R.id.btnCancel);
+                    myDialog.onClick(R.id.btnOK,v -> {
+                        RxBus.post(new EditArticleInputLinkEvent(title.getText().toString(),source.getText().toString()));
                     });
                 })
                 .canceledOnTouchOutside(true)

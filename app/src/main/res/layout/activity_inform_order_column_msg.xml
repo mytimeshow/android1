@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -108,7 +107,6 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
-
     <FrameLayout
         android:id="@+id/inform_title_bg"
         style="@style/title_title"
@@ -147,6 +145,7 @@
 
         <ImageView style="@style/title_search" />
     </FrameLayout>
+
     <Button
         android:id="@+id/inform_order_edit_article"
         android:layout_width="@dimen/dp_50"

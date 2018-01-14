@@ -532,7 +532,7 @@
         <activity android:name=".modules.inform.InformSelfFollowActivity" />
         <activity android:name=".modules.inform.InformSelfFansActivity" />
         <activity android:name=".modules.inform.InformLableContentActivity" />
-        <activity android:name=".modules.inform.InformEditArticleActivity" />
+        <activity android:name=".modules.inform.InformEditArticleActivity" android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".modules.inform.InformDetailsActivity"
             android:windowSoftInputMode="adjustResize"/>

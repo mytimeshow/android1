@@ -1,5 +1,6 @@
 package cn.czyugang.tcg.client.utils.string;
 
+import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
@@ -231,6 +232,19 @@ public class RichText {
         return this;
     }
 
+    public RichText addimg( @DrawableRes int img) {
+        builder.append(" ");
+        ImageSpan imageSpan = new ImageSpan(MyApplication.getContext(), img, ALIGN_BASELINE);
+        builder.setSpan(imageSpan, build().length()-2, build().length()-1, 0);
+        return this;
+    }
+
+    public RichText addimg(Bitmap bitmap) {
+        builder.append(" ");
+        ImageSpan imageSpan = new ImageSpan(MyApplication.getContext(), bitmap, ALIGN_BASELINE);
+        builder.setSpan(imageSpan, build().length()-2, build().length()-1, 0);
+        return this;
+    }
     public RichText addimg(int start, int end, @DrawableRes int img) {
         if (start < 0 || start >= end) return this;
         if (builder.toString().length() < end) return this;

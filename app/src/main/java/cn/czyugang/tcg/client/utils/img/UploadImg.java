@@ -75,5 +75,29 @@ public class UploadImg {
         });
     }
 
+    public void upload(String filePath,String uploadType,OnUploadCompleted onUploadCompleted) {
+        if (filePath.equals("")) return;
+        HashMap<String, Object> filesMap = new HashMap<>();
+        File file = new File(filePath);
+        filesMap.put("file", file);
+        UserOAuth.getInstance().upload("api/auth/v1/file/uploadFile?type=" + uploadType, filesMap).subscribe(new BaseActivity.NetObserver<Progress>() {
+            @Override
+            public void onNext(Progress response) {
+                super.onNext(response);
+                if (response.getBodyStr() != null) {
+                    uploadId=response.getFileId();
+                    onUploadCompleted.onCompleted(UploadImg.this);
+                }
+            }
 
+            @Override
+            public boolean showLoading() {
+                return false;
+            }
+        });
+    }
+
+    public static interface OnUploadCompleted{
+        void onCompleted(UploadImg uploadImg);
+    }
 }
