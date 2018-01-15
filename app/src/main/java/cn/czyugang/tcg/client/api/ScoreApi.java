@@ -30,11 +30,11 @@ public class ScoreApi {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 //获取积分明细新信息
-    public  static Observable<Response<List<Score>>> getScoreDetail(String id){
+    public  static Observable<Response<List<Score>>> getScoreDetail(String id,int page,int num){
         HashMap<String, Object> map = new HashMap<>();
         map.put("scoreId", id);
-        map.put("page",10);
-        map.put("size",120);
+        map.put("page",page);
+        map.put("size",num);
         return UserOAuth.getInstance()
                 .get("api/auth/v2/user/bonusPoints/query/record/dict", map)
                 .map(s -> (Response<List<Score>>) JsonParse.fromJson(s, new JsonParse.Type(Response.class,new JsonParse.Type(List.class,Score.class))))

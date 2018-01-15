@@ -36,7 +36,13 @@ public class AftersaleDetailResponse extends Response<Aftersale> {
     public void parse(){
         if (values==null) return;
         try{
-
+            buyerImgList.clear();
+            sellerImgList1.clear();
+            sellerImgList2.clear();
+            statusList.clear();
+            timeList.clear();
+            imgList.clear();
+            titleList.clear();
             //售后申请信息-data{orderNo-售后编号,createTime-申请时间.overtime-超时时间,type-售后类型}
             //售后状态字典-statusDict
             //售后状态说明字典-statusSupplementDict
@@ -164,13 +170,13 @@ public class AftersaleDetailResponse extends Response<Aftersale> {
                 String object=jsonArray.optJSONObject(i).optString("status");
                 String time=jsonArray.optJSONObject(i).optString("createTime");
                 if(object.equals("POST_APPLICATION")) timeList.add(time);
-                if(object.equals("BUSINESS_REFUSE_APPLICATION")) timeList.add("time");
-                if(object.equals("PLATFORM_INTERVENING")) timeList.add("time");
-                if(object.equals("PLATFORM_AGREE_REFUND_APPLICATION")) timeList.add("time");
-                if(object.equals("BUYER_RETURN_GOODS")) timeList.add("time");
-                if(object.equals("BUSINESS_REFUSE_APPLICATION")) timeList.add("time");
-                if(object.equals("PLATFORM_INTERVENING")) timeList.add("time");
-                if(object.equals("FINISH")) timeList.add("time");
+                if(object.equals("BUSINESS_REFUSE_APPLICATION")) timeList.add(time);
+                if(object.equals("PLATFORM_INTERVENING")) timeList.add(time);
+                if(object.equals("PLATFORM_AGREE_REFUND_APPLICATION")) timeList.add(time);
+                if(object.equals("BUYER_RETURN_GOODS")) timeList.add(time);
+                if(object.equals("BUSINESS_REFUSE_APPLICATION")) timeList.add(time);
+                if(object.equals("PLATFORM_INTERVENING")) timeList.add(time);
+                if(object.equals("FINISH")) timeList.add(time);
 
             }
         }

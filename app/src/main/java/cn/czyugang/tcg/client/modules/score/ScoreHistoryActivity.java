@@ -3,7 +3,6 @@ package cn.czyugang.tcg.client.modules.score;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -64,6 +63,7 @@ public class ScoreHistoryActivity extends BaseActivity {
     private Response<Score> mResponse;
     private boolean isToday;
     private boolean isYesterday;
+    private boolean hadLoadMore;
     //积分来源类型
     private HashMap<String, String> scoreType = new HashMap<>();
     //月份的初始化
@@ -101,7 +101,7 @@ public class ScoreHistoryActivity extends BaseActivity {
         getCurrentMonth();
         initTimeL();
         initFliterL();
-        getScoreInfo(UserOAuth.getUserId(),"allRecord");
+        getScoreInfo(UserOAuth.getUserId(),"allRecord",1,30);
         isFirstIn=false;
 //        int s=02-01;
 //        Log.e(TAG, "onCreate: " +" " +s );
@@ -139,7 +139,7 @@ public class ScoreHistoryActivity extends BaseActivity {
                             isLastMonth=true;
                             isThisMonth=true;
                             isTheMonthLastMonth=true;
-                            getScoreInfo(UserOAuth.getUserId(),"allRecord");
+                            getScoreInfo(UserOAuth.getUserId(),"allRecord",10,100);
                             adapter.notifyDataSetChanged();
                             timeL.setVisibility(timeL.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
                         }
@@ -153,7 +153,7 @@ public class ScoreHistoryActivity extends BaseActivity {
     private void setTheMonthLastMonth() {
         historyList.clear();
         isTheMonthLastMonth=true;
-        getScoreInfo(UserOAuth.getUserId(),strTheLaMonth);
+        getScoreInfo(UserOAuth.getUserId(),strTheLaMonth,10,100);
         adapter.notifyDataSetChanged();
         timeL.setVisibility(timeL.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
     }
@@ -161,7 +161,7 @@ public class ScoreHistoryActivity extends BaseActivity {
     private void setThisMonth() {
         historyList.clear();
         isThisMonth=true;
-        getScoreInfo(UserOAuth.getUserId(),"本月");
+        getScoreInfo(UserOAuth.getUserId(),"本月",10,100);
         adapter.notifyDataSetChanged();
         timeL.setVisibility(timeL.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
     }
@@ -169,7 +169,7 @@ public class ScoreHistoryActivity extends BaseActivity {
     private void setLastMonth() {
         historyList.clear();
         isLastMonth=true;
-        getScoreInfo(UserOAuth.getUserId(),strLaMonth);
+        getScoreInfo(UserOAuth.getUserId(),strLaMonth,10,100);
         adapter.notifyDataSetChanged();
         timeL.setVisibility(timeL.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
     }
@@ -179,7 +179,7 @@ public class ScoreHistoryActivity extends BaseActivity {
         isLastMonth=true;
         isThisMonth=true;
         isTheMonthLastMonth=true;
-        getScoreInfo(UserOAuth.getUserId(),"allRecord");
+        getScoreInfo(UserOAuth.getUserId(),"allRecord",10,100);
         adapter.notifyDataSetChanged();
         filterL.setVisibility(filterL.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
 
@@ -191,7 +191,7 @@ public class ScoreHistoryActivity extends BaseActivity {
         isLastMonth=true;
         isThisMonth=true;
         isTheMonthLastMonth=true;
-        getScoreInfo(UserOAuth.getUserId(),"usedRecord");
+        getScoreInfo(UserOAuth.getUserId(),"usedRecord",10,100);
         filterL.setVisibility(filterL.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
     }
     //获取记录
@@ -200,7 +200,7 @@ public class ScoreHistoryActivity extends BaseActivity {
         isLastMonth=true;
         isThisMonth=true;
         isTheMonthLastMonth=true;
-        getScoreInfo(UserOAuth.getUserId(),"getRecord");
+        getScoreInfo(UserOAuth.getUserId(),"getRecord",10,100);
         filterL.setVisibility(filterL.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
     }
 //下拉框内数据的实现
@@ -339,8 +339,8 @@ public class ScoreHistoryActivity extends BaseActivity {
         }
     }
     //获取积分的来源途径信息,积分明细
-    private void getScoreInfo(String userId,String id) {
-        ScoreApi.getScoreDetail(userId).subscribe(new NetObserver<Response<List<Score>>>() {
+    private void getScoreInfo(String userId,String id,int page,int num) {
+        ScoreApi.getScoreDetail(userId,page,num).subscribe(new NetObserver<Response<List<Score>>>() {
             @Override
             public void onNext(Response<List<Score>> response) {
                 super.onNext(response);
@@ -381,11 +381,11 @@ public class ScoreHistoryActivity extends BaseActivity {
                     LinearLayoutManager manager=new LinearLayoutManager(ScoreHistoryActivity.this);
                     historyR.setLayoutManager(manager);
                     historyR.setAdapter(adapter);
-                    if(adapter.getItemCount()>13){
+                  /*  if(adapter.getItemCount()>13){
                         View footerView=LayoutInflater.from(ScoreHistoryActivity.this)
                                 .inflate(R.layout.recyclerview_footerview,historyR,false);
                         adapter.addFooterView(footerView);
-                    }
+                    }*/
 
                     isDoThis1=true;
                     isDoThis2=true;
@@ -395,13 +395,16 @@ public class ScoreHistoryActivity extends BaseActivity {
                     historyR.addOnScrollListener(new EndlessRecyclerOnScrollListener(manager,displayMetrics.heightPixels) {
                         @Override
                         public void onLoadMore(int currentPage) {
-                            showToast(" load more");
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    hidLoading(historyR);
-                                }
-                            }, 2000);
+                            if(!hadLoadMore){
+                                historyList.clear();
+                                isLastMonth=true;
+                                isThisMonth=true;
+                                isTheMonthLastMonth=true;
+                                getScoreInfo(UserOAuth.getUserId(),"allRecord",10,100);
+                                adapter.notifyDataSetChanged();
+                                hadLoadMore=true;
+                            }
+
 
                         }
 

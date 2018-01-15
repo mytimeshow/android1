@@ -46,14 +46,14 @@ public  class EndlessRecyclerOnScrollListener extends
             //showLoading(recyclerView);
 
         }
-        if(recyclerView.getChildCount()>0) {
+      /*  if(recyclerView.getChildCount()>0) {
             View view = recyclerView.getChildAt(recyclerView.getChildCount() - 1);
             if (recyclerviewHeight - (contentHeight + scrolledHeight) > view.getMeasuredHeight()) {
                 showLoading(recyclerView);
             }
 
 
-        }
+        }*/
 
 
     }
