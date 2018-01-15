@@ -3,9 +3,11 @@ package cn.czyugang.tcg.client.modules.score;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +17,14 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +47,7 @@ import cn.czyugang.tcg.client.widget.SpinnerSelectView;
 
 public class ScoreHistoryActivity extends BaseActivity {
     private static final String TAG = "ScoreHistoryActivity";
+    private static final int FOOTER_VIEW=1;
     @BindView(R.id.score_history)
     RecyclerView historyR;
     @BindView(R.id.score_history_filter)
@@ -56,10 +62,13 @@ public class ScoreHistoryActivity extends BaseActivity {
     private ScoreHistoryAdapter adapter;
     private List<Score> mscoreList;
     private Response<Score> mResponse;
+    private boolean isToday;
+    private boolean isYesterday;
     //积分来源类型
     private HashMap<String, String> scoreType = new HashMap<>();
     //月份的初始化
     private String year;
+    private String today;
     private int month;
     private  int lastMonth;
     private int theMonthLastMonth;
@@ -115,7 +124,7 @@ public class ScoreHistoryActivity extends BaseActivity {
         filterL.select("所有记录");
     }
     private void initTimeL() {
-        timeL.add("本月",strLaMonth,strTheLaMonth)
+        timeL.add("近三个月","本月",strLaMonth,strTheLaMonth)
                 .setOnSelectItemListener(text -> {
                     time.setText(text);
                     if(!isFirstIn){
@@ -123,8 +132,16 @@ public class ScoreHistoryActivity extends BaseActivity {
                             setLastMonth();
                         }else if(text.equals(strTheLaMonth)){
                             setTheMonthLastMonth();
-                        }else {
+                        }else if(text.equals("本月")){
                             setThisMonth();
+                        }else {
+                            historyList.clear();
+                            isLastMonth=true;
+                            isThisMonth=true;
+                            isTheMonthLastMonth=true;
+                            getScoreInfo(UserOAuth.getUserId(),"allRecord");
+                            adapter.notifyDataSetChanged();
+                            timeL.setVisibility(timeL.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
                         }
                     }
 
@@ -191,6 +208,8 @@ public class ScoreHistoryActivity extends BaseActivity {
         SimpleDateFormat format=new SimpleDateFormat("yyyy-MM");
         String date=format.format(new Date());
         month= Integer.parseInt(date.substring(5,7));
+        SimpleDateFormat format1=new SimpleDateFormat("yyyy-MM-dd");
+        today=format1.format(new Date());
         if(month==02){
             year=date.substring(0,4)+"年 ";
             lastMonth=month-1;
@@ -234,20 +253,27 @@ public class ScoreHistoryActivity extends BaseActivity {
     private static class ScoreHistoryAdapter extends RecyclerView.Adapter<ScoreHistoryAdapter.Holder> {
         private List<ScoreHistory> list;
         private Activity activity;
+        private View footerView;
 
         public ScoreHistoryAdapter(List<ScoreHistory> list, Activity activity) {
             this.list = list;
             this.activity = activity;
         }
-
+        public void addFooterView(View view){
+            footerView=view;
+        }
         @Override
         public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+            if(viewType==FOOTER_VIEW){
+              return new  Holder(footerView);
+            }
             return new Holder(LayoutInflater.from(activity).inflate(
                     viewType, parent, false));
         }
 
         @Override
         public void onBindViewHolder(Holder holder, int position) {
+            if(position==list.size()) return;
             ScoreHistory data = list.get(position);
             if (data.isTitle) {
                 holder.title.setText(data.title);
@@ -275,12 +301,24 @@ public class ScoreHistoryActivity extends BaseActivity {
 
         @Override
         public int getItemCount() {
-            return list.size();
+            return footerView==null ? list.size():list.size()+1;
         }
 
         @Override
         public int getItemViewType(int position) {
-            return list.get(position).isTitle ? R.layout.itme_score_history_title : R.layout.item_score_history;
+
+            if(footerView !=null && getItemCount()>14 && position==getItemCount()-1){
+                return FOOTER_VIEW;
+            }
+            if(position<list.size()){
+                if( list.size() >0 && list.get(position).isTitle ){
+                    return R.layout.itme_score_history_title;
+                }else if(!( list.size() >0&& list.get(position).isTitle)){
+                    return R.layout.item_score_history;
+                }
+            }
+
+            return R.layout.recyclerview_footerview;
         }
 
         class Holder extends RecyclerView.ViewHolder {
@@ -340,11 +378,35 @@ public class ScoreHistoryActivity extends BaseActivity {
                       //  }
                     }
                     adapter = new ScoreHistoryAdapter(historyList, ScoreHistoryActivity.this);
-                    historyR.setLayoutManager(new LinearLayoutManager(ScoreHistoryActivity.this));
+                    LinearLayoutManager manager=new LinearLayoutManager(ScoreHistoryActivity.this);
+                    historyR.setLayoutManager(manager);
                     historyR.setAdapter(adapter);
+                    if(adapter.getItemCount()>13){
+                        View footerView=LayoutInflater.from(ScoreHistoryActivity.this)
+                                .inflate(R.layout.recyclerview_footerview,historyR,false);
+                        adapter.addFooterView(footerView);
+                    }
+
                     isDoThis1=true;
                     isDoThis2=true;
                     isDoThis3=true;
+
+                    DisplayMetrics displayMetrics=getResources().getDisplayMetrics();
+                    historyR.addOnScrollListener(new EndlessRecyclerOnScrollListener(manager,displayMetrics.heightPixels) {
+                        @Override
+                        public void onLoadMore(int currentPage) {
+                            showToast(" load more");
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    hidLoading(historyR);
+                                }
+                            }, 2000);
+
+                        }
+
+
+                    });
 
                 }
             }
@@ -459,7 +521,26 @@ public class ScoreHistoryActivity extends BaseActivity {
     }
     private void initHistoryList(int i, Response<List<Score>> response) {
         ScoreHistory scoreHistory = new ScoreHistory();
-        scoreHistory.setGetTime(mscoreList.get(i).createTime.substring(5, 10));
+        if(today.equals(mscoreList.get(i).createTime.substring(0, 10))){
+            isToday=true;
+
+        }else try {
+            if(IsYesterday(mscoreList.get(i).createTime)){
+                isYesterday=true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(isToday){
+            scoreHistory.setGetTime("今天");
+            isToday=false;
+        }else if(isYesterday){
+            scoreHistory.setGetTime("昨天");
+            isYesterday=false;
+        }else {
+            scoreHistory.setGetTime(mscoreList.get(i).createTime.substring(5, 10));
+        }
+
         scoreHistory.setName(scoreType.get(mscoreList.get(i).way));
         if (mscoreList.get(i).objectId.equals("")) {
             Log.e(TAG, "onNext:objectId is null ");
@@ -530,5 +611,32 @@ public class ScoreHistoryActivity extends BaseActivity {
         scoreType.put("SIGN_CONTI","连续签到积分");
         return "";
     }
+    public static boolean IsYesterday(String day) throws ParseException {
+
+        Calendar pre = Calendar.getInstance();
+        Date predate = new Date(System.currentTimeMillis());
+        pre.setTime(predate);
+
+        Calendar cal = Calendar.getInstance();
+        Date date = getDateFormat().parse(day);
+        cal.setTime(date);
+
+        if (cal.get(Calendar.YEAR) == (pre.get(Calendar.YEAR))) {
+            int diffDay = cal.get(Calendar.DAY_OF_YEAR)
+                    - pre.get(Calendar.DAY_OF_YEAR);
+
+            if (diffDay == -1) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static SimpleDateFormat getDateFormat() {
+        if (null == DateLocal.get()) {
+            DateLocal.set(new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA));
+        }
+        return DateLocal.get();
+    }
+    private static ThreadLocal<SimpleDateFormat> DateLocal = new ThreadLocal<SimpleDateFormat>();
 
 }

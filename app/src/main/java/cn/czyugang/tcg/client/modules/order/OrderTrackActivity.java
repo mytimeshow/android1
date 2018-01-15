@@ -126,11 +126,17 @@ public class OrderTrackActivity extends BaseActivity {
 
                     if (deliverTypeDict.get(order.deliveryWay).equals("自提")) {
                         JSONObject fetchCode=result.values.optJSONObject("deliveryOrder");
-                        deliveryOrder=JsonParse.fromJson(fetchCode.toString(),DeliveryOrder.class);
+                        if(deliveryOrder!=null){
+                            deliveryOrder=JsonParse.fromJson(fetchCode.toString(),DeliveryOrder.class);
+                        }
+
                         track_person.setVisibility(View.GONE);
                         deliverySelf.setText("自提券码");
-                        deliveryTime.setText(deliveryOrder.fetchCode+"（已使用）");
-                        distributorName.setText(deliveryOrder.fetchCode);
+                        if(deliveryOrder!=null){
+                            deliveryTime.setText(deliveryOrder.fetchCode+"（已使用）");
+                            distributorName.setText(deliveryOrder.fetchCode);
+                        }
+
                         selfTake(result);
                     } else if(deliverTypeDict.get(order.deliveryWay).equals("商家配送")){
                         deliverySelf.setText("配送时间");

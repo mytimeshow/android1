@@ -91,9 +91,7 @@ public class ScoreActivity extends BaseActivity {
 
     @OnClick(R.id.score_sign_action)
     public void onSign() {
-        signAction.setText("+"+1);
-        signAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
-        signAction.setClickable(false);
+
        // isSignToday=true;
         asynSignDays();
     }
@@ -109,20 +107,19 @@ public class ScoreActivity extends BaseActivity {
 
     @OnClick(R.id.score_continue_sign_action)
     public void onContinueSign() {
-        if(Integer.parseInt(signedDay)>Integer.parseInt(signedDayDict)){
-            if(isGotToday){
-                continueSignAction.setClickable(false);
-                continueSignAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
-            }
+        if(Integer.parseInt(signedDay)>=Integer.parseInt(signedDayDict)){
+
             if(!isGotToday){
                 postData("SIGN_CONTINUOUSLY",false);
             }else {
                 showToast("你已经领取过了");
             }
 
+        }else {
+            showToast("要连续签到"+signedDayDict+"天才可以领取哦");
         }
 
-        if(isGotToday)continueSignAction.setText("+"+signedDayBonusDict);
+
 
 
 
@@ -177,7 +174,24 @@ public class ScoreActivity extends BaseActivity {
                     score.setText(myUserBonus);
                     continueSignDay.setText("连续签到" +signedDay + "日");
                     signTip.setText("连续签到" +signedDay + "天");
-                    continueSignTip.setText(myUserBonus);
+                    if(isSignToday){
+                        signAction.setText("+"+1);
+                        signAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
+                        signAction.setClickable(false);
+                    }
+                    if(Integer.parseInt(signedDay)>=Integer.parseInt(signedDayDict)){
+                        if(isSignToday){
+                           continueSignAction.setText("+"+signedDayBonusDict);
+                            continueSignAction.setBackgroundResource(R.drawable.bg_rect_cir_grey_ccc);
+                            continueSignAction.setClickable(false);
+                            continueSignTip.setText("积分+"+signedDayBonusDict);
+                        }else {
+                            continueSignTip.setText("积分+"+0);
+                        }
+                    }else {
+                        continueSignTip.setText("积分+"+0);
+                    }
+
                     orderCommentTip.setText("每日上限：" +currentOrderBonus
                             + "/" +limitOrderBonus);
                     informCommentTip.setText("每日上限：" +currentInfoBonus
@@ -212,9 +226,9 @@ public class ScoreActivity extends BaseActivity {
                 if(ErrorHandler.judge200(response)){
                     getScoreDetail(UserOAuth.getUserId());
                     if(forSign){
-                        showToast("签到成功");
+                        showToast("签到成功+1");
                     }else {
-                        showToast("领取成功");
+                        showToast("积分加+"+signedDayBonusDict);
                     }
 
                 }
